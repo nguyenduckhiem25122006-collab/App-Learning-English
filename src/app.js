@@ -57,7 +57,8 @@
   }
   let S = load();
   let saveT = null;
-  const save = () => { clearTimeout(saveT); saveT = setTimeout(flush, SAVE_MS); };
+  // Write at most SAVE_MS after the first change; later changes ride along instead of postponing it.
+  const save = () => { if (!saveT) saveT = setTimeout(flush, SAVE_MS); };
   function flush() {
     clearTimeout(saveT); saveT = null;
     const keys = Object.keys(S.days).sort();
