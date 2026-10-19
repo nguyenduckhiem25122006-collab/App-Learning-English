@@ -261,7 +261,7 @@
     }
     try { renderTabs(); renderHeader(); } catch (err) { console.error("header failed", err); }
     document.body.classList.toggle("farm-wide", U.tab === "farm");
-    if (U.tab === "farm") startFarmer();
+    if (U.tab === "farm") { startFarmer(); startTraffic(); }
     const sp = $("#spell-in"); if (sp) sp.focus({ preventScroll: true });
   }
   function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
@@ -934,7 +934,6 @@
   // ---- The farm frame: crop field and animal ranch share one piece of land; all actions sit in a bar at the bottom ----
   function fieldSlots(f, now, lv) {
     const slots = [];
-    let locked = 0;
     for (let n = 1; n <= F.MAX_PLOTS; n++) {
       if (n <= f.plots.length) { slots.push(plotHTML(f.plots[n - 1], n - 1, now)); continue; }
       const need = F.plotLevel(n);
@@ -943,8 +942,7 @@
         slots.push(`<button type="button" class="plot buy" data-buyplot${f.coins < cost ? " disabled" : ""} aria-label="Mua ô đất số ${n}: ${cost} xu">
           <span class="e" aria-hidden="true">➕</span><span class="lbl">${cost} xu</span></button>`);
       } else {
-        locked++;
-        slots.push(`<div class="plot locked${locked > 4 ? " far" : ""}" title="Mở ở nông trại cấp ${need}"><span class="e" aria-hidden="true">🔒</span><span class="lbl">Cấp ${need}</span></div>`);
+        slots.push(`<div class="plot locked" title="Mở ở nông trại cấp ${need}"><span class="e" aria-hidden="true">🔒</span><span class="lbl">Cấp ${need}</span></div>`);
       }
     }
     return slots.join("");
@@ -960,8 +958,11 @@
     return `<section class="panel stack landp"><div class="row" style="justify-content:space-between"><h2>🌾 Trang trại</h2>
         <span class="chip num">🌱 ${f.plots.length}/${F.MAX_PLOTS} ô đất · 🐾 ${f.animals.length} vật nuôi</span></div>
       <div class="land">
+        <div class="road-ring" aria-hidden="true"></div>
         <div class="zone"><div class="zone-head">🌱 Cánh đồng</div><div class="field">${fieldSlots(f, now, lv)}</div></div>
+        <div class="road mid" aria-hidden="true"></div>
         <div class="zone"><div class="zone-head">🐾 Khu chăn nuôi</div><div class="ranch">${ranchGroups(f, now, lv)}</div></div>
+        ${TRAFFIC.map((v, k) => `<div class="veh" data-veh="${k}" aria-hidden="true">${VEHICLE_SVG[v.kind]}</div>`).join("")}
         ${farmerBot()}
       </div>
       <div class="farm-actions">
@@ -1022,6 +1023,74 @@
     };
     setTimeout(step, 300);
     farmerTimer = setInterval(step, 3600);
+  }
+
+  // ---- Traffic: vehicles drive laps on the dirt road around the farm (top-down drawings facing +x, centred on 0,0) ----
+  const VEHICLE_SVG = {
+    truck: `<svg width="34" height="19" viewBox="-17 -9.5 34 19"><rect class="wheel" x="-13" y="-9.5" width="6" height="3" rx="1"/><rect class="wheel" x="-13" y="6.5" width="6" height="3" rx="1"/>
+      <rect class="wheel" x="7" y="-9.5" width="6" height="3" rx="1"/><rect class="wheel" x="7" y="6.5" width="6" height="3" rx="1"/>
+      <rect x="-16" y="-7.5" width="21" height="15" rx="2" fill="#C98A4B"/><rect x="-14" y="-5.5" width="7.5" height="5" rx="1" fill="#F2C14E"/><rect x="-14" y=".5" width="7.5" height="5" rx="1" fill="#7ED957"/>
+      <rect x="-5.5" y="-5.5" width="8" height="11" rx="1" fill="#E5533D"/><rect x="6" y="-7.5" width="10" height="15" rx="3.5" fill="#E5533D"/><rect x="11" y="-6" width="3" height="12" rx="1" fill="#BFE6FF"/></svg>`,
+    tractor: `<svg width="30" height="21" viewBox="-15 -10.5 30 21"><rect class="wheel" x="-13" y="-10.5" width="10" height="4.5" rx="1.5"/><rect class="wheel" x="-13" y="6" width="10" height="4.5" rx="1.5"/>
+      <rect class="wheel" x="6" y="-8.5" width="6" height="3" rx="1"/><rect class="wheel" x="6" y="5.5" width="6" height="3" rx="1"/>
+      <rect x="-12" y="-6.5" width="25" height="13" rx="3" fill="#3FA34D"/><rect x="2" y="-4.5" width="11" height="9" rx="2.5" fill="#2E7D32"/><circle cx="9" cy="-2.5" r="1.3" fill="#FFE66D"/><circle cx="9" cy="2.5" r="1.3" fill="#FFE66D"/>
+      <rect x="-10" y="-5" width="9" height="10" rx="2" fill="#FFD84D"/><rect x="-8.5" y="-3.5" width="6" height="7" rx="1" fill="#BFE6FF"/></svg>`,
+    van: `<svg width="30" height="17" viewBox="-15 -8.5 30 17"><rect class="wheel" x="-11" y="-8.5" width="5" height="2.6" rx="1"/><rect class="wheel" x="-11" y="5.9" width="5" height="2.6" rx="1"/>
+      <rect class="wheel" x="5" y="-8.5" width="5" height="2.6" rx="1"/><rect class="wheel" x="5" y="5.9" width="5" height="2.6" rx="1"/>
+      <rect x="-14" y="-6.8" width="28" height="13.6" rx="4" fill="#4FA8E8"/><rect x="-12" y="-4.8" width="16" height="9.6" rx="2" fill="#fff"/><circle cx="-4" cy="0" r="2.6" fill="#4FA8E8"/>
+      <rect x="7" y="-5.5" width="3.5" height="11" rx="1" fill="#BFE6FF"/></svg>`,
+  };
+  // lane: distance in from the land edge; dir 1 = clockwise (outer lane), -1 = counter-clockwise (inner lane); speed in px/s
+  const TRAFFIC = [{ kind: "truck", lane: "out", dir: 1, speed: 70, d: 0 }, { kind: "tractor", lane: "in", dir: -1, speed: 42, d: 0.45 }, { kind: "van", lane: "out", dir: 1, speed: 70, d: 0.55 }];
+  /** Point and heading (degrees) at distance d clockwise along a rounded rectangle; starts where the top edge leaves the top-left corner. */
+  function ringPoint(w, h, inset, r, d) {
+    const a = Math.max(0, w - 2 * inset - 2 * r), b = Math.max(0, h - 2 * inset - 2 * r), arc = (Math.PI * r) / 2;
+    const L = inset, T = inset, R = w - inset, B = h - inset;
+    const segs = [[a, (t) => [L + r + t, T, 0]], [arc, (t) => corner(R - r, T + r, -90, t)], [b, (t) => [R, T + r + t, 90]], [arc, (t) => corner(R - r, B - r, 0, t)],
+      [a, (t) => [R - r - t, B, 180]], [arc, (t) => corner(L + r, B - r, 90, t)], [b, (t) => [L, B - r - t, 270]], [arc, (t) => corner(L + r, T + r, 180, t)]];
+    function corner(cx, cy, from, t) { const th = from + (t / arc) * 90, rad = (th * Math.PI) / 180; return [cx + r * Math.cos(rad), cy + r * Math.sin(rad), th + 90]; }
+    const P = 2 * a + 2 * b + 4 * arc;
+    let x = ((d % P) + P) % P;
+    for (const [len, at] of segs) { if (x <= len) return at(x); x -= len; }
+    return segs[0][1](0);
+  }
+  let trafficRaf = 0;
+  /** Vehicles keep their lap position (a fraction of the lap) across re-renders, so they never jump. */
+  function startTraffic() {
+    cancelAnimationFrame(trafficRaf);
+    const land = $(".land"), ring = $(".road-ring");
+    if (!land || !ring) return;
+    const cars = TRAFFIC.map((v, k) => ({ v, el: land.querySelector(`[data-veh="${k}"]`) })).filter((c) => c.el);
+    let w = 0, h = 0, last = 0;
+    const measure = () => {
+      const cs = getComputedStyle(land), rw = parseFloat(cs.getPropertyValue("--rw")) || 30, ri = parseFloat(cs.getPropertyValue("--ri")) || 8;
+      const rad = parseFloat(getComputedStyle(ring).borderTopLeftRadius) || 30;
+      w = land.clientWidth; h = land.clientHeight;
+      for (const c of cars) {
+        c.inset = ri + rw * (c.v.lane === "out" ? 0.27 : 0.73);
+        c.r = Math.max(4, rad - (c.inset - ri));
+        c.len = 2 * Math.max(0, w - 2 * c.inset - 2 * c.r) + 2 * Math.max(0, h - 2 * c.inset - 2 * c.r) + 2 * Math.PI * c.r;
+        c.hw = c.el.offsetWidth / 2; c.hh = c.el.offsetHeight / 2;
+      }
+    };
+    const draw = () => {
+      for (const c of cars) {
+        let [x, y, hd] = ringPoint(w, h, c.inset, c.r, c.v.d * c.len * c.v.dir);
+        if (c.v.dir < 0) hd += 180;
+        c.el.style.transform = `translate(${(x - c.hw).toFixed(1)}px, ${(y - c.hh).toFixed(1)}px) rotate(${hd.toFixed(1)}deg)`;
+      }
+    };
+    measure(); draw();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const tick = (t) => {
+      if (!document.contains(land)) return;
+      const dt = last ? Math.min(0.1, (t - last) / 1000) : 0; last = t;
+      if (land.clientWidth !== w || land.clientHeight !== h) measure();
+      for (const c of cars) if (c.len) c.v.d = (c.v.d + (c.v.speed * dt) / c.len) % 1;
+      draw();
+      trafficRaf = requestAnimationFrame(tick);
+    };
+    trafficRaf = requestAnimationFrame(tick);
   }
 
   // ---- Animal pens: each kind of animal gets its own fenced pen with a building; animals wander, ready ones show their product ----

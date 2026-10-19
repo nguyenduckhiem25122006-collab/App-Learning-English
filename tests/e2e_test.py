@@ -209,6 +209,12 @@ def main():
               and page.locator("[data-buyplot]").count() == 1)
         page.wait_for_timeout(1800)
         check("farmer runs to the crops and tends them", page.locator(".farmer-bot.run, .farmer-bot.work").count() == 1)
+        pos0 = page.eval_on_selector_all(".land .veh", "els => els.map(e => e.style.transform)")
+        page.wait_for_timeout(600)
+        pos1 = page.eval_on_selector_all(".land .veh", "els => els.map(e => e.style.transform)")
+        check("roads ring the farm and split field from ranch; vehicles drive on them",
+              page.locator(".land .road-ring").count() == 1 and page.locator(".land .road.mid").count() == 1
+              and len(pos0) == 3 and all(a != b for a, b in zip(pos0, pos1)), (pos0, pos1))
         page.click("[data-sell=wheat]")
         check("selling sends the delivery truck from the barn to the market", page.locator(".delivery .dv-truck").count() == 1 and page.locator(".delivery .crate.load").count() == 1)
         page.click("[data-farmfull]")

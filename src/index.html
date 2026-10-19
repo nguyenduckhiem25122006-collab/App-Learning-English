@@ -328,18 +328,17 @@ svg.scene.wide { height: auto; aspect-ratio: 1300 / 300 }
 .plot .bbadge { position: absolute; right: 4px; bottom: 4px; background: #6C5CE7; color: #fff; font-size: .6rem; font-weight: 800; border-radius: 999px; padding: 1px 5px }
 
 /* Farm layout, field, farmer, pens and effects */
-body.farm-wide main { max-width: min(1760px, 100%) }
+body.farm-wide main { max-width: min(2400px, 100%) }
 body.farm-full .top, body.farm-full::before { display: none }
 body.farm-full main { padding-top: 12px; padding-bottom: 24px }
 .fullbtn { border: 0; cursor: pointer; font: inherit; font-weight: 700 }
 .land { position: relative }
-.field { grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)) }
+.field { grid-template-columns: repeat(auto-fill, minmax(clamp(70px, 6.6vw, 128px), 1fr)) }
 .plot.buy { background: rgba(255,255,255,.35); border: 3px dashed #fff; box-shadow: none; color: #2E7D32 }
 .plot.buy .e { font-size: 1.6rem; filter: none }
 .plot.buy:disabled { opacity: .7 }
 .plot.locked { background: repeating-linear-gradient(180deg, #8DBF6F 0 9px, #7FB262 9px 12px); box-shadow: inset 0 0 0 2px rgba(255,255,255,.35); opacity: .78 }
 .plot.locked .e { font-size: 1.4rem; filter: none }
-@media (max-width: 640px) { .plot.far { display: none } }
 .plot.blessed::before { content: ""; position: absolute; inset: -4px; border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 3px #fff, 0 0 18px 6px #FFE66D; animation: fadeout 1.8s ease-out forwards }
 @keyframes fadeout { from { opacity: 1 } to { opacity: 0 } }
 .floater { position: absolute; left: 50%; top: 10%; transform: translateX(-50%); z-index: 3; pointer-events: none; white-space: nowrap;
@@ -349,12 +348,28 @@ body.farm-full main { padding-top: 12px; padding-bottom: 24px }
 .farmer-bot.left .fb-flip { transform: scaleX(-1) }
 .farmer-bot svg { display: block; overflow: visible }
 .farmer-bot .drops { opacity: 0 }
-.land { display: grid; gap: 14px; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); align-items: start; padding: 12px; border-radius: 18px;
+.land { --rw: 38px; --ri: 8px; display: grid; gap: 14px; grid-template-columns: minmax(0, 1.55fr) var(--rw) minmax(320px, 1fr); align-items: start;
+  padding: calc(var(--ri) + var(--rw) + 12px); border-radius: 26px; overflow: hidden;
   background: #7CC85A; border: 3px solid #5DAA3E; background-image: radial-gradient(#8FD66B 2px, transparent 2.5px); background-size: 18px 18px }
 @media (max-width: 1100px) { .land { grid-template-columns: 1fr } }
+@media (max-width: 640px) { .land { --rw: 22px; --ri: 5px; gap: 10px } .landp { padding: 12px } .land .field { gap: 8px } }
+/* Dirt roads: a ring around the whole farm and one between the field and the ranch; vehicles drive on them */
+.road-ring { position: absolute; inset: var(--ri); border: var(--rw) solid #D9B57B; border-radius: 30px; pointer-events: none;
+  box-shadow: 0 0 0 2px #B98D55, inset 0 0 0 2px #B98D55 }
+.road-ring::after { content: ""; position: absolute; inset: calc(var(--rw) / -2 - 1px); border: 2px dashed rgba(255,255,255,.8); border-radius: calc(30px - var(--rw) / 2) }
+.road.mid { position: relative; z-index: 1; align-self: stretch; margin-block: -14px; pointer-events: none;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.8) 0 8px, transparent 8px 16px) center / 2px 100% no-repeat, #D9B57B;
+  box-shadow: inset 2px 0 #B98D55, inset -2px 0 #B98D55 }
+@media (max-width: 1100px) { .road.mid { height: var(--rw); margin-block: 0; margin-inline: -14px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.8) 0 8px, transparent 8px 16px) center / 100% 2px no-repeat, #D9B57B;
+  box-shadow: inset 0 2px #B98D55, inset 0 -2px #B98D55 } }
+.veh { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 1px rgba(0,0,0,.3)) }
+.veh svg { display: block; overflow: visible; width: auto; height: 24px }
+.veh .wheel { fill: #2E2A25 }
+@media (max-width: 640px) { .veh svg { height: 15px } }
 .land .field { padding: 0; border: 0; background: none }
 .zone-head { width: max-content; margin-bottom: 8px; padding: 3px 12px; border-radius: 10px; background: #C98A4B; color: #fff; font: 700 .9rem var(--f-display); box-shadow: 0 3px 0 #8B5A2B }
-.ranch { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) }
+.ranch { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 215px), 1fr)) }
 .pgroup { padding: 8px; border: 5px solid #C98A4B; border-radius: 14px; background: rgba(255,255,255,.16); box-shadow: inset 0 0 0 2px #E2B07A, 0 3px 0 #8B5A2B }
 .pgroup.locked { filter: grayscale(.8); opacity: .75 }
 .pgroup.new { animation: popin .9s ease-out }
