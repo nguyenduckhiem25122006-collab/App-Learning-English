@@ -16,6 +16,15 @@ create table if not exists public.nhip_rooms (
   created_at  timestamptz not null default now()
 );
 
+-- Class codes are stored in capitals, so 'English' and 'ENGLISH' are the same class.
+create or replace function public.nhip_room_code() returns trigger language plpgsql as $$
+begin
+  new.code := upper(btrim(new.code));
+  return new;
+end $$;
+drop trigger if exists nhip_room_code on public.nhip_rooms;
+create trigger nhip_room_code before insert or update on public.nhip_rooms for each row execute function public.nhip_room_code();
+
 create table if not exists public.nhip_players (
   id           bigint generated always as identity primary key,
   room         text not null references public.nhip_rooms(code) on delete cascade,
@@ -173,5 +182,5 @@ do $$ begin
   end if;
 end $$;
 
--- Create your class (change the code; 4–12 capital letters or digits):
+-- Create your class (change the code; 4–12 letters or digits, no spaces or accents):
 --   insert into public.nhip_rooms (code, max_players) values ('LOP7A', 15);

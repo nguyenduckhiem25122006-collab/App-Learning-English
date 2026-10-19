@@ -12,7 +12,7 @@ Làm một lần, khoảng 10 phút.
 
 1. Menu trái → **SQL Editor** → **New query**.
 2. Mở file [`supabase/schema.sql`](supabase/schema.sql) trong repo, copy toàn bộ, dán vào → **Run**. Thấy "Success" là xong.
-3. Tạo lớp: chạy thêm câu sau (đổi `LOP7A` thành mã bạn muốn, 4–12 chữ in hoa hoặc số):
+3. Tạo lớp: chạy thêm câu sau (đổi `LOP7A` thành mã bạn muốn: 4–12 chữ cái không dấu hoặc số, không có dấu cách; chữ thường sẽ tự đổi thành chữ in hoa):
 
    ```sql
    insert into public.nhip_rooms (code, max_players) values ('LOP7A', 15);
@@ -53,6 +53,8 @@ Mỗi người chọn **tên hiển thị** và **mã PIN 4–6 số**. Đổi m
 | Màn hình bị lỗi | App hiện nút "Về trang Hôm nay" thay vì trắng trang; dữ liệu có bản sao lưu mỗi ngày trên máy. |
 
 ## Việc quản lý thường dùng (chạy trong SQL Editor)
+
+⚠️ Đây là các lệnh **riêng lẻ** — mỗi lần chỉ copy **một** lệnh cần dùng, thay `LOP7A` bằng mã lớp của bạn và `Tên học sinh` bằng tên thật. Đừng dán cả khối rồi bấm Run.
 
 ```sql
 -- Xem bảng xếp hạng

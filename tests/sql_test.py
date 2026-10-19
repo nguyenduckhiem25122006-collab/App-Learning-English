@@ -15,7 +15,8 @@ def check(name, cond, detail=""):
 def main():
     with TempPostgres() as pg:
         rpc = pg.anon_rpc
-        pg.admin("insert into nhip_rooms (code, max_players) values ('LOP7A', 15), ('MINI', 3)")
+        pg.admin("insert into nhip_rooms (code, max_players) values ('LOP7A', 15), ('MINI', 3), (' English ', 15)")
+        check("class code typed in lowercase is stored in capitals", pg.admin("select count(*) from nhip_rooms where code = 'ENGLISH'")[0][0] == 1)
 
         # Tables are closed to the public role
         for sql in ["select * from nhip_players", "insert into nhip_rooms(code) values ('HACK1')", "select public.nhip_int('{}'::jsonb, 'x', 0, 1)"]:
