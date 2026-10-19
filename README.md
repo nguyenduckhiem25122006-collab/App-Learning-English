@@ -22,3 +22,7 @@ Phiên bản `playwright` (pip) phải khớp với Chromium đã cài (`playwri
 Kết quả: `dist/nhip.html` mở trực tiếp bằng trình duyệt; `dist/pwa/` là bản cài đặt offline (đưa lên GitHub Pages/Netlify).
 
 Thêm từ mới: thêm dòng vào `data/*.txt`, chạy lại 2 lệnh build và bộ test.
+
+Đưa lên web (GitHub Pages):
+    Mỗi lần push lên nhánh `main`, workflow `.github/workflows/pages.yml` tự build và đăng `dist/pwa`.
+    Link: https://nguyenduckhiem25122006-collab.github.io/App-Learning-English/
