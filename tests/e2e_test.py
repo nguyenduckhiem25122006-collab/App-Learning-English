@@ -8,6 +8,15 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = ROOT / "dist" / "pwa"
 SHOTS = ROOT / "build" / "shots"
 PORT = 8765
+SHOWCASE = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1') || '{}'), now = Date.now(), M = 60000;
+  s.gate = { start: now, study: 30 * M, play: 0 };
+  s.farm = Object.assign(s.farm || {}, { coins: 2400, fert: 4, xp: 700, cap: 80, orders: [], goalDay: null, earned: 900,
+    plots: [{c:'corn',at:0},{c:'tomato',at:0},{c:'strawberry',at:now-60*M},{c:'pumpkin',at:now-30*M},{c:'wheat',at:now},{c:null,at:0},{c:'carrot',at:0},{c:'sunflower',at:now-100*M}],
+    animals: [{a:'chicken',at:0},{a:'chicken',at:now},{a:'chicken',at:now},{a:'cow',at:now},{a:'cow',at:0},{a:'sheep',at:now},{a:'sheep',at:now},{a:'bee',at:now}],
+    deco: ['flowers','fence','tree','dog','well','house','tractor','rainbow'], barn: {wheat: 4, egg: 3, milk: 1} });
+  localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
+UNLOCK = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1'));
+  s.gate = { start: Date.now(), study: 12 * 60000, play: 0 }; localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
 # ==================
 
 results = []
@@ -176,6 +185,13 @@ def main():
         # 10b. Farm: separate header button, coins from lessons, plant → fertilize → harvest
         page.click("#farm-btn")
         check("farm button opens farm", page.inner_text("#view h1").startswith("Nông trại") and page.get_attribute("#farm-btn", "aria-pressed") == "true")
+        check("farm locked before 10 study minutes", page.locator("[data-lock]").count() == 1 and page.locator("[data-plotidx]").count() == 0)
+        check("study time is tracked", ((state(page).get("gate") or {}).get("study") or 0) > 0, str(state(page).get("gate")))
+        other = ctx.new_page(); other.goto(url, wait_until="networkidle"); other.evaluate(UNLOCK); other.close()
+        page.wait_for_timeout(400)
+        check("12 study minutes unlock the farm", page.locator("[data-lock]").count() == 0 and page.locator("[data-plotidx]").count() == 6)
+        left = page.inner_text("[data-playleft]")
+        check("play time = 0.75 × study time (9 min)", "9:00" in left or "8:5" in left, left)
         s = state(page); coins0 = s["farm"]["coins"]
         check("studying earned coins", coins0 >= 50 + 50 + 20 + 15, str(coins0))
         check("lessons gave fertilizer", s["farm"]["fert"] == 3, str(s["farm"]["fert"]))
@@ -187,6 +203,9 @@ def main():
         page.click("[data-plotidx='0']")
         check("harvest goes to the barn", state(page)["farm"]["barn"].get("wheat") == 1)
         check("3 orders on the board", page.locator(".order").count() == 3)
+        other = ctx.new_page(); other.goto(url, wait_until="networkidle"); other.evaluate(SHOWCASE); other.close()
+        page.wait_for_timeout(400)
+        check("owned animals walk on the farm scene", page.locator("svg.scene .peck").count() == 3 and page.locator("svg.scene .walk").count() == 1)
         page.screenshot(path=str(SHOTS / "desktop-farm.png"), full_page=True)
 
         # 11. Service worker for offline use
@@ -206,8 +225,11 @@ def main():
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
             mp.click("#farm-btn")
-            check(f"{scheme} 390px no h-scroll: farm", no_hscroll(mp))
-            mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm.png"))
+            check(f"{scheme} 390px no h-scroll: farm locked", no_hscroll(mp) and mp.locator("[data-lock]").count() == 1)
+            mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm-locked.png"))
+            mp.evaluate(SHOWCASE); mp.reload(wait_until="networkidle"); mp.click("#farm-btn")
+            check(f"{scheme} 390px no h-scroll: farm open", no_hscroll(mp) and mp.locator("[data-plotidx]").count() == 8)
+            mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm.png"), full_page=True)
             mp.click("[data-tab=words]"); mp.click("button[data-vocab=learn]")
             check(f"{scheme} 390px card fits", no_hscroll(mp))
             mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-card.png"))

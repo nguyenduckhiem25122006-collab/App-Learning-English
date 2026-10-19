@@ -107,3 +107,34 @@ test("decorations: buy once, respect level", () => {
   assert.equal(F.buyDeco(f, "tractor").ok, false);
   assert.equal(F.bonus(f), 2);
 });
+
+test("play gate: locked until 10 study minutes, 1 study minute = 0.75 play minute", () => {
+  const M = F.MIN;
+  let g = null;
+  assert.equal(F.gate(g, T0).open, false);
+  g = F.addStudy(g, 9 * M, T0);
+  let st = F.gate(g, T0);
+  assert.equal(st.open, false); assert.equal(st.need, M); assert.equal(st.budget, 6.75 * M);
+  g = F.addStudy(g, M, T0 + M);
+  st = F.gate(g, T0 + M);
+  assert.equal(st.open, true); assert.equal(st.budget, 7.5 * M);
+  g = F.addPlay(g, 7.5 * M, T0 + 2 * M);
+  st = F.gate(g, T0 + 2 * M);
+  assert.equal(st.open, false); assert.equal(st.budget, 0);
+  g = F.addPlay(g, M, T0 + 2 * M);
+  assert.equal(g.play, 7.5 * M, "play never exceeds the budget");
+  g = F.addStudy(g, 4 * M, T0 + 3 * M);
+  assert.equal(F.gate(g, T0 + 3 * M).budget, 3 * M);
+});
+
+test("play gate: window resets 5 hours after it started", () => {
+  const M = F.MIN, W = F.GATE.WINDOW;
+  let g = F.addStudy(null, 20 * M, T0);
+  assert.equal(F.gate(g, T0 + W - 1).open, true);
+  assert.equal(F.gate(g, T0 + W - 60e3).resetIn, 60e3);
+  const after = F.gate(g, T0 + W);
+  assert.equal(after.open, false); assert.equal(after.study, 0); assert.equal(after.resetIn, null);
+  assert.equal(F.addPlay(g, M, T0 + W), g, "no play counted in an expired window");
+  g = F.addStudy(g, M, T0 + W + 5);
+  assert.deepEqual(g, { start: T0 + W + 5, study: M, play: 0 });
+});

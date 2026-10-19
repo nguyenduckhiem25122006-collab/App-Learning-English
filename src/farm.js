@@ -41,6 +41,9 @@
   const START = { coins: 50, fert: 1, plots: 6, cap: 40 };
   const MAX_PLOTS = 15, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20;
   const REWARD = { lesson: [20, 1], review: [15, 1], goal: [50, 2] }; // [coins, fertilizer]
+  // Play-time gate: each study minute buys RATIO farm minutes; the farm opens after MIN_STUDY
+  // of study in a window, and the window (study + play time) resets WINDOW after it started.
+  const GATE = { RATIO: 0.75, MIN_STUDY: 10 * MIN, WINDOW: 5 * 60 * MIN, IDLE: 90 * 1000 };
   // ==================
 
   const ITEMS = Object.fromEntries([...CROPS, ...PRODUCTS].map((x) => [x.id, x]));
@@ -183,11 +186,31 @@
   }
   function skipOrder(f, i, r) { if (!f.orders[i]) return fail("Không có đơn hàng này"); f.orders.splice(i, 1); fillOrders(f, r); return { ok: true }; }
 
+  // ---- Play-time gate ----
+  const gateLive = (g, now) => !!g && now - g.start < GATE.WINDOW;
+  /** Effective gate state now: study/play ms in the current window, play budget left, open or locked. */
+  function gate(g, now) {
+    const live = gateLive(g, now), study = live ? g.study : 0, play = live ? g.play : 0;
+    const budget = Math.max(0, study * GATE.RATIO - play);
+    return { study, play, budget, open: study >= GATE.MIN_STUDY && budget > 0,
+      need: Math.max(0, GATE.MIN_STUDY - study), resetIn: live ? g.start + GATE.WINDOW - now : null };
+  }
+  /** Count study time; starts a new window when the previous one has expired. */
+  function addStudy(g, ms, now) {
+    const w = gateLive(g, now) ? { ...g } : { start: now, study: 0, play: 0 };
+    w.study += ms;
+    return w;
+  }
+  function addPlay(g, ms, now) {
+    if (!gateLive(g, now)) return g;
+    return { ...g, play: Math.min(g.play + ms, g.study * GATE.RATIO) };
+  }
+
   /** What a farm level unlocks, for the level-up message. */
   const unlocks = (lv) => [...CROPS, ...ANIMALS, ...DECOS].filter((x) => x.lv === lv);
 
   const Farm = {
-    MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, MAX_PER_ANIMAL, REWARD,
+    MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
     fresh, level, nextXp, bonus, stock, unlockedItems, earn, reward, remaining, plotReady, plant, harvest, fertilize, plotCost, buyPlot,
     animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks,
   };

@@ -41,7 +41,7 @@
 
   // ---------- State ----------
   const fresh = () => ({ v: 1, level: "toeic", perday: 8, sentPerDay: 3, track: "daily", progress: { kids: {}, toeic: {} },
-    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh() });
+    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null });
   function merge(o) {
     const d = fresh(), s = { ...d, ...(o || {}) };
     s.progress = { ...d.progress, ...(s.progress || {}) };
@@ -236,8 +236,7 @@
   function renderHeader() {
     document.querySelectorAll("[data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === S.level)));
     const st = C.liveStreak(S.streak, today());
-    $("#farm-btn").setAttribute("aria-pressed", String(U.tab === "farm"));
-    $("#coins").textContent = `🪙 ${S.farm.coins}`;
+    farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
   }
   const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, me: vMe, farm: vFarm };
@@ -250,6 +249,10 @@
   function applyTheme() {
     if (S.theme === "auto") document.documentElement.removeAttribute("data-theme");
     else document.documentElement.setAttribute("data-theme", S.theme);
+  }
+  function farmBtn(g) {
+    $("#farm-btn").setAttribute("aria-pressed", String(U.tab === "farm"));
+    $("#coins").textContent = `🪙 ${S.farm.coins} · ${g.open ? `⏱ ${fmtLeft(g.budget)}` : "🔒"}`;
   }
   const back = (attr, label) => `<button class="btn ghost sm" ${attr}>${I.back} ${label}</button>`;
 
@@ -288,7 +291,8 @@
         <p>${plan}</p></section>
     </div>
     <section class="panel row" style="justify-content:space-between"><div><p class="label">Nông trại</p>
-      <p>🪙 <b class="num">${S.farm.coins}</b> xu · 🧪 ${S.farm.fert} phân bón · ${S.farm.plots.filter((x) => F.plotReady(x, Date.now())).length} ô đã chín</p></div>
+      <p>🪙 <b class="num">${S.farm.coins}</b> xu · 🧪 ${S.farm.fert} phân bón · ${S.farm.plots.filter((x) => F.plotReady(x, Date.now())).length} ô đã chín</p>
+      <p class="small muted">${(() => { const g = gateNow(); return g.open ? `⏱ Còn ${fmtLeft(g.budget)} phút chơi` : g.study < F.GATE.MIN_STUDY ? `🔒 Học thêm ${Math.ceil(g.need / F.MIN)} phút để mở nông trại` : "⏰ Hết giờ chơi — học thêm để chơi tiếp"; })()}</p></div>
       <button class="btn" data-farm>Vào nông trại 🌾</button></section>`;
   }
   const stepper = (id, v) => `<div class="stepper"><button type="button" data-step="${id}" data-d="-1" aria-label="Giảm">−</button><output id="${id}">${v}</output><button type="button" data-step="${id}" data-d="1" aria-label="Tăng">+</button></div>`;
@@ -706,31 +710,143 @@
   const itemName = (it) => `${esc(it.vi)} · <i>${esc(it.en)}</i>`;
   const timer = (end, dur) => `data-end="${end}" data-dur="${dur}"`;
 
+  // Animated farm scene (inline SVG). Every animated group is drawn around its pivot at (0,0).
+  const SPOTS = { chicken: [[250, 262], [296, 280], [340, 258]], cow: [[432, 244], [508, 266], [584, 240]],
+    sheep: [[104, 262], [152, 282], [198, 254]], bee: [[652, 282], [702, 290], [752, 280]] };
+  const DECO_AT = { flowers: [[10, 294, 22], [36, 298, 22], [62, 294, 22]], tree: [[0, 252, 70]], dog: [[598, 296, 30]],
+    well: [[372, 236, 34]], house: [[538, 200, 42]], tractor: [[430, 298, 40]] };
+  const svgFarmer = () => `<g class="walk"><g class="flip">
+    <ellipse cx="0" cy="47" rx="17" ry="4" fill="rgba(0,0,0,.18)"/>
+    <g transform="translate(-5,14)"><g class="leg"><rect x="-3.5" y="0" width="7" height="28" rx="3.5" fill="#2F5BB7"/><rect x="-5" y="26" width="11" height="7" rx="3" fill="#6B3E1E"/></g></g>
+    <g transform="translate(5,14)"><g class="leg b"><rect x="-3.5" y="0" width="7" height="28" rx="3.5" fill="#2F5BB7"/><rect x="-5" y="26" width="11" height="7" rx="3" fill="#6B3E1E"/></g></g>
+    <g transform="translate(-11,-8) rotate(12)"><rect x="-3" y="0" width="6" height="20" rx="3" fill="#E5533D"/><circle cx="0" cy="21" r="3.6" fill="#FFD1A6"/></g>
+    <rect x="-12" y="-15" width="24" height="31" rx="9" fill="#E5533D"/><path d="M-12 -6h24M-12 2h24M-4 -15v31M4 -15v31" stroke="#C23E2B" stroke-width="1.2" opacity=".6"/>
+    <path d="M-11 2h22v12a5 5 0 0 1-5 5h-12a5 5 0 0 1-5-5z" fill="#3B6FD8"/><rect x="-7" y="-6" width="14" height="10" rx="2" fill="#3B6FD8"/>
+    <path d="M-7 -6l-3-8M7 -6l3-8" stroke="#3B6FD8" stroke-width="3" stroke-linecap="round"/><circle cx="-5" cy="-3" r="1.5" fill="#FFD84D"/><circle cx="5" cy="-3" r="1.5" fill="#FFD84D"/>
+    <circle cx="-12" cy="-26" r="3" fill="#F5BD8E"/><circle cx="12" cy="-26" r="3" fill="#F5BD8E"/><circle cx="0" cy="-26" r="12" fill="#FFD1A6"/>
+    <circle cx="-4" cy="-27" r="1.7" fill="#3B2A14"/><circle cx="4" cy="-27" r="1.7" fill="#3B2A14"/><circle cx="-7.5" cy="-22" r="2.3" fill="#FF9E9E" opacity=".7"/><circle cx="7.5" cy="-22" r="2.3" fill="#FF9E9E" opacity=".7"/>
+    <path d="M-5 -20q5 5 10 0" stroke="#3B2A14" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <ellipse cx="0" cy="-35" rx="21" ry="5" fill="#E2A93B"/><path d="M-11 -35q0-14 11-14q11 0 11 14z" fill="#F2C14E"/><rect x="-11" y="-39" width="22" height="3.5" fill="#D9443A"/>
+    <g transform="translate(11,-8)"><g class="wave"><rect x="-3" y="0" width="6" height="20" rx="3" fill="#E5533D"/><circle cx="0" cy="21" r="3.6" fill="#FFD1A6"/></g></g>
+  </g></g>`;
+  const svgChicken = (d) => `<ellipse cx="0" cy="17" rx="13" ry="3" fill="rgba(0,0,0,.15)"/>
+    <path d="M-3 9v8M4 9v8" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/><path d="M-12 -4l-9-9l3 13z" fill="#fff" stroke="#E8DCC8"/>
+    <ellipse cx="0" cy="0" rx="14" ry="11" fill="#fff" stroke="#E8DCC8" stroke-width="1.5"/><path d="M-7 -1q5 7 11 0" fill="none" stroke="#E8DCC8" stroke-width="2"/>
+    <g transform="translate(8,-6)"><g class="peck" style="animation-delay:${d}s"><circle cx="3" cy="-6" r="7" fill="#fff" stroke="#E8DCC8" stroke-width="1.5"/>
+      <path d="M0 -12q1.5-5 3 0q1.5-5 3 0q1.5-5 3 0z" fill="#E74C3C"/><path d="M9 -7l6 2l-6 2z" fill="#F5A623"/><circle cx="5" cy="-8" r="1.4" fill="#222"/><path d="M8 -3q3 3 0 5" fill="#E74C3C"/></g></g>`;
+  const svgCow = (d) => `<ellipse cx="0" cy="27" rx="30" ry="4" fill="rgba(0,0,0,.15)"/>
+    ${[-22, -12, 8, 18].map((x) => `<rect x="${x}" y="6" width="7" height="20" fill="#fff" stroke="#333" stroke-width="1.4"/><rect x="${x}" y="22" width="7" height="4" fill="#333"/>`).join("")}
+    <g transform="translate(-29,-8)"><g class="tail" style="animation-delay:${d}s"><path d="M0 0q-7 10-3 20" stroke="#333" stroke-width="2.5" fill="none"/><circle cx="-3" cy="21" r="3" fill="#333"/></g></g>
+    <rect x="-30" y="-17" width="56" height="28" rx="13" fill="#fff" stroke="#333" stroke-width="1.8"/>
+    <path d="M-20 -16q11 6 4 16q-12 2-12-10z" fill="#333"/><ellipse cx="9" cy="-3" rx="7" ry="5" fill="#333"/><ellipse cx="6" cy="11" rx="6" ry="3" fill="#F7B6C2"/>
+    <g transform="translate(22,-10)"><g class="chew" style="animation-delay:${d}s">
+      <path d="M3 -13q-4-6 1-9M15 -13q4-6-1-9" stroke="#E8D9B5" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="-2" cy="-8" rx="5" ry="3" fill="#fff" stroke="#333"/><ellipse cx="20" cy="-8" rx="5" ry="3" fill="#fff" stroke="#333"/>
+      <rect x="1" y="-13" width="16" height="20" rx="7" fill="#fff" stroke="#333" stroke-width="1.6"/><circle cx="6" cy="-5" r="1.6" fill="#222"/><circle cx="12" cy="-5" r="1.6" fill="#222"/>
+      <ellipse cx="9" cy="6" rx="9" ry="6" fill="#F7B6C2" stroke="#333" stroke-width="1.4"/><circle cx="6" cy="6" r="1.2" fill="#9B4F5D"/><circle cx="12" cy="6" r="1.2" fill="#9B4F5D"/></g></g>`;
+  const svgSheep = (d) => `<ellipse cx="0" cy="19" rx="18" ry="3" fill="rgba(0,0,0,.15)"/><g class="hop" style="animation-delay:${d}s">
+    <rect x="-10" y="6" width="4" height="12" rx="2" fill="#3B2A14"/><rect x="5" y="6" width="4" height="12" rx="2" fill="#3B2A14"/>
+    ${[[-10, -2, 9], [0, -7, 10], [10, -2, 9], [-4, 4, 9], [6, 4, 9]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#E6E1D8" stroke-width="1.5"/>`).join("")}
+    <ellipse cx="17" cy="-6" rx="7" ry="8" fill="#3B2A14"/><ellipse cx="11" cy="-10" rx="4" ry="2" fill="#3B2A14"/><circle cx="19" cy="-8" r="1.5" fill="#fff"/></g>`;
+  const svgHive = (d) => `<ellipse cx="0" cy="2" rx="18" ry="3" fill="rgba(0,0,0,.15)"/>
+    <path d="M-16 0q0-34 16-34q16 0 16 34z" fill="#F5B942" stroke="#C98A1B" stroke-width="2"/><path d="M-15 -10h30M-12 -21h24" stroke="#C98A1B" stroke-width="2"/>
+    <ellipse cx="0" cy="-5" rx="4.5" ry="3.5" fill="#6B3E1E"/>
+    <g transform="translate(0,-20)"><g class="orbit" style="animation-delay:${d}s"><text x="22" y="5" font-size="13">🐝</text></g></g>`;
+  const ANIMAL_SVG = { chicken: svgChicken, cow: svgCow, sheep: svgSheep, bee: svgHive };
+  const cloud = (x, y, s, dur, delay) => `<g transform="translate(${x},${y}) scale(${s})"><g class="cloud" style="animation-duration:${dur}s;animation-delay:${delay}s;--x:${x}px">
+    <g fill="#fff"><ellipse cx="0" cy="0" rx="34" ry="13"/><ellipse cx="-16" cy="-6" rx="16" ry="12"/><ellipse cx="12" cy="-10" rx="18" ry="14"/></g></g></g>`;
+
+  function farmScene(f, locked) {
+    const has = (id) => f.deco.includes(id);
+    const items = [];
+    const seen = {};
+    f.animals.forEach((a, i) => {
+      const n = seen[a.a] = (seen[a.a] || 0) + 1, at = SPOTS[a.a][n - 1];
+      if (at) items.push([at[1], `<g transform="translate(${at[0]},${at[1]})">${ANIMAL_SVG[a.a](-(i * 0.7).toFixed(1))}</g>`]);
+    });
+    for (const id of f.deco) for (const [x, y, sz] of DECO_AT[id] || []) items.push([y, `<text x="${x}" y="${y}" font-size="${sz}">${F.DECO[id].emo}</text>`]);
+    items.sort((a, b) => a[0] - b[0]);
+    const rainbow = has("rainbow") ? `<g fill="none" stroke-width="9" opacity=".75">${["#FF6B6B", "#FFB347", "#FFE66D", "#7ED957", "#5DADE2", "#A569BD"].map((c, i) =>
+      `<path d="M${140 + i * 9} 200A${200 - i * 9} ${200 - i * 9} 0 0 1 ${540 - i * 9} 200" stroke="${c}"/>`).join("")}</g>` : "";
+    const fence = has("fence") ? `<g fill="#C98A4B"><rect x="170" y="207" width="440" height="5" rx="2"/><rect x="170" y="219" width="440" height="5" rx="2"/>
+      ${Array.from({ length: 13 }, (_, i) => `<rect x="${172 + i * 35}" y="199" width="7" height="30" rx="2"/>`).join("")}</g>` : "";
+    return `<svg class="scene" viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Cảnh nông trại: bác nông dân và các con vật">
+      <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6CCBFF"/><stop offset="1" stop-color="#D4F3FF"/></linearGradient></defs>
+      <rect width="800" height="300" fill="url(#sky)"/>
+      <g transform="translate(745,50)"><g class="rays">${Array.from({ length: 10 }, (_, i) => `<rect x="-3" y="-42" width="6" height="13" rx="3" fill="#FFC83D" transform="rotate(${i * 36})"/>`).join("")}</g>
+        <circle r="24" fill="#FFD84D" stroke="#FFC83D" stroke-width="3"/><circle cx="-8" cy="-3" r="2.4" fill="#7A4514"/><circle cx="8" cy="-3" r="2.4" fill="#7A4514"/>
+        <path d="M-8 7q8 7 16 0" stroke="#7A4514" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>
+      ${cloud(140, 52, 1, 80, -10)}${cloud(430, 34, 1.3, 110, -60)}${cloud(620, 92, .8, 95, -35)}
+      <g transform="translate(0,64)"><g class="bird"><path d="M0 0q6-6 12 0q6-6 12 0" stroke="#3B4A5A" stroke-width="2.2" fill="none"/><path d="M30 12q5-5 10 0q5-5 10 0" stroke="#3B4A5A" stroke-width="2" fill="none"/></g></g>
+      ${rainbow}
+      <path d="M0 176Q120 118 260 160T520 150T800 158V300H0Z" fill="#A6E07A"/>
+      <g transform="translate(610,96)"><path d="M-6 52L75 0L156 52Z" fill="#9E2B25"/><rect x="6" y="48" width="138" height="62" fill="#D9443A"/>
+        <rect x="6" y="48" width="138" height="5" fill="#fff" opacity=".85"/><rect x="48" y="62" width="54" height="48" fill="#fff"/><rect x="52" y="66" width="46" height="44" fill="#B83229"/>
+        <path d="M52 66L98 110M98 66L52 110" stroke="#fff" stroke-width="4"/><rect x="61" y="20" width="28" height="22" fill="#fff"/><rect x="64" y="23" width="22" height="16" fill="#8FD8FF"/></g>
+      <g transform="translate(110,206)"><path d="M-18 0L-10 -100L10 -100L18 0Z" fill="#F3E2C3" stroke="#C9A877" stroke-width="2"/><rect x="-6" y="-26" width="12" height="26" rx="6" fill="#8B5A2B"/>
+        <g transform="translate(0,-100)"><g class="blades">${[0, 90, 180, 270].map((r) => `<g transform="rotate(${r})"><rect x="-5" y="-60" width="10" height="55" rx="2" fill="#fff" stroke="#C9A877" stroke-width="1.5"/>
+          <path d="M-5 -45h10M-5 -30h10M-5 -15h10" stroke="#C9A877" stroke-width="1.2"/></g>`).join("")}<circle r="7" fill="#D9443A" stroke="#fff" stroke-width="2"/></g></g></g>
+      <path d="M0 206Q200 188 420 204T800 200V300H0Z" fill="#74C54F"/>
+      <ellipse cx="400" cy="286" rx="250" ry="13" fill="#E3C38E" opacity=".75"/>
+      ${[[40, 230], [260, 238], [470, 226], [690, 236], [330, 296], [560, 292]].map(([x, y]) => `<path d="M${x} ${y}l3-9l3 9l3-9l3 9" stroke="#4E9E36" stroke-width="2" fill="none"/>`).join("")}
+      ${fence}
+      ${items.map((x) => x[1]).join("")}
+      ${svgFarmer()}
+      ${locked ? `<g transform="translate(685,180)"><circle r="24" fill="#fff" stroke="#E7BF79" stroke-width="3"/><text x="-14" y="10" font-size="28">🔒</text></g>` : ""}
+    </svg>`;
+  }
+  const TIPS = ["Hello! Cây chín thì bấm “Thu hoạch” nhé! 🌾", "Giao đơn hàng để kiếm nhiều xu hơn bán lẻ! 🚚", "Học xong bài sẽ có phân bón 🧪 làm cây chín ngay!",
+    "Let's grow some carrots! 🥕 Cùng trồng cà rốt nào!", "Mua đồ trang trí để nhận thêm xu khi học! 🌷", "Good morning, farmer! Chào buổi sáng, nhà nông!"];
+  function hud(f, g) {
+    const lv = F.level(f.xp), next = F.nextXp(f.xp), prev = F.LVXP[lv - 1];
+    return `<section class="hud"><div class="lvl" title="Cấp nông trại"><span aria-hidden="true">⭐</span><b>${lv}</b></div>
+      <div class="main"><h1>Nông trại của bạn</h1>${next ? bar((f.xp - prev) / (next - prev)) : ""}<span class="small" style="color:#7A5C3A">Cấp ${lv} · ${next ? `${f.xp}/${next} điểm trại` : "cấp tối đa"}</span></div>
+      <div class="pills"><span class="pill" title="Xu">🪙 <b>${f.coins}</b></span><span class="pill" title="Phân bón">🧪 <b>${f.fert}</b></span>
+        ${g.open ? `<span class="pill time" data-playleft title="Thời gian chơi còn lại">⏱ <b class="pl">${fmtLeft(g.budget)}</b></span>` : `<span class="pill time">🔒 Đang khoá</span>`}</div></section>`;
+  }
+  function vFarmLocked(f, g) {
+    const G = F.GATE, mins = (ms) => Math.floor(ms / F.MIN), first = g.study < G.MIN_STUDY;
+    const msg = first ? `Học thêm ${Math.ceil(g.need / F.MIN)} phút nữa để mở cửa nông trại nhé! 📚` : "Hết giờ chơi rồi! Học thêm một chút để chơi tiếp nhé ⏰";
+    return `<div class="farmv">${hud(f, g)}
+      <div class="scene-wrap">${farmScene(f, true)}<div class="bubble">${msg}</div></div>
+      <section class="panel stack lockcard" data-lock>
+        <h2>${first ? "🔒 Nông trại đang khoá" : "⏰ Hết giờ chơi"}</h2>
+        ${first ? `<p class="big num">${mins(g.study)}<small style="font-size:1.1rem"> / ${mins(G.MIN_STUDY)} phút học</small></p>${bar(g.study / G.MIN_STUDY)}`
+          : `<p>Bạn đã chơi hết ${fmtLeft(g.play)} phút của lượt này. Cứ học thêm 4 phút sẽ có thêm 3 phút chơi.</p>`}
+        <ul class="earn">
+          <li>⏱️ 1 phút học = ${String(G.RATIO).replace(".", ",")} phút chơi nông trại</li>
+          <li>📚 Cần học tối thiểu ${mins(G.MIN_STUDY)} phút mỗi lượt thì nông trại mới mở</li>
+          <li>🔄 Mỗi lượt kéo dài ${G.WINDOW / 60 / F.MIN} tiếng rồi làm mới${g.resetIn ? ` — lượt này còn <b data-resetin>${fmtLeft(g.resetIn)}</b>` : ""}</li>
+          <li>👆 Chỉ tính giờ khi bạn đang học ở Từ vựng, Câu hoặc IPA và có thao tác</li>
+          <li>🪙 Xu và phân bón vẫn được cộng khi học: bạn đang có ${f.coins} xu, ${f.fert} 🧪</li></ul>
+        <div class="row" style="justify-content:center"><button type="button" class="btn primary" data-go="learn">Học từ mới</button><button type="button" class="btn" data-go="review">Ôn tập</button><button type="button" class="btn" data-go="sent">Luyện câu</button></div>
+      </section></div>`;
+  }
+
   function vFarm() {
-    const f = S.farm, now = Date.now(), lv = F.level(f.xp), next = F.nextXp(f.xp), prev = F.LVXP[lv - 1];
+    const f = S.farm, now = Date.now(), lv = F.level(f.xp), g = F.gate(S.gate, now);
+    if (!g.open) return vFarmLocked(f, g);
     if (f.orders.length < 3) { F.fillOrders(f, Math.random); save(); }
     const R = F.REWARD, bonus = F.bonus(f);
-    const scene = [...f.deco.map((id) => F.DECO[id].emo), ...f.animals.map((a) => F.ANIMAL[a.a].emo)];
-    return `<section class="hello"><div><p class="label">Cấp ${lv} · ${next ? `${f.xp}/${next} điểm trại` : "cấp tối đa"}</p><h1>Nông trại của bạn</h1></div>
-        <div class="row"><span class="chip" style="font-size:.95rem">🪙 <b class="num">${f.coins}</b> xu</span><span class="chip" style="font-size:.95rem">🧪 ${f.fert} phân bón</span></div></section>
-      ${next ? bar((f.xp - prev) / (next - prev)) : ""}
-      <div class="scene" aria-hidden="true">${scene.length ? scene.join(" ") : "🌱"}<span class="sun">☀️</span></div>
+    return `<div class="farmv">${hud(f, g)}
+      <div class="scene-wrap">${farmScene(f, false)}<div class="bubble">${TIPS[Math.floor(now / 60000) % TIPS.length]}</div></div>
       <div class="grid g2" style="align-items:start">
-        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Cánh đồng</h2>
-            <div class="row"><button type="button" class="btn sm" data-harvestall>Thu hoạch tất cả</button>
-            ${F.plotCost(f) != null ? `<button type="button" class="btn sm ghost" data-buyplot>+ Ô đất (${F.plotCost(f)} xu)</button>` : ""}</div></div>
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🌱 Cánh đồng</h2>
+            <div class="row"><button type="button" class="btn sm primary" data-harvestall>Thu hoạch tất cả</button>
+            ${F.plotCost(f) != null ? `<button type="button" class="btn sm" data-buyplot>+ Ô đất (${F.plotCost(f)} xu)</button>` : ""}</div></div>
           <div class="field">${f.plots.map((p, i) => plotHTML(p, i, now)).join("")}</div>
           <p class="small muted">Chạm ô trống để gieo hạt. Dùng 🧪 phân bón để cây chín ngay. Mỗi loại cây có tên tiếng Anh — bấm loa để nghe.</p></section>
-        <section class="panel stack"><h2>Học để kiếm xu</h2>
+        <section class="panel stack"><h2>📘 Học để kiếm xu</h2>
           <ul class="earn"><li>📘 Mỗi 1 XP khi học = 1 xu${bonus ? ` <span class="chip good">+${bonus}% nhờ đồ trang trí</span>` : ""}</li>
             <li>✅ Xong một lượt học từ mới: +${R.lesson[0]} xu, +${R.lesson[1]} 🧪</li>
             <li>🔁 Ôn hết các từ đến hạn: +${R.review[0]} xu, +${R.review[1]} 🧪</li>
-            <li>🎯 Đạt mục tiêu từ mới trong ngày: +${R.goal[0]} xu, +${R.goal[1]} 🧪</li></ul>
+            <li>🎯 Đạt mục tiêu từ mới trong ngày: +${R.goal[0]} xu, +${R.goal[1]} 🧪</li>
+            <li>⏱️ 1 phút học = ${String(F.GATE.RATIO).replace(".", ",")} phút chơi · lượt mới sau ${fmtLeft(g.resetIn)}</li></ul>
           <div class="row"><button type="button" class="btn primary" data-go="learn">Học từ mới</button><button type="button" class="btn" data-go="review">Ôn tập</button><button type="button" class="btn" data-go="sent">Luyện câu</button></div>
           <p class="small muted">Tổng xu kiếm được từ việc học: ${f.earned}</p></section>
       </div>
       <div class="grid g2" style="align-items:start">
-        <section class="panel stack"><h2>Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
+        <section class="panel stack"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
           <div class="orders">${f.orders.map((o, i) => {
             const can = F.canDeliver(f, o);
             return `<div class="order"><div class="need">${Object.entries(o.need).map(([id, q]) => {
@@ -740,12 +856,12 @@
               <div class="row" style="justify-content:space-between"><span class="small"><b>🪙 ${o.coins}</b> xu · ⭐ ${o.xp} điểm</span>
                 <span class="row"><button type="button" class="btn sm ghost" data-skiporder="${i}">Đổi đơn</button><button type="button" class="btn sm primary" data-deliver="${i}"${can ? "" : " disabled"}>Giao hàng</button></span></div></div>`;
           }).join("")}</div></section>
-        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Chuồng trại</h2><button type="button" class="btn sm" data-animalshop>Mua vật nuôi</button></div>
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐔 Chuồng trại</h2><button type="button" class="btn sm primary" data-animalshop>Mua vật nuôi</button></div>
           ${f.animals.length ? `<div class="list">${f.animals.map((a, i) => animalHTML(a, i, now)).join("")}</div>`
-            : `<p class="muted">Chưa có vật nuôi. Gà mở ở cấp 2, bò ở cấp 3 — chúng cho trứng, sữa để giao đơn hàng.</p>`}</section>
+            : `<p class="muted">Chưa có vật nuôi. Gà mở ở cấp 2, bò ở cấp 3 — chúng sẽ đi dạo trên nông trại và cho trứng, sữa để giao đơn hàng.</p>`}</section>
       </div>
       <div class="grid g2" style="align-items:start">
-        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🏚️ Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
           ${bar(F.stock(f) / f.cap)}
           ${Object.keys(f.barn).length ? `<div class="list">${Object.entries(f.barn).map(([id, n]) => {
             const it = F.ITEMS[id];
@@ -753,22 +869,22 @@
               <span style="display:flex;gap:6px;align-items:center">${sayEn(it.en)}<button type="button" class="btn sm" data-sell="${id}">Bán 1</button></span></div>`;
           }).join("")}</div>` : `<p class="muted">Kho trống. Thu hoạch cây để có hàng.</p>`}
           <div><button type="button" class="btn sm" data-upbarn>Nâng cấp kho +20 chỗ (${F.barnCost(f)} xu)</button></div></section>
-        <section class="panel stack"><h2>Trang trí</h2><p class="small muted">Mỗi món làm nông trại đẹp hơn và tăng % xu nhận được khi học (tối đa 30%).</p>
+        <section class="panel stack"><h2>🌷 Trang trí</h2><p class="small muted">Món đã mua xuất hiện trên nông trại và tăng % xu nhận được khi học (tối đa 30%).</p>
           <div class="shop">${F.DECOS.map((d) => {
             const own = f.deco.includes(d.id), locked = d.lv > lv;
             return `<div class="it${own ? " owned" : ""}"><span class="e">${d.emo}</span><b>${esc(d.vi)}</b><span class="small muted"><i>${esc(d.en)}</i> · +${d.bonus}% xu</span>
               ${own ? `<span class="chip good">✓ Đã có</span>` : locked ? `<span class="chip">🔒 Cấp ${d.lv}</span>`
-                : `<button type="button" class="btn sm" data-buydeco="${d.id}"${f.coins < d.cost ? " disabled" : ""}>Mua · ${d.cost} xu</button>`}</div>`;
+                : `<button type="button" class="btn sm primary" data-buydeco="${d.id}"${f.coins < d.cost ? " disabled" : ""}>Mua · ${d.cost} xu</button>`}</div>`;
           }).join("")}</div></section>
-      </div>`;
+      </div></div>`;
   }
   function plotHTML(p, i, now) {
-    if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">＋</span>Gieo hạt</button>`;
+    if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">+</span><span class="lbl">Gieo hạt</span></button>`;
     const c = F.CROP[p.c], dur = c.min * F.MIN, left = F.remaining(p.at, c.min, now);
-    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span>Thu hoạch</button>`;
-    const frac = 1 - left / dur;
+    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span><span class="lbl">Thu hoạch!</span></button>`;
+    const frac = 1 - left / dur, stage = frac < 0.34 ? ["🌱", "s1"] : frac < 0.67 ? ["🌿", "s2"] : [c.emo, "s3"];
     return `<button type="button" class="plot" data-plotidx="${i}" ${timer(p.at + dur, dur)} aria-label="${esc(c.vi)} đang lớn">
-      <span class="e">${frac < 0.5 ? "🌱" : "🌿"}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}</button>`;
+      <span class="e ${stage[1]}">${stage[0]}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}</button>`;
   }
   function animalHTML(a, i, now) {
     const an = F.ANIMAL[a.a], pr = F.ITEMS[an.prod], dur = an.min * F.MIN, left = F.remaining(a.at, an.min, now);
@@ -829,10 +945,32 @@
     else if (F.plotReady(p, Date.now())) { const c = F.CROP[p.c]; farmDone(F.harvest(S.farm, i, Date.now()), `+1 ${c.emo} ${c.en} (${c.vi})`, c.en); }
     else growSheet(i);
   }
-  // Live countdowns on the farm; re-render when something becomes ready.
-  setInterval(() => {
-    if (U.tab !== "farm") return;
-    const now = Date.now(); let ripe = false;
+  // One clock for everything time-based: study/play minutes for the farm gate, farm countdowns.
+  const STUDY_TABS = new Set(["words", "sent", "ipa"]);
+  let lastAct = Date.now(), ticks = 0;
+  for (const ev of ["pointerdown", "keydown", "input", "wheel", "touchstart"]) addEventListener(ev, () => { lastAct = Date.now(); }, { passive: true, capture: true });
+  const gateNow = () => F.gate(S.gate, Date.now());
+  function tick() {
+    const now = Date.now(), active = document.visibilityState === "visible" && now - lastAct < F.GATE.IDLE;
+    const before = F.gate(S.gate, now);
+    let counted = false;
+    if (active && STUDY_TABS.has(U.tab)) { S.gate = F.addStudy(S.gate, 1000, now); counted = true; }
+    else if (active && U.tab === "farm" && before.open) { S.gate = F.addPlay(S.gate, 1000, now); counted = true; }
+    if (counted && ++ticks % 5 === 0) save();
+    const g = F.gate(S.gate, now);
+    farmBtn(g);
+    if (U.tab !== "farm") {
+      if (!before.open && g.open) toast(`🔓 Nông trại đã mở! Bạn có ${fmtLeft(g.budget)} phút chơi.`, 3500);
+      return;
+    }
+    if (before.open !== g.open || (!g.open && !$("[data-lock]"))) {
+      if (!$("#modal").hidden) closeModal();
+      if (!g.open) { save(); toast("⏰ Hết giờ chơi! Học thêm để chơi tiếp nhé.", 3500); }
+      render(); return;
+    }
+    const pl = $("#view [data-playleft] .pl"); if (pl) pl.textContent = fmtLeft(g.budget);
+    const ri = $("#view [data-resetin]"); if (ri && g.resetIn) ri.textContent = fmtLeft(g.resetIn);
+    let ripe = false;
     document.querySelectorAll("#view [data-end]").forEach((el) => {
       const left = +el.dataset.end - now;
       if (left <= 0) { ripe = true; return; }
@@ -840,7 +978,8 @@
       const b = el.querySelector(".bar > i"); if (b) b.style.width = `${Math.round((1 - left / +el.dataset.dur) * 100)}%`;
     });
     if (ripe && $("#modal").hidden) render();
-  }, 1000);
+  }
+  setInterval(tick, 1000);
 
   // ---------- Tiến độ ----------
   function vMe() {
@@ -1008,10 +1147,15 @@
       render();
     },
   };
+  const FARM_ACTIONS = new Set(["plotidx", "plant", "plantall", "harvestall", "fert", "uproot", "buyplot", "animalshop", "buyanimal", "collect", "boost",
+    "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
     if (e.target.id === "modal") { closeModal(); return; }
     const t = e.target.closest("button"); if (!t || t.disabled) return;
-    for (const k in H) if (k in t.dataset) { H[k](t.dataset[k], t, e); return; }
+    for (const k in H) if (k in t.dataset) {
+      if (FARM_ACTIONS.has(k) && !gateNow().open) { if (!$("#modal").hidden) closeModal(); toast("🔒 Nông trại đang khoá — học thêm để chơi nhé"); render(); return; }
+      H[k](t.dataset[k], t, e); return;
+    }
   });
   document.addEventListener("submit", (e) => {
     if (!e.target.matches("[data-spellform]")) return;
