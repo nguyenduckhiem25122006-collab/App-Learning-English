@@ -1,0 +1,203 @@
+# School | Trường học
+school|n|trường học|Our school is near the river.|🏫
+classroom|n|lớp học|The classroom is clean.|🧑‍🏫
+teacher|n|giáo viên|Our teacher is very kind.|👩‍🏫
+student|n|học sinh|There are 40 students in my class.|🧑‍🎓
+classmate|n|bạn cùng lớp|My classmates are friendly.|👫
+subject|n|môn học|What is your favourite subject?|📚
+maths|n|môn toán|I have maths on Monday.|➗
+science|n|khoa học|We do experiments in science.|🔬
+history|n|lịch sử|History tells us about the past.|📜
+geography|n|địa lý|We learn about maps in geography.|🗺️
+literature|n|văn học|We read poems in literature class.|📖
+physics|n|vật lý|Physics is difficult but fun.|🧲
+biology|n|sinh học|Biology is about living things.|🧬
+chemistry|n|hoá học|We mix liquids in chemistry.|⚗️
+information technology|n|tin học|We use computers in IT class.|💻
+physical education|n|thể dục|We play football in PE.|⚽
+timetable|n|thời khoá biểu|Check your timetable.|🗓️
+lesson|n|bài học, tiết học|The lesson starts at 7.|📘
+homework|n|bài tập về nhà|I finish my homework before dinner.|📝
+exam|n|kỳ thi|We have an exam next week.|📝
+test|n|bài kiểm tra|I got a good mark on the test.|✅
+mark|n|điểm số|She got full marks.|💯
+uniform|n|đồng phục|We wear uniforms on Mondays.|👔
+notebook|n|vở|Write it in your notebook.|📓
+textbook|n|sách giáo khoa|Open your textbook to page 20.|📗
+ruler|n|thước kẻ|Draw a line with a ruler.|📏
+eraser|n|cục tẩy|Can I borrow your eraser?|🧽
+pencil case|n|hộp bút|My pencil case is blue.|✏️
+schoolbag|n|cặp sách|My schoolbag is heavy.|🎒
+board|n|cái bảng|The teacher writes on the board.|🟩
+desk|n|bàn học|Sit at your desk, please.|🪑
+break time|n|giờ ra chơi|We play games at break time.|🔔
+canteen|n|căng tin|We have lunch in the canteen.|🍱
+playground|n|sân chơi|Children run in the playground.|🛝
+gym|n|phòng thể dục|The gym is next to the library.|🏋️
+laboratory|n|phòng thí nghiệm|The laboratory has new equipment.|🧪
+principal|n|hiệu trưởng|The principal gave a speech.|👨‍💼
+outdoor activity|n|hoạt động ngoài trời|Our school has many outdoor activities.|🌤️
+field trip|n|chuyến đi thực tế|We went on a field trip to a farm.|🚌
+gifted|adj|có năng khiếu|It's a school for gifted students.|🎓
+entrance exam|n|kỳ thi đầu vào|He passed the entrance exam.|📝
+pass|v|vượt qua (kỳ thi)|I hope I pass the exam.|✅
+fail|v|trượt|Don't worry if you fail once.|❌
+study|v|học|I study English every evening.|📖
+learn|v|học, học hỏi|We learn new words every day.|🧠
+revise|v|ôn tập|I revise for the test.|🔁
+memorise|v|ghi nhớ|Memorise these ten words.|🧠
+explain|v|giải thích|Can you explain this word?|🗣️
+answer|v|trả lời|Answer the questions.|💬
+question|n|câu hỏi|May I ask a question?|❓
+borrow|v|mượn|Can I borrow your pen?|🤲
+lend|v|cho mượn|I'll lend you my book.|🤝
+excellent|adj|xuất sắc|Your work is excellent!|🏆
+term|n|học kỳ|The first term ends in January.|📅
+semester|n|học kỳ|This semester is busy.|📅
+competition|n|cuộc thi|She won the spelling competition.|🥇
+prize|n|giải thưởng|He got a prize for his drawing.|🏅
+# Traffic | Giao thông
+traffic|n|giao thông|Traffic is heavy in the morning.|🚦
+traffic jam|n|tắc đường|We were stuck in a traffic jam.|🚗
+traffic light|n|đèn giao thông|Stop at the red traffic light.|🚦
+road|n|con đường|Look left before crossing the road.|🛣️
+street|n|đường phố|I live on Hang Bai Street.|🏙️
+pavement|n|vỉa hè|Walk on the pavement.|🚶
+zebra crossing|n|vạch sang đường|Cross at the zebra crossing.|🦓
+cross|v|băng qua|Cross the street carefully.|🚸
+road sign|n|biển báo giao thông|Obey the road signs.|🪧
+rule|n|quy tắc|Follow the traffic rules.|📏
+obey|v|tuân theo|You must obey traffic laws.|✅
+helmet|n|mũ bảo hiểm|Always wear a helmet.|⛑️
+seat belt|n|dây an toàn|Fasten your seat belt.|💺
+safety|n|sự an toàn|Safety comes first.|🛡️
+safe|adj|an toàn|Is it safe to walk here?|🛡️
+dangerous|adj|nguy hiểm|Riding fast is dangerous.|⚠️
+accident|n|tai nạn|There was an accident on the bridge.|💥
+vehicle|n|phương tiện|Cars and buses are vehicles.|🚙
+car|n|ô tô|My uncle drives a red car.|🚗
+bus|n|xe buýt|I go to school by bus.|🚌
+motorbike|n|xe máy|Motorbikes are everywhere in Hanoi.|🏍️
+bicycle|n|xe đạp|I ride my bicycle to school.|🚲
+train|n|tàu hoả|We took the train to Hue.|🚆
+plane|n|máy bay|The plane lands at 9.|✈️
+boat|n|thuyền|We rowed a boat on the lake.|🚣
+ship|n|tàu thuỷ|The ship carries goods.|🚢
+taxi|n|xe taxi|Let's take a taxi.|🚕
+lorry|n|xe tải|A big lorry blocked the road.|🚚
+drive|v|lái (xe)|My mum drives carefully.|🚗
+ride|v|đi, cưỡi (xe đạp/xe máy)|He rides a motorbike to work.|🏍️
+park|v|đỗ xe|You can't park here.|🅿️
+passenger|n|hành khách|The bus has 30 passengers.|🧳
+driver|n|tài xế|The driver stopped the bus.|🧑‍✈️
+pedestrian|n|người đi bộ|Pedestrians use the crosswalk.|🚶
+cyclist|n|người đi xe đạp|Cyclists should use bike lanes.|🚴
+turn left|phr|rẽ trái|Turn left at the corner.|⬅️
+turn right|phr|rẽ phải|Turn right at the traffic lights.|➡️
+go straight|phr|đi thẳng|Go straight for 200 metres.|⬆️
+corner|n|góc phố|The shop is on the corner.|📐
+bridge|n|cây cầu|The bridge is very long.|🌉
+station|n|nhà ga, bến|Meet me at the bus station.|🚉
+distance|n|khoảng cách|What's the distance from here?|📏
+far|adj|xa|Is your school far from home?|🔭
+near|adj|gần|The park is near my house.|📍
+fine|n|tiền phạt|He paid a fine for speeding.|💸
+illegal|adj|bất hợp pháp|It's illegal to run a red light.|🚫
+crowded|adj|đông đúc|The bus is crowded.|👥
+fuel|n|nhiên liệu|Cars need fuel to run.|⛽
+pollution|n|sự ô nhiễm|Traffic causes air pollution.|🏭
+# Films | Phim ảnh
+film|n|bộ phim|Let's watch a film tonight.|🎬
+cinema|n|rạp chiếu phim|We went to the cinema.|🍿
+actor|n|nam diễn viên|He's my favourite actor.|🕴️
+actress|n|nữ diễn viên|She is a famous actress.|💃
+director|n|đạo diễn|The director won an award.|🎬
+character|n|nhân vật|The main character is a girl.|🧑
+star|v|đóng vai chính|Who stars in the film?|⭐
+comedy|n|phim hài|Comedies make me laugh.|😂
+horror film|n|phim kinh dị|I'm scared of horror films.|👻
+science fiction|n|phim khoa học viễn tưởng|Science fiction is about the future.|🚀
+animation|n|phim hoạt hình|Kids love animations.|🐭
+documentary|n|phim tài liệu|We watched a documentary about whales.|🐋
+action film|n|phim hành động|Action films have lots of fights.|💥
+fantasy|n|phim giả tưởng|It's a fantasy about dragons.|🐉
+thriller|n|phim giật gân|The thriller was exciting.|🔪
+plot|n|cốt truyện|The plot is simple.|🧵
+review|n|bài phê bình|I read a review of the film.|📝
+scene|n|cảnh phim|The last scene was sad.|🎞️
+ticket|n|vé|Two tickets, please.|🎟️
+screen|n|màn hình|The cinema has a huge screen.|📺
+gripping|adj|hấp dẫn, lôi cuốn|The story is gripping.|🤯
+moving|adj|cảm động|It's a moving film.|🥹
+shocking|adj|gây sốc|The ending was shocking.|😱
+frightening|adj|đáng sợ|Ghost films are frightening.|😨
+hilarious|adj|vô cùng hài hước|The comedy was hilarious.|🤣
+confusing|adj|khó hiểu|The plot is confusing.|😵
+violent|adj|bạo lực|This film is too violent for kids.|🥊
+recommend|v|giới thiệu, gợi ý|I recommend this film.|👍
+award|n|giải thưởng|The film won three awards.|🏆
+success|n|thành công|The film was a big success.|🎉
+# Festivals | Lễ hội
+festival|n|lễ hội|Tet is the biggest festival in Vietnam.|🎉
+celebrate|v|kỷ niệm, ăn mừng|We celebrate Tet in spring.|🥳
+celebration|n|lễ kỷ niệm|The celebration lasted three days.|🎊
+Christmas|n|lễ Giáng sinh|We decorate a tree at Christmas.|🎄
+Easter|n|lễ Phục sinh|Children look for eggs at Easter.|🐣
+Halloween|n|lễ hội Halloween|Kids wear costumes at Halloween.|🎃
+Thanksgiving|n|lễ Tạ ơn|Americans eat turkey at Thanksgiving.|🦃
+Mid-Autumn Festival|n|Tết Trung thu|We eat mooncakes at the Mid-Autumn Festival.|🥮
+mooncake|n|bánh trung thu|Mooncakes are sweet.|🥮
+lantern|n|đèn lồng|Children carry lanterns.|🏮
+firework|n|pháo hoa|We watched fireworks at midnight.|🎆
+parade|n|cuộc diễu hành|The parade went down the street.|🎺
+costume|n|trang phục hoá trang|She wore a witch costume.|🧙
+decorate|v|trang trí|We decorate the house for Tet.|🎀
+decoration|n|đồ trang trí|The decorations are colourful.|🎈
+lucky money|n|tiền mừng tuổi|Kids get lucky money at Tet.|🧧
+apricot blossom|n|hoa mai|Apricot blossoms are yellow.|🌼
+peach blossom|n|hoa đào|Peach blossoms are popular in the north.|🌸
+sticky rice|n|gạo nếp, xôi|Banh chung is made of sticky rice.|🍙
+tradition|n|truyền thống|Visiting relatives is a Tet tradition.|🏮
+traditional|adj|truyền thống|Ao dai is a traditional dress.|👘
+custom|n|phong tục|It's a custom to wish people luck.|🙏
+gift|n|món quà|I got a gift from my aunt.|🎁
+wish|n|lời chúc|Best wishes for the new year!|🌠
+relative|n|họ hàng|We visit our relatives at Tet.|👨‍👩‍👧
+gather|v|tụ họp|Families gather on New Year's Eve.|👪
+pagoda|n|chùa|We go to the pagoda on the first day.|🛕
+temple|n|đền|The temple is very old.|⛩️
+feast|n|bữa tiệc lớn|They prepared a big feast.|🍖
+carnival|n|lễ hội hoá trang|The carnival has music and dancing.|🎭
+national|adj|thuộc quốc gia|September 2nd is our National Day.|🇻🇳
+holiday|n|ngày nghỉ, kỳ nghỉ|We have a holiday next week.|🏖️
+# Energy sources | Nguồn năng lượng
+solar|adj|thuộc mặt trời|Solar panels make electricity.|☀️
+solar panel|n|tấm pin mặt trời|We put solar panels on the roof.|🔆
+wind|n|gió|Wind can make electricity.|🌬️
+wind turbine|n|tua-bin gió|Wind turbines are tall.|🌀
+hydro power|n|thuỷ điện|Hydro power uses water.|💧
+nuclear|adj|hạt nhân|Nuclear energy is powerful.|☢️
+coal|n|than đá|Coal is a fossil fuel.|🪨
+oil|n|dầu|Oil comes from under the ground.|🛢️
+natural gas|n|khí thiên nhiên|We cook with natural gas.|🔥
+electricity|n|điện|Turn off the lights to save electricity.|💡
+power|n|năng lượng, điện năng|There's no power in the building.|🔌
+renewable|adj|có thể tái tạo|Wind is a renewable source.|♻️
+non-renewable|adj|không tái tạo được|Coal is non-renewable.|⛔
+source|n|nguồn|The sun is a source of energy.|🌞
+save|v|tiết kiệm, cứu|Save water and energy.|💾
+waste|v|lãng phí|Don't waste food.|🗑️
+reduce|v|giảm|Reduce the use of plastic bags.|📉
+reuse|v|tái sử dụng|Reuse old bottles.|🔁
+light bulb|n|bóng đèn|Change the light bulb.|💡
+switch off|phr|tắt|Switch off the TV.|📴
+plug|n|phích cắm|Pull out the plug.|🔌
+heat|n|nhiệt, sức nóng|The sun gives us heat.|🔥
+cheap|adj|rẻ|Solar energy is getting cheaper.|💲
+expensive|adj|đắt|Petrol is expensive.|💰
+limited|adj|hạn chế|Fossil fuels are limited.|⏳
+produce|v|sản xuất|Dams produce electricity.|🏭
+replace|v|thay thế|Replace old bulbs with LED bulbs.|🔄
+climate|n|khí hậu|The climate is changing.|🌡️
+global warming|n|sự nóng lên toàn cầu|Global warming melts ice.|🔥
+planet|n|hành tinh|Earth is our planet.|🪐

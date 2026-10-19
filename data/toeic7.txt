@@ -1,0 +1,180 @@
+# Part 1 picture words | Từ vựng mô tả tranh (Part 1)
+ladder|n|cái thang|A man is climbing a ladder.|🪜
+wheelbarrow|n|xe cút kít|He's pushing a wheelbarrow.|🛒
+railing|n|lan can|She's leaning on a railing.|🚧
+lean|v|dựa, tựa|A bicycle is leaning against a wall.|🚲
+stack|v|xếp chồng|Boxes are stacked on the floor.|📚
+pile|n|đống|There's a pile of papers on the desk.|🗂️
+arrange|v|bày, xếp|Chairs are arranged in rows.|🪑
+row|n|hàng|Cars are parked in a row.|🚗
+rack|n|giá, kệ|Coats are hanging on a rack.|🧥
+hang|v|treo|A picture is hanging on the wall.|🖼️
+shelf|n|kệ|Items are displayed on shelves.|🗄️
+display|v|trưng bày|Fruit is displayed for sale.|🍎
+browse|v|xem lướt|A woman is browsing in a store.|👀
+examine|v|xem xét kỹ|He's examining a document.|🔍
+point at|phr|chỉ vào|She's pointing at a screen.|👉
+reach for|phr|với lấy|He's reaching for a box.|🤚
+pour|v|rót|A man is pouring coffee.|☕
+sweep|v|quét|A worker is sweeping the floor.|🧹
+mop|v|lau (sàn)|She's mopping the floor.|🧽
+wipe|v|lau, chùi|He's wiping the table.|🧻
+water|v|tưới|She's watering the plants.|🪴
+trim|v|cắt tỉa|A gardener is trimming bushes.|✂️
+bush|n|bụi cây|Bushes line the path.|🌳
+path|n|lối đi nhỏ|People are walking along a path.|🛤️
+walkway|n|lối đi bộ|The walkway is being repaired.|🚶
+pier|n|cầu tàu|Boats are tied to a pier.|⚓
+dock|v|cập bến|A ship is docked at the port.|🚢
+fountain|n|đài phun nước|Children play near a fountain.|⛲
+bench|n|ghế dài|A man is sitting on a bench.|🪑
+lamppost|n|cột đèn|A bike is chained to a lamppost.|🏮
+podium|n|bục phát biểu|A speaker is standing at a podium.|🎤
+microphone|n|micro|She's speaking into a microphone.|🎙️
+projector|n|máy chiếu|A projector is on the table.|📽️
+monitor|n|màn hình|He's looking at a monitor.|🖥️
+keyboard|n|bàn phím|She's typing on a keyboard.|⌨️
+drawer|n|ngăn kéo|He's opening a drawer.|🗄️
+tool|n|dụng cụ|Tools are spread on the bench.|🛠️
+wrench|n|cờ lê|He's holding a wrench.|🔧
+hammer|n|búa|A man is using a hammer.|🔨
+toolbox|n|hộp dụng cụ|The toolbox is open.|🧰
+cart|n|xe đẩy|A woman is pushing a cart.|🛒
+crate|n|thùng gỗ|Crates are piled up.|📦
+vase|n|bình hoa|Flowers are in a vase.|💐
+curtain|n|rèm cửa|The curtains are open.|🪟
+rug|n|thảm nhỏ|A rug covers the floor.|🟫
+plant pot|n|chậu cây|Plant pots line the window.|🪴
+staircase|n|cầu thang|People are going down a staircase.|🪜
+doorway|n|lối ra vào|A man is standing in a doorway.|🚪
+awning|n|mái hiên che|An awning shades the café.|⛱️
+umbrella stand|n|giá để ô|Umbrellas are in a stand.|☂️
+pedestrian crossing|n|vạch qua đường|People are using a pedestrian crossing.|🚸
+intersection|n|ngã tư|Cars are stopped at an intersection.|🚦
+traffic cone|n|cọc tiêu giao thông|Traffic cones block the lane.|🔶
+lane|n|làn đường|One lane is closed.|🛣️
+platform|n|sân ga|Passengers are waiting on a platform.|🚉
+board a train|phr|lên tàu|They're boarding a train.|🚆
+luggage cart|n|xe đẩy hành lý|A luggage cart is in the lobby.|🧳
+counter|n|quầy|Customers are standing at a counter.|🧾
+line up|phr|xếp hàng|People are lining up for tickets.|🚶‍♂️
+face|v|quay mặt về|The chairs face the stage.|🎭
+fold|v|gấp|He's folding a shirt.|👕
+roll up|phr|xắn lên, cuộn lại|He's rolling up his sleeves.|💪
+sleeve|n|tay áo|The shirt has long sleeves.|👔
+glove|n|găng tay|She's putting on gloves.|🧤
+apron|n|tạp dề|The cook is wearing an apron.|🧑‍🍳
+hard hat|n|mũ bảo hộ|Workers are wearing hard hats.|⛑️
+scaffolding|n|giàn giáo|Scaffolding covers the building.|🏗️
+crane|n|cần cẩu|A crane is lifting steel.|🏗️
+lift|v|nâng|He's lifting a box.|🏋️
+carry|v|mang, khiêng|Two men are carrying a sofa.|🛋️
+outdoor seating|n|chỗ ngồi ngoài trời|The café has outdoor seating.|☀️
+deserted|adj|vắng vẻ|The street is deserted.|🏜️
+crowded|adj|đông đúc|The market is crowded.|👥
+unoccupied|adj|trống, không có người|Some seats are unoccupied.|🪑
+# Business vocabulary II | Từ vựng kinh doanh mở rộng
+agenda item|n|mục trong chương trình họp|The first agenda item is the budget.|📌
+benchmark|n|tiêu chuẩn đối chiếu|This sets a benchmark for quality.|📏
+breakthrough|n|bước đột phá|It's a breakthrough in medicine.|💥
+collaboration|n|sự cộng tác|Thanks to our collaboration…|🤝
+conglomerate|n|tập đoàn đa ngành|It's a large conglomerate.|🏙️
+consultant|n|chuyên gia tư vấn|We hired a consultant.|🧑‍💼
+consultation|n|buổi tư vấn|Book a free consultation.|💬
+deadline extension|n|sự gia hạn hạn chót|We asked for a deadline extension.|📆
+downturn|n|sự suy giảm|The industry faced a downturn.|📉
+entrepreneur|n|doanh nhân khởi nghiệp|She's a young entrepreneur.|🚀
+founder|n|nhà sáng lập|Meet the company's founder.|🏛️
+franchise|n|nhượng quyền thương mại|They opened a coffee franchise.|☕
+growth|n|sự tăng trưởng|We expect 8% growth.|🌱
+incentive|n|sự khích lệ, ưu đãi|We offer incentives to buyers.|🎁
+industry|n|ngành công nghiệp|The tourism industry is recovering.|🏭
+joint venture|n|liên doanh|They formed a joint venture.|🤝
+leadership|n|khả năng lãnh đạo|She showed strong leadership.|🧭
+milestone|n|cột mốc|We reached a milestone: 1 million users.|🏁
+outsource|v|thuê ngoài|We outsource IT support.|🌐
+partnership|n|quan hệ đối tác|We formed a partnership with a bank.|🤝
+partner|n|đối tác|They're our business partner.|🤝
+portfolio|n|danh mục; hồ sơ năng lực|Show me your design portfolio.|📁
+restructure|v|tái cơ cấu|The company restructured last year.|🧱
+revenue growth|n|tăng trưởng doanh thu|Revenue growth was strong.|📈
+sector|n|lĩnh vực, khu vực|The private sector is growing.|🥧
+stakeholder|n|các bên liên quan|Inform all stakeholders.|👥
+startup|n|công ty khởi nghiệp|He works at a tech startup.|🚀
+venture|n|dự án kinh doanh mạo hiểm|It's a risky venture.|🎲
+workforce|n|lực lượng lao động|Our workforce is very diverse.|👷
+productivity tool|n|công cụ năng suất|We use productivity tools.|🧰
+cost-effective|adj|hiệu quả về chi phí|It's a cost-effective solution.|💲
+high-quality|adj|chất lượng cao|We sell high-quality goods.|💎
+well-known|adj|nổi tiếng|It's a well-known brand.|🌟
+long-term|adj|dài hạn|We want a long-term partner.|📅
+short-term|adj|ngắn hạn|It's a short-term contract.|⏱️
+up-to-date|adj|cập nhật|Keep your records up-to-date.|🔄
+user-friendly|adj|thân thiện với người dùng|The app is user-friendly.|👍
+state-of-the-art|adj|hiện đại nhất|A state-of-the-art factory.|🚀
+# Word families | Họ từ (danh–động–tính–trạng)
+competent|adj|có năng lực|He is a competent manager.|💼
+competence|n|năng lực|Show your competence.|🎓
+decisive|adj|quyết đoán|She's a decisive leader.|⚡
+decisively|adv|một cách quyết đoán|He acted decisively.|✔️
+dependability|n|sự đáng tin cậy|Dependability is key.|🤝
+distribution|n|sự phân phối|Distribution costs rose.|🚚
+employment|n|việc làm|Employment rose last month.|💼
+unemployment|n|thất nghiệp|Unemployment fell to 3%.|📉
+expectation|n|sự kỳ vọng|Sales exceeded expectations.|🎯
+inclusion|n|sự bao gồm|Inclusion of tax is noted.|➕
+inclusive|adj|bao gồm tất cả|The price is all-inclusive.|🎁
+introduction|n|sự giới thiệu|Thanks for the introduction.|🙋
+investigation|n|cuộc điều tra|An investigation is underway.|🕵️
+investigate|v|điều tra|Police are investigating.|🔍
+maintenance fee|n|phí bảo trì|The maintenance fee is monthly.|💵
+measurement|n|sự đo lường|Take accurate measurements.|📏
+operational|adj|đang hoạt động|The plant is fully operational.|⚙️
+performance|n|hiệu suất; buổi biểu diễn|Sales performance improved.|📊
+preference|n|sự ưu tiên, sở thích|What's your seating preference?|⭐
+prediction|n|sự dự đoán|His prediction was right.|🔮
+preparation|n|sự chuẩn bị|Preparation is the key.|📋
+prevention|n|sự phòng ngừa|Fire prevention training.|🧯
+production cost|n|chi phí sản xuất|Production costs fell.|🏭
+productively|adv|một cách hiệu quả|Use your time productively.|⏱️
+proficiency|n|sự thành thạo|English proficiency is required.|🗣️
+publicity|n|sự quảng bá, công khai|The event got a lot of publicity.|📢
+reliance|n|sự phụ thuộc|Reduce reliance on imports.|🔗
+representation|n|sự đại diện|Legal representation is advised.|⚖️
+selection|n|sự lựa chọn|We have a wide selection.|🛍️
+selective|adj|có chọn lọc|The program is very selective.|🔬
+specialist|n|chuyên gia|See a specialist.|🧑‍⚕️
+specialty|n|đặc sản, chuyên môn|Seafood is our specialty.|🦞
+supervision|n|sự giám sát|Work under supervision.|👀
+utilization|n|sự tận dụng|Improve resource utilization.|♻️
+verification|n|sự xác minh|Verification takes two days.|✔️
+# Daily life in TOEIC | Đời sống hằng ngày trong đề TOEIC
+commuter|n|người đi làm hằng ngày|Commuters fill the trains.|🚆
+public transportation|n|giao thông công cộng|Use public transportation.|🚌
+subway|n|tàu điện ngầm|Take the subway downtown.|🚇
+detour|n|đường vòng|Take a detour due to roadwork.|↪️
+roadwork|n|công trình sửa đường|Roadwork causes delays.|🚧
+toll|n|phí cầu đường|Pay the toll at the gate.|💵
+fare increase|n|tăng giá vé|A fare increase starts in June.|📈
+timetable change|n|thay đổi lịch chạy|Check the timetable change.|🕒
+weather advisory|n|cảnh báo thời tiết|A weather advisory is in effect.|⚠️
+heavy rain|n|mưa lớn|Heavy rain is expected.|🌧️
+grocery|n|hàng tạp hoá|I buy groceries on Saturday.|🛒
+appliance|n|đồ gia dụng|Kitchen appliances are on sale.|🔌
+household|n|hộ gia đình|Most households own a car.|🏠
+neighborhood|n|khu dân cư|It's a quiet neighborhood.|🏘️
+resident|n|cư dân|Residents can park for free.|🧑
+municipal|adj|thuộc thành phố|The municipal library is free.|🏛️
+city council|n|hội đồng thành phố|The city council approved the plan.|🏛️
+mayor|n|thị trưởng|The mayor opened the bridge.|🎖️
+volunteer opportunity|n|cơ hội tình nguyện|There are volunteer opportunities.|🙋
+community center|n|trung tâm cộng đồng|Classes are at the community center.|🏢
+membership|n|tư cách thành viên|Renew your gym membership.|🎫
+member|n|thành viên|Members get 10% off.|👤
+admission|n|sự vào cửa; phí vào cửa|Admission is free.|🎟️
+museum exhibit|n|hiện vật trưng bày|The new exhibit opens today.|🏺
+gallery opening|n|buổi khai mạc triển lãm|Come to the gallery opening.|🖼️
+performance hall|n|nhà biểu diễn|The performance hall seats 800.|🎭
+intermission|n|giờ nghỉ giữa buổi|There's a 15-minute intermission.|⏸️
+box office|n|phòng bán vé|Buy tickets at the box office.|🎫
+sold out|phr|bán hết vé|The concert is sold out.|🈵

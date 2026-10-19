@@ -1,0 +1,271 @@
+# Hobbies | Sở thích
+hobby|n|sở thích|My hobby is collecting stamps.|🎯
+collect|v|sưu tầm|He collects old coins.|🪙
+stamp|n|con tem|This stamp is from Japan.|📮
+coin|n|đồng xu|I found a coin on the floor.|🪙
+doll|n|búp bê|My sister has ten dolls.|🪆
+gardening|n|làm vườn|Gardening keeps my grandma busy.|🌱
+horse riding|n|cưỡi ngựa|Horse riding is exciting.|🏇
+skating|n|trượt băng/patin|We go skating on Sundays.|⛸️
+cycling|n|đạp xe|Cycling is good for your legs.|🚴
+fishing|n|câu cá|My dad loves fishing.|🎣
+painting|n|vẽ tranh (màu)|She is good at painting.|🎨
+drawing|n|vẽ (bút chì)|Drawing helps me relax.|✏️
+photography|n|nhiếp ảnh|He takes photography classes.|📷
+dancing|n|nhảy múa|Dancing is fun with friends.|💃
+cooking|n|nấu ăn|I learn cooking from my mum.|🍳
+camping|n|cắm trại|We went camping in the forest.|🏕️
+swimming|n|bơi lội|Swimming is my favourite sport.|🏊
+jogging|n|chạy bộ|He goes jogging every morning.|🏃
+board game|n|trò chơi trên bàn|Let's play a board game.|🎲
+chess|n|cờ vua|Can you play chess?|♟️
+puzzle|n|trò xếp hình, câu đố|This puzzle has 500 pieces.|🧩
+model|n|mô hình|He builds model cars.|🚗
+build|v|xây, lắp ráp|They build a sandcastle.|🏗️
+carve|v|chạm, khắc|He carves wood into animals.|🪵
+wood|n|gỗ|The table is made of wood.|🪵
+eggshell|n|vỏ trứng|She paints on eggshells.|🥚
+pottery|n|đồ gốm|I made a cup in my pottery class.|🏺
+origami|n|nghệ thuật gấp giấy|Origami is a Japanese art.|🦢
+fold|v|gấp|Fold the paper in half.|📄
+glue|n|keo dán|Use glue to stick the pictures.|🧴
+scissors|n|cái kéo|Be careful with the scissors.|✂️
+knit|v|đan len|My grandma knits scarves.|🧶
+sew|v|may vá|Can you sew a button?|🪡
+gymnastics|n|thể dục dụng cụ|She does gymnastics after school.|🤸
+mountain climbing|n|leo núi|Mountain climbing is dangerous.|🧗
+bird-watching|n|ngắm chim|Bird-watching needs patience.|🐦
+arrange|v|sắp xếp|She arranges flowers beautifully.|💐
+patient|adj|kiên nhẫn|You must be patient to fish.|⏳
+creative|adj|sáng tạo|Art makes children creative.|💡
+unusual|adj|khác thường|He has an unusual hobby.|🦄
+popular|adj|phổ biến|Football is very popular here.|⭐
+interesting|adj|thú vị|This book is interesting.|🤩
+boring|adj|nhàm chán|The film was boring.|🥱
+relaxing|adj|thư giãn|Reading is relaxing.|😌
+enjoy|v|thích, tận hưởng|I enjoy listening to music.|😊
+share|v|chia sẻ|Share your hobby with the class.|🤝
+spend|v|dành (thời gian), tiêu|I spend an hour reading.|⏰
+free time|n|thời gian rảnh|What do you do in your free time?|🕒
+join|v|tham gia|Join our art club!|➕
+club|n|câu lạc bộ|I'm in the chess club.|🏷️
+# Healthy living | Sống khoẻ
+healthy|adj|khoẻ mạnh, lành mạnh|Eat healthy food every day.|💪
+unhealthy|adj|không lành mạnh|Fast food is unhealthy.|🍟
+habit|n|thói quen|Brushing teeth is a good habit.|🔁
+exercise|n|bài tập, sự tập thể dục|Exercise makes you strong.|🏋️
+fit|adj|cân đối, khoẻ|She keeps fit by running.|🏃‍♀️
+diet|n|chế độ ăn|A good diet has lots of fruit.|🥗
+vegetable|n|rau củ|Eat more vegetables.|🥦
+fruit|n|trái cây|Fruit is good for you.|🍎
+junk food|n|đồ ăn vặt không tốt|Avoid junk food.|🍔
+soft drink|n|nước ngọt có ga|Soft drinks have a lot of sugar.|🥤
+sugar|n|đường|Too much sugar is bad for teeth.|🍬
+fat|n|chất béo|Fried food has a lot of fat.|🧈
+calorie|n|ca-lo|Running burns calories.|🔥
+vitamin|n|vitamin|Oranges have vitamin C.|🍊
+sleep|v|ngủ|Children should sleep 9 hours.|😴
+stay up|phr|thức khuya|Don't stay up too late.|🌙
+rest|n|sự nghỉ ngơi|You need some rest.|🛌
+tired|adj|mệt|I'm tired after school.|😩
+energy|n|năng lượng|Breakfast gives you energy.|⚡
+sunburn|n|cháy nắng|Wear a hat to avoid sunburn.|🌞
+suncream|n|kem chống nắng|Put on suncream at the beach.|🧴
+spot|n|mụn, nốt|I have a spot on my nose.|🔴
+acne|n|mụn trứng cá|Many teenagers get acne.|😣
+skin|n|da|Wash your skin gently.|🖐️
+chapped lips|n|môi nứt nẻ|Lip balm helps chapped lips.|👄
+lip balm|n|son dưỡng|I use lip balm in winter.|💄
+tofu|n|đậu phụ|Tofu is made from soybeans.|🧊
+soap|n|xà phòng|Wash your hands with soap.|🧼
+wash|v|rửa, giặt|Wash your face every morning.|🚿
+brush|v|chải, đánh (răng)|Brush your teeth twice a day.|🪥
+toothpaste|n|kem đánh răng|We need more toothpaste.|🦷
+dentist|n|nha sĩ|I visit the dentist every six months.|🦷
+doctor|n|bác sĩ|The doctor checked my throat.|🩺
+sick|adj|ốm|He is sick today.|🤒
+cold|n|cảm lạnh|I have a cold.|🤧
+fever|n|sốt|She has a high fever.|🌡️
+headache|n|đau đầu|Too much screen time gives me a headache.|🤕
+stomachache|n|đau bụng|He ate too much and got a stomachache.|🤢
+cough|n|ho|Drink warm water for your cough.|😷
+medicine|n|thuốc|Take this medicine after meals.|💊
+outdoor|adj|ngoài trời|Outdoor activities are healthy.|🌳
+indoor|adj|trong nhà|Table tennis is an indoor sport.|🏠
+active|adj|năng động|Try to be active every day.|⚡
+lazy|adj|lười biếng|Don't be lazy—get up!|🦥
+avoid|v|tránh|Avoid eating late at night.|🚫
+keep|v|giữ|Keep your room clean.|🗝️
+advice|n|lời khuyên|My mum gives me good advice.|💬
+tip|n|mẹo, lời khuyên nhỏ|Here are some health tips.|💡
+body|n|cơ thể|Exercise is good for your body.|🧍
+mind|n|tâm trí|Reading is good for the mind.|🧠
+# Community service | Hoạt động cộng đồng
+community|n|cộng đồng|We help our community.|🏘️
+volunteer|n|tình nguyện viên|She is a volunteer at the hospital.|🙋
+volunteer|v|làm tình nguyện|I volunteer at the library.|🙋
+service|n|dịch vụ, sự phục vụ|Community service helps people.|🤲
+help|v|giúp đỡ|Can I help you?|🆘
+donate|v|quyên góp|We donate books to poor children.|🎁
+donation|n|sự quyên góp|Thank you for your donation.|💝
+charity|n|tổ chức từ thiện|He gives money to charity.|❤️
+homeless|adj|vô gia cư|We cooked for homeless people.|🏚️
+elderly|adj|cao tuổi|We visit elderly people.|👵
+nursing home|n|viện dưỡng lão|They sing at the nursing home.|🏥
+disabled|adj|khuyết tật|The school helps disabled students.|♿
+tutor|v|dạy kèm|I tutor young children in maths.|📚
+plant|v|trồng|Let's plant trees in the park.|🌳
+tree|n|cây|This tree is 100 years old.|🌲
+pick up|phr|nhặt|Pick up the rubbish, please.|🫳
+rubbish|n|rác|Put rubbish in the bin.|🗑️
+litter|n|rác vứt bừa|There's litter on the beach.|🚯
+recycle|v|tái chế|We recycle plastic bottles.|♻️
+clean up|phr|dọn dẹp|We clean up the beach every month.|🧹
+environment|n|môi trường|Protect the environment.|🌍
+graffiti|n|vẽ bậy lên tường|They removed graffiti from the wall.|🖌️
+benefit|n|lợi ích|Volunteering has many benefits.|➕
+difference|n|sự khác biệt|You can make a difference.|✨
+project|n|dự án|Our class has a green project.|📋
+blanket|n|chăn|We gave blankets to poor families.|🛏️
+clothes|n|quần áo|Donate your old clothes.|👕
+raise money|phr|gây quỹ|They raised money for the flood victims.|💰
+flood|n|lũ lụt|The flood destroyed many houses.|🌊
+victim|n|nạn nhân|We help flood victims.|🤕
+support|v|ủng hộ, hỗ trợ|We support local farmers.|🫶
+care|v|quan tâm|I care about animals.|💗
+proud|adj|tự hào|I'm proud of my work.|😊
+local|adj|địa phương|We shop at the local market.|📍
+neighbourhood|n|khu phố|Our neighbourhood is quiet.|🏡
+village|n|làng|My grandparents live in a village.|🛖
+street children|n|trẻ em đường phố|They teach street children to read.|🧒
+organise|v|tổ chức|We organise a charity concert.|🗓️
+event|n|sự kiện|The event starts at 8 a.m.|🎪
+activity|n|hoạt động|What activities do you like?|🎯
+library|n|thư viện|I borrow books from the library.|🏛️
+encourage|v|khuyến khích|Teachers encourage us to read.|👏
+# Music and arts | Âm nhạc và nghệ thuật
+music|n|âm nhạc|I listen to music every day.|🎵
+art|n|nghệ thuật, mỹ thuật|Art is my favourite subject.|🖼️
+musician|n|nhạc sĩ, nhạc công|He is a famous musician.|🎼
+singer|n|ca sĩ|She wants to be a singer.|🎤
+artist|n|hoạ sĩ, nghệ sĩ|The artist painted a big picture.|👩‍🎨
+painter|n|thợ sơn, hoạ sĩ|Van Gogh was a painter.|🖌️
+composer|n|nhà soạn nhạc|Beethoven was a composer.|🎹
+instrument|n|nhạc cụ|Can you play an instrument?|🎻
+piano|n|đàn piano|She plays the piano well.|🎹
+guitar|n|đàn ghi-ta|He plays the guitar in a band.|🎸
+violin|n|đàn vi-ô-lông|The violin sounds beautiful.|🎻
+drum|n|trống|He plays the drums loudly.|🥁
+flute|n|sáo|I'm learning the flute.|🪈
+band|n|ban nhạc|My brother is in a rock band.|🎸
+concert|n|buổi hoà nhạc|We went to a concert last night.|🎶
+song|n|bài hát|This song is very popular.|🎵
+perform|v|biểu diễn|They perform on stage.|🎭
+performance|n|màn trình diễn|Her performance was amazing.|👏
+audience|n|khán giả|The audience clapped loudly.|👥
+stage|n|sân khấu|He is nervous on stage.|🎭
+puppet|n|con rối|Water puppets are famous in Vietnam.|🪆
+water puppetry|n|múa rối nước|Water puppetry is a traditional art.|🎎
+opera|n|nhạc kịch, ô-pê-ra|My grandpa likes Chinese opera.|🎭
+classical music|n|nhạc cổ điển|Classical music helps me study.|🎼
+pop music|n|nhạc pop|Teenagers love pop music.|🎧
+folk music|n|nhạc dân gian|Quan ho is a type of folk music.|🪕
+paint|v|vẽ, sơn|She paints flowers.|🎨
+draw|v|vẽ|Draw a cat on the paper.|✏️
+picture|n|bức tranh, bức ảnh|Look at this picture.|🖼️
+portrait|n|chân dung|He painted a portrait of his mother.|🧑‍🎨
+gallery|n|phòng trưng bày|We visited an art gallery.|🏛️
+exhibition|n|triển lãm|There's a photo exhibition downtown.|🖼️
+museum|n|bảo tàng|The museum opens at 9.|🏛️
+sculpture|n|tác phẩm điêu khắc|This sculpture is made of stone.|🗿
+talent|n|tài năng|She has a talent for music.|🌟
+talented|adj|có tài|He is a talented singer.|🌟
+famous|adj|nổi tiếng|She's a famous actress.|⭐
+prefer|v|thích hơn|I prefer music to art.|⚖️
+compose|v|soạn (nhạc)|He composes songs.|🎼
+melody|n|giai điệu|The melody is easy to remember.|🎶
+rhythm|n|nhịp điệu|Clap to the rhythm.|🥁
+lyric|n|lời bài hát|I don't know the lyrics.|📝
+practise|v|luyện tập|Practise the piano every day.|🔁
+anthem|n|quốc ca|We sing the national anthem on Mondays.|🇻🇳
+# Food and drink | Đồ ăn và thức uống
+food|n|đồ ăn|Vietnamese food is delicious.|🍽️
+drink|n|đồ uống|What would you like to drink?|🥤
+beef|n|thịt bò|Pho with beef is my favourite.|🥩
+pork|n|thịt lợn|Grilled pork is tasty.|🥓
+chicken|n|thịt gà|I'd like some chicken soup.|🍗
+fish|n|cá|We eat fish on Fridays.|🐟
+shrimp|n|tôm|Shrimp spring rolls are great.|🦐
+egg|n|trứng|I have an egg for breakfast.|🥚
+rice|n|cơm, gạo|We eat rice every day.|🍚
+noodles|n|mì, phở, bún|Beef noodle soup is famous.|🍜
+bread|n|bánh mì|I eat bread with butter.|🍞
+butter|n|bơ|Spread butter on the toast.|🧈
+cheese|n|phô mai|Pizza has a lot of cheese.|🧀
+milk|n|sữa|Drink a glass of milk.|🥛
+juice|n|nước ép|Orange juice is fresh.|🧃
+lemonade|n|nước chanh|A glass of lemonade, please.|🍋
+mineral water|n|nước khoáng|I'd like mineral water.|💧
+tea|n|trà|Green tea is healthy.|🍵
+coffee|n|cà phê|My dad drinks coffee every morning.|☕
+soup|n|súp, canh|The soup is too hot.|🥣
+salad|n|rau trộn, sa lát|I'll have a chicken salad.|🥗
+sandwich|n|bánh kẹp|He made a ham sandwich.|🥪
+spring roll|n|nem rán, chả giò|Spring rolls are crispy.|🥟
+omelette|n|trứng tráng|I can make an omelette.|🍳
+pancake|n|bánh kếp|We have pancakes on Sunday.|🥞
+yoghurt|n|sữa chua|Yoghurt is good for your stomach.|🥛
+ingredient|n|nguyên liệu|What ingredients do we need?|🧂
+recipe|n|công thức nấu ăn|This is my grandma's recipe.|📜
+salt|n|muối|Add a little salt.|🧂
+pepper|n|hạt tiêu|Add salt and pepper.|🌶️
+sauce|n|nước sốt|Fish sauce is very Vietnamese.|🥫
+onion|n|hành tây|Cut the onion into small pieces.|🧅
+garlic|n|tỏi|Fry the garlic first.|🧄
+carrot|n|cà rốt|Rabbits like carrots.|🥕
+potato|n|khoai tây|I love mashed potatoes.|🥔
+tomato|n|cà chua|Slice two tomatoes.|🍅
+cucumber|n|dưa chuột|Cucumber is cool and fresh.|🥒
+mushroom|n|nấm|Add some mushrooms to the soup.|🍄
+banana|n|chuối|Monkeys eat bananas.|🍌
+mango|n|xoài|Mangoes are sweet in summer.|🥭
+watermelon|n|dưa hấu|Watermelon is red inside.|🍉
+pineapple|n|dứa|Pineapple juice is sour.|🍍
+grape|n|nho|A bunch of grapes, please.|🍇
+apple|n|táo|An apple a day keeps the doctor away.|🍎
+cake|n|bánh ngọt|She made a chocolate cake.|🎂
+sweets|n|kẹo|Too many sweets hurt your teeth.|🍬
+snack|n|đồ ăn nhẹ|Have a healthy snack.|🍿
+breakfast|n|bữa sáng|Don't skip breakfast.|🥐
+lunch|n|bữa trưa|We have lunch at school.|🍱
+dinner|n|bữa tối|Dinner is ready!|🍲
+meal|n|bữa ăn|We have three meals a day.|🍽️
+delicious|adj|ngon|This pho is delicious.|😋
+tasty|adj|ngon miệng|These cookies are tasty.|😋
+sweet|adj|ngọt|The cake is too sweet.|🍭
+sour|adj|chua|Lemons are sour.|🍋
+salty|adj|mặn|The soup is a bit salty.|🧂
+spicy|adj|cay|I can't eat spicy food.|🌶️
+bitter|adj|đắng|This coffee is bitter.|☕
+fresh|adj|tươi|Buy fresh vegetables.|🥬
+fried|adj|chiên, rán|Fried chicken is delicious.|🍗
+boil|v|luộc, đun sôi|Boil the eggs for 8 minutes.|♨️
+fry|v|chiên, rán|Fry the fish in oil.|🍳
+grill|v|nướng (vỉ)|Grill the meat over charcoal.|🔥
+bake|v|nướng (lò)|She bakes bread at home.|🍞
+cut|v|cắt|Cut the bread into slices.|🔪
+slice|n|lát|A slice of pizza, please.|🍕
+mix|v|trộn|Mix the flour and eggs.|🥣
+pour|v|rót, đổ|Pour the milk into a glass.|🫗
+add|v|thêm vào|Add some sugar.|➕
+bowl|n|cái bát|A bowl of rice.|🥣
+plate|n|cái đĩa|Put the cake on a plate.|🍽️
+glass|n|cái cốc (thuỷ tinh)|A glass of water, please.|🥛
+bottle|n|cái chai|A bottle of juice.|🍾
+spoon|n|cái thìa|Eat soup with a spoon.|🥄
+chopsticks|n|đũa|We eat with chopsticks.|🥢
+kitchen|n|nhà bếp|Mum is cooking in the kitchen.|🍳
+hungry|adj|đói|I'm hungry—let's eat!|😋
+thirsty|adj|khát|I'm thirsty. Can I have water?|🥵
+order|v|gọi món|Are you ready to order?|📝
+menu|n|thực đơn|Can I see the menu?|📋

@@ -1,0 +1,179 @@
+# Purchasing and ordering | Mua hàng & đặt hàng
+purchase|v|mua|You can purchase tickets online.|🛒
+purchase|n|việc mua, món hàng đã mua|Thank you for your purchase.|🛍️
+order|n|đơn hàng|Your order has shipped.|📦
+place an order|phr|đặt hàng|I'd like to place an order.|📝
+supplier|n|nhà cung cấp|We changed suppliers.|🏭
+vendor|n|người bán, nhà cung cấp|Vendors must register by Friday.|🧑‍🔧
+quote|n|bảng báo giá|Can you send us a quote?|💬
+quotation|n|báo giá|The quotation is valid for 30 days.|📄
+bulk|n|số lượng lớn|We buy paper in bulk.|📦
+quantity|n|số lượng|What quantity do you need?|🔢
+inventory|n|hàng tồn kho|We check inventory weekly.|📋
+in stock|phr|còn hàng|Is this item in stock?|✅
+out of stock|phr|hết hàng|The blue model is out of stock.|🚫
+backorder|n|đơn hàng chờ bổ sung|Your item is on backorder.|⏳
+catalog|n|danh mục sản phẩm|Browse our online catalog.|📒
+specification|n|thông số kỹ thuật|Check the product specifications.|📐
+procurement|n|việc thu mua|Procurement handles all orders.|🧾
+requisition|n|phiếu yêu cầu|Fill out a purchase requisition.|📝
+budget limit|n|hạn mức ngân sách|Stay within the budget limit.|🚧
+negotiate a price|phr|thương lượng giá|We negotiated a lower price.|🤝
+bid|n|giá thầu|Three companies submitted bids.|🔨
+tender|n|hồ sơ dự thầu, đấu thầu|They won the tender.|📑
+# Shipping and logistics | Vận chuyển & hậu cần
+ship|v|gửi hàng|We ship worldwide.|🚢
+shipment|n|lô hàng|The shipment arrived late.|📦
+shipping|n|việc vận chuyển|Shipping is free over $50.|🚚
+deliver|v|giao hàng|We deliver within 24 hours.|🛵
+delivery|n|sự giao hàng|Delivery takes 3–5 days.|📬
+dispatch|v|gửi đi|Your order was dispatched today.|📤
+courier|n|dịch vụ chuyển phát|Send it by courier.|🏃
+package|n|gói hàng|A package came for you.|📦
+parcel|n|bưu kiện|The parcel weighs 2 kg.|📦
+freight|n|hàng hoá vận chuyển; cước|Freight costs went up.|🚛
+cargo|n|hàng hoá (tàu, máy bay)|The ship carries cargo.|🛳️
+warehouse|n|nhà kho|Goods are stored in the warehouse.|🏬
+storage|n|sự lưu kho|We rent extra storage.|🗄️
+logistics|n|hậu cần|She works in logistics.|🚛
+track|v|theo dõi|Track your package online.|📍
+tracking number|n|mã vận đơn|Here is your tracking number.|🔢
+destination|n|điểm đến|The goods reached their destination.|🎯
+route|n|tuyến đường|We changed the delivery route.|🗺️
+transport|v|vận chuyển|We transport goods by truck.|🚚
+truck|n|xe tải|The truck is being loaded.|🚛
+load|v|chất hàng lên|They are loading boxes onto the truck.|⬆️
+unload|v|dỡ hàng|Workers unloaded the cargo.|⬇️
+pallet|n|pa-lét (kệ hàng)|Stack the boxes on pallets.|🟫
+container|n|công-te-nơ|The container arrived at the port.|📦
+port|n|cảng|The port is very busy.|⚓
+customs|n|hải quan|The goods are held at customs.|🛃
+import|v|nhập khẩu|We import coffee from Brazil.|📥
+export|v|xuất khẩu|Vietnam exports rice.|📤
+delay|n|sự chậm trễ|Sorry for the delay.|⏳
+delay|v|làm chậm trễ|The flight was delayed.|🐢
+on schedule|phr|đúng tiến độ|The project is on schedule.|✅
+behind schedule|phr|chậm tiến độ|We are behind schedule.|⌛
+ahead of schedule|phr|vượt tiến độ|The work finished ahead of schedule.|🏁
+fragile|adj|dễ vỡ|Handle with care—fragile.|🥚
+label|n|nhãn|Check the shipping label.|🏷️
+address|n|địa chỉ|Confirm the delivery address.|🏠
+recipient address|n|địa chỉ người nhận|Write the recipient address clearly.|📮
+expedite|v|xúc tiến, đẩy nhanh|Can you expedite my order?|⚡
+express|adj|tốc hành|Use express delivery.|💨
+# Manufacturing and quality | Sản xuất & chất lượng
+manufacture|v|sản xuất|We manufacture car parts.|🏭
+manufacturer|n|nhà sản xuất|Contact the manufacturer.|🏭
+production|n|sự sản xuất|Production increased by 20%.|⚙️
+plant|n|nhà máy|The plant employs 500 people.|🏭
+facility|n|cơ sở, cơ sở vật chất|The new facility opens in June.|🏗️
+assembly line|n|dây chuyền lắp ráp|He works on the assembly line.|🔩
+assemble|v|lắp ráp|Workers assemble the phones.|🔧
+machinery|n|máy móc|The machinery needs repair.|⚙️
+equipment|n|thiết bị|Safety equipment is required.|🦺
+device|n|thiết bị|This device measures temperature.|📟
+component|n|linh kiện|We buy components from Korea.|🔌
+material|n|vật liệu|Raw materials are expensive.|🧱
+raw material|n|nguyên liệu thô|Prices of raw materials rose.|🪵
+capacity|n|công suất; sức chứa|The plant is at full capacity.|📊
+output|n|sản lượng|Output fell last month.|📉
+quality control|n|kiểm soát chất lượng|Quality control checks every item.|🔍
+inspect|v|kiểm tra|Inspectors inspect the products.|🕵️
+inspection|n|sự kiểm tra|The safety inspection is tomorrow.|📋
+inspector|n|thanh tra viên|The inspector found a problem.|🧐
+standard|n|tiêu chuẩn|Our products meet high standards.|📏
+defect|n|lỗi, khuyết tật|We found a defect in the batch.|❗
+malfunction|n|sự trục trặc|A machine malfunction stopped production.|⚠️
+maintenance|n|bảo trì|Maintenance is scheduled for Sunday.|🛠️
+operate|v|vận hành|Only trained staff can operate it.|🎛️
+operation|n|sự vận hành, hoạt động|The plant is in operation 24/7.|⚙️
+procedure|n|quy trình|Follow the safety procedure.|📑
+process|n|quy trình|We improved the process.|🔄
+protective|adj|bảo hộ|Wear protective gear.|🥽
+hazard|n|mối nguy hiểm|Wet floors are a hazard.|☣️
+precaution|n|biện pháp phòng ngừa|Take safety precautions.|🛑
+comply|v|tuân thủ|All plants comply with the law.|✔️
+compliance|n|sự tuân thủ|Compliance with rules is required.|📜
+automate|v|tự động hoá|We automated the packing process.|🤖
+innovation|n|sự đổi mới|Innovation drives growth.|💡
+innovative|adj|có tính đổi mới|It's an innovative design.|🚀
+prototype|n|mẫu thử nghiệm|The prototype is ready.|🧪
+durable|adj|bền|These boots are durable.|🥾
+reliable|adj|đáng tin cậy|We need a reliable supplier.|🤝
+reliability|n|độ tin cậy|Reliability is our strength.|🛡️
+efficiently|adv|một cách hiệu quả|The line runs efficiently.|⚙️
+# Contracts and legal | Hợp đồng & pháp lý
+contract|n|hợp đồng|Please sign the contract.|📜
+agreement|n|thoả thuận|We reached an agreement.|🤝
+terms|n|điều khoản|Read the terms carefully.|📃
+condition|n|điều kiện|Terms and conditions apply.|📑
+clause|n|điều khoản (trong hợp đồng)|There's a penalty clause.|§
+sign|v|ký|Sign here, please.|✍️
+signature|n|chữ ký|We need your signature.|🖋️
+party|n|bên (trong hợp đồng)|Both parties agreed.|👥
+renew|v|gia hạn|We renewed the lease.|🔄
+expire|v|hết hạn|The contract expires in June.|⌛
+expiration date|n|ngày hết hạn|Check the expiration date.|📅
+valid|adj|có hiệu lực|Your ticket is valid for a year.|✅
+binding|adj|có tính ràng buộc|The agreement is legally binding.|🔗
+legal|adj|hợp pháp; thuộc pháp lý|Get legal advice first.|⚖️
+lawyer|n|luật sư|Our lawyer reviewed the deal.|👩‍⚖️
+attorney|n|luật sư|Contact our attorney.|🧑‍⚖️
+lawsuit|n|vụ kiện|They filed a lawsuit.|📂
+dispute|n|tranh chấp|The dispute was settled.|⚔️
+settle|v|giải quyết, dàn xếp|They settled out of court.|🤝
+violate|v|vi phạm|He violated the agreement.|🚫
+breach|n|sự vi phạm|That's a breach of contract.|💔
+penalty|n|tiền phạt, hình phạt|There's a penalty for late payment.|💸
+liable|adj|chịu trách nhiệm pháp lý|We're not liable for lost items.|⚠️
+obligation|n|nghĩa vụ|You have no obligation to buy.|📌
+permit|n|giấy phép|You need a building permit.|📄
+license|n|giấy phép, bằng|Show your driver's license.|🪪
+patent|n|bằng sáng chế|They hold a patent on the design.|💡
+copyright|n|bản quyền|The book is protected by copyright.|©️
+authorization|n|sự cho phép|Authorization is required.|🔐
+confidentiality|n|tính bảo mật|Sign the confidentiality agreement.|🤐
+amend|v|sửa đổi (văn bản)|They amended the contract.|✏️
+draft a contract|phr|soạn thảo hợp đồng|Our lawyer will draft a contract.|📝
+# Business travel and hotels | Công tác & khách sạn
+business trip|n|chuyến công tác|He's on a business trip.|💼
+itinerary|n|lịch trình chuyến đi|Here is your travel itinerary.|🗺️
+reservation|n|sự đặt chỗ|I have a reservation under Kim.|📑
+reserve|v|đặt trước|I'd like to reserve a table.|📝
+book|v|đặt (vé, phòng)|Book your flight early.|🎫
+booking|n|việc đặt chỗ|Your booking is confirmed.|✅
+accommodation|n|chỗ ở|Accommodation is included.|🏨
+check in|phr|làm thủ tục nhận phòng/lên máy bay|Check in at the front desk.|🛎️
+check out|phr|trả phòng|Check out is at noon.|🧳
+front desk|n|quầy lễ tân|Leave the key at the front desk.|🛎️
+lobby|n|sảnh|Meet me in the lobby.|🏨
+suite|n|phòng hạng sang|They booked a suite.|🛏️
+amenities|n|tiện nghi|The hotel amenities include a gym.|🏊
+complimentary|adj|miễn phí (tặng kèm)|Breakfast is complimentary.|🥐
+flight|n|chuyến bay|My flight leaves at 7.|✈️
+airline|n|hãng hàng không|Which airline are you flying with?|🛫
+boarding pass|n|thẻ lên máy bay|Show your boarding pass.|🎫
+gate|n|cổng|Go to gate 12.|🚪
+terminal|n|nhà ga sân bay|Terminal 2 is for international flights.|🛬
+departure|n|sự khởi hành|Departure is at 10:30.|🛫
+arrival|n|sự đến nơi|Arrival time is 2 p.m.|🛬
+depart|v|khởi hành|The train departs at noon.|🚆
+board|v|lên (tàu, xe, máy bay)|Passengers may now board.|🚶
+aisle|n|lối đi|I'd like an aisle seat.|🪑
+layover|n|quá cảnh|We have a three-hour layover.|⏳
+round-trip|adj|khứ hồi|A round-trip ticket, please.|🔁
+one-way|adj|một chiều|A one-way ticket to Tokyo.|➡️
+fare|n|giá vé|Bus fares went up.|🎟️
+baggage|n|hành lý|Collect your baggage here.|🧳
+baggage claim|n|khu nhận hành lý|Go to baggage claim.|🛄
+carry-on|adj|xách tay|One carry-on bag is allowed.|👜
+excess baggage|n|hành lý quá cước|You must pay for excess baggage.|⚖️
+travel agency|n|đại lý du lịch|Book through a travel agency.|🏢
+destination city|n|thành phố điểm đến|What's your destination city?|🏙️
+rental car|n|xe thuê|Pick up the rental car at the airport.|🚗
+shuttle|n|xe đưa đón|Take the free airport shuttle.|🚐
+per diem|n|công tác phí theo ngày|The per diem is $50.|💵
+jet lag|n|mệt mỏi do lệch múi giờ|I have terrible jet lag.|😵
+local time|n|giờ địa phương|It's 9 a.m. local time.|🕘
+time zone|n|múi giờ|We're in different time zones.|🌐
+sightseeing tour|n|chuyến tham quan|Join a city sightseeing tour.|🚌

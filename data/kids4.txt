@@ -1,0 +1,238 @@
+# Weather and seasons | Thời tiết và mùa
+weather|n|thời tiết|What's the weather like today?|🌤️
+sunny|adj|nắng|It's sunny today.|☀️
+rainy|adj|mưa|I don't like rainy days.|🌧️
+cloudy|adj|nhiều mây|It's cloudy this morning.|☁️
+windy|adj|nhiều gió|It's windy at the beach.|🌬️
+foggy|adj|có sương mù|It's foggy in Sa Pa.|🌫️
+stormy|adj|có bão|It was stormy last night.|⛈️
+storm|n|cơn bão|A big storm is coming.|🌪️
+snow|n|tuyết|Children play in the snow.|❄️
+temperature|n|nhiệt độ|The temperature is 35°C.|🌡️
+hot|adj|nóng|It's very hot in summer.|🥵
+warm|adj|ấm|Spring is warm.|🌞
+cool|adj|mát mẻ|Autumn is cool.|🍃
+freezing|adj|lạnh cóng|It's freezing outside!|🥶
+season|n|mùa|Which season do you like?|🗓️
+spring|n|mùa xuân|Flowers bloom in spring.|🌸
+summer|n|mùa hè|We swim in summer.|🏖️
+autumn|n|mùa thu|Leaves turn yellow in autumn.|🍁
+winter|n|mùa đông|Winter in Hanoi is cold.|⛄
+rainbow|n|cầu vồng|Look! A rainbow!|🌈
+thunder|n|sấm|I heard thunder.|⚡
+lightning|n|tia chớp|Lightning lit up the sky.|🌩️
+forecast|n|dự báo|The forecast says it will rain.|📺
+# Places and shopping | Địa điểm và mua sắm
+town|n|thị trấn|I live in a small town.|🏘️
+city|n|thành phố|Hanoi is a busy city.|🌆
+market|n|chợ|Mum buys fish at the market.|🧺
+supermarket|n|siêu thị|Let's go to the supermarket.|🛒
+shop|n|cửa hàng|The shop opens at 8.|🏪
+bakery|n|tiệm bánh|The bakery smells nice.|🥖
+bookshop|n|hiệu sách|I bought a novel at the bookshop.|📚
+pharmacy|n|hiệu thuốc|Buy medicine at the pharmacy.|💊
+hospital|n|bệnh viện|She works at a hospital.|🏥
+post office|n|bưu điện|Send the letter at the post office.|📮
+bank|n|ngân hàng|The bank is closed on Sunday.|🏦
+police station|n|đồn cảnh sát|The police station is nearby.|🚓
+restaurant|n|nhà hàng|We ate at a seafood restaurant.|🍴
+café|n|quán cà phê|Let's meet at the café.|☕
+stadium|n|sân vận động|The stadium holds 40,000 people.|🏟️
+zoo|n|vườn thú|We saw elephants at the zoo.|🦓
+theatre|n|nhà hát|We saw a play at the theatre.|🎭
+shopping centre|n|trung tâm mua sắm|The shopping centre is crowded.|🛍️
+price|n|giá cả|What's the price of this hat?|🏷️
+cost|v|có giá|How much does it cost?|💵
+buy|v|mua|I want to buy a new bag.|🛍️
+sell|v|bán|They sell fruit here.|🏷️
+pay|v|trả tiền|Can I pay by card?|💳
+money|n|tiền|I saved some money.|💰
+change|n|tiền thừa|Here's your change.|🪙
+discount|n|giảm giá|There's a 20% discount.|🔖
+customer|n|khách hàng|The customer is always right.|🧑
+cashier|n|thu ngân|Pay at the cashier.|🧾
+# Jobs | Nghề nghiệp
+job|n|công việc|What's your dream job?|💼
+work|v|làm việc|My dad works in a factory.|🛠️
+nurse|n|y tá|The nurse is very gentle.|👩‍⚕️
+engineer|n|kỹ sư|My uncle is an engineer.|👷
+farmer|n|nông dân|Farmers grow rice.|👨‍🌾
+worker|n|công nhân|The workers built a bridge.|👷
+police officer|n|cảnh sát|The police officer helped us.|👮
+firefighter|n|lính cứu hoả|Firefighters are brave.|🧑‍🚒
+chef|n|đầu bếp|The chef cooks delicious food.|👨‍🍳
+architect|n|kiến trúc sư|An architect designs buildings.|📐
+scientist|n|nhà khoa học|She wants to be a scientist.|🧑‍🔬
+journalist|n|nhà báo|The journalist wrote an article.|📰
+vet|n|bác sĩ thú y|Take the dog to the vet.|🐕
+astronaut|n|phi hành gia|Astronauts go to space.|👨‍🚀
+designer|n|nhà thiết kế|He is a fashion designer.|✂️
+mechanic|n|thợ máy|The mechanic fixed our car.|🔧
+tour guide|n|hướng dẫn viên du lịch|The tour guide speaks English.|🚩
+programmer|n|lập trình viên|Programmers write code.|👩‍💻
+factory|n|nhà máy|The factory makes shoes.|🏭
+office|n|văn phòng|My mum works in an office.|🏢
+dream|n|ước mơ|My dream is to be a pilot.|💭
+future job|n|nghề tương lai|Let's talk about future jobs.|🔮
+# Time | Thời gian
+time|n|thời gian|What time is it?|⏰
+minute|n|phút|Wait a minute.|⏱️
+hour|n|giờ|I study for an hour.|🕐
+week|n|tuần|See you next week.|📅
+weekend|n|cuối tuần|What do you do at the weekend?|🎉
+month|n|tháng|My birthday is next month.|📆
+year|n|năm|Happy New Year!|🎆
+century|n|thế kỷ|This temple is from the 11th century.|🏯
+yesterday|adv|hôm qua|I saw her yesterday.|⏪
+today|adv|hôm nay|Today is Monday.|📍
+tomorrow|adv|ngày mai|See you tomorrow.|⏩
+tonight|adv|tối nay|What are you doing tonight?|🌃
+morning|n|buổi sáng|I go jogging every morning.|🌅
+afternoon|n|buổi chiều|We play sport in the afternoon.|🌇
+evening|n|buổi tối|I read in the evening.|🌆
+midnight|n|nửa đêm|We stayed up until midnight.|🕛
+early|adj|sớm|I get up early.|🐓
+late|adj|muộn|Don't be late for school.|⌛
+always|adv|luôn luôn|I always brush my teeth.|🔁
+usually|adv|thường xuyên|I usually walk to school.|🚶
+often|adv|thường|We often play badminton.|🏸
+sometimes|adv|thỉnh thoảng|Sometimes I cook dinner.|🎲
+rarely|adv|hiếm khi|He rarely eats fast food.|🦄
+never|adv|không bao giờ|I never tell lies.|🚫
+once|adv|một lần|I go swimming once a week.|1️⃣
+twice|adv|hai lần|We meet twice a month.|2️⃣
+ago|adv|cách đây|I met him two years ago.|⏮️
+already|adv|đã … rồi|I've already finished.|✅
+yet|adv|chưa (câu phủ định)|I haven't eaten yet.|⏳
+soon|adv|sớm, chẳng bao lâu|See you soon.|🔜
+# Feelings | Cảm xúc
+happy|adj|vui|I'm happy to see you.|😀
+sad|adj|buồn|Why are you sad?|😢
+angry|adj|tức giận|Don't be angry with me.|😠
+scared|adj|sợ hãi|I'm scared of the dark.|😨
+afraid|adj|sợ|She's afraid of dogs.|😰
+worried|adj|lo lắng|I'm worried about the test.|😟
+nervous|adj|hồi hộp|I feel nervous before exams.|😬
+excited|adj|hào hứng|We're excited about the trip.|🤩
+surprised|adj|ngạc nhiên|I was surprised by the gift.|😮
+bored|adj|chán|I'm bored. Let's go out.|😑
+lonely|adj|cô đơn|He felt lonely in the new city.|🥺
+calm|adj|bình tĩnh|Stay calm during the test.|😌
+upset|adj|buồn phiền|She was upset about her marks.|😞
+embarrassed|adj|xấu hổ|I was embarrassed when I fell.|😳
+pleased|adj|hài lòng|I'm pleased with my result.|🙂
+feel|v|cảm thấy|How do you feel?|💭
+smile|v|mỉm cười|Smile for the photo!|😊
+laugh|v|cười to|We laughed a lot.|😆
+cry|v|khóc|The baby is crying.|😭
+# Technology and media | Công nghệ và truyền thông
+computer|n|máy tính|I use the computer for homework.|🖥️
+laptop|n|máy tính xách tay|My laptop is new.|💻
+smartphone|n|điện thoại thông minh|Many kids have smartphones.|📱
+tablet|n|máy tính bảng|I read e-books on my tablet.|📲
+internet|n|mạng internet|The internet is slow today.|🌐
+website|n|trang web|Visit our school website.|🔗
+email|n|thư điện tử|Send me an email.|📧
+message|n|tin nhắn|I got your message.|💬
+online|adj|trực tuyến|We have online lessons.|🟢
+download|v|tải xuống|Download the app.|⬇️
+upload|v|tải lên|Upload your photo.|⬆️
+password|n|mật khẩu|Don't share your password.|🔑
+screen time|n|thời gian dùng màn hình|Limit your screen time.|⏲️
+social media|n|mạng xã hội|Be careful on social media.|📣
+video|n|video|Watch this video.|📹
+game|n|trò chơi|Let's play a game.|🎮
+robot|n|người máy|Robots can do housework.|🤖
+invent|v|phát minh|Who invented the telephone?|💡
+invention|n|phát minh|The wheel is a great invention.|⚙️
+newspaper|n|báo|Grandpa reads the newspaper.|📰
+magazine|n|tạp chí|I buy a magazine every month.|📖
+television|n|ti vi|Turn off the television.|📺
+programme|n|chương trình|My favourite TV programme is on.|📡
+news|n|tin tức|Did you hear the news?|🗞️
+# Sports | Thể thao
+sport|n|thể thao|Do you like sport?|🏅
+football|n|bóng đá|Football is popular in Vietnam.|⚽
+basketball|n|bóng rổ|He's tall—he plays basketball.|🏀
+volleyball|n|bóng chuyền|We play volleyball on the beach.|🏐
+badminton|n|cầu lông|My mum plays badminton.|🏸
+table tennis|n|bóng bàn|Table tennis is fast.|🏓
+tennis|n|quần vợt|Let's play tennis.|🎾
+karate|n|võ karate|I do karate twice a week.|🥋
+marathon|n|cuộc chạy marathon|He ran a marathon.|🏃
+match|n|trận đấu|We watched the match on TV.|🏟️
+team|n|đội|Our team won!|👥
+player|n|cầu thủ, người chơi|He's a good player.|⛹️
+coach|n|huấn luyện viên|Our coach is strict.|📣
+win|v|thắng|We want to win the cup.|🏆
+lose|v|thua; đánh mất|They lost the game.|😞
+score|v|ghi bàn|He scored a goal.|🥅
+goal|n|bàn thắng, mục tiêu|What a great goal!|🥅
+champion|n|nhà vô địch|She is the world champion.|🏆
+race|n|cuộc đua|He won the race.|🏁
+compete|v|thi đấu|Teams compete for the cup.|🤼
+equipment|n|dụng cụ|Sports equipment is expensive.|🎽
+ball|n|quả bóng|Throw the ball to me.|⚾
+racket|n|vợt|I need a new racket.|🏸
+# Useful verbs | Động từ thông dụng
+begin|v|bắt đầu|The class begins at 7.|▶️
+finish|v|kết thúc, hoàn thành|I finished my homework.|🏁
+open|v|mở|Open your book.|📖
+close|v|đóng|Close the door.|🚪
+bring|v|mang đến|Bring your textbook tomorrow.|🎒
+carry|v|mang, xách|Can you carry this box?|📦
+catch|v|bắt|Catch the ball!|🧤
+throw|v|ném|Don't throw stones.|🤾
+climb|v|leo, trèo|Cats climb trees.|🧗
+fall|v|ngã, rơi|Be careful—don't fall.|🍂
+find|v|tìm thấy|I can't find my key.|🔍
+forget|v|quên|Don't forget your homework.|🤦
+remember|v|nhớ|Remember to call me.|🧠
+choose|v|chọn|Choose the correct answer.|☑️
+decide|v|quyết định|I decided to learn Japanese.|⚖️
+try|v|thử, cố gắng|Try again, you can do it!|💪
+need|v|cần|I need your help.|🙏
+want|v|muốn|I want a new bike.|💭
+hope|v|hy vọng|I hope you feel better.|🤞
+believe|v|tin|I believe you.|🤝
+understand|v|hiểu|Do you understand?|💡
+know|v|biết|I know the answer.|✔️
+think|v|nghĩ|I think it will rain.|🤔
+describe|v|miêu tả|Describe your best friend.|🗒️
+invite|v|mời|I invited ten friends.|💌
+visit|v|thăm|We visited the museum.|🏛️
+meet|v|gặp|Nice to meet you.|🤝
+wait|v|chờ đợi|Wait for me!|⏳
+grow|v|trồng, lớn lên|We grow vegetables.|🌱
+move|v|di chuyển, chuyển nhà|We moved to Da Nang.|🚚
+happen|v|xảy ra|What happened to your bike?|❗
+prepare|v|chuẩn bị|Prepare for the test.|📋
+improve|v|cải thiện|I want to improve my English.|📈
+practice|n|sự luyện tập|Practice makes perfect.|🔁
+# Useful adjectives | Tính từ thông dụng
+easy|adj|dễ|This test is easy.|👌
+difficult|adj|khó|Maths is difficult for me.|🧗
+important|adj|quan trọng|Sleep is important.|❗
+different|adj|khác|We are different.|🔀
+same|adj|giống nhau|We are in the same class.|🟰
+special|adj|đặc biệt|Today is a special day.|🌟
+modern|adj|hiện đại|It's a modern building.|🏙️
+ancient|adj|cổ xưa|Hue has ancient buildings.|🏯
+quiet|adj|yên tĩnh|The library is quiet.|🤫
+noisy|adj|ồn ào|The street is noisy.|📢
+clean|adj|sạch sẽ|Keep the classroom clean.|✨
+dirty|adj|bẩn|My shoes are dirty.|🟤
+busy|adj|bận rộn|I'm busy today.|📆
+free|adj|rảnh, miễn phí|Are you free tonight?|🆓
+huge|adj|khổng lồ|The whale is huge.|🐋
+tiny|adj|nhỏ xíu|An ant is tiny.|🐜
+heavy|adj|nặng|This bag is heavy.|🏋️
+light|adj|nhẹ|Feathers are light.|🪶
+amazing|adj|tuyệt vời|The view is amazing!|🤩
+terrible|adj|tồi tệ|The weather is terrible.|🌧️
+wonderful|adj|tuyệt diệu|We had a wonderful time.|🎈
+correct|adj|đúng|Your answer is correct!|✅
+wrong|adj|sai|Sorry, that's wrong.|❌
+possible|adj|có thể|Is it possible?|🔓
+necessary|adj|cần thiết|Water is necessary for life.|💧
+useful|adj|hữu ích|This app is useful.|🛠️

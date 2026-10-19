@@ -1,0 +1,105 @@
+# Colours, shapes and materials | Màu sắc, hình dạng, chất liệu
+colour|n|màu sắc|What's your favourite colour?|🎨
+red|adj|màu đỏ|The apple is red.|🔴
+orange|adj|màu cam|I have an orange bag.|🟠
+yellow|adj|màu vàng|Bananas are yellow.|🟡
+green|adj|màu xanh lá|The grass is green.|🟢
+blue|adj|màu xanh dương|The sky is blue.|🔵
+purple|adj|màu tím|She likes purple flowers.|🟣
+pink|adj|màu hồng|Her dress is pink.|🩷
+brown|adj|màu nâu|The bear is brown.|🟤
+grey|adj|màu xám|Elephants are grey.|🩶
+black|adj|màu đen|My cat is black.|⚫
+white|adj|màu trắng|Snow is white.|⚪
+circle|n|hình tròn|Draw a circle.|⭕
+square|n|hình vuông|A square has four sides.|🟥
+triangle|n|hình tam giác|A triangle has three sides.|🔺
+round|adj|tròn|The table is round.|🔘
+plastic|n|nhựa|Don't use plastic bags.|🧴
+paper|n|giấy|Write on this paper.|📄
+metal|n|kim loại|The box is made of metal.|🔩
+cotton|n|vải bông|This shirt is cotton.|🧵
+# Prepositions and directions | Giới từ & phương hướng
+in front of|prep|phía trước|The bus stop is in front of the school.|⬆️
+behind|prep|phía sau|The garden is behind the house.|⬇️
+next to|prep|bên cạnh|I sit next to Lan.|↔️
+between|prep|ở giữa|The bank is between the café and the shop.|↕️
+opposite|prep|đối diện|The park is opposite the hospital.|🔁
+above|prep|ở trên|The clock is above the door.|⤴️
+below|prep|ở dưới|Write your name below.|⤵️
+under|prep|bên dưới|The cat is under the table.|⬇️
+inside|prep|bên trong|It's warm inside.|🏠
+outside|prep|bên ngoài|Let's play outside.|🌳
+along|prep|dọc theo|Walk along the river.|〰️
+across|prep|băng qua|Swim across the lake.|↔️
+through|prep|xuyên qua|The train goes through a tunnel.|🚇
+around|prep|xung quanh|We walked around the lake.|🔄
+towards|prep|về phía|He ran towards me.|➡️
+north|n|phía bắc|Hanoi is in the north.|🧭
+south|n|phía nam|Ho Chi Minh City is in the south.|⬇️
+east|n|phía đông|The sun rises in the east.|🌅
+west|n|phía tây|The sun sets in the west.|🌇
+direction|n|hướng|Which direction is the station?|🧭
+# Numbers and quantities | Số lượng
+hundred|n|một trăm|There are a hundred students.|💯
+thousand|n|một nghìn|It costs ten thousand dong.|🔢
+million|n|một triệu|The city has 8 million people.|🌆
+half|n|một nửa|Cut the cake in half.|🌓
+quarter|n|một phần tư|It's a quarter past six.|🕡
+first|adj|thứ nhất|This is my first trip.|1️⃣
+second|adj|thứ hai|He came second in the race.|2️⃣
+third|adj|thứ ba|I live on the third floor.|3️⃣
+last|adj|cuối cùng|This is the last question.|🔚
+next|adj|tiếp theo|See you next week.|⏭️
+a lot of|phr|nhiều|We have a lot of homework.|📚
+a few|phr|một vài|I have a few friends here.|👥
+a little|phr|một chút|Add a little salt.|🤏
+enough|adj|đủ|Do we have enough chairs?|✅
+many|adj|nhiều (đếm được)|How many books do you have?|🔢
+much|adj|nhiều (không đếm được)|How much water do you drink?|💧
+some|adj|một vài, một ít|I need some help.|🤲
+every|adj|mọi|I go jogging every day.|🔁
+each|adj|mỗi|Each student has a book.|☝️
+both|adj|cả hai|Both answers are correct.|✌️
+# Common verbs II | Động từ thông dụng II
+agree|v|đồng ý|I agree with you.|👍
+argue|v|tranh cãi|Don't argue with your brother.|🗯️
+ask|v|hỏi|Ask your teacher.|❓
+call|v|gọi điện|Call me later.|📞
+check|v|kiểm tra|Check your answers.|☑️
+clean|v|dọn dẹp|Clean your room.|🧹
+cook|v|nấu ăn|My dad cooks dinner.|🍳
+copy|v|chép lại|Copy the words into your notebook.|📝
+count|v|đếm|Count from one to ten.|🔢
+dance|v|nhảy|Let's dance to this song!|💃
+fix|v|sửa|Can you fix my bike?|🔧
+follow|v|đi theo, làm theo|Please follow me to the classroom.|👣
+hold|v|cầm, giữ|Hold my hand.|🤝
+hurry|v|vội vã|Hurry up! We're late.|🏃
+jump|v|nhảy (bật)|Kangaroos jump high.|🦘
+listen|v|lắng nghe|Listen to the teacher.|👂
+look|v|nhìn|Look at the board.|👀
+pick|v|hái, chọn|Pick a card.|🃏
+promise|v|hứa|I promise to help you.|🤞
+push|v|đẩy|Push the door.|👉
+pull|v|kéo|Pull the rope.|🪢
+repeat|v|nhắc lại|Repeat after me.|🔁
+return|v|trở lại, trả lại|Return the book on Friday.|↩️
+run|v|chạy|Don't run in the corridor.|🏃
+say|v|nói|What did you say?|💬
+send|v|gửi|Send me a photo.|📤
+shout|v|hét|Don't shout in class.|📢
+show|v|chỉ, cho xem|Show me your drawing.|🖼️
+sing|v|hát|She sings beautifully.|🎤
+sit|v|ngồi|Sit down, please.|🪑
+speak|v|nói (ngôn ngữ)|Do you speak English?|🗣️
+stand|v|đứng|Stand up, please.|🧍
+stop|v|dừng lại|Stop talking, please.|🛑
+swim|v|bơi|Can you swim?|🏊
+talk|v|nói chuyện|Let's talk about it.|💬
+teach|v|dạy|She teaches English.|👩‍🏫
+tell|v|kể, bảo|Tell me a story.|📖
+touch|v|chạm|Don't touch the paint.|☝️
+walk|v|đi bộ|I walk to school.|🚶
+watch|v|xem|We watch TV after dinner.|📺
+write|v|viết|Write your name here.|✍️

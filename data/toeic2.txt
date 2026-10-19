@@ -1,0 +1,157 @@
+# Finance, accounting and banking | Tài chính, kế toán & ngân hàng
+finance|n|tài chính|She works in finance.|💹
+financial|adj|thuộc tài chính|We need financial advice.|📈
+budget|n|ngân sách|We're over budget.|💼
+expense|n|chi phí|Travel expenses will be reimbursed.|🧾
+expenditure|n|khoản chi tiêu|Expenditure rose by 5%.|📊
+cost|n|chi phí|Reduce operating costs.|💲
+revenue|n|doanh thu|Revenue increased this quarter.|💰
+income|n|thu nhập|Their income doubled.|💵
+profit|n|lợi nhuận|Profits fell last year.|📈
+profitable|adj|có lãi|The new store is profitable.|💹
+loss|n|sự thua lỗ|The company reported a loss.|📉
+earnings|n|thu nhập, lợi nhuận|Quarterly earnings beat forecasts.|💵
+quarter|n|quý|Sales rose in the third quarter.|🗓️
+fiscal year|n|năm tài chính|The fiscal year ends in March.|📅
+annual|adj|hằng năm|The annual report is out.|📘
+account|n|tài khoản|Open a bank account.|🏦
+accountant|n|kế toán viên|Our accountant checks the books.|🧮
+accounting|n|kế toán|She studied accounting.|📒
+audit|n|kiểm toán|The audit found no problems.|🔍
+auditor|n|kiểm toán viên|The auditors arrive Monday.|🕵️
+invoice|n|hoá đơn|Please pay the invoice within 30 days.|🧾
+receipt|n|biên lai|Keep your receipt.|🧾
+bill|n|hoá đơn|Can I have the bill, please?|💳
+payment|n|sự thanh toán|Payment is due on the 15th.|💸
+due|adj|đến hạn|The rent is due today.|⏳
+overdue|adj|quá hạn|This invoice is overdue.|⚠️
+balance|n|số dư|Check your account balance.|⚖️
+deposit|n|tiền gửi; tiền đặt cọc|A 10% deposit is required.|🏦
+withdraw|v|rút (tiền)|I withdrew $200 from the ATM.|🏧
+withdrawal|n|sự rút tiền|Withdrawals are free.|💵
+transaction|n|giao dịch|Each transaction is recorded.|🔄
+loan|n|khoản vay|The bank approved our loan.|🏦
+interest rate|n|lãi suất|Interest rates went up.|📈
+mortgage|n|khoản vay thế chấp|They took out a mortgage.|🏠
+debt|n|khoản nợ|The firm paid off its debt.|📛
+credit|n|tín dụng|Can I pay on credit?|💳
+currency|n|tiền tệ|What currency do they use?|💱
+exchange rate|n|tỷ giá hối đoái|The exchange rate is good today.|💱
+investment|n|sự đầu tư|It's a smart investment.|📊
+invest|v|đầu tư|We invested in new machines.|💸
+investor|n|nhà đầu tư|Investors are confident.|🤵
+shareholder|n|cổ đông|Shareholders met in May.|📜
+stock|n|cổ phiếu; hàng tồn kho|Stock prices rose.|📈
+asset|n|tài sản|Our people are our greatest asset.|💎
+capital|n|vốn|We need more capital.|💰
+fund|n|quỹ|The fund supports small businesses.|🏦
+funding|n|nguồn tài trợ|The project lost its funding.|💸
+tax|n|thuế|Prices include tax.|🧾
+reimburse|v|hoàn trả|We'll reimburse your travel costs.|↩️
+reimbursement|n|sự hoàn tiền|Submit receipts for reimbursement.|💵
+refund|n|tiền hoàn lại|I'd like a refund.|🔙
+spending|n|chi tiêu|Consumer spending is up.|🛍️
+afford|v|có đủ khả năng chi trả|We can't afford a new office.|💸
+estimate|n|bản ước tính|Get an estimate before repairs.|🧮
+forecast|n|dự báo|The sales forecast is positive.|🔮
+figure|n|số liệu|The figures look good.|🔢
+statement|n|bảng sao kê, báo cáo|Check your monthly statement.|📃
+spreadsheet|n|bảng tính|Enter the data in the spreadsheet.|📊
+calculate|v|tính toán|Calculate the total cost.|🧮
+deduct|v|khấu trừ|Taxes are deducted from your salary.|➖
+economy|n|nền kinh tế|The economy is growing.|🌐
+economic|adj|thuộc kinh tế|Economic growth slowed.|📉
+economical|adj|tiết kiệm|This car is economical.|💡
+inflation|n|lạm phát|Inflation hit 4%.|🎈
+recession|n|suy thoái|Many firms closed during the recession.|📉
+merger|n|sự sáp nhập|The merger was announced today.|🤝
+acquisition|n|sự thâu tóm|The acquisition cost $2 million.|🏢
+bankrupt|adj|phá sản|The store went bankrupt.|💥
+# Marketing and sales | Marketing & bán hàng
+market|n|thị trường|The Asian market is growing.|🌏
+marketing|n|tiếp thị|She manages marketing.|📣
+advertise|v|quảng cáo|We advertise on social media.|📢
+advertisement|n|quảng cáo|I saw your advertisement.|📰
+commercial|n|quảng cáo truyền hình|The TV commercial was funny.|📺
+campaign|n|chiến dịch|The ad campaign was successful.|🎯
+brand|n|thương hiệu|It's a well-known brand.|🏷️
+logo|n|biểu tượng logo|We redesigned our logo.|🔰
+slogan|n|khẩu hiệu|The slogan is easy to remember.|💬
+target|v|nhắm đến|We target young customers.|🎯
+consumer|n|người tiêu dùng|Consumers want lower prices.|🛒
+client|n|khách hàng (dịch vụ)|We have clients in 20 countries.|🤝
+customer base|n|tập khách hàng|We need to grow our customer base.|👥
+survey|n|khảo sát|Please complete our survey.|📋
+questionnaire|n|bảng câu hỏi|Fill in the questionnaire.|📝
+research|n|nghiên cứu|Market research shows strong demand.|🔬
+demand|n|nhu cầu|Demand for electric cars is rising.|📈
+supply|n|nguồn cung|Supply can't meet demand.|📦
+competitor|n|đối thủ cạnh tranh|Our competitor lowered prices.|🥊
+competition|n|sự cạnh tranh|Competition is fierce.|⚔️
+competitive|adj|cạnh tranh|We offer competitive prices.|🏁
+launch|v|ra mắt|We will launch the product in May.|🚀
+launch|n|sự ra mắt|The launch event was a success.|🎉
+release|v|phát hành|The new model will be released soon.|📦
+promotion|n|chương trình khuyến mãi|The promotion ends Sunday.|🏷️
+promotional|adj|mang tính quảng bá|We sent promotional emails.|📧
+sample|n|mẫu thử|Free samples are available.|🧴
+feature|n|tính năng|This phone has many features.|⭐
+feature|v|có, làm nổi bật|The magazine featured our CEO.|📰
+benefit|n|lợi ích|Explain the benefits to customers.|➕
+sales|n|doanh số; bán hàng|Sales increased by 10%.|📈
+salesperson|n|nhân viên bán hàng|Ask a salesperson for help.|🧑‍💼
+sales representative|n|đại diện bán hàng|A sales representative will call you.|📞
+retail|n|bán lẻ|She works in retail.|🛍️
+retailer|n|nhà bán lẻ|Major retailers sell our products.|🏬
+wholesale|n|bán buôn|We buy at wholesale prices.|📦
+distributor|n|nhà phân phối|We need a distributor in Japan.|🚚
+merchandise|n|hàng hoá|All merchandise is 20% off.|🛒
+goods|n|hàng hoá|The goods arrived damaged.|📦
+item|n|mặt hàng|This item is out of stock.|🏷️
+product line|n|dòng sản phẩm|We are expanding our product line.|🧴
+quota|n|chỉ tiêu|She met her sales quota.|🎯
+commission|n|tiền hoa hồng|Salespeople earn commission.|💸
+strategy|n|chiến lược|We need a new marketing strategy.|♟️
+trend|n|xu hướng|Online shopping is a growing trend.|📈
+expand|v|mở rộng|We plan to expand into Europe.|↔️
+expansion|n|sự mở rộng|The expansion created 200 jobs.|🏗️
+potential|adj|tiềm năng|We met potential clients.|🌱
+attract|v|thu hút|The sale attracted many shoppers.|🧲
+loyal|adj|trung thành|We reward loyal customers.|💝
+loyalty program|n|chương trình khách hàng thân thiết|Join our loyalty program.|🎟️
+voucher|n|phiếu giảm giá|Use this voucher for 10% off.|🎫
+coupon|n|phiếu giảm giá|Bring this coupon to the store.|✂️
+reasonable|adj|hợp lý (giá)|The prices are reasonable.|👌
+affordable|adj|giá phải chăng|We offer affordable plans.|💲
+exclusive|adj|độc quyền|This is an exclusive offer.|💎
+# Customer service | Chăm sóc khách hàng
+customer service|n|dịch vụ khách hàng|Call customer service for help.|🎧
+complaint|n|lời phàn nàn|We received a complaint.|😠
+complain|v|phàn nàn|He complained about the noise.|🗯️
+apologize|v|xin lỗi|We apologize for the delay.|🙇
+apology|n|lời xin lỗi|Please accept our apology.|💐
+inconvenience|n|sự bất tiện|Sorry for the inconvenience.|😓
+resolve|v|giải quyết|We resolved the problem quickly.|🔧
+issue|n|vấn đề|We're looking into the issue.|❗
+satisfy|v|làm hài lòng|We aim to satisfy every customer.|😊
+satisfaction|n|sự hài lòng|Customer satisfaction is our priority.|⭐
+satisfied|adj|hài lòng|Are you satisfied with the service?|🙂
+dissatisfied|adj|không hài lòng|Dissatisfied customers can get a refund.|🙁
+assistance|n|sự trợ giúp|Do you need assistance?|🆘
+representative|n|người đại diện|A representative will contact you.|🧑‍💼
+warranty|n|bảo hành|The laptop has a two-year warranty.|🛡️
+guarantee|n|sự bảo đảm|There's a money-back guarantee.|✅
+exchange|v|đổi (hàng)|Can I exchange this shirt?|🔄
+return|v|trả lại|You can return it within 30 days.|↩️
+replacement|n|đồ thay thế|We'll send a replacement.|🔁
+defective|adj|bị lỗi|The item was defective.|⚠️
+damaged|adj|bị hư hỏng|The box arrived damaged.|📦
+faulty|adj|có lỗi|A faulty part caused the problem.|🔌
+compensate|v|bồi thường|We will compensate you for the loss.|💰
+courteous|adj|lịch sự, nhã nhặn|The staff were courteous.|🙇
+prompt|adj|nhanh chóng, kịp thời|Thank you for your prompt reply.|⚡
+helpline|n|đường dây hỗ trợ|Call our 24-hour helpline.|☎️
+on hold|phr|chờ máy|I was on hold for 20 minutes.|⏳
+transfer a call|phr|chuyển cuộc gọi|Let me transfer your call.|📲
+hesitate|v|do dự, ngần ngại|Don't hesitate to contact us.|🤔
+valued|adj|quý giá, được trân trọng|You are a valued customer.|💎

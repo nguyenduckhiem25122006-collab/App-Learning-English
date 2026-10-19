@@ -1,0 +1,17 @@
+NHỊP – HỌC TIẾNG ANH (bản cài đặt offline)
+
+Cách 1 – Cài lên điện thoại/máy tính (khuyên dùng):
+  1. Đưa thư mục "nhip" lên một host tĩnh miễn phí có HTTPS: GitHub Pages, Netlify Drop (kéo-thả thư mục), Cloudflare Pages.
+  2. Mở đường link trên điện thoại:
+     - Android (Chrome): menu ⋮ → "Cài đặt ứng dụng" / "Thêm vào màn hình chính".
+     - iPhone (Safari): nút Chia sẻ → "Thêm vào MH chính".
+     - Máy tính (Chrome/Edge): bấm biểu tượng Cài đặt ở thanh địa chỉ.
+  3. Sau lần mở đầu tiên, app chạy hoàn toàn offline. Micro dùng được để ghi âm và chấm phát âm.
+
+Cách 2 – Chạy thử trên máy tính không cần mạng:
+  Trong thư mục "nhip", chạy:  python -m http.server 8000   rồi mở http://localhost:8000
+
+Ghi chú:
+  - Đọc to dùng giọng đọc có sẵn của thiết bị. Để nghe giọng Anh (UK) ở phần IPA, hãy tải thêm giọng "English (UK)" trong cài đặt Chuyển văn bản thành giọng nói của máy.
+  - Chấm phát âm (Nói thử) cần Chrome/Edge và có mạng; Ghi âm – nghe lại hoạt động offline.
+  - Tiến độ và hình tự đổi được lưu trên chính thiết bị.

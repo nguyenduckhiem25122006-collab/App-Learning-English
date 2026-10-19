@@ -1,0 +1,220 @@
+# Travel and future transport | Du lịch & phương tiện tương lai
+travel|v|du lịch, đi lại|I want to travel around the world.|🧳
+trip|n|chuyến đi|We had a short trip to Ha Long Bay.|🗺️
+journey|n|hành trình|The journey took five hours.|🛤️
+future|n|tương lai|What will cars be like in the future?|🔮
+flying car|n|ô tô bay|People may use flying cars.|🚁
+driverless|adj|không người lái|Driverless cars are being tested.|🤖
+skytrain|n|tàu trên cao|The skytrain is fast.|🚝
+hyperloop|n|tàu siêu tốc trong ống|A hyperloop could be super fast.|🚄
+teleporter|n|máy dịch chuyển tức thời|A teleporter is only in films.|🌀
+bamboo-copter|n|chong chóng tre|Doraemon's bamboo-copter lets him fly.|🎋
+eco-friendly|adj|thân thiện với môi trường|Bikes are eco-friendly.|🌿
+electric|adj|chạy bằng điện|Electric buses are quiet.|🔋
+convenient|adj|tiện lợi|The metro is convenient.|👍
+comfortable|adj|thoải mái|The seats are comfortable.|🛋️
+fast|adj|nhanh|Planes are faster than trains.|💨
+slow|adj|chậm|The old bus is slow.|🐢
+pilot|n|phi công|The pilot flies the plane.|👨‍✈️
+passport|n|hộ chiếu|Don't forget your passport.|🛂
+luggage|n|hành lý|My luggage is heavy.|🧳
+suitcase|n|va li|Pack your suitcase tonight.|🧳
+airport|n|sân bay|We arrived at the airport early.|🛫
+hotel|n|khách sạn|We stayed at a small hotel.|🏨
+map|n|bản đồ|Look at the map.|🗺️
+abroad|adv|ở nước ngoài|She wants to study abroad.|🌐
+tourist|n|khách du lịch|Many tourists visit Hoi An.|📸
+sightseeing|n|tham quan|We went sightseeing in Paris.|🗼
+souvenir|n|quà lưu niệm|I bought a souvenir for my friend.|🎁
+explore|v|khám phá|Let's explore the island.|🧭
+arrive|v|đến nơi|We arrived at noon.|📍
+leave|v|rời đi|The bus leaves at 6.|🚪
+# English-speaking countries | Các nước nói tiếng Anh
+country|n|đất nước|Which country do you want to visit?|🌏
+capital|n|thủ đô|London is the capital of the UK.|🏙️
+the United Kingdom|n|Vương quốc Anh|The United Kingdom has four nations.|🇬🇧
+the United States|n|Hoa Kỳ|The United States is very big.|🇺🇸
+Australia|n|nước Úc|Kangaroos live in Australia.|🇦🇺
+Canada|n|Canada|Canada has cold winters.|🇨🇦
+New Zealand|n|New Zealand|New Zealand has beautiful mountains.|🇳🇿
+Scotland|n|Scotland|People in Scotland play bagpipes.|🏴
+Ireland|n|Ireland|Ireland is very green.|🇮🇪
+native speaker|n|người bản xứ|She is a native speaker of English.|🗣️
+official language|n|ngôn ngữ chính thức|English is an official language in Singapore.|📢
+symbol|n|biểu tượng|The maple leaf is a symbol of Canada.|🍁
+landmark|n|địa danh nổi tiếng|Big Ben is a famous landmark.|🗽
+castle|n|lâu đài|We visited an old castle.|🏰
+kangaroo|n|chuột túi|Kangaroos can jump far.|🦘
+koala|n|gấu túi|Koalas sleep a lot.|🐨
+population|n|dân số|The population is about 5 million.|👥
+culture|n|văn hoá|I'm interested in British culture.|🎎
+accent|n|giọng (vùng miền)|He has an Australian accent.|🗣️
+continent|n|châu lục|Asia is the biggest continent.|🌍
+ocean|n|đại dương|The Pacific Ocean is huge.|🌊
+island|n|hòn đảo|Australia is a big island.|🏝️
+scenery|n|phong cảnh|The scenery is breathtaking.|🏞️
+unique|adj|độc đáo|Each country has unique food.|💎
+# Family and people | Gia đình và con người
+family|n|gia đình|I love my family.|👨‍👩‍👧‍👦
+parent|n|bố hoặc mẹ|My parents work in Hanoi.|👪
+grandparent|n|ông hoặc bà|I visit my grandparents on Sundays.|👴
+uncle|n|chú, bác, cậu|My uncle is a doctor.|👨
+aunt|n|cô, dì, bác gái|My aunt bakes great cakes.|👩
+cousin|n|anh chị em họ|My cousin is the same age as me.|🧒
+brother|n|anh/em trai|My brother is older than me.|👦
+sister|n|chị/em gái|My little sister is five.|👧
+twin|n|anh chị em sinh đôi|They are twins.|👯
+only child|n|con một|I'm an only child.|🧒
+baby|n|em bé|The baby is sleeping.|👶
+teenager|n|thiếu niên|Teenagers love social media.|🧑
+adult|n|người lớn|Adults pay full price.|🧑‍💼
+neighbour|n|hàng xóm|Our neighbours are friendly.|🏘️
+friend|n|bạn bè|She is my best friend.|🤝
+friendly|adj|thân thiện|People here are friendly.|😊
+kind|adj|tốt bụng|My teacher is kind.|💗
+funny|adj|vui tính|My dad is funny.|😄
+clever|adj|thông minh|She's a clever girl.|🧠
+shy|adj|nhút nhát|He is shy with strangers.|🙈
+confident|adj|tự tin|Be confident when you speak.|😎
+hard-working|adj|chăm chỉ|Vietnamese students are hard-working.|💪
+careful|adj|cẩn thận|Be careful with knives.|⚠️
+careless|adj|bất cẩn|Careless drivers cause accidents.|😬
+generous|adj|hào phóng|My grandma is generous.|🎁
+honest|adj|trung thực|Always be honest.|🤞
+polite|adj|lịch sự|Be polite to older people.|🙇
+rude|adj|thô lỗ|It's rude to interrupt.|😠
+brave|adj|dũng cảm|The firefighter was brave.|🦁
+curious|adj|tò mò|Children are curious.|🔍
+tall|adj|cao|My brother is very tall.|📏
+short|adj|thấp, ngắn|My hair is short.|📐
+slim|adj|mảnh mai|She is tall and slim.|🧍‍♀️
+handsome|adj|đẹp trai|The actor is handsome.|🤵
+beautiful|adj|đẹp|What a beautiful day!|🌺
+young|adj|trẻ|My mum looks young.|🧒
+old|adj|già, cũ|This is an old house.|👴
+appearance|n|ngoại hình|Don't judge people by appearance.|🪞
+personality|n|tính cách|She has a nice personality.|💫
+# Body and clothes | Cơ thể và quần áo
+head|n|đầu|My head hurts.|🗣️
+face|n|khuôn mặt|Wash your face.|🙂
+hair|n|tóc|She has long black hair.|💇
+eye|n|mắt|Close your eyes.|👁️
+ear|n|tai|Listen with your ears.|👂
+nose|n|mũi|My nose is cold.|👃
+mouth|n|miệng|Open your mouth.|👄
+tooth|n|răng|I lost a tooth.|🦷
+neck|n|cổ|Giraffes have long necks.|🦒
+shoulder|n|vai|My shoulder hurts.|💪
+arm|n|cánh tay|He broke his arm.|💪
+hand|n|bàn tay|Raise your hand.|✋
+finger|n|ngón tay|I cut my finger.|☝️
+leg|n|chân|My legs are tired.|🦵
+foot|n|bàn chân|My foot is wet.|🦶
+knee|n|đầu gối|I hurt my knee playing football.|🦵
+back|n|lưng|Sit up straight to protect your back.|🧍
+heart|n|tim|Exercise keeps your heart healthy.|❤️
+shirt|n|áo sơ mi|He wears a white shirt.|👔
+T-shirt|n|áo phông|I like this T-shirt.|👕
+jeans|n|quần bò|She's wearing blue jeans.|👖
+trousers|n|quần dài|These trousers are too long.|👖
+shorts|n|quần soóc|Wear shorts in summer.|🩳
+skirt|n|chân váy|Her skirt is red.|👗
+dress|n|váy liền|What a lovely dress!|👗
+jacket|n|áo khoác|Take a jacket. It's cold.|🧥
+coat|n|áo choàng, áo khoác dài|Put on your coat.|🧥
+sweater|n|áo len|My sweater is warm.|🧶
+shoes|n|giày|I need new shoes.|👟
+boots|n|ủng, bốt|Wear boots in the rain.|🥾
+socks|n|tất|Where are my socks?|🧦
+hat|n|mũ|Wear a hat in the sun.|👒
+cap|n|mũ lưỡi trai|He wears a cap backwards.|🧢
+scarf|n|khăn quàng|A scarf keeps your neck warm.|🧣
+glasses|n|kính mắt|I wear glasses for reading.|👓
+umbrella|n|ô, dù|Take an umbrella.|☂️
+wear|v|mặc, đội, đeo|I wear a uniform to school.|👕
+put on|phr|mặc vào|Put on your shoes.|👞
+take off|phr|cởi ra|Take off your shoes inside.|🥿
+fashion|n|thời trang|She loves fashion.|👠
+size|n|kích cỡ|What size are you?|📏
+# House and home | Nhà cửa
+house|n|ngôi nhà|We live in a big house.|🏠
+flat|n|căn hộ|They live in a flat in the city.|🏢
+apartment|n|căn hộ|Our apartment is on the 10th floor.|🏢
+living room|n|phòng khách|We watch TV in the living room.|🛋️
+bedroom|n|phòng ngủ|My bedroom is small.|🛏️
+bathroom|n|phòng tắm|The bathroom is upstairs.|🛁
+garden|n|khu vườn|There are flowers in the garden.|🌷
+garage|n|nhà để xe|The car is in the garage.|🚗
+roof|n|mái nhà|The cat is on the roof.|🏠
+floor|n|sàn nhà, tầng|Don't sit on the floor.|🟫
+wall|n|bức tường|There's a clock on the wall.|🧱
+window|n|cửa sổ|Open the window, please.|🪟
+door|n|cửa ra vào|Close the door.|🚪
+stairs|n|cầu thang|Go up the stairs.|🪜
+sofa|n|ghế sô-pha|The cat sleeps on the sofa.|🛋️
+table|n|cái bàn|Put the books on the table.|🪑
+chair|n|cái ghế|Pull up a chair.|🪑
+bed|n|cái giường|Make your bed.|🛏️
+wardrobe|n|tủ quần áo|My clothes are in the wardrobe.|🚪
+shelf|n|giá, kệ|The books are on the shelf.|📚
+lamp|n|đèn bàn|Turn on the lamp.|💡
+mirror|n|gương|Look in the mirror.|🪞
+fridge|n|tủ lạnh|Put the milk in the fridge.|🧊
+cooker|n|bếp nấu|The cooker is hot.|🔥
+sink|n|bồn rửa|Wash the dishes in the sink.|🚰
+air conditioner|n|máy điều hoà|Turn on the air conditioner.|❄️
+fan|n|quạt|The fan is broken.|🌀
+clock|n|đồng hồ|The clock is slow.|🕰️
+housework|n|việc nhà|I help with the housework.|🧹
+do the washing-up|phr|rửa bát|I do the washing-up after dinner.|🍽️
+tidy|adj|gọn gàng|Keep your room tidy.|🧺
+messy|adj|bừa bộn|My brother's room is messy.|🧦
+comfortable home|phr|ngôi nhà thoải mái|We have a comfortable home.|🏡
+# Animals and nature | Động vật và thiên nhiên
+animal|n|động vật|I love animals.|🐾
+pet|n|thú cưng|Do you have a pet?|🐶
+dog|n|con chó|My dog is friendly.|🐕
+cat|n|con mèo|The cat is sleeping.|🐈
+rabbit|n|con thỏ|Rabbits have long ears.|🐇
+bird|n|con chim|Birds sing in the morning.|🐦
+parrot|n|con vẹt|The parrot can talk.|🦜
+elephant|n|con voi|Elephants are very big.|🐘
+tiger|n|con hổ|Tigers are dangerous.|🐅
+lion|n|sư tử|The lion is the king of the jungle.|🦁
+monkey|n|con khỉ|Monkeys climb trees.|🐒
+bear|n|con gấu|Bears sleep in winter.|🐻
+snake|n|con rắn|I'm afraid of snakes.|🐍
+crocodile|n|con cá sấu|Crocodiles live in rivers.|🐊
+dolphin|n|cá heo|Dolphins are smart.|🐬
+whale|n|cá voi|Whales are huge.|🐋
+shark|n|cá mập|Sharks have sharp teeth.|🦈
+turtle|n|con rùa|Turtles live a long time.|🐢
+butterfly|n|con bướm|A butterfly landed on the flower.|🦋
+bee|n|con ong|Bees make honey.|🐝
+ant|n|con kiến|Ants are very strong.|🐜
+mosquito|n|con muỗi|Mosquitoes bite at night.|🦟
+buffalo|n|con trâu|Farmers use buffaloes.|🐃
+cow|n|con bò|Cows give us milk.|🐄
+pig|n|con lợn|The pig is in the mud.|🐖
+duck|n|con vịt|Ducks swim in the pond.|🦆
+wild|adj|hoang dã|Wild animals live in forests.|🐺
+endangered|adj|có nguy cơ tuyệt chủng|Pandas are endangered.|🐼
+protect|v|bảo vệ|We must protect animals.|🛡️
+forest|n|rừng|The forest is full of trees.|🌳
+jungle|n|rừng rậm|Tigers live in the jungle.|🌴
+mountain|n|núi|Fansipan is a high mountain.|⛰️
+river|n|sông|The Red River is long.|🏞️
+lake|n|hồ|Hoan Kiem Lake is in Hanoi.|🏞️
+sea|n|biển|We swim in the sea.|🌊
+beach|n|bãi biển|Let's go to the beach.|🏖️
+waterfall|n|thác nước|The waterfall is beautiful.|💦
+desert|n|sa mạc|The Sahara is a desert.|🏜️
+cave|n|hang động|Son Doong is the largest cave.|🕳️
+hill|n|đồi|We climbed the hill.|⛰️
+field|n|cánh đồng|Rice fields are green.|🌾
+flower|n|bông hoa|She picked a flower.|🌸
+grass|n|cỏ|Keep off the grass.|🌱
+leaf|n|lá cây|Leaves fall in autumn.|🍂
+rock|n|tảng đá|Sit on that rock.|🪨
+sky|n|bầu trời|The sky is blue.|🌌
+nature|n|thiên nhiên|I love nature.|🍃

@@ -1,0 +1,162 @@
+# Restaurants and events | Nhà hàng & sự kiện
+cater|v|cung cấp đồ ăn (sự kiện)|A local company catered the party.|🍱
+catering|n|dịch vụ ăn uống|Catering is included in the price.|🍽️
+banquet|n|tiệc lớn|The awards banquet is on Friday.|🥂
+reception|n|tiệc chiêu đãi; quầy lễ tân|There's a reception after the talk.|🥂
+venue|n|địa điểm tổ chức|The venue holds 300 guests.|🏛️
+host|v|tổ chức, làm chủ nhà|We will host the conference.|🎤
+guest|n|khách|Guests arrive at 7.|🧑‍🤝‍🧑
+invitation|n|lời mời, thiệp mời|Did you get the invitation?|💌
+RSVP|v|phản hồi lời mời|Please RSVP by May 1.|📩
+register|v|đăng ký|Register online for the event.|🖊️
+registration|n|sự đăng ký|Registration closes Friday.|📋
+registration fee|n|phí đăng ký|The registration fee is $100.|💵
+keynote speaker|n|diễn giả chính|The keynote speaker is a famous CEO.|🎙️
+award ceremony|n|lễ trao giải|She won at the award ceremony.|🏆
+anniversary|n|lễ kỷ niệm|We celebrate our 10th anniversary.|🎂
+fundraiser|n|sự kiện gây quỹ|The fundraiser raised $5,000.|💝
+exhibition booth|n|gian hàng triển lãm|Visit our exhibition booth.|🏪
+trade show|n|hội chợ thương mại|We met clients at the trade show.|🏢
+sponsor|n|nhà tài trợ|The event has three sponsors.|🤝
+sponsor|v|tài trợ|A bank sponsored the race.|💰
+attendee|n|người tham dự|Attendees received a gift bag.|🎒
+appetizer|n|món khai vị|Let's order an appetizer.|🥟
+main course|n|món chính|For the main course, I'll have fish.|🍖
+dessert|n|món tráng miệng|Would you like dessert?|🍰
+beverage|n|đồ uống|Beverages are served at the bar.|🥤
+cuisine|n|ẩm thực|I love Italian cuisine.|🍝
+chef's special|n|món đặc biệt của bếp trưởng|Try the chef's special.|👨‍🍳
+diner|n|thực khách|Diners enjoyed the new menu.|🍽️
+waiter|n|bồi bàn|The waiter brought our drinks.|🤵
+server|n|người phục vụ; máy chủ|Our server was very friendly.|💁
+table for two|phr|bàn cho hai người|A table for two, please.|2️⃣
+tip|n|tiền boa|We left a 10% tip.|💵
+vegetarian|adj|ăn chay|Do you have vegetarian dishes?|🥬
+dietary restriction|n|hạn chế ăn uống|Tell us about dietary restrictions.|🚫
+buffet|n|tiệc buffet|Lunch is a buffet.|🍱
+refreshments|n|đồ ăn nhẹ, đồ uống|Refreshments will be served.|🧃
+occasion|n|dịp|It's a special occasion.|🎊
+entertainment|n|giải trí|Live music provides entertainment.|🎶
+schedule of events|n|lịch trình sự kiện|Check the schedule of events.|🗓️
+# Technology and IT | Công nghệ & CNTT
+technology|n|công nghệ|Technology changes fast.|💻
+technical|adj|thuộc kỹ thuật|We have a technical problem.|🛠️
+technician|n|kỹ thuật viên|A technician will fix it.|🧑‍🔧
+software|n|phần mềm|Install the new software.|💿
+hardware|n|phần cứng|The hardware is outdated.|🖥️
+install|v|cài đặt|Install the app on your phone.|⬇️
+installation|n|sự lắp đặt, cài đặt|Installation takes 10 minutes.|🔧
+upgrade|v|nâng cấp|We upgraded our computers.|⬆️
+system|n|hệ thống|The system is down.|🖧
+network|n|mạng|The network is slow today.|🌐
+server|n|máy chủ|The server crashed.|🗄️
+database|n|cơ sở dữ liệu|Customer data is in the database.|🗃️
+data|n|dữ liệu|We analyze sales data.|📊
+backup|n|bản sao lưu|Make a backup of your files.|💾
+access|n|quyền truy cập|You need access to the system.|🔓
+access|v|truy cập|You can access it from home.|🔑
+log in|phr|đăng nhập|Log in with your ID.|🔐
+user|n|người dùng|The app has 1 million users.|👤
+username|n|tên đăng nhập|Enter your username.|🆔
+security|n|bảo mật, an ninh|Security is our top priority.|🛡️
+virus|n|vi-rút máy tính|A virus infected the computer.|🦠
+technical support|n|hỗ trợ kỹ thuật|Call technical support.|🎧
+troubleshoot|v|khắc phục sự cố|IT will troubleshoot the issue.|🧰
+compatible|adj|tương thích|Is it compatible with Mac?|🔗
+digital|adj|kỹ thuật số|We use digital signatures.|🔢
+electronic|adj|điện tử|Submit an electronic copy.|📱
+online platform|n|nền tảng trực tuyến|We sell on an online platform.|🌐
+e-commerce|n|thương mại điện tử|E-commerce is growing fast.|🛒
+application|n|ứng dụng|Download our mobile application.|📲
+feature update|n|bản cập nhật tính năng|A feature update is coming.|🆕
+malfunction|v|trục trặc|The printer malfunctioned again.|🖨️
+outage|n|sự cố mất điện/mất mạng|There was a power outage.|🔌
+restore|v|khôi phục|Service was restored at 6.|♻️
+manual|n|sách hướng dẫn|Read the user manual.|📘
+instruction|n|hướng dẫn|Follow the instructions.|📋
+tutorial|n|bài hướng dẫn|Watch the online tutorial.|▶️
+automatic|adj|tự động|The doors are automatic.|🚪
+cutting-edge|adj|tiên tiến nhất|We use cutting-edge technology.|🚀
+obsolete|adj|lỗi thời|This model is obsolete.|🗑️
+# Real estate and facilities | Bất động sản & cơ sở vật chất
+property|n|bất động sản, tài sản|They own property downtown.|🏘️
+real estate|n|bất động sản|She works in real estate.|🏠
+real estate agent|n|môi giới nhà đất|Call a real estate agent.|🧑‍💼
+lease|n|hợp đồng thuê|We signed a two-year lease.|📜
+rent|n|tiền thuê|The rent is $800 a month.|💵
+rent|v|thuê|We rent an office downtown.|🔑
+tenant|n|người thuê nhà|The tenants complained about noise.|🧑
+landlord|n|chủ nhà|Call the landlord about the leak.|👴
+premises|n|cơ sở, khuôn viên|No smoking on the premises.|🚭
+spacious|adj|rộng rãi|The office is spacious.|📐
+located|adj|toạ lạc|The hotel is located downtown.|📍
+location|n|vị trí|It's a great location.|📌
+renovate|v|cải tạo, sửa sang|They renovated the lobby.|🔨
+renovation|n|sự cải tạo|The gym is closed for renovation.|🚧
+construction|n|xây dựng|Construction will finish in May.|🏗️
+contractor|n|nhà thầu|We hired a contractor.|👷
+repair|v|sửa chữa|The elevator needs repair.|🔧
+maintenance staff|n|nhân viên bảo trì|Maintenance staff fixed the light.|🧑‍🔧
+plumber|n|thợ sửa ống nước|Call a plumber.|🪠
+electrician|n|thợ điện|The electrician fixed the wiring.|⚡
+leak|n|chỗ rò rỉ|There's a leak in the ceiling.|💧
+ceiling|n|trần nhà|The ceiling is very high.|⬆️
+elevator|n|thang máy|Take the elevator to the 5th floor.|🛗
+escalator|n|thang cuốn|The escalator is broken.|↗️
+parking lot|n|bãi đỗ xe|The parking lot is full.|🅿️
+storage room|n|phòng kho|Boxes are in the storage room.|📦
+utilities|n|các tiện ích (điện, nước)|Utilities are included in the rent.|🚰
+furnished|adj|có sẵn đồ nội thất|The apartment is fully furnished.|🛋️
+furniture|n|đồ nội thất|We ordered new office furniture.|🪑
+relocate|v|di dời|The company relocated to Da Nang.|🚚
+relocation|n|sự chuyển địa điểm|Relocation costs are covered.|📦
+vacant|adj|trống|The unit is vacant.|🈳
+occupancy|n|tỷ lệ lấp đầy|Hotel occupancy is 90%.|🏨
+blueprint|n|bản thiết kế|Review the blueprints.|📘
+layout|n|cách bố trí|I like the office layout.|🗺️
+# Health and insurance | Sức khoẻ & bảo hiểm
+insurance|n|bảo hiểm|Health insurance is provided.|🛡️
+policyholder|n|người có hợp đồng bảo hiểm|Policyholders get a discount.|📜
+coverage|n|phạm vi bảo hiểm|Check your coverage.|☂️
+premium|n|phí bảo hiểm|Premiums increased this year.|💳
+claim|n|yêu cầu bồi thường|File an insurance claim.|📝
+claim|v|yêu cầu, khẳng định|He claimed the money back.|🙋
+clinic|n|phòng khám|The clinic opens at 8.|🏥
+physician|n|bác sĩ|See your physician regularly.|🩺
+pharmacist|n|dược sĩ|Ask the pharmacist.|💊
+prescription|n|đơn thuốc|You need a prescription.|📃
+appointment|n|cuộc hẹn|I have a dentist appointment.|📅
+checkup|n|khám sức khoẻ định kỳ|Get an annual checkup.|🩺
+patient|n|bệnh nhân|The patient is recovering.|🛌
+symptom|n|triệu chứng|What are your symptoms?|🤒
+treatment|n|sự điều trị|The treatment worked.|💉
+recover|v|hồi phục|She recovered quickly.|💪
+sick leave|n|nghỉ ốm|He's on sick leave.|🤒
+wellness|n|sức khoẻ tổng thể|We run a wellness program.|🧘
+fitness center|n|trung tâm thể hình|The building has a fitness center.|🏋️
+medical|adj|thuộc y tế|Bring your medical records.|🩻
+emergency|n|trường hợp khẩn cấp|In an emergency, call 115.|🚑
+first aid|n|sơ cứu|Take a first aid course.|⛑️
+# News, media and environment | Tin tức, truyền thông & môi trường
+article|n|bài báo|I read an article about AI.|📰
+editor|n|biên tập viên|The editor checked the article.|✏️
+publish|v|xuất bản|They publish a monthly magazine.|📚
+publication|n|ấn phẩm, sự xuất bản|The publication date is June 1.|📖
+subscribe|v|đăng ký dài hạn|Subscribe to our newsletter.|🔔
+subscription|n|gói đăng ký|Your subscription expires soon.|🔁
+newsletter|n|bản tin|Read our weekly newsletter.|📨
+press release|n|thông cáo báo chí|We issued a press release.|🗞️
+press conference|n|họp báo|The CEO held a press conference.|🎤
+journalist|n|nhà báo|Journalists asked about the merger.|🧑‍💻
+broadcast|v|phát sóng|The show is broadcast live.|📡
+headline|n|tiêu đề bài báo|The news made headlines.|🗞️
+interview|v|phỏng vấn|The reporter interviewed the mayor.|🎙️
+public relations|n|quan hệ công chúng|She works in public relations.|📣
+reputation|n|danh tiếng|The firm has a good reputation.|⭐
+sustainable|adj|bền vững|We use sustainable materials.|🌱
+sustainability|n|tính bền vững|Sustainability is a key goal.|♻️
+emission|n|khí thải|We cut carbon emissions.|🏭
+recycling|n|sự tái chế|Recycling bins are by the door.|♻️
+conserve|v|bảo tồn, tiết kiệm|Conserve energy—turn off lights.|💡
+environmental|adj|thuộc môi trường|We follow environmental rules.|🌍
+waste|n|chất thải|Reduce office waste.|🗑️

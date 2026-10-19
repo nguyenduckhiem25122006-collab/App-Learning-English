@@ -1,0 +1,196 @@
+# Office and workplace | Văn phòng & nơi làm việc
+colleague|n|đồng nghiệp|My colleague helped me with the report.|🧑‍🤝‍🧑
+co-worker|n|đồng nghiệp|Two co-workers shared a desk.|👥
+supervisor|n|người giám sát|Ask your supervisor for approval.|🧑‍💼
+manager|n|quản lý|The manager called a meeting.|👔
+employee|n|nhân viên|All employees must wear ID badges.|🪪
+employer|n|người sử dụng lao động|Your employer pays for training.|🏢
+staff|n|đội ngũ nhân viên|The staff are friendly.|👥
+personnel|n|nhân sự|Only authorized personnel may enter.|🚷
+department|n|phòng ban|She works in the sales department.|🗂️
+division|n|bộ phận, khối|He heads the Asia division.|🧩
+headquarters|n|trụ sở chính|Our headquarters is in Singapore.|🏢
+branch|n|chi nhánh|The bank opened a new branch.|🌿
+subsidiary|n|công ty con|It's a subsidiary of a Japanese firm.|🏬
+firm|n|công ty|She joined a law firm.|⚖️
+corporation|n|tập đoàn|It's a multinational corporation.|🏙️
+enterprise|n|doanh nghiệp|Small enterprises need loans.|🏭
+executive|n|giám đốc điều hành, quản lý cấp cao|The executives met in Tokyo.|🎩
+receptionist|n|lễ tân|Please check in with the receptionist.|🛎️
+assistant|n|trợ lý|My assistant will send the file.|🗃️
+intern|n|thực tập sinh|The intern started on Monday.|🧑‍🎓
+workload|n|khối lượng công việc|My workload is heavy this month.|📚
+task|n|nhiệm vụ|Complete each task by Friday.|✅
+assignment|n|nhiệm vụ được giao|This is a challenging assignment.|📌
+duty|n|nghĩa vụ, trách nhiệm|Answering calls is part of my duties.|📞
+responsibility|n|trách nhiệm|Safety is everyone's responsibility.|🛡️
+responsible|adj|chịu trách nhiệm|Who is responsible for the budget?|🙋
+deadline|n|hạn chót|The deadline is next Tuesday.|⏰
+schedule|n|lịch trình|Let me check my schedule.|🗓️
+reschedule|v|dời lịch|We need to reschedule the meeting.|🔁
+memo|n|bản ghi nhớ nội bộ|Read the memo from HR.|📝
+notice|n|thông báo|A notice was posted on the board.|📌
+bulletin board|n|bảng tin|Check the bulletin board for updates.|📋
+document|n|tài liệu|Please sign this document.|📄
+file|v|lưu trữ (hồ sơ)|File the invoices by date.|🗄️
+folder|n|thư mục, bìa hồ sơ|The contract is in the blue folder.|📁
+cabinet|n|tủ hồ sơ|Lock the filing cabinet.|🗄️
+photocopier|n|máy photocopy|The photocopier is out of order.|🖨️
+printer|n|máy in|The printer is out of paper.|🖨️
+stationery|n|văn phòng phẩm|Order more stationery.|🖇️
+supplies|n|đồ dùng, vật tư|Office supplies are in the storage room.|📦
+cubicle|n|ô làm việc ngăn vách|Her cubicle is near the window.|🔲
+workstation|n|chỗ làm việc|Keep your workstation tidy.|🖥️
+badge|n|thẻ tên|Wear your badge at all times.|🪪
+extension|n|số máy lẻ; sự gia hạn|Call me at extension 204.|☎️
+shift|n|ca làm việc|I work the night shift.|🌙
+overtime|n|làm thêm giờ|We worked overtime last week.|⏱️
+commute|v|đi lại (đi làm)|She commutes by train.|🚆
+remote work|n|làm việc từ xa|Remote work is common now.|🏠
+in charge of|phr|phụ trách|Who is in charge of the project?|🎯
+on leave|phr|đang nghỉ phép|Mr. Lee is on leave this week.|🏖️
+day off|n|ngày nghỉ|I'm taking a day off tomorrow.|📆
+productivity|n|năng suất|New software boosted productivity.|📈
+efficient|adj|hiệu quả (ít lãng phí)|This is an efficient process.|⚙️
+efficiency|n|hiệu suất|We aim to improve efficiency.|⚡
+organize|v|tổ chức, sắp xếp|She organized the files.|🗂️
+coordinate|v|điều phối|He coordinates the team's work.|🔗
+delegate|v|uỷ quyền, giao việc|Managers should delegate tasks.|➡️
+handle|v|xử lý|She handles customer complaints.|🤲
+manage|v|quản lý|He manages a team of ten.|🧭
+oversee|v|giám sát|She oversees the construction.|👀
+assist|v|hỗ trợ|Can you assist me with this?|🤝
+submit|v|nộp|Submit the form by noon.|📤
+approve|v|phê duyệt|The director approved the plan.|✅
+approval|n|sự phê duyệt|We're waiting for approval.|🟢
+authorize|v|cho phép, uỷ quyền|Who authorized this payment?|🖊️
+review|v|xem xét, rà soát|Please review the draft.|🔍
+revise|v|sửa đổi|We revised the proposal.|✏️
+draft|n|bản nháp|Here's the first draft.|📝
+update|v|cập nhật|I'll update you tomorrow.|🔄
+remind|v|nhắc nhở|Remind me to call him.|🔔
+reminder|n|lời nhắc|This is a reminder about the deadline.|⏰
+urgent|adj|khẩn cấp|This matter is urgent.|🚨
+confidential|adj|bảo mật|These files are confidential.|🔒
+punctual|adj|đúng giờ|Please be punctual.|⌚
+occupied|adj|đang bận, có người|The meeting room is occupied.|🔴
+available|adj|có sẵn, rảnh|Is Ms. Tran available now?|🟢
+# Meetings and communication | Họp & giao tiếp
+meeting|n|cuộc họp|The meeting starts at 9.|👥
+agenda|n|chương trình nghị sự|What's on the agenda?|📋
+minutes|n|biên bản cuộc họp|Who will take the minutes?|🗒️
+attend|v|tham dự|Ten people attended the meeting.|🙋
+attendance|n|sự tham dự|Attendance is mandatory.|✔️
+participant|n|người tham gia|Each participant got a handout.|🧑‍🤝‍🧑
+participate|v|tham gia|Everyone should participate.|✋
+conference|n|hội nghị|The conference is in Bangkok.|🎤
+conference call|n|cuộc gọi hội nghị|We have a conference call at 3.|📞
+videoconference|n|họp trực tuyến có hình|Join the videoconference link.|📹
+presentation|n|bài thuyết trình|Her presentation was clear.|📊
+presenter|n|người thuyết trình|The presenter answered questions.|🎙️
+handout|n|tài liệu phát tay|Please take a handout.|📄
+discuss|v|thảo luận|Let's discuss the budget.|💬
+discussion|n|cuộc thảo luận|We had a long discussion.|🗣️
+propose|v|đề xuất|I propose a new schedule.|💡
+proposal|n|bản đề xuất|The proposal was accepted.|📑
+suggest|v|gợi ý|I suggest meeting on Monday.|💭
+suggestion|n|gợi ý|Do you have any suggestions?|💡
+consensus|n|sự đồng thuận|We reached a consensus.|🤝
+vote|v|bỏ phiếu|Let's vote on it.|🗳️
+postpone|v|hoãn lại|The meeting was postponed.|⏸️
+cancel|v|huỷ|The flight was canceled.|❌
+adjourn|v|tạm hoãn, kết thúc (cuộc họp)|The meeting was adjourned at 5.|🔚
+announce|v|thông báo|The CEO announced a merger.|📢
+announcement|n|thông báo|Listen to the announcement.|📣
+inform|v|thông báo cho|Please inform the staff.|ℹ️
+notify|v|báo cho biết|We'll notify you by email.|🔔
+confirm|v|xác nhận|Please confirm your attendance.|✅
+confirmation|n|sự xác nhận|You'll receive a confirmation email.|📧
+clarify|v|làm rõ|Could you clarify that point?|🔎
+respond|v|phản hồi|Please respond by Friday.|↩️
+response|n|sự phản hồi|Thank you for your quick response.|💬
+inquire|v|hỏi, đề nghị thông tin|I'm calling to inquire about the job.|❓
+inquiry|n|yêu cầu thông tin|We received many inquiries.|📨
+correspondence|n|thư từ giao dịch|Keep all correspondence.|✉️
+attachment|n|tệp đính kèm|See the attachment.|📎
+forward|v|chuyển tiếp|I'll forward you the email.|➡️
+recipient|n|người nhận|Check the recipient's address.|📬
+reply|v|trả lời|Reply to all, please.|↪️
+brief|adj|ngắn gọn|Keep it brief.|⏱️
+summarize|v|tóm tắt|Let me summarize the main points.|📝
+mention|v|đề cập|He mentioned a new product.|💬
+emphasize|v|nhấn mạnh|She emphasized safety.|❗
+feedback|n|phản hồi, góp ý|Thanks for your feedback.|🗨️
+opinion|n|ý kiến|What's your opinion?|💭
+objection|n|sự phản đối|Are there any objections?|✋
+agree|v|đồng ý|I agree with you.|👍
+disagree|v|không đồng ý|I disagree with this plan.|👎
+negotiate|v|đàm phán|We negotiated a better price.|🤝
+negotiation|n|cuộc đàm phán|Negotiations lasted two days.|⚖️
+compromise|n|sự thoả hiệp|We reached a compromise.|🤝
+brainstorm|v|động não|Let's brainstorm ideas.|🧠
+interrupt|v|ngắt lời|Sorry to interrupt.|✋
+# Human resources and recruitment | Nhân sự & tuyển dụng
+recruit|v|tuyển dụng|We plan to recruit five engineers.|🧲
+recruitment|n|sự tuyển dụng|Recruitment starts in May.|📢
+hire|v|thuê, tuyển|The company hired 20 new staff.|✍️
+candidate|n|ứng viên|The candidate has great experience.|🧑‍💼
+applicant|n|người nộp đơn|All applicants must submit a résumé.|📄
+apply|v|nộp đơn|She applied for the manager position.|📨
+application|n|đơn xin việc; ứng dụng|Fill out the application form.|📝
+position|n|vị trí|The position is still open.|🪑
+vacancy|n|vị trí còn trống|We have a vacancy in sales.|🈳
+opening|n|vị trí tuyển dụng|There's an opening for a designer.|🚪
+résumé|n|sơ yếu lý lịch|Send your résumé by email.|📄
+cover letter|n|thư xin việc|Attach a cover letter.|✉️
+qualification|n|bằng cấp, trình độ|What are your qualifications?|🎓
+qualified|adj|đủ điều kiện|She is highly qualified.|✅
+requirement|n|yêu cầu|A degree is a requirement.|📋
+experience|n|kinh nghiệm|He has five years' experience.|⏳
+experienced|adj|có kinh nghiệm|We need experienced staff.|🧓
+skill|n|kỹ năng|Communication skills are important.|🛠️
+degree|n|bằng đại học|She has a degree in finance.|🎓
+certificate|n|chứng chỉ|You need a TOEIC certificate.|📜
+reference|n|thư giới thiệu, người tham chiếu|Please provide two references.|🧾
+interview|n|buổi phỏng vấn|The interview is at 10 a.m.|🎙️
+interviewer|n|người phỏng vấn|The interviewer asked about my goals.|🧑‍💼
+shortlist|v|chọn vào danh sách ngắn|Five candidates were shortlisted.|📃
+job offer|n|lời mời làm việc|She accepted the job offer.|🤝
+salary|n|lương|The salary is competitive.|💵
+wage|n|tiền công|The minimum wage went up.|💴
+benefits|n|phúc lợi|Benefits include health insurance.|🎁
+compensation|n|thù lao; sự bồi thường|The compensation package is attractive.|💰
+bonus|n|tiền thưởng|We got a year-end bonus.|🎉
+raise|n|sự tăng lương|He asked for a raise.|📈
+promotion|n|sự thăng chức; khuyến mãi|She got a promotion last month.|⬆️
+promote|v|thăng chức; quảng bá|He was promoted to director.|🏅
+transfer|v|thuyên chuyển|She was transferred to Hanoi.|🔁
+resign|v|từ chức, nghỉ việc|He resigned last week.|🚪
+resignation|n|sự từ chức|She handed in her resignation.|📝
+retire|v|nghỉ hưu|He retired at 60.|🧓
+retirement|n|sự nghỉ hưu|We held a retirement party.|🎈
+dismiss|v|sa thải; giải tán|He was dismissed for misconduct.|🚫
+lay off|phr|cho nghỉ việc (cắt giảm)|The factory laid off 100 workers.|📉
+full-time|adj|toàn thời gian|It's a full-time job.|🕘
+part-time|adj|bán thời gian|She works part-time.|🕐
+permanent|adj|lâu dài, chính thức|It's a permanent position.|📌
+temporary|adj|tạm thời|We hired temporary staff.|⏳
+probation|n|thời gian thử việc|Probation lasts two months.|🧪
+orientation|n|buổi định hướng nhân viên mới|New hires attend orientation.|🧭
+training|n|sự đào tạo|Training is provided.|🎓
+workshop|n|hội thảo thực hành|Join our leadership workshop.|🛠️
+seminar|n|hội thảo|The seminar covers marketing.|🎤
+performance review|n|đánh giá hiệu suất|My performance review is in June.|📊
+evaluate|v|đánh giá|We evaluate staff every year.|📋
+evaluation|n|sự đánh giá|The evaluation was positive.|⭐
+appraisal|n|sự đánh giá, thẩm định|Annual appraisals start next week.|📝
+motivate|v|thúc đẩy, tạo động lực|Bonuses motivate employees.|🔥
+morale|n|tinh thần|Staff morale is high.|😊
+mentor|n|người hướng dẫn|My mentor gave me good advice.|🧑‍🏫
+payroll|n|bảng lương|Payroll is processed monthly.|📑
+human resources|n|phòng nhân sự|Contact human resources about leave.|👩‍💼
+policy|n|chính sách|Read the company policy.|📘
+regulation|n|quy định|Follow safety regulations.|📏
+dress code|n|quy định trang phục|The dress code is business casual.|👔
+eligible|adj|đủ điều kiện|You are eligible for a bonus.|✅
+entitled|adj|được quyền|Staff are entitled to 12 days' leave.|📜
