@@ -7,8 +7,9 @@ ROOT = pathlib.Path(__file__).parent
 DATA = ROOT / "data"
 OUT_JS = ROOT / "build" / "data.js"
 LEVELS = {"kids": ["kids1.txt", "kids2.txt", "kids3.txt", "kids4.txt", "kids5.txt"],
-          "toeic": ["toeic1.txt", "toeic2.txt", "toeic3.txt", "toeic4.txt", "toeic5.txt", "toeic6.txt", "toeic7.txt", "toeic8.txt"]}
-SENTENCE_FILES = ["sent_daily.txt", "sent_work.txt"]
+          "toeic": ["toeic1.txt", "toeic2.txt", "toeic3.txt", "toeic4.txt", "toeic5.txt", "toeic6.txt", "toeic7.txt", "toeic8.txt",
+                    "toeic9.txt", "toeic10.txt", "toeic11.txt"]}
+SENTENCE_FILES = ["sent_daily.txt", "sent_work.txt", "sent_toeic.txt"]
 IPA_FILE = "ipa.json"
 # Manual IPA for words CMU lacks or gets wrong for our part of speech
 OVERRIDES = {
@@ -30,6 +31,8 @@ OVERRIDES = {
     "stomachache": "ˈstʌməkeɪk", "programme": "ˈproʊɡræm", "theatre": "ˈθiːətɚ", "centre": "ˈsentɚ",
     "co-worker": "ˈkoʊ ˌwɝːkɚ", "e-commerce": "ˌiː ˈkɑːmɝːs", "itinerary": "aɪˈtɪnəreri", "chapped lips": "tʃæpt lɪps",
     "omelette": "ˈɑːmlət", "schoolbag": "ˈskuːlbæɡ", "shortlist": "ˈʃɔːrtlɪst",
+    "elaborate|v": "ɪˈlæbəreɪt", "overlook|v": "ˌoʊvɚˈlʊk", "overhead|adv": "ˌoʊvɚˈhed", "unpack": "ʌnˈpæk", "unveil": "ʌnˈveɪl",
+    "unattended": "ˌʌnəˈtendɪd", "foliage": "ˈfoʊliɪdʒ", "sidewalk": "ˈsaɪdwɔːk", "footwear": "ˈfʊtwer", "artwork": "ˈɑːrtwɝːk", "complement|v": "ˈkɑːmpləment", "compliment|n": "ˈkɑːmpləmənt",
     "helpline": "ˈhelplaɪn", "backorder": "ˈbækˌɔːrdɚ", "punctually": "ˈpʌŋktʃuəli", "rsvp": "ˌɑːr es viː ˈpiː",
 }
 BRIT = [(r"ise$", "ize"), (r"ised$", "ized"), (r"ising$", "izing"), (r"isation$", "ization"), (r"our", "or"),

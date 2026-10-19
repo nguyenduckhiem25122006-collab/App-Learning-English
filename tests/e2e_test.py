@@ -164,6 +164,10 @@ def main():
         check("track switch to Công sở", "Công sở" in page.locator(".sent .chip").first.inner_text())
         page.click("[data-sentview=all]"); page.click("[data-stage=Advanced]")
         check("library shows advanced groups", page.locator("details").count() >= 5)
+        page.click("[data-track=toeic]"); page.click("[data-stage=Basic]")
+        check("TOEIC LR & SW track has its own library", "Cấu trúc câu TOEIC" in page.locator("h1").first.inner_text()
+              and page.locator("details").count() >= 3 and "Part 1" in page.locator("#view").inner_text())
+        page.click("[data-track=daily]")
 
         # 9. IPA
         page.click("[data-tab=ipa]")

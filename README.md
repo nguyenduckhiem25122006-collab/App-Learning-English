@@ -1,7 +1,7 @@
 # Nhịp – mã nguồn
 
 Cấu trúc:
-- `data/` – nguồn dữ liệu dạng văn bản: `kids*.txt`, `toeic*.txt` (từ|loại từ|nghĩa|ví dụ|hình), `sent_*.txt` (câu giao tiếp), `ipa.json` (44 âm).
+- `data/` – nguồn dữ liệu dạng văn bản: `kids*.txt`, `toeic*.txt` (từ|loại từ|nghĩa|ví dụ|hình), `sent_*.txt` (câu giao tiếp hằng ngày, công sở và cấu trúc câu TOEIC LR & SW), `ipa.json` (44 âm).
 - `build_data.py` – gắn IPA (từ điển CMU), kiểm tra trùng lặp, xuất `build/data.js`.
 - `src/core.js` – logic thuần (lịch ôn tập Leitner, chuỗi ngày, quiz) dùng chung cho app và test.
 - `src/farm.js` – logic nông trại (cây trồng, vật nuôi, đơn hàng, nhà kho, trang trí); xu kiếm được từ việc học.

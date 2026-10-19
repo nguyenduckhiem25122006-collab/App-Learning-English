@@ -11,7 +11,7 @@ const D = ctx.window.APP_DATA;
 const POS = new Set(["n", "v", "adj", "adv", "phr", "prep", "conj"]);
 
 test("both levels have enough words, all fields filled", () => {
-  for (const [lvl, min] of [["kids", 900], ["toeic", 1200]]) {
+  for (const [lvl, min] of [["kids", 900], ["toeic", 1600]]) {
     const words = D.levels[lvl].flatMap((t) => t.words);
     assert.ok(words.length >= min, `${lvl}: ${words.length}`);
     for (const w of words) {
@@ -28,7 +28,7 @@ test("both levels have enough words, all fields filled", () => {
 });
 
 test("sentence tracks: stages valid, at least 3 sentences per group", () => {
-  for (const track of ["daily", "work"]) {
+  for (const track of ["daily", "work", "toeic"]) {
     const groups = D.sentences[track];
     assert.ok(groups.length >= 15);
     for (const g of groups) {

@@ -7,7 +7,7 @@
   const KEY = "nhip.v1";
   const SAVE_MS = 250;
   const LEVELS = { kids: "Lớp 7", toeic: "TOEIC 750" };
-  const TRACKS = { daily: "Hằng ngày", work: "Công sở" };
+  const TRACKS = { daily: "Hằng ngày", work: "Công sở", toeic: "TOEIC LR & SW" };
   const STAGES = { Basic: "Cơ bản", Intermediate: "Trung cấp", Advanced: "Nâng cao" };
   const POS = { n: "danh từ", v: "động từ", adj: "tính từ", adv: "trạng từ", phr: "cụm từ", prep: "giới từ", conj: "liên từ" };
   const XP = { learn: 10, quiz: 5, review: 3, sent: 8, scramble: 2, ipa: 5, pair: 1 };
@@ -619,7 +619,7 @@
   }
   function vSent() {
     const track = S.track;
-    const head = `<section class="hello"><div><p class="label">${TRACKS[track]} · ${Object.keys(S.sent).filter((k) => k.startsWith(track + ":")).length}/${SENTS[track].length} câu</p><h1>Câu giao tiếp</h1></div>
+    const head = `<section class="hello"><div><p class="label">${TRACKS[track]} · ${Object.keys(S.sent).filter((k) => k.startsWith(track + ":")).length}/${SENTS[track].length} câu</p><h1>${track === "toeic" ? "Cấu trúc câu TOEIC" : "Câu giao tiếp"}</h1></div>
       <div class="row"><div class="seg" role="group" aria-label="Chủ đề câu">${Object.entries(TRACKS).map(([id, l]) => `<button type="button" data-track="${id}" aria-pressed="${track === id}">${l}</button>`).join("")}</div>
       <div class="seg" role="group" aria-label="Chế độ">${[["today", "Hôm nay"], ["all", "Thư viện"]].map(([id, l]) => `<button type="button" data-sentview="${id}" aria-pressed="${U.sentView === id}">${l}</button>`).join("")}</div></div></section>`;
     if (U.sentView === "all") return head + library(track);

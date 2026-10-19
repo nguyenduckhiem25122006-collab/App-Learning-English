@@ -1,0 +1,148 @@
+# Part 1: people's actions | Part 1: hành động của người trong tranh
+kneel|v|quỳ gối|A man is kneeling to fix a tire.|🧎
+crouch|v|ngồi xổm, khom người xuống|A worker is crouching beside a machine.|🔧
+bend over|phr|cúi người xuống|She's bending over to pick up a box.|🙇
+lean over|phr|nghiêng người qua (bàn, lan can)|He's leaning over a desk.|🖥️
+wheel|v|đẩy, kéo (vật có bánh xe)|A traveler is wheeling a suitcase through the terminal.|🧳
+haul|v|kéo, chở (vật nặng)|Some workers are hauling bricks.|🧱
+climb|v|leo, trèo|A man is climbing up some stairs.|🧗
+hold onto|phr|bám vào, giữ chặt|A woman is holding onto a handrail.|✊
+gaze|v|nhìn chăm chú|A woman is gazing out a window.|👁️
+shake hands|phr|bắt tay|Two men are shaking hands.|🤝
+hand out|phr|phát (tài liệu, tờ rơi)|A woman is handing out flyers.|📄
+jot down|phr|ghi nhanh|He's jotting down some notes.|📝
+sort|v|phân loại|A clerk is sorting the mail.|📬
+scrub|v|cọ rửa|He's scrubbing a pot in the sink.|🧽
+vacuum|v|hút bụi|A man is vacuuming the carpet.|🧹
+rake|v|cào (lá, cỏ)|Someone is raking leaves in a yard.|🍂
+mow|v|cắt (cỏ)|A gardener is mowing the lawn.|🌱
+put on|phr|đang mặc vào (hành động mặc)|A man is putting on a jacket.|🧥
+try on|phr|mặc thử, đi thử|She's trying on a pair of shoes.|👟
+take off|phr|cởi ra, tháo ra|He's taking off his helmet.|⛑️
+sip|v|nhấp, uống từng ngụm|A woman is sipping a drink.|🥤
+dine|v|dùng bữa|Some people are dining outdoors.|🍽️
+stir|v|khuấy|A cook is stirring a pot.|🥄
+weigh|v|cân (đo khối lượng)|A clerk is weighing some fruit.|⚖️
+unpack|v|dỡ đồ ra, mở (thùng, vali)|They're unpacking some boxes.|📦
+applaud|v|vỗ tay tán thưởng|The audience is applauding the speaker.|👏
+gather around|phr|tụ tập quanh|Some people are gathered around a table.|👥
+step off|phr|bước xuống (xe, tàu)|A man is stepping off a bus.|🚌
+
+# Part 1: objects, places and positions | Part 1: đồ vật, địa điểm & vị trí
+stacked|adj|được xếp chồng lên nhau|Some boxes have been stacked near the door.|📦
+propped|adj|được dựng tựa, được chống|A ladder has been propped against the wall.|🪜
+suspended|adj|được treo lơ lửng|Lights are suspended from the ceiling.|💡
+scattered|adj|nằm rải rác|Some papers are scattered on the desk.|📄
+mounted|adj|được gắn (lên tường, giá)|A clock has been mounted on the wall.|🕰️
+unattended|adj|không có người trông coi|A bicycle has been left unattended.|🚲
+lined with|phr|có hàng (cây, cửa hàng) dọc theo|The street is lined with trees.|🌳
+on display|phr|được trưng bày|Some jewelry is on display.|💍
+overlook|v|nhìn ra, hướng ra (cảnh)|The balcony overlooks the harbor.|🌅
+cast a shadow|phr|đổ bóng|A tree is casting a shadow on the lawn.|🌗
+side by side|phr|cạnh nhau, sát bên nhau|Two cars are parked side by side.|🚗
+on top of each other|phr|chồng lên nhau|Chairs have been placed on top of each other.|🪑
+across from|phr|đối diện với|A café is located across from the bank.|↔️
+in the distance|phr|ở đằng xa|Mountains can be seen in the distance.|🏔️
+overhead|adv|ở phía trên đầu|Some lights are hanging overhead.|⬆️
+alongside|prep|dọc theo, sát bên cạnh|A boat is tied up alongside the pier.|⛵
+forklift|n|xe nâng hàng|A forklift is lifting a pallet.|🚜
+canopy|n|mái che, tấm bạt che|A canopy has been set up over the tables.|⛺
+curb|n|lề đường, mép vỉa hè|A car is parked along the curb.|🛣️
+sidewalk|n|vỉa hè|People are walking along a sidewalk.|🚶
+balcony|n|ban công|Flowers are hanging from a balcony.|🌺
+patio|n|hiên, sân lát gạch (ngoài trời)|Tables have been set up on the patio.|☀️
+ledge|n|gờ, mép (cửa sổ, tường)|A plant is sitting on the window ledge.|🪟
+potted plant|n|cây trồng trong chậu|Potted plants have been placed by the entrance.|🪴
+blinds|n|rèm sáo, mành cửa sổ|The blinds have been lowered.|🎚️
+easel|n|giá vẽ|A painting is resting on an easel.|🎨
+cash register|n|máy tính tiền|A clerk is standing behind a cash register.|💵
+light fixture|n|đèn gắn cố định (trần, tường)|A light fixture is being installed.|💡
+
+# Part 2–3: office situations | Part 2–3: tình huống văn phòng
+fill in for|phr|làm thay (ai đó)|Can you fill in for me at the meeting?|🔄
+fully booked|phr|kín chỗ, hết phòng|The hotel is fully booked that weekend.|🏨
+swamped|adj|ngập đầu công việc|I'm swamped with work this week.|😵
+tied up|phr|bận, không rảnh|Ms. Park is tied up in a meeting.|⏰
+pick up|phr|đón (ai), lấy (đồ)|I'll pick up the clients at the airport.|🚗
+drop off|phr|gửi lại, để lại (đồ)|Please drop off the forms at reception.|📥
+stop by|phr|ghé qua|Could you stop by my office later?|🚪
+step out|phr|ra ngoài một lát|He just stepped out for lunch.|🚶
+run late|phr|bị trễ, kéo dài quá giờ|The meeting is running late.|⌛
+get back to|phr|trả lời lại (sau)|I'll get back to you by Friday.|↩️
+touch base|phr|liên lạc, trao đổi nhanh|Let's touch base after lunch.|📞
+double-check|v|kiểm tra lại|Please double-check the figures.|✔️
+sign off on|phr|phê duyệt, ký duyệt|The director signed off on the budget.|🖊️
+put together|phr|soạn, chuẩn bị (báo cáo, kế hoạch)|Can you put together a sales report?|📊
+pass along|phr|chuyển lời, chuyển tiếp|I'll pass along your message.|📨
+reach|v|liên lạc được với (ai)|I couldn't reach him by phone.|☎️
+expense report|n|báo cáo chi phí|Submit your expense report by Monday.|🧾
+paperwork|n|giấy tờ, thủ tục|I still have some paperwork to finish.|📑
+supply closet|n|tủ đựng đồ dùng văn phòng|There are more pens in the supply closet.|🗄️
+break room|n|phòng nghỉ của nhân viên|There's fresh coffee in the break room.|☕
+crash|v|(máy tính) bị sập, bị treo|My computer crashed this morning.|💻
+reorder|v|đặt hàng lại|We need to reorder printer paper.|🔁
+short-staffed|adj|thiếu nhân viên|We're short-staffed this week.|👥
+double-booked|adj|bị đặt trùng lịch|The meeting room was double-booked.|📅
+mix-up|n|sự nhầm lẫn|Sorry, there was a mix-up with your order.|🔀
+misplace|v|để thất lạc, để quên chỗ|I've misplaced my keys again.|🔍
+break down|phr|bị hỏng (máy móc, xe)|The copier broke down again.|🛠️
+move up|phr|dời lên sớm hơn|Can we move up the meeting to 10?|⏫
+push back|phr|lùi lại, dời muộn hơn|Let's push back the deadline by a week.|⏬
+in the meantime|phr|trong lúc chờ đợi|In the meantime, please fill out this form.|⏳
+
+# Part 4: announcements, voicemails & ads | Part 4: thông báo, tin nhắn thoại & quảng cáo
+passenger|n|hành khách|Passengers should proceed to Gate 12.|🧍
+boarding|n|việc lên máy bay, lên tàu|Boarding will begin in ten minutes.|🛫
+delayed|adj|bị trễ, bị hoãn|Flight 208 has been delayed.|⏱️
+inclement weather|n|thời tiết xấu, khắc nghiệt|The game was canceled due to inclement weather.|🌧️
+fasten|v|thắt, cài chặt|Please fasten your seat belts.|💺
+overhead bin|n|ngăn hành lý phía trên ghế|Place your bags in the overhead bin.|🧳
+disembark|v|xuống (máy bay, tàu)|Passengers may now disembark.|🚢
+connecting flight|n|chuyến bay nối chuyến|Please check the screen for your connecting flight.|🔗
+disruption|n|sự gián đoạn|There may be service disruptions this weekend.|⚠️
+suspend|v|tạm ngừng|Train service has been suspended.|⏸️
+resume|v|tiếp tục lại (sau khi ngừng)|Service will resume at 6 p.m.|▶️
+congestion|n|sự tắc nghẽn (giao thông)|Expect heavy congestion downtown.|🚦
+closure|n|việc đóng cửa, phong tỏa (đường)|The bridge closure will last two weeks.|🚧
+alternate route|n|tuyến đường thay thế|Drivers should take an alternate route.|🗺️
+tune in|phr|bật (đài, kênh) để theo dõi|Tune in tomorrow for more local news.|📻
+stay tuned|phr|tiếp tục theo dõi|Stay tuned for the weather report.|📺
+shower|n|mưa rào|Expect scattered showers this afternoon.|🌦️
+clear up|phr|(trời) quang đãng trở lại|The skies should clear up by noon.|🌤️
+guided tour|n|chuyến tham quan có hướng dẫn viên|The guided tour starts in the lobby.|🧭
+refrain from|phr|xin đừng, hạn chế (làm gì)|Please refrain from using flash photography.|🚫
+grand opening|n|lễ khai trương|Join us for our grand opening this Saturday.|🎊
+clearance sale|n|đợt bán xả hàng|Our clearance sale ends on Sunday.|🏷️
+limited-time offer|n|ưu đãi có thời hạn|Don't miss this limited-time offer.|💥
+promotional code|n|mã khuyến mãi|Enter the promotional code at checkout.|🎟️
+while supplies last|phr|trong khi còn hàng|Free gifts are available while supplies last.|🎁
+guest speaker|n|diễn giả khách mời|Our guest speaker is a well-known author.|🎤
+spokesperson|n|người phát ngôn|A company spokesperson confirmed the news.|🗣️
+unveil|v|công bố, ra mắt (sản phẩm, kế hoạch)|The company will unveil its new model next month.|✨
+press|v|nhấn (phím)|Press one to speak with a representative.|🔢
+automated|adj|tự động|This is an automated message.|🤖
+fire drill|n|buổi diễn tập phòng cháy|There will be a fire drill at 2 p.m.|🚒
+return a call|phr|gọi lại (cho ai)|Please return my call as soon as you can.|📲
+
+# Paraphrases the test uses | Từ diễn đạt lại đề thi hay dùng
+vehicle|n|xe cộ, phương tiện (= car, truck)|Several vehicles are parked outside.|🚗
+vessel|n|tàu thuyền (= boat, ship)|A vessel is approaching the dock.|🚢
+aircraft|n|máy bay (= plane)|The aircraft is being refueled.|✈️
+apparel|n|quần áo (= clothing)|The store sells outdoor apparel.|👕
+attire|n|trang phục (= clothes)|Business attire is required at the event.|👔
+footwear|n|giày dép (= shoes)|Footwear is on the second floor.|👞
+residence|n|nơi ở, nhà (= house, home)|The property is a private residence.|🏠
+eatery|n|quán ăn (= restaurant)|The new eatery is popular with office workers.|🍜
+foliage|n|tán lá, lá cây (= leaves)|The path is covered in fallen foliage.|🍃
+greenery|n|cây xanh (= plants)|The lobby is decorated with greenery.|🌿
+shrub|n|cây bụi (= bush)|Shrubs have been planted along the path.|🌳
+body of water|n|vùng nước (= lake, river, sea)|A body of water can be seen in the distance.|🌊
+waterfront|n|khu bờ sông, bờ biển (= shore)|Restaurants line the waterfront.|🏖️
+seating|n|chỗ ngồi (= chairs, seats)|Seating is available on the patio.|🪑
+artwork|n|tác phẩm nghệ thuật (= painting, picture)|Some artwork is hanging on the wall.|🖼️
+belongings|n|đồ đạc cá nhân (= things, bags)|Please take all your belongings with you.|🎒
+luggage|n|hành lý (= bags, suitcases)|Luggage has been piled near the counter.|💼
+instrument|n|nhạc cụ (= guitar, piano...)|A woman is playing an instrument.|🎻
+at no cost|phr|miễn phí (= free)|Parking is provided at no cost.|🆓
+inexpensive|adj|rẻ, không đắt (= cheap)|The hotel is clean and inexpensive.|💰
+packed|adj|chật kín người (= crowded)|The train was packed this morning.|🚃

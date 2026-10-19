@@ -1,0 +1,131 @@
+# Part 7: notices, memos and ads | Part 7: thông báo, bản ghi nhớ & quảng cáo
+memorandum|n|bản ghi nhớ nội bộ (memo)|This memorandum is for all sales staff.|📝
+bulletin|n|bản tin, thông báo ngắn|The update was posted in the staff bulletin.|📰
+flyer|n|tờ rơi quảng cáo|A flyer about the sale was left at the front desk.|📄
+supersede|v|thay thế (quy định cũ)|This notice supersedes all previous instructions.|🔁
+attached|adj|được đính kèm|Please review the attached schedule.|📎
+inquiry form|phr|mẫu đơn yêu cầu thông tin|Fill out the inquiry form on our website.|🧾
+renewal|n|sự gia hạn|Renewal notices are sent 30 days in advance.|🔄
+warranty claim|phr|yêu cầu bảo hành|Warranty claims must include the original receipt.|🛠️
+testimonial|n|lời chứng thực, nhận xét của khách hàng|Read testimonials from our satisfied clients.|💬
+in effect|phr|đang có hiệu lực|The discount remains in effect until June 30.|✅
+terms and conditions|phr|điều khoản và điều kiện|See our website for full terms and conditions.|📜
+patronage|n|sự ủng hộ, lui tới (của khách hàng)|Thank you for your continued patronage.|🤝
+hereby|adv|bằng văn bản này, nay (văn phong trang trọng)|You are hereby invited to the annual dinner.|🖋️
+no later than|phr|không muộn hơn, chậm nhất là|Submit your form no later than Friday.|⏳
+at no extra charge|phr|không tính thêm phí|Gift wrapping is available at no extra charge.|🎁
+non-refundable|adj|không được hoàn tiền|The deposit is non-refundable.|💸
+rebate|n|khoản tiền hoàn lại (sau khi mua)|Customers can get a 10 percent rebate by mail.|💵
+promo code|phr|mã khuyến mãi|Enter the promo code at checkout.|🏷️
+clearance sale|phr|đợt bán hàng thanh lý|Our clearance sale starts this weekend.|🔖
+grand opening|phr|lễ khai trương|Join us for the grand opening of our new store.|🎉
+business hours|phr|giờ làm việc, giờ mở cửa|Our business hours are 9 a.m. to 6 p.m.|🕘
+subscriber|n|người đăng ký (báo, dịch vụ)|Subscribers receive the magazine every month.|📬
+surcharge|n|phụ phí|A surcharge applies to weekend deliveries.|➕
+eligibility|n|tư cách, điều kiện đủ để tham gia|Eligibility requirements are listed below.|📋
+# Part 7: articles and business news | Part 7: bài báo & tin tức kinh doanh
+quarterly earnings|phr|lợi nhuận hàng quý|Quarterly earnings exceeded expectations.|💰
+market share|phr|thị phần|The brand increased its market share to 20 percent.|🥧
+chief executive|phr|giám đốc điều hành|The chief executive announced her retirement.|👩‍💼
+analyst|n|nhà phân tích|Analysts expect sales to rise next year.|🔍
+forecast|v|dự báo|Experts forecast steady growth.|🔮
+surge|n|sự tăng vọt|There was a surge in online orders.|⬆️
+decline|n|sự sụt giảm|The report shows a decline in profits.|📉
+outperform|v|làm tốt hơn, vượt trội hơn|The company outperformed its rivals last year.|🏆
+restructuring|n|sự tái cơ cấu|The restructuring led to several job cuts.|🧩
+takeover|n|sự thâu tóm, tiếp quản (công ty)|The takeover was approved by regulators.|🦈
+downsizing|n|sự cắt giảm quy mô, nhân sự|Downsizing has affected many factories.|📦
+layoff|n|sự sa thải (hàng loạt)|The firm announced layoffs at two plants.|🚪
+bankruptcy|n|sự phá sản|The retailer filed for bankruptcy in May.|💥
+profitability|n|khả năng sinh lời|New software improved the company's profitability.|💹
+profit margin|phr|biên lợi nhuận|Higher costs reduced the profit margin.|📊
+annual report|phr|báo cáo thường niên|The figures appear in the annual report.|📘
+share price|phr|giá cổ phiếu|The share price rose after the announcement.|📈
+board of directors|phr|hội đồng quản trị|The board of directors approved the deal.|🪑
+successor|n|người kế nhiệm|Mr. Lim was named as her successor.|👔
+step down|phr|từ chức|The president will step down in December.|⬇️
+outlook|n|triển vọng|The economic outlook remains positive.|🔭
+slump|n|sự sụt giảm mạnh, suy thoái|Car sales recovered after a long slump.|🪫
+rival|n|đối thủ|The firm overtook its biggest rival.|🥊
+diversify|v|đa dạng hóa|The company plans to diversify its products.|🌈
+flagship store|phr|cửa hàng chủ lực, cửa hàng lớn nhất|The brand opened a flagship store in Hanoi.|🏬
+# Part 7: question words | Part 7: từ dùng trong câu hỏi
+imply|v|ngụ ý (What is implied about...? – Điều gì được ngụ ý về...?)|What is implied about Ms. Tran?|🤔
+infer|v|suy ra (What can be inferred...? – Có thể suy ra điều gì?)|What can be inferred about the company?|🧠
+not true|phr|không đúng (What is NOT true about...? – Điều gì KHÔNG đúng về...?)|What is NOT true about the offer?|❌
+true|adj|đúng (What is true about...? – Điều gì đúng về...?)|What is true about the conference?|✔️
+most likely|phr|nhiều khả năng nhất (Who most likely is...? – Ai nhiều khả năng là...?)|Who most likely is Mr. Kim?|🎲
+likely|adj|có khả năng (What is Mr. Ho likely to do? – Ông Hồ có khả năng sẽ làm gì?)|What is the manager likely to do next?|🎯
+probably|adv|có lẽ (What will Ms. Lee probably do next? – Bà Lee có lẽ sẽ làm gì tiếp?)|What will the customer probably do next?|🔜
+refer to|phr|nhắc đến, chỉ đến (What does "it" refer to? – "it" chỉ điều gì?)|In paragraph 2, what does "it" refer to?|🔎
+intended audience|phr|đối tượng người đọc hướng đến (Thông báo này dành cho ai?)|Who is the intended audience of the flyer?|👥
+closest in meaning|phr|gần nghĩa nhất (câu hỏi từ đồng nghĩa)|The word "cover" is closest in meaning to?|🟰
+paragraph|n|đoạn văn (in paragraph 1 – ở đoạn 1)|What is stated in the first paragraph?|📃
+line|n|dòng (in line 3 – ở dòng 3)|The word "terms" in line 3 is closest in meaning to?|➖
+state|v|nêu, tuyên bố (What is stated about...? – Điều gì được nêu về...?)|What is stated about the delivery?|📌
+describe|v|mô tả (What is described in the article? – Bài báo mô tả điều gì?)|What is described in the second paragraph?|🖊️
+best describes|phr|mô tả đúng nhất (Which best describes...? – Điều nào mô tả đúng nhất...?)|Which best describes the new policy?|🏅
+main topic|phr|chủ đề chính (What is the main topic of...? – Chủ đề chính của... là gì?)|What is the main topic of the article?|🗂️
+be asked to|phr|được yêu cầu làm (What are readers asked to do? – Người đọc được yêu cầu làm gì?)|What are employees asked to do?|🙋
+be expected to|phr|được dự kiến sẽ (What are guests expected to do? – Khách được dự kiến làm gì?)|What are participants expected to bring?|🔮
+best belong|phr|phù hợp nhất (câu hỏi chèn câu vào vị trí [1]–[4])|Where does the following sentence best belong?|🧩
+reason|n|lý do (What is one reason...? – Một lý do của... là gì?)|What is one reason for the delay?|❓
+based on|phr|dựa vào (Based on the information, ... – Dựa vào thông tin, ...)|Based on the e-mail, who is Ms. Cruz?|📖
+in all|phr|trong tất cả (được nhắc đến trong tất cả các văn bản)|What is mentioned in all of the e-mails?|🗃️
+sender|n|người gửi (Who is the sender? – Người gửi là ai?)|What is the sender's job?|📤
+writer|n|người viết (Why did the writer send the message? – Vì sao người viết gửi tin?)|Why did the writer send the message?|✍️
+relationship|n|mối quan hệ (What is the relationship between A and B? – A và B có quan hệ gì?)|What is the relationship between Mr. Ono and Ms. Diaz?|🔗
+mean|v|có ý là (What does X mean when he writes...? – X có ý gì khi viết...?)|At 10:15, what does Ms. Ito most likely mean when she writes, "Sure thing"?|💡
+# Speaking: describing pictures & giving opinions | Nói: mô tả tranh & nêu ý kiến
+foreground|n|tiền cảnh (phần phía trước bức tranh)|In the foreground, a woman is holding an umbrella.|🖼️
+in the middle of|phr|ở giữa|In the middle of the picture, there is a long table.|⏺️
+on the left-hand side|phr|ở phía bên trái|On the left-hand side, a man is reading a newspaper.|⬅️
+on the right-hand side|phr|ở phía bên phải|On the right-hand side, there are several bicycles.|➡️
+appear|v|có vẻ, trông như|The people appear to be waiting for a bus.|👀
+seem|v|dường như|They seem to be enjoying the meeting.|🙂
+it looks like|phr|trông có vẻ như|It looks like they are having a meeting.|🔍
+bustling|adj|nhộn nhịp, tấp nập|This is a bustling street in a big city.|🏙️
+outdoor|adj|ngoài trời|This picture was taken at an outdoor café.|🌳
+casually dressed|phr|ăn mặc giản dị|Most of the people are casually dressed.|👕
+wearing|adj|đang mặc, đang đeo|A man wearing glasses is giving a presentation.|👓
+facing|prep|đối diện, quay mặt về phía|Two people are sitting facing each other.|↔️
+next to|phr|bên cạnh|A laptop is next to the coffee cup.|📍
+in front of|phr|phía trước|A woman is standing in front of a store.|🚶
+behind|prep|phía sau|There is a parking lot behind the building.|🔙
+surrounded by|phr|được bao quanh bởi|The house is surrounded by trees.|🌲
+lean against|phr|dựa vào|A bicycle is leaning against the wall.|🚲
+gesture|v|ra hiệu, chỉ tay|The speaker is gesturing toward the screen.|👋
+in my opinion|phr|theo ý kiến của tôi|In my opinion, working from home saves time.|🗣️
+from my perspective|phr|theo góc nhìn của tôi|From my perspective, teamwork is the key to success.|👁️
+as far as I am concerned|phr|theo như tôi thấy, đối với tôi|As far as I am concerned, health is more important than money.|💭
+prefer|v|thích hơn|I prefer to shop online because it saves time.|❤️
+for instance|phr|chẳng hạn, ví dụ như|For instance, my company offers free training.|☝️
+drawback|n|nhược điểm, mặt hạn chế|One drawback is the high cost.|👎
+the main reason|phr|lý do chính|The main reason is that it saves money.|🔑
+in addition|phr|thêm vào đó|In addition, it helps people learn new skills.|➕
+that is why|phr|đó là lý do tại sao|That is why I think it is a good idea.|✅
+# Writing: emails and opinion essays | Viết: email & bài luận nêu ý kiến
+I am writing to|phr|tôi viết thư này để (mở đầu email)|I am writing to request more information.|✍️
+as requested|phr|theo như yêu cầu|As requested, I have sent the updated file.|📨
+kindly|adv|vui lòng (lịch sự, trang trọng)|Could you kindly send me the details?|🙏
+grateful|adj|biết ơn|I would be grateful if you could call me back.|🤗
+do not hesitate to|phr|đừng ngần ngại (kết thư)|Please do not hesitate to contact me.|📞
+as a result|phr|kết quả là|As a result, employees feel less stressed.|🎯
+in contrast|phr|ngược lại, trái lại|In contrast, small companies offer more flexibility.|🔀
+in other words|phr|nói cách khác|In other words, time is money.|💬
+firstly|adv|thứ nhất, trước hết|Firstly, online meetings save travel time.|1️⃣
+last but not least|phr|cuối cùng nhưng không kém phần quan trọng|Last but not least, it improves teamwork.|🔚
+similarly|adv|tương tự như vậy|Similarly, students can benefit from this program.|🟰
+even though|phr|mặc dù|Even though it is expensive, it is worth it.|⚖️
+to sum up|phr|tóm lại|To sum up, I believe the plan will succeed.|🧾
+in conclusion|phr|kết luận lại|In conclusion, I agree with this statement.|🏁
+overall|adv|nhìn chung|Overall, I think the change is positive.|🌐
+on the other hand|phr|mặt khác|On the other hand, it can be expensive.|🔄
+for these reasons|phr|vì những lý do này|For these reasons, I support the proposal.|📋
+agree with|phr|đồng ý với|I strongly agree with this opinion.|🤝
+disadvantage|n|bất lợi, nhược điểm|A disadvantage is the long commute.|⛔
+pros and cons|phr|ưu và nhược điểm|There are pros and cons to working from home.|⚖️
+outweigh|v|lớn hơn, vượt trội hơn (về tầm quan trọng)|The benefits outweigh the costs.|🏋️
+flexibility|n|sự linh hoạt|Flexibility is important to young workers.|🤸
+work-life balance|phr|cân bằng công việc và cuộc sống|A four-day week can improve work-life balance.|🧘
+efficient workplace|phr|nơi làm việc hiệu quả|Clear rules create an efficient workplace.|🏢
