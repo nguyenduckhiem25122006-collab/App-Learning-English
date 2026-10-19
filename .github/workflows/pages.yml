@@ -33,6 +33,10 @@ jobs:
           python3 build_app.py
       - name: Unit tests
         run: node --test tests/*.test.js
+      - name: Database tests (supabase/schema.sql on PostgreSQL)
+        run: |
+          pip install "psycopg[binary]"
+          cd tests && python3 sql_test.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

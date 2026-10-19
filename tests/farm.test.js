@@ -138,3 +138,91 @@ test("play gate: window resets 5 hours after it started", () => {
   g = F.addStudy(g, M, T0 + W + 5);
   assert.deepEqual(g, { start: T0 + W + 5, study: M, play: 0 });
 });
+
+const DAY = "2026-10-19", NEXT = "2026-10-20";
+const richFarm = () => { const f = F.fresh(); f.coins = 100000; f.xp = 99999; f.cap = 9999; f.barn = Object.fromEntries(F.CROPS.concat(F.PRODUCTS).map((x) => [x.id, 200])); return f; };
+
+test("12 spirit beasts: one per zodiac sign, valid materials and effects", () => {
+  assert.equal(F.BEASTS.length, 12);
+  assert.deepEqual(F.BEASTS.map((b) => b.zo), ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"]);
+  for (const b of F.BEASTS) {
+    for (const id of [...Object.keys(b.need), ...b.fav]) assert.ok(F.ITEMS[id], `${b.id}: ${id}`);
+    for (const id of Object.keys(b.need)) {
+      const src = F.CROP[id] ? F.CROP[id].lv : F.ANIMALS.find((a) => a.prod === id).lv;
+      assert.ok(src <= b.lv, `${b.id} needs ${id} unlocked at level ${src}`);
+    }
+    assert.ok(b.speed[1] + b.price[1] > 0);
+    const p1 = F.beastPower(b.id, 1), p8 = F.beastPower(b.id, 8);
+    assert.deepEqual([p1.speed, p1.price, p8.speed, p8.price], [b.speed[0], b.price[0], b.speed[1], b.price[1]]);
+  }
+});
+
+test("buying a beast needs farm level, coins and materials", () => {
+  const f = F.fresh();
+  assert.match(F.buyBeast(f, "ox", DAY).msg, /cấp 2/);
+  f.coins = 1000;
+  assert.match(F.buyBeast(f, "rat", DAY).msg, /nguyên liệu/);
+  assert.deepEqual(F.missing(f, F.BEAST.rat.need), { wheat: 10 });
+  f.barn = { wheat: 12 };
+  assert.ok(F.buyBeast(f, "rat", DAY).ok);
+  assert.equal(f.coins, 800); assert.deepEqual(f.barn, { wheat: 2 });
+  assert.deepEqual(f.beasts.rat, { lv: 1, st: F.STAMINA, day: DAY });
+  assert.equal(F.buyBeast(f, "rat", DAY).ok, false);
+});
+
+test("beasts upgrade through 8 levels with harvested crops", () => {
+  const f = richFarm();
+  F.buyBeast(f, "tiger", DAY);
+  const c1 = F.upgradeCost(f, "tiger");
+  assert.deepEqual(c1, { coins: 225, need: { corn: 5 } });
+  for (let i = 0; i < 7; i++) assert.ok(F.upgradeBeast(f, "tiger").ok);
+  assert.equal(f.beasts.tiger.lv, 8);
+  assert.equal(F.upgradeCost(f, "tiger"), null);
+  assert.match(F.upgradeBeast(f, "tiger").msg, /tối đa/);
+  const g = F.fresh(); g.coins = 10000; g.barn = { wheat: 10 }; F.buyBeast(g, "rat", DAY);
+  assert.match(F.upgradeBeast(g, "rat").msg, /nông sản/);
+});
+
+test("stamina: 10 a day, more crops cost more, higher level costs less", () => {
+  assert.equal(F.castCost(1, 1), 1); assert.equal(F.castCost(1, 6), 6);
+  assert.equal(F.castCost(8, 6), 2); assert.equal(F.castCost(5, 3), 2);
+  assert.ok(F.castCost(1, 10) > F.castCost(4, 10) && F.castCost(4, 10) > F.castCost(8, 10));
+  const f = richFarm(); F.buyBeast(f, "rat", DAY);
+  for (let i = 0; i < 6; i++) F.plant(f, i, "wheat", T0);
+  const r = F.cast(f, "rat", [0, 1, 2, 3, 4, 5], T0, DAY);
+  assert.deepEqual([r.ok, r.n, r.cost], [true, 6, 6]);
+  assert.equal(F.stamina(f, "rat", DAY), 4);
+  F.uproot(f, 0); F.uproot(f, 1);
+  for (let i = 0; i < 6; i++) if (!f.plots[i].c) F.plant(f, i, "wheat", T0);
+  for (let i = 6; i < 9; i++) { f.plots.push({ c: null, at: 0 }); F.plant(f, i, "wheat", T0); }
+  assert.match(F.cast(f, "rat", [0, 1, 6, 7, 8], T0, DAY).msg, /thể lực/);
+  assert.equal(F.stamina(f, "rat", NEXT), F.STAMINA, "refills the next day");
+  assert.ok(F.cast(f, "rat", [0, 1, 6, 7, 8], T0, NEXT).ok);
+});
+
+test("speed buff cuts remaining grow time once per beast per crop", () => {
+  const f = richFarm(); F.buyBeast(f, "horse", DAY);
+  F.plant(f, 0, "pumpkin", T0);
+  const before = F.remaining(f.plots[0].at, 240, T0);
+  assert.ok(F.cast(f, "horse", [0], T0, DAY).ok);
+  assert.equal(F.remaining(f.plots[0].at, 240, T0), Math.round(before * 0.75));
+  assert.deepEqual(F.castTargets(f, "horse", T0), []);
+  assert.equal(F.cast(f, "horse", [0], T0, DAY).ok, false);
+  F.plant(f, 1, "wheat", T0); F.plant(f, 2, "pumpkin", T0);
+  assert.deepEqual(F.castTargets(f, "horse", T0 + 3 * F.MIN), [2], "ripe crops are skipped by a speed-only beast");
+});
+
+test("price buff pays extra coins at harvest, capped, cleared after", () => {
+  const f = richFarm(); F.buyBeast(f, "pig", DAY); F.buyBeast(f, "rooster", DAY);
+  F.plant(f, 0, "watermelon", T0);
+  F.cast(f, "pig", [0], T0, DAY); F.cast(f, "rooster", [0], T0, DAY);
+  assert.equal(f.plots[0].pb, 45);
+  const coins = f.coins, h = F.harvest(f, 0, T0 + 480 * F.MIN);
+  assert.equal(h.bonus, Math.round(210 * 0.45)); assert.equal(f.coins, coins + h.bonus);
+  assert.deepEqual(f.plots[0], { c: null, at: 0 });
+  for (let i = 0; i < 7; i++) { F.upgradeBeast(f, "pig"); F.upgradeBeast(f, "rooster"); }
+  f.beasts.dragon = { lv: 8, st: 10, day: DAY }; f.beasts.snake = { lv: 8, st: 10, day: DAY };
+  F.plant(f, 0, "wheat", T0);
+  for (const b of ["pig", "rooster", "dragon", "snake"]) F.cast(f, b, [0], T0, DAY);
+  assert.equal(f.plots[0].pb, F.PRICE_CAP);
+});

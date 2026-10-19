@@ -13,6 +13,14 @@
   const parse = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d, 12); };
   const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return dstr(d); };
   const daysBetween = (a, b) => Math.round((parse(b) - parse(a)) / 864e5);
+  /** ISO-8601 week of a local date, e.g. "2026-W43" (weeks start on Monday). */
+  function isoWeek(s) {
+    const d = parse(s);
+    d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7)); // Thursday of this week decides the year
+    const jan4 = new Date(d.getFullYear(), 0, 4, 12);
+    const wk = 1 + Math.round((daysBetween(dstr(jan4), dstr(d)) - 3 + ((jan4.getDay() + 6) % 7)) / 7);
+    return `${d.getFullYear()}-W${pad(wk)}`;
+  }
 
   /** Word id "word|pos", from a raw data row [word, pos, …] or a word object { w, pos }. */
   const wkey = (w) => (Array.isArray(w) ? `${w[0]}|${w[1]}` : w.key || `${w.w}|${w.pos}`);
@@ -156,7 +164,7 @@
   const badges = (stats) => BADGES.map(([icon, name, test]) => ({ icon, name, on: !!test(stats) }));
 
   const Core = {
-    INTERVALS, MASTER_BOX, BATCH, dstr, addDays, daysBetween, wkey, newCard, grade, isDue, dueKeys, boxCounts,
+    INTERVALS, MASTER_BOX, BATCH, dstr, addDays, daysBetween, isoWeek, wkey, newCard, grade, isDue, dueKeys, boxCounts,
     touchStreak, liveStreak, planDays, nextNew, rng, hashStr, shuffle, makeQuiz, norm, checkSpelling, similarity,
     tokens, scramble, pickSentences, badges,
   };

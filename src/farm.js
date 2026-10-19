@@ -37,6 +37,24 @@
     { id: "tractor", en: "tractor", vi: "Máy cày", emo: "🚜", cost: 800, bonus: 6, lv: 6 },
     { id: "rainbow", en: "rainbow", vi: "Cầu vồng", emo: "🌈", cost: 1200, bonus: 5, lv: 8 },
   ];
+  // 12 spirit beasts (Linh Thú) from the zodiac art. speed = % of remaining grow time cut, price = % extra coins
+  // when the buffed crop is harvested; [level 1, level 8] values, linear in between. need = coins + barn items to buy.
+  const BEASTS = [
+    { id: "rat", zo: "Tý", en: "rat", vi: "Thử Ảnh Sát Thủ", lore: "Ninja bóng đêm, giục cây lớn nhanh như chớp", lv: 1, cost: 200, need: { wheat: 10 }, fav: ["wheat", "carrot"], speed: [15, 40], price: [0, 0] },
+    { id: "ox", zo: "Sửu", en: "ox", vi: "Ngưu Hỏa Chiến Tướng", lore: "Búa lửa nện đất, nông sản chắc nặng, bán được giá", lv: 2, cost: 300, need: { wheat: 15, carrot: 8 }, fav: ["carrot", "wheat"], speed: [0, 0], price: [10, 35] },
+    { id: "tiger", zo: "Dần", en: "tiger", vi: "Hổ Viêm Đao", lore: "Đao lửa thiêu sâu bọ, cây vừa nhanh lớn vừa đẹp", lv: 3, cost: 450, need: { carrot: 10, corn: 8 }, fav: ["corn", "carrot"], speed: [12, 30], price: [8, 25] },
+    { id: "cat", zo: "Mão", en: "cat", vi: "Miêu Nguyệt Ảnh", lore: "Dưới trăng, móng vuốt gọi sương đêm tưới cây", lv: 3, cost: 500, need: { corn: 10, wheat: 10 }, fav: ["corn", "wheat"], speed: [20, 50], price: [0, 0] },
+    { id: "dragon", zo: "Thìn", en: "dragon", vi: "Lôi Long Thần", lore: "Gọi sấm mưa, mùa màng bội thu và quý giá", lv: 7, cost: 2500, need: { watermelon: 5, sunflower: 5, strawberry: 10 }, fav: ["watermelon", "sunflower"], speed: [15, 40], price: [15, 40] },
+    { id: "snake", zo: "Tỵ", en: "snake", vi: "Xà Độc Pháp Sư", lore: "Bùa lục xà khiến thương lái tranh nhau trả giá", lv: 4, cost: 700, need: { tomato: 10, strawberry: 5 }, fav: ["tomato", "strawberry"], speed: [0, 0], price: [15, 45] },
+    { id: "horse", zo: "Ngọ", en: "horse", vi: "Mã Liệt Hỏa Thương", lore: "Phi nước đại, thời gian như ngắn lại một nửa", lv: 5, cost: 1000, need: { pumpkin: 5, strawberry: 8 }, fav: ["strawberry", "pumpkin"], speed: [25, 55], price: [0, 0] },
+    { id: "goat", zo: "Mùi", en: "goat", vi: "Dương Băng Pháp Sư", lore: "Lửa băng nuôi rễ, cây khỏe và ngon hơn", lv: 4, cost: 800, need: { tomato: 8, milk: 5 }, fav: ["tomato", "corn"], speed: [8, 20], price: [12, 35] },
+    { id: "monkey", zo: "Thân", en: "monkey", vi: "Hầu Lôi Quyền", lore: "Quyền sấm sét đánh thức hạt giống ngủ quên", lv: 5, cost: 1200, need: { pumpkin: 6, egg: 10 }, fav: ["pumpkin", "tomato"], speed: [18, 45], price: [5, 15] },
+    { id: "rooster", zo: "Dậu", en: "rooster", vi: "Kê Phượng Song Kiếm", lore: "Tiếng gáy phượng hoàng khiến nông sản sáng như vàng", lv: 6, cost: 1600, need: { sunflower: 6, honey: 3 }, fav: ["sunflower", "strawberry"], speed: [0, 0], price: [20, 50] },
+    { id: "dog", zo: "Tuất", en: "dog", vi: "Khuyển Trung Kiếm Sĩ", lore: "Canh giữ ruộng vườn, cây lớn đều và bán đắt", lv: 2, cost: 350, need: { carrot: 10, wheat: 10 }, fav: ["carrot", "corn"], speed: [10, 30], price: [10, 30] },
+    { id: "pig", zo: "Hợi", en: "pig", vi: "Trư Chùy Bá Vương", lore: "Chùy gai dọa lui sâu hại, nông sản được giá cao nhất", lv: 6, cost: 2000, need: { pumpkin: 8, wool: 3 }, fav: ["pumpkin", "sunflower"], speed: [0, 0], price: [25, 60] },
+  ];
+  const BEAST_MAX_LV = 8, STAMINA = 10, PRICE_CAP = 150;
+  const STAMINA_PER_CROP = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]; // by beast level
   const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700]; // farm xp needed for level 1..10
   const START = { coins: 50, fert: 1, plots: 6, cap: 40 };
   const MAX_PLOTS = 15, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20;
@@ -50,11 +68,12 @@
   const CROP = Object.fromEntries(CROPS.map((x) => [x.id, x]));
   const ANIMAL = Object.fromEntries(ANIMALS.map((x) => [x.id, x]));
   const DECO = Object.fromEntries(DECOS.map((x) => [x.id, x]));
+  const BEAST = Object.fromEntries(BEASTS.map((x) => [x.id, x]));
   const fail = (msg) => ({ ok: false, msg });
 
   function fresh() {
     return { coins: START.coins, fert: START.fert, xp: 0, plots: Array.from({ length: START.plots }, () => ({ c: null, at: 0 })),
-      animals: [], barn: {}, cap: START.cap, orders: [], deco: [], goalDay: null, earned: 0 };
+      animals: [], barn: {}, cap: START.cap, orders: [], deco: [], goalDay: null, earned: 0, beasts: {} };
   }
   const level = (xp) => { let l = 1; while (l < LVXP.length && xp >= LVXP[l]) l++; return l; };
   const nextXp = (xp) => LVXP[level(xp)] ?? null;
@@ -88,10 +107,13 @@
     const p = f.plots[i];
     if (!p || !plotReady(p, now)) return fail("Cây chưa chín");
     if (stock(f) >= f.cap) return fail("Nhà kho đầy — bán bớt hoặc nâng cấp kho");
-    const c = CROP[p.c];
-    f.barn[c.id] = (f.barn[c.id] || 0) + 1; p.c = null; p.at = 0;
-    return { ok: true, item: c.id, levelUp: addXp(f, c.xp) };
+    const c = CROP[p.c], bonusCoins = Math.round(c.sell * (p.pb || 0) / 100);
+    f.barn[c.id] = (f.barn[c.id] || 0) + 1; f.coins += bonusCoins;
+    clearPlot(p);
+    return { ok: true, item: c.id, bonus: bonusCoins, levelUp: addXp(f, c.xp) };
   }
+  function clearPlot(p) { p.c = null; p.at = 0; delete p.bf; delete p.pb; }
+  function uproot(f, i) { const p = f.plots[i]; if (!p || !p.c) return fail("Ô đất trống"); clearPlot(p); return { ok: true }; }
   function fertilize(f, i, now) {
     const p = f.plots[i];
     if (!p || !p.c || plotReady(p, now)) return fail("Không có cây đang lớn ở ô này");
@@ -206,13 +228,78 @@
     return { ...g, play: Math.min(g.play + ms, g.study * GATE.RATIO) };
   }
 
+  // ---- Spirit beasts (Linh Thú) ----
+  const has = (f, items) => Object.entries(items).every(([id, q]) => (f.barn[id] || 0) >= q);
+  const take = (f, items) => { for (const [id, q] of Object.entries(items)) { f.barn[id] -= q; if (!f.barn[id]) delete f.barn[id]; } };
+  const missing = (f, items) => Object.fromEntries(Object.entries(items).filter(([id, q]) => (f.barn[id] || 0) < q).map(([id, q]) => [id, q - (f.barn[id] || 0)]));
+  /** Effect of a beast at a level: { speed, price } in %. */
+  function beastPower(id, lv) {
+    const b = BEAST[id], t = (lv - 1) / (BEAST_MAX_LV - 1);
+    return { speed: Math.round(b.speed[0] + (b.speed[1] - b.speed[0]) * t), price: Math.round(b.price[0] + (b.price[1] - b.price[0]) * t) };
+  }
+  /** Stamina left today (refills to STAMINA at each new day). */
+  const stamina = (f, id, today) => { const s = f.beasts[id]; return !s ? 0 : s.day === today ? s.st : STAMINA; };
+  /** Stamina for buffing n crops: more crops cost more, higher levels cost less per crop. */
+  const castCost = (lv, n) => (n <= 0 ? 0 : Math.ceil(n * STAMINA_PER_CROP[lv - 1] - 1e-9));
+  function buyBeast(f, id, today) {
+    const b = BEAST[id];
+    if (!b) return fail("Không có Linh Thú này");
+    if (f.beasts[id]) return fail("Bạn đã có Linh Thú này");
+    if (b.lv > level(f.xp)) return fail(`Cần nông trại cấp ${b.lv}`);
+    if (f.coins < b.cost) return fail("Chưa đủ xu");
+    if (!has(f, b.need)) return fail("Chưa đủ nguyên liệu trong kho");
+    f.coins -= b.cost; take(f, b.need);
+    f.beasts[id] = { lv: 1, st: STAMINA, day: today };
+    return { ok: true };
+  }
+  /** Coins and harvested crops needed to go from the current level to the next; null at max level. */
+  function upgradeCost(f, id) {
+    const s = f.beasts[id], b = BEAST[id];
+    if (!s || s.lv >= BEAST_MAX_LV) return null;
+    const L = s.lv, need = { [b.fav[0]]: 3 + 2 * L };
+    if (L >= 3) need[b.fav[1]] = L;
+    return { coins: Math.round(b.cost * 0.5 * L), need };
+  }
+  function upgradeBeast(f, id) {
+    const c = upgradeCost(f, id);
+    if (!c) return fail(f.beasts[id] ? `Đã đạt cấp tối đa ${BEAST_MAX_LV}` : "Bạn chưa có Linh Thú này");
+    if (f.coins < c.coins) return fail("Chưa đủ xu để nâng cấp");
+    if (!has(f, c.need)) return fail("Chưa đủ nông sản để nâng cấp");
+    f.coins -= c.coins; take(f, c.need); f.beasts[id].lv++;
+    return { ok: true, lv: f.beasts[id].lv };
+  }
+  /** Plots this beast can buff now: planted, not yet buffed by it; ripe plots only if it raises the price. */
+  function castTargets(f, id, now) {
+    const pw = f.beasts[id] ? beastPower(id, f.beasts[id].lv) : null;
+    if (!pw) return [];
+    return f.plots.map((p, i) => [p, i]).filter(([p]) => p.c && !(p.bf || []).includes(id) && (!plotReady(p, now) || pw.price > 0)).map(([, i]) => i);
+  }
+  function cast(f, id, idxs, now, today) {
+    const s = f.beasts[id];
+    if (!s) return fail("Bạn chưa có Linh Thú này");
+    const ok = new Set(castTargets(f, id, now)), list = [...new Set(idxs)].filter((i) => ok.has(i));
+    if (!list.length) return fail("Không có cây nào để ban phúc");
+    const cost = castCost(s.lv, list.length), st = stamina(f, id, today);
+    if (cost > st) return fail(`Không đủ thể lực (cần ${cost}, còn ${st})`);
+    const pw = beastPower(id, s.lv);
+    for (const i of list) {
+      const p = f.plots[i];
+      if (pw.speed && !plotReady(p, now)) p.at -= Math.round(remaining(p.at, CROP[p.c].min, now) * pw.speed / 100);
+      if (pw.price) p.pb = Math.min(PRICE_CAP, (p.pb || 0) + pw.price);
+      p.bf = [...(p.bf || []), id];
+    }
+    s.st = st - cost; s.day = today;
+    return { ok: true, n: list.length, cost };
+  }
+
   /** What a farm level unlocks, for the level-up message. */
-  const unlocks = (lv) => [...CROPS, ...ANIMALS, ...DECOS].filter((x) => x.lv === lv);
+  const unlocks = (lv) => [...CROPS, ...ANIMALS, ...DECOS, ...BEASTS].filter((x) => x.lv === lv);
 
   const Farm = {
     MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
     fresh, level, nextXp, bonus, stock, unlockedItems, earn, reward, remaining, plotReady, plant, harvest, fertilize, plotCost, buyPlot,
-    animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks,
+    animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks, uproot,
+    BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, upgradeCost, upgradeBeast, castTargets, cast, missing,
   };
   if (typeof module === "object" && module.exports) module.exports = Farm;
   else root.Farm = Farm;

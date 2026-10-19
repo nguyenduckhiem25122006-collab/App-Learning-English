@@ -1,7 +1,7 @@
 /* UI: five views (Hôm nay, Từ vựng, Câu, IPA, Tiến độ), local storage, speech, and custom word pictures. */
 (function () {
   "use strict";
-  const C = window.Core, D = window.APP_DATA, F = window.Farm;
+  const C = window.Core, D = window.APP_DATA, F = window.Farm, Online = window.Online;
 
   // ===== CONFIG =====
   const KEY = "nhip.v1";
@@ -41,7 +41,7 @@
 
   // ---------- State ----------
   const fresh = () => ({ v: 1, level: "toeic", perday: 8, sentPerDay: 3, track: "daily", progress: { kids: {}, toeic: {} },
-    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null });
+    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null, online: null });
   function merge(o) {
     const d = fresh(), s = { ...d, ...(o || {}) };
     s.progress = { ...d.progress, ...(s.progress || {}) };
@@ -49,10 +49,15 @@
     if (!LEVELS[s.level]) s.level = d.level;
     if (!Array.isArray(s.ipa)) s.ipa = [];
     s.farm = { ...F.fresh(), ...(s.farm || {}) };
+    if (!s.farm.beasts || typeof s.farm.beasts !== "object") s.farm.beasts = {};
+    if (!s.online || typeof s.online.token !== "string") s.online = null;
     return s;
   }
+  // A daily backup copy lets the app recover if the main record is ever damaged.
   function load() {
-    try { const raw = localStorage.getItem(KEY); if (raw) return merge(JSON.parse(raw)); } catch (e) { /* private mode */ }
+    for (const k of [KEY, KEY + ".bak"]) {
+      try { const raw = localStorage.getItem(k); if (raw) return merge(JSON.parse(raw)); } catch (e) { /* damaged or blocked: try the backup */ }
+    }
     return fresh();
   }
   let S = load();
@@ -63,7 +68,11 @@
     clearTimeout(saveT); saveT = null;
     const keys = Object.keys(S.days).sort();
     for (const k of keys.slice(0, Math.max(0, keys.length - 60))) delete S.days[k];
-    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage full or blocked */ }
+    try {
+      const json = JSON.stringify(S);
+      localStorage.setItem(KEY, json);
+      if (localStorage.getItem(KEY + ".bakday") !== today()) { localStorage.setItem(KEY + ".bak", json); localStorage.setItem(KEY + ".bakday", today()); }
+    } catch (e) { /* storage full or blocked */ }
   }
   // Another tab wrote the store: adopt its copy so we never overwrite it with stale data.
   addEventListener("storage", (e) => {
@@ -96,7 +105,7 @@
   }
 
   // Screen state that is not persisted
-  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false };
+  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false };
   const inSession = () => U.tab === "words" && ["learn", "quiz", "review"].includes(U.vocab.mode);
 
   // ---------- Helpers ----------
@@ -111,6 +120,7 @@
     words: svg('<rect x="3" y="6" width="14" height="15" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v13"/>'),
     sent: svg('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'),
     ipa: svg('<path d="M3 19 8 5l5 14"/><path d="M5 14h6"/><path d="M17 10v9"/><path d="M17 6.5v.01"/>'),
+    rank: svg('<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/>'),
     me: svg('<path d="M4 20V11"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M3 20h18"/>'),
     speak: svg('<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>'),
     mic: svg('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>'),
@@ -229,7 +239,7 @@
   const pic = (w, cls) => picHTML(PICS[w.key] || {}, w.emo, cls);
 
   // ---------- Shell ----------
-  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["me", "Tiến độ"]];
+  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
   function renderTabs() {
     $("#tabs").innerHTML = TABS.map(([id, label]) =>
       `<button type="button" data-tab="${id}"${U.tab === id ? ' aria-current="page"' : ""}>${I[id]}<span>${label}</span></button>`).join("");
@@ -240,10 +250,16 @@
     farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
   }
-  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, me: vMe, farm: vFarm };
+  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, rank: vRank, me: vMe, farm: vFarm };
+  // A broken screen must never take the whole app down: show a recovery panel instead, data stays safe.
   function render() {
-    $("#view").innerHTML = VIEWS[U.tab]();
-    renderTabs(); renderHeader();
+    try { $("#view").innerHTML = VIEWS[U.tab](); }
+    catch (err) {
+      console.error("render failed", err);
+      $("#view").innerHTML = `<section class="panel stack"><h1>Ôi, màn hình này gặp lỗi 😅</h1><p>Dữ liệu học và nông trại của bạn vẫn an toàn.</p>
+        <div class="row"><button type="button" class="btn primary" data-recover>Về trang Hôm nay</button><button type="button" class="btn" data-reload>Tải lại app</button></div></section>`;
+    }
+    try { renderTabs(); renderHeader(); } catch (err) { console.error("header failed", err); }
     const sp = $("#spell-in"); if (sp) sp.focus({ preventScroll: true });
   }
   function go(tab) { U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
@@ -294,7 +310,13 @@
     <section class="panel row" style="justify-content:space-between"><div><p class="label">Nông trại</p>
       <p>🪙 <b class="num">${S.farm.coins}</b> xu · 🧪 ${S.farm.fert} phân bón · ${S.farm.plots.filter((x) => F.plotReady(x, Date.now())).length} ô đã chín</p>
       <p class="small muted">${(() => { const g = gateNow(); return g.open ? `⏱ Còn ${fmtLeft(g.budget)} phút chơi` : g.study < F.GATE.MIN_STUDY ? `🔒 Học thêm ${Math.ceil(g.need / F.MIN)} phút để mở nông trại` : "⏰ Hết giờ chơi — học thêm để chơi tiếp"; })()}</p></div>
-      <button class="btn" data-farm>Vào nông trại 🌾</button></section>`;
+      <button class="btn" data-farm>Vào nông trại 🌾</button></section>
+    ${NET.configured ? (() => {
+      const r = myRank("week");
+      return `<section class="panel row" style="justify-content:space-between"><div><p class="label">Xếp hạng lớp</p>
+        <p>${!S.online ? "Tham gia lớp để thi đua cùng bạn bè 🏆" : r ? `🏆 Bạn đứng thứ <b>${r.me.rank}/${r.list.length}</b> tuần này (${r.me.value} XP)` : "Mở bảng xếp hạng để xem thứ hạng của bạn"}</p></div>
+        <button class="btn" data-tab="rank">Xem bảng xếp hạng</button></section>`;
+    })() : ""}`;
   }
   const stepper = (id, v) => `<div class="stepper"><button type="button" data-step="${id}" data-d="-1" aria-label="Giảm">−</button><output id="${id}">${v}</output><button type="button" data-step="${id}" data-d="1" aria-label="Tăng">+</button></div>`;
   function week() {
@@ -846,6 +868,7 @@
           <div class="row"><button type="button" class="btn primary" data-go="learn">Học từ mới</button><button type="button" class="btn" data-go="review">Ôn tập</button><button type="button" class="btn" data-go="sent">Luyện câu</button></div>
           <p class="small muted">Tổng xu kiếm được từ việc học: ${f.earned}</p></section>
       </div>
+      ${beastsSection(f, now)}
       <div class="grid g2" style="align-items:start">
         <section class="panel stack"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
           <div class="orders">${f.orders.map((o, i) => {
@@ -882,10 +905,11 @@
   function plotHTML(p, i, now) {
     if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">+</span><span class="lbl">Gieo hạt</span></button>`;
     const c = F.CROP[p.c], dur = c.min * F.MIN, left = F.remaining(p.at, c.min, now);
-    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span><span class="lbl">Thu hoạch!</span></button>`;
+    const badge = (p.pb ? `<span class="pbadge" title="Linh Thú: +${p.pb}% giá bán">💰+${p.pb}%</span>` : "") + (p.bf && p.bf.length ? `<span class="bbadge" title="Được ${p.bf.length} Linh Thú ban phúc">✦${p.bf.length}</span>` : "");
+    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span><span class="lbl">Thu hoạch!</span>${badge}</button>`;
     const frac = 1 - left / dur, stage = frac < 0.34 ? ["🌱", "s1"] : frac < 0.67 ? ["🌿", "s2"] : [c.emo, "s3"];
     return `<button type="button" class="plot" data-plotidx="${i}" ${timer(p.at + dur, dur)} aria-label="${esc(c.vi)} đang lớn">
-      <span class="e ${stage[1]}">${stage[0]}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}</button>`;
+      <span class="e ${stage[1]}">${stage[0]}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}${badge}</button>`;
   }
   function animalHTML(a, i, now) {
     const an = F.ANIMAL[a.a], pr = F.ITEMS[an.prod], dur = an.min * F.MIN, left = F.remaining(a.at, an.min, now);
@@ -943,7 +967,10 @@
   function plotClick(i) {
     const p = S.farm.plots[i]; if (!p) return;
     if (!p.c) seedSheet(i);
-    else if (F.plotReady(p, Date.now())) { const c = F.CROP[p.c]; farmDone(F.harvest(S.farm, i, Date.now()), `+1 ${c.emo} ${c.en} (${c.vi})`, c.en); }
+    else if (F.plotReady(p, Date.now())) {
+      const c = F.CROP[p.c], r = F.harvest(S.farm, i, Date.now());
+      farmDone(r, `+1 ${c.emo} ${c.en} (${c.vi})${r.bonus ? ` · +${r.bonus} xu nhờ Linh Thú ✨` : ""}`, c.en);
+    }
     else growSheet(i);
   }
   // One clock for everything time-based: study/play minutes for the farm gate, farm countdowns.
@@ -960,6 +987,7 @@
     if (counted && ++ticks % 5 === 0) save();
     const g = F.gate(S.gate, now);
     farmBtn(g);
+    if (S.online && NET.configured && document.visibilityState === "visible" && now - lastPushAt >= Online.SYNC_EVERY) pushStats();
     if (U.tab !== "farm") {
       if (!before.open && g.open) toast(`🔓 Nông trại đã mở! Bạn có ${fmtLeft(g.budget)} phút chơi.`, 3500);
       return;
@@ -981,6 +1009,218 @@
     if (ripe && $("#modal").hidden) render();
   }
   setInterval(tick, 1000);
+
+  // ---------- Linh Thú (spirit beasts) ----------
+  const BIMG = window.BEAST_IMG || {};
+  const effectText = (pw) => [pw.speed && `⏩ Rút ngắn ${pw.speed}% thời gian chín còn lại`, pw.price && `💰 +${pw.price}% giá bán khi thu hoạch`].filter(Boolean).join(" · ");
+  const stars = (lv) => `<span class="stars" aria-label="Cấp ${lv}/${F.BEAST_MAX_LV}">${"★".repeat(lv)}${"☆".repeat(F.BEAST_MAX_LV - lv)}</span>`;
+  function needChips(f, coins, items) {
+    return `<div class="need"><span class="${f.coins >= coins ? "ok" : "no"}">🪙 ${coins}</span>${Object.entries(items).map(([id, q]) => {
+      const it = F.ITEMS[id], have = f.barn[id] || 0;
+      return `<span class="${have >= q ? "ok" : "no"}" title="${esc(it.vi)} (${esc(it.en)})">${it.emo} ${Math.min(have, q)}/${q}</span>`;
+    }).join("")}</div>`;
+  }
+  function beastsSection(f, now) {
+    const owned = Object.keys(f.beasts).length;
+    return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐉 Linh Thú 12 con giáp</h2><span class="chip num">${owned}/12</span></div>
+      <p class="small muted">Thu phục Linh Thú bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
+        Mỗi ngày mỗi Linh Thú có ${F.STAMINA} ⚡ thể lực — ban phúc càng nhiều cây càng tốn, cấp càng cao càng ít tốn. Nâng cấp (tối đa ${F.BEAST_MAX_LV}) bằng nông sản thu hoạch.</p>
+      <div class="beasts">${F.BEASTS.map((b) => beastCard(f, b, now)).join("")}</div></section>`;
+  }
+  function beastCard(f, b, now) {
+    const s = f.beasts[b.id], locked = !s && b.lv > F.level(f.xp);
+    const img = BIMG[b.id] ? `<img src="${BIMG[b.id]}" alt="${esc(b.zo)} – ${esc(b.vi)}" loading="lazy">` : `<div class="noimg">${esc(b.zo)}</div>`;
+    let body;
+    if (s) {
+      const st = F.stamina(f, b.id, today()), targets = F.castTargets(f, b.id, now).length;
+      body = `${stars(s.lv)}<p class="small">${effectText(F.beastPower(b.id, s.lv))}</p>
+        <div class="stamina" title="Thể lực hôm nay"><i style="width:${st / F.STAMINA * 100}%"></i></div>
+        <span class="small muted">⚡ ${st}/${F.STAMINA} thể lực · ${F.STAMINA_PER_CROP[s.lv - 1]} ⚡/cây</span>
+        <div class="row"><button type="button" class="btn sm primary" data-beastcast="${b.id}"${targets && st ? "" : " disabled"}>✨ Ban phúc${targets ? ` (${targets})` : ""}</button>
+          <button type="button" class="btn sm" data-beastinfo="${b.id}">${s.lv < F.BEAST_MAX_LV ? "Nâng cấp" : "Chi tiết"}</button></div>`;
+    } else if (locked) {
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p><span class="chip">🔒 Nông trại cấp ${b.lv}</span>
+        <div><button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
+    } else {
+      const can = f.coins >= b.cost && Object.entries(b.need).every(([id, q]) => (f.barn[id] || 0) >= q);
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p>${needChips(f, b.cost, b.need)}
+        <div class="row"><button type="button" class="btn sm primary" data-beastbuy="${b.id}"${can ? "" : " disabled"}>Thu phục</button>
+          <button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
+    }
+    return `<div class="beast${s ? " owned" : ""}${locked ? " locked" : ""}">${img}<div class="bd">
+      <div class="row" style="justify-content:space-between;gap:4px"><b>${esc(b.zo)} · ${esc(b.vi)}</b>${s ? `<span class="chip good">Cấp ${s.lv}</span>` : ""}</div>
+      <span class="small muted"><i>${esc(b.en)}</i> — ${esc(b.lore)}</span>${body}</div></div>`;
+  }
+  function beastSheet(id) {
+    const f = S.farm, b = F.BEAST[id], s = f.beasts[id], up = s && F.upgradeCost(f, id);
+    const can = up && f.coins >= up.coins && Object.entries(up.need).every(([k, q]) => (f.barn[k] || 0) >= q);
+    sheet(`<div class="row" style="justify-content:space-between"><h2>${esc(b.zo)} · ${esc(b.vi)}</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      ${BIMG[id] ? `<img class="beast-big" src="${BIMG[id]}" alt="${esc(b.zo)}">` : ""}
+      <div class="row"><span class="word" style="font-size:1.4rem">${esc(b.en)}</span>${sayBtns(b.en)}</div>
+      <p class="muted">${esc(b.lore)}</p>
+      ${s ? `<p>${stars(s.lv)} <b>Cấp ${s.lv}/${F.BEAST_MAX_LV}</b></p><p>Hiện tại: ${effectText(F.beastPower(id, s.lv))} · ${F.STAMINA_PER_CROP[s.lv - 1]} ⚡/cây</p>`
+        : `<p>Khi thu phục (cấp 1): ${effectText(F.beastPower(id, 1))}</p><p class="small muted">Cấp tối đa ${F.BEAST_MAX_LV}: ${effectText(F.beastPower(id, F.BEAST_MAX_LV))} · ${F.STAMINA_PER_CROP[F.BEAST_MAX_LV - 1]} ⚡/cây</p>
+           <p class="label">Cần để thu phục${b.lv > F.level(f.xp) ? ` · 🔒 nông trại cấp ${b.lv}` : ""}</p>${needChips(f, b.cost, b.need)}`}
+      ${up ? `<p class="label">Nâng lên cấp ${s.lv + 1}: ${effectText(F.beastPower(id, s.lv + 1))} · ${F.STAMINA_PER_CROP[s.lv]} ⚡/cây</p>${needChips(f, up.coins, up.need)}
+        <div><button type="button" class="btn primary" data-beastup="${id}"${can ? "" : " disabled"}>Nâng lên cấp ${s.lv + 1}</button></div>` : s ? `<p class="feedback ok">🏆 Đã đạt cấp tối đa!</p>` : ""}`, b.vi);
+  }
+  function castSheet(id) {
+    const f = S.farm, b = F.BEAST[id], s = f.beasts[id], now = Date.now(), st = F.stamina(f, id, today());
+    const targets = F.castTargets(f, id, now);
+    let n = 0;
+    while (n < targets.length && F.castCost(s.lv, n + 1) <= st) n++;
+    sheet(`<div class="row" style="justify-content:space-between"><h2>✨ ${esc(b.zo)} ban phúc</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <p>${effectText(F.beastPower(id, s.lv))}</p>
+      <p class="small muted">Thể lực ⚡ ${st}/${F.STAMINA} · cấp ${s.lv}: ${F.STAMINA_PER_CROP[s.lv - 1]} ⚡ mỗi cây. Chọn cây muốn ban phúc:</p>
+      <div class="list">${targets.map((i, k) => {
+        const p = f.plots[i], c = F.CROP[p.c], left = F.remaining(p.at, c.min, now);
+        return `<label class="item"><input type="checkbox" data-castpick value="${i}"${k < n ? " checked" : ""}>
+          <span class="t">${c.emo} <b>${esc(c.vi)}</b> · ô ${i + 1}<br><span class="small muted">${left ? `còn ${fmtLeft(left)}` : "đã chín"}${p.pb ? ` · đang +${p.pb}% giá` : ""}</span></span><span></span></label>`;
+      }).join("")}</div>
+      <p class="feedback" id="castcost"></p>
+      <div class="row"><button type="button" class="btn primary" data-castgo="${id}">Ban phúc</button><button type="button" class="btn ghost" data-close>Đóng</button></div>`, `${b.zo} ban phúc`);
+    castCost(id);
+  }
+  function castCost(id) {
+    const s = S.farm.beasts[id], st = F.stamina(S.farm, id, today());
+    const n = document.querySelectorAll("#sheet [data-castpick]:checked").length, cost = F.castCost(s.lv, n);
+    const out = $("#castcost"), go = $("#sheet [data-castgo]");
+    if (!out || !go) return;
+    out.className = `feedback ${cost <= st && n ? "ok" : "no"}`;
+    out.textContent = n ? `${n} cây · tốn ${cost}/${st} ⚡ thể lực${cost > st ? " — không đủ thể lực" : ""}` : "Chưa chọn cây nào";
+    go.disabled = !n || cost > st;
+  }
+
+  // ---------- Bảng xếp hạng (online) ----------
+  const NET = window.Online.create(window.NHIP_ONLINE || {});
+  const BOARD_KEY = "nhip.board";
+  let board = (() => { try { return JSON.parse(localStorage.getItem(BOARD_KEY)) || null; } catch (e) { return null; } })();
+  let boardLoading = false, boardTriedAt = 0, lastPushAt = 0, lastPushed = "";
+  const urlRoom = (new URLSearchParams(location.search).get("lop") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12);
+  function myStats() {
+    const t = today(), wk = C.isoWeek(t);
+    let wxp = 0;
+    for (const [d, v] of Object.entries(S.days)) if (C.isoWeek(d) === wk) wxp += v.xp || 0;
+    const av = S.online && S.online.avatar;
+    return { xp: S.xp, week_xp: wxp, week: wk, words: Object.keys(S.progress.kids).length + Object.keys(S.progress.toeic).length,
+      streak: C.liveStreak(S.streak, t), farm_lv: F.level(S.farm.xp), beasts: Object.keys(S.farm.beasts).length, avatar: av && S.farm.beasts[av] ? av : "" };
+  }
+  function lostSeat() {
+    S.online = null; board = null; flush();
+    try { localStorage.removeItem(BOARD_KEY); } catch (e) { /* ignore */ }
+    toast(Online.message("no_player"), 4000);
+    if (U.tab === "rank") render();
+  }
+  async function pushStats(force) {
+    if (!S.online || !NET.configured || NET.offline()) return;
+    const stats = myStats(), js = JSON.stringify(stats), now = Date.now();
+    if (!force && js === lastPushed && now - lastPushAt < 10 * 60 * 1000) return;
+    lastPushAt = now;
+    try {
+      const r = await NET.sync(S.online.token, stats);
+      if (r.ok) lastPushed = js;
+      else if (r.error === "too_fast") lastPushAt = now - Online.SYNC_EVERY + (+r.retry_in || 20) * 1000;
+      else if (r.error === "no_player") lostSeat();
+    } catch (e) { /* offline: Online backs off by itself */ }
+  }
+  async function fetchBoard(force) {
+    if (!S.online || boardLoading || !NET.configured) return;
+    if (!force && board && board.room === S.online.room && Date.now() - board.at < Online.BOARD_TTL) return;
+    boardLoading = true; boardTriedAt = Date.now(); U.boardErr = "";
+    try {
+      await pushStats();
+      const r = await NET.board(S.online.token, C.isoWeek(today()));
+      if (r.ok && Array.isArray(r.players)) {
+        board = { at: Date.now(), room: String(r.room), max: +r.max || 15, players: r.players.slice(0, 50).map((p) => ({
+          name: String(p.name || "?").slice(0, 20), me: p.me === true, xp: +p.xp || 0, week_xp: +p.week_xp || 0, words: +p.words || 0,
+          streak: +p.streak || 0, farm_lv: +p.farm_lv || 1, beasts: +p.beasts || 0, avatar: BIMG[p.avatar] ? p.avatar : "", seen: p.seen ? Date.parse(p.seen) || 0 : 0 })) };
+        try { localStorage.setItem(BOARD_KEY, JSON.stringify(board)); } catch (e) { /* ignore */ }
+      } else if (r.error === "no_player") lostSeat();
+      else U.boardErr = Online.message(r.error);
+    } catch (e) { U.boardErr = Online.message(e.code); }
+    boardLoading = false;
+    if (U.tab === "rank" || U.tab === "today") render();
+  }
+  async function joinClass() {
+    const room = $("#j-room").value.trim().toUpperCase(), name = $("#j-name").value.trim(), pin = $("#j-pin").value.trim();
+    Object.assign(U, { joinRoom: room, joinName: name, joinErr: "", joining: true });
+    render();
+    try {
+      const r = await NET.join(room, name, pin);
+      if (r.ok) {
+        S.online = { room: r.room, name: r.name, token: r.token, avatar: "" };
+        board = null; lastPushAt = 0; lastPushed = ""; flush();
+        toast(`🎉 Chào ${r.name}! Bạn đã vào lớp ${r.room}.`);
+      } else U.joinErr = Online.message(r.error) + (r.error === "room_full" && r.max ? ` (${r.max} người)` : "");
+    } catch (e) { U.joinErr = Online.message(e.code); }
+    U.joining = false;
+    if (U.tab === "rank") render();
+  }
+  const ago = (ms) => { if (!ms) return ""; const m = Math.round((Date.now() - ms) / 60000); return m < 10 ? "vừa hoạt động" : m < 60 ? `${m} phút trước` : m < 1440 ? `${Math.round(m / 60)} giờ trước` : `${Math.round(m / 1440)} ngày trước`; };
+  const hhmm = (ms) => { const d = new Date(ms); return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`; };
+  const avatar = (p) => (BIMG[p.avatar] ? `<img class="av" src="${BIMG[p.avatar]}" alt="">` : `<span class="av" aria-hidden="true">${esc(Array.from(p.name)[0] || "?").toUpperCase()}</span>`);
+  function myRank(by) {
+    if (!board || !S.online || board.room !== S.online.room) return null;
+    const list = Online.rank(board.players, by), me = list.find((p) => p.me);
+    return me ? { me, list } : null;
+  }
+  function vRank() {
+    const head = (extra = "") => `<section class="hello"><div><p class="label">${S.online ? `Lớp ${esc(S.online.room)} · ${esc(S.online.name)}` : "Cùng học, cùng đua"}</p><h1>Bảng xếp hạng</h1></div>${extra}</section>`;
+    if (!NET.configured) {
+      return head() + `<section class="panel stack"><h2>Chưa bật chế độ trực tuyến</h2>
+        <p>Bảng xếp hạng lớp cần một máy chủ nhỏ (miễn phí). Người quản lý lớp làm theo hướng dẫn trong file <b>ONLINE.md</b> của dự án (khoảng 10 phút), sau đó mọi người mở lại app là thấy.</p>
+        <p class="small muted">Mọi tính năng học và nông trại vẫn chạy đầy đủ khi chưa bật.</p></section>`;
+    }
+    if (!S.online) {
+      return head() + `<section class="panel stack"><h2>Tham gia lớp</h2>
+        <p class="muted">Nhập mã lớp do thầy cô hoặc người quản lý gửi, chọn tên hiển thị và mã PIN 4–6 chữ số. Dùng đúng tên + PIN để đăng nhập lại trên máy khác.</p>
+        <form data-joinform class="stack" style="max-width:420px">
+          <label class="stack" style="gap:4px"><span class="label">Mã lớp</span><input type="text" id="j-room" value="${esc(U.joinRoom || urlRoom)}" maxlength="12" autocapitalize="characters" autocomplete="off" required></label>
+          <label class="stack" style="gap:4px"><span class="label">Tên hiển thị</span><input type="text" id="j-name" value="${esc(U.joinName || "")}" maxlength="20" autocomplete="nickname" required></label>
+          <label class="stack" style="gap:4px"><span class="label">Mã PIN (4–6 số)</span><input type="password" id="j-pin" inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" autocomplete="off" required></label>
+          ${U.joinErr ? `<p class="feedback no" role="alert">${esc(U.joinErr)}</p>` : ""}
+          <div><button class="btn primary"${U.joining ? " disabled" : ""}>${U.joining ? "Đang kết nối…" : "Tham gia lớp"}</button></div>
+        </form>
+        <p class="small muted">Bạn cùng lớp chỉ thấy tên, XP, chuỗi ngày, số từ đã học và cấp nông trại của bạn.</p></section>`;
+    }
+    if (!boardLoading && Date.now() - boardTriedAt > 15000 && (!board || board.room !== S.online.room || Date.now() - board.at >= Online.BOARD_TTL)) setTimeout(fetchBoard, 0);
+    const offline = NET.offline() || !!U.boardErr;
+    const status = `<span class="chip ${offline ? "warn" : "good"}">${boardLoading ? "Đang cập nhật…" : offline ? "Ngoại tuyến" : "Trực tuyến"}</span>`;
+    if (!board || board.room !== S.online.room) {
+      return head(status) + `<section class="panel"><p class="muted">${U.boardErr ? esc(U.boardErr) : "Đang tải bảng xếp hạng…"}</p></section>`;
+    }
+    const by = U.rankBy, M = Online.METRICS[by], { me, list } = myRank(by) || { list: Online.rank(board.players, by) };
+    const valText = (p) => (by === "farm" ? `cấp ${p.farm_lv}` : `${p.value} ${M.unit}`);
+    let gapText = "";
+    if (me) {
+      const above = list.filter((p) => p.value > me.value).pop();
+      gapText = me.rank === 1 ? "🏆 Bạn đang dẫn đầu — giữ vững phong độ nhé!"
+        : by === "farm" ? `Nâng cấp nông trại và thu phục Linh Thú để vượt ${esc(above.name)}!`
+        : `Còn <b>${above.value - me.value + 1} ${M.unit}</b> nữa là vượt ${esc(above.name)}!`;
+    }
+    const medal = ["🥇", "🥈", "🥉"];
+    const owned = Object.keys(S.farm.beasts).filter((id) => BIMG[id]);
+    return head(status) + `
+      ${me ? `<section class="panel row rank-me"><span class="big num">#${me.rank}</span><div class="stack" style="gap:2px;flex:1 1 200px">
+        <b>Bạn đứng thứ ${me.rank}/${list.length} · ${M.label}</b><span>${gapText}</span></div></section>` : ""}
+      <div class="seg" role="group" aria-label="Xếp theo">${Object.entries(Online.METRICS).map(([id, m]) => `<button type="button" data-rankby="${id}" aria-pressed="${by === id}">${m.label}</button>`).join("")}</div>
+      <ol class="ranks">${list.map((p) => `<li class="rk${p.me ? " me" : ""}${p.rank <= 3 ? ` top${p.rank}` : ""}">
+        <span class="pos">${p.rank <= 3 && p.value > 0 ? medal[p.rank - 1] : p.rank}</span>${avatar(p)}
+        <span class="t"><b>${esc(p.name)}</b>${p.me ? ' <span class="chip new">Bạn</span>' : ""}<br>
+          <span class="small muted">🔥 ${p.streak} · 📚 ${p.words} từ · 🌾 cấp ${p.farm_lv} · 🐉 ${p.beasts}${p.seen ? ` · ${ago(p.seen)}` : ""}</span></span>
+        <b class="val num">${valText(p)}</b></li>`).join("")}</ol>
+      <section class="panel stack">
+        <div class="row" style="justify-content:space-between"><span class="small muted">${list.length}/${board.max} người · cập nhật lúc ${hhmm(board.at)}${U.boardErr ? ` · ${esc(U.boardErr)}` : ""}</span>
+          <button type="button" class="btn sm" data-rankrefresh${boardLoading ? " disabled" : ""}>Làm mới</button></div>
+        ${owned.length ? `<p class="label">Ảnh đại diện (Linh Thú của bạn)</p><div class="avatars">
+          <button type="button" data-avatar="" aria-pressed="${!S.online.avatar}" aria-label="Chữ cái đầu tên"><span class="av">${esc(Array.from(S.online.name)[0] || "?").toUpperCase()}</span></button>
+          ${owned.map((id) => `<button type="button" data-avatar="${id}" aria-pressed="${S.online.avatar === id}" aria-label="${esc(F.BEAST[id].zo)}"><img src="${BIMG[id]}" alt=""></button>`).join("")}</div>`
+          : `<p class="small muted">Thu phục Linh Thú ở nông trại để dùng làm ảnh đại diện.</p>`}
+        <div class="row">${U.leaveAsk ? `<span class="small">Rời lớp sẽ xoá bạn khỏi bảng xếp hạng (dữ liệu học trên máy vẫn giữ).</span>
+          <button type="button" class="btn sm" data-leave="yes" style="color:var(--bad)">Rời lớp</button><button type="button" class="btn sm primary" data-leave="no">Ở lại</button>`
+          : `<button type="button" class="btn sm ghost" data-leave="ask">Rời lớp…</button>`}</div>
+      </section>`;
+  }
 
   // ---------- Tiến độ ----------
   function vMe() {
@@ -1117,16 +1357,41 @@
       farmDone(n ? { ok: true } : r, `Đã gieo ${n} ô ${c.emo} ${c.vi}${r.ok ? "" : " (hết xu)"}`);
     },
     harvestall: () => {
-      const got = {}; let r = { ok: true }, lvUp = 0;
+      const got = {}; let r = { ok: true }, lvUp = 0, bonus = 0;
       S.farm.plots.forEach((p, i) => {
-        if (r.ok && F.plotReady(p, Date.now())) { r = F.harvest(S.farm, i, Date.now()); if (r.ok) { got[r.item] = (got[r.item] || 0) + 1; lvUp = r.levelUp || lvUp; } }
+        if (r.ok && F.plotReady(p, Date.now())) { r = F.harvest(S.farm, i, Date.now()); if (r.ok) { got[r.item] = (got[r.item] || 0) + 1; lvUp = r.levelUp || lvUp; bonus += r.bonus; } }
       });
       const list = Object.entries(got).map(([id, n]) => `${n} ${F.ITEMS[id].emo}`).join(", ");
       if (!list) { toast(r.ok ? "Chưa có cây nào chín" : r.msg); return; }
-      farmDone({ ok: true, levelUp: lvUp }, `Thu hoạch: ${list}${r.ok ? "" : " — kho đã đầy"}`);
+      farmDone({ ok: true, levelUp: lvUp }, `Thu hoạch: ${list}${bonus ? ` · +${bonus} xu nhờ Linh Thú ✨` : ""}${r.ok ? "" : " — kho đã đầy"}`);
     },
     fert: (v) => farmDone(F.fertilize(S.farm, +v, Date.now()), "Cây đã chín nhờ phân bón 🧪"),
-    uproot: (v) => { const p = S.farm.plots[+v]; if (p) { p.c = null; p.at = 0; } farmDone({ ok: true }, "Đã dọn ô đất"); },
+    uproot: (v) => farmDone(F.uproot(S.farm, +v), "Đã dọn ô đất"),
+    beastinfo: (v) => beastSheet(v),
+    beastbuy: (v) => { const b = F.BEAST[v]; farmDone(F.buyBeast(S.farm, v, today()), `🎉 ${b.zo} – ${b.vi} đã về nông trại!`, b.en); },
+    beastup: (v) => { const b = F.BEAST[v], r = F.upgradeBeast(S.farm, v); farmDone(r, r.ok && `⭐ ${b.zo} lên cấp ${r.lv}!`); },
+    beastcast: (v) => castSheet(v),
+    castgo: (v) => {
+      const idx = [...document.querySelectorAll("#sheet [data-castpick]:checked")].map((x) => +x.value), b = F.BEAST[v];
+      const r = F.cast(S.farm, v, idx, Date.now(), today());
+      farmDone(r, r.ok && `✨ ${b.zo} đã ban phúc ${r.n} cây (−${r.cost} ⚡)`);
+    },
+    rankby: (v) => { U.rankBy = v; render(); },
+    rankrefresh: () => { if (board && Date.now() - board.at < 10000) toast("Bảng vừa được cập nhật"); else fetchBoard(true); },
+    avatar: (v) => { S.online.avatar = v; save(); lastPushed = ""; pushStats(true); render(); },
+    leave: (v) => {
+      if (v === "ask") U.leaveAsk = true;
+      else if (v === "no") U.leaveAsk = false;
+      else {
+        NET.leave(S.online.token).catch(() => {});
+        S.online = null; board = null; U.leaveAsk = false; flush();
+        try { localStorage.removeItem(BOARD_KEY); } catch (e) { /* ignore */ }
+        toast("Đã rời lớp");
+      }
+      render();
+    },
+    recover: () => { U.tab = "today"; U.vocab = { mode: "home" }; closeModal(); render(); },
+    reload: () => location.reload(),
     buyplot: () => farmDone(F.buyPlot(S.farm), "Đã mở thêm một ô đất 🟫"),
     animalshop: () => animalShop(),
     buyanimal: (v) => { const a = F.ANIMAL[v]; farmDone(F.buyAnimal(S.farm, v, Date.now()), `Chào mừng ${a.emo} ${a.vi} đến nông trại!`, a.en); },
@@ -1149,16 +1414,19 @@
     },
   };
   const FARM_ACTIONS = new Set(["plotidx", "plant", "plantall", "harvestall", "fert", "uproot", "buyplot", "animalshop", "buyanimal", "collect", "boost",
+    "beastbuy", "beastup", "beastcast", "castgo",
     "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
     if (e.target.id === "modal") { closeModal(); return; }
     const t = e.target.closest("button"); if (!t || t.disabled) return;
     for (const k in H) if (k in t.dataset) {
       if (FARM_ACTIONS.has(k) && !gateNow().open) { if (!$("#modal").hidden) closeModal(); toast("🔒 Nông trại đang khoá — học thêm để chơi nhé"); render(); return; }
-      H[k](t.dataset[k], t, e); return;
+      try { H[k](t.dataset[k], t, e); } catch (err) { console.error("action failed", k, err); toast("Có lỗi nhỏ, bạn thử lại nhé — dữ liệu vẫn an toàn"); render(); }
+      return;
     }
   });
   document.addEventListener("submit", (e) => {
+    if (e.target.matches("[data-joinform]")) { e.preventDefault(); if (!U.joining) joinClass(); return; }
     if (!e.target.matches("[data-spellform]")) return;
     e.preventDefault();
     const q = U.vocab.qs[U.vocab.i];
@@ -1170,6 +1438,7 @@
     if (e.target.id === "rate") { S.rate = +e.target.value; $("#rate-v").textContent = S.rate.toFixed(1) + "×"; save(); }
   });
   document.addEventListener("change", (e) => {
+    if (e.target.matches("[data-castpick]")) { const go = $("#sheet [data-castgo]"); if (go) castCost(go.dataset.castgo); }
     if (e.target.id === "btopic") { U.btopic = e.target.value; $("#blist").innerHTML = browseList(); }
     if (e.target.id === "import-in" && e.target.files[0]) importData(e.target.files[0]);
     if (e.target.id === "rate") say("This is the reading speed.");
@@ -1189,6 +1458,11 @@
   });
 
   // ---------- Start ----------
+  let lastOops = 0;
+  const oops = () => { if (Date.now() - lastOops > 10000) { lastOops = Date.now(); toast("Có lỗi nhỏ — app vẫn chạy, dữ liệu vẫn an toàn"); } };
+  addEventListener("error", oops);
+  addEventListener("unhandledrejection", oops);
+  if (urlRoom && !S.online && NET.configured) U.tab = "rank";
   applyTheme();
   render();
   DB.loadAll().then((pics) => { PICS = pics; if (Object.keys(pics).length && $("#modal").hidden) render(); });

@@ -1,5 +1,5 @@
 """Assemble the app: dist/nhip.html (single-file demo/artifact) and dist/nhip-pwa.zip (installable offline app)."""
-import json, pathlib, zipfile, hashlib, glob
+import json, pathlib, zipfile, hashlib, glob, base64, shutil
 from PIL import Image, ImageDraw, ImageFont
 
 # ===== CONFIG =====
@@ -8,14 +8,26 @@ SRC, BUILD, DIST = ROOT / "src", ROOT / "build", ROOT / "dist"
 APP_NAME, SHORT_NAME = "Nhịp Học Tiếng Anh", "Nhịp"
 THEME, BG = "#15223A", "#F3F5F9"
 ICON_SIZES = [192, 512]
+BEAST_DIR = SRC / "img" / "beasts"
 # ==================
 
 
-def assemble():
+def beast_images(inline):
+    """Spirit beast portraits: data URIs for the single-file build, relative paths for the PWA."""
+    out = {}
+    for f in sorted(BEAST_DIR.glob("*.webp")):
+        out[f.stem] = ("data:image/webp;base64," + base64.b64encode(f.read_bytes()).decode()) if inline else f"img/beasts/{f.name}"
+    return "window.BEAST_IMG=" + json.dumps(out) + ";"
+
+
+def assemble(inline_images):
     html = (SRC / "index.html").read_text(encoding="utf-8")
     parts = {"/*DATA*/": (BUILD / "data.js").read_text(encoding="utf-8"),
              "/*CORE*/": (SRC / "core.js").read_text(encoding="utf-8"),
              "/*FARM*/": (SRC / "farm.js").read_text(encoding="utf-8"),
+             "/*ONLINE*/": (SRC / "online.js").read_text(encoding="utf-8"),
+             "/*ONLINECFG*/": (SRC / "online.config.js").read_text(encoding="utf-8"),
+             "/*IMG*/": beast_images(inline_images),
              "/*APP*/": (SRC / "app.js").read_text(encoding="utf-8")}
     for k, v in parts.items():
         assert html.count(k) == 1, k
@@ -48,7 +60,7 @@ def pwa(html):
     version = hashlib.sha1(page.encode()).hexdigest()[:10]
     sw = f"""/* Offline cache: app shell cache-first, Google Fonts stale-while-revalidate. */
 const CACHE = "nhip-{version}";
-const SHELL = ["./", "index.html", "manifest.webmanifest", {", ".join(f'"icon-{n}.png"' for n in ICON_SIZES)}];
+const SHELL = ["./", "index.html", "manifest.webmanifest", {", ".join(f'"icon-{n}.png"' for n in ICON_SIZES)}, {", ".join(f'"img/beasts/{f.name}"' for f in sorted(BEAST_DIR.glob("*.webp")))}];
 self.addEventListener("install", (e) => e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", (e) => {{
@@ -66,6 +78,7 @@ self.addEventListener("fetch", (e) => {{
 """
     out = DIST / "pwa"
     out.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(BEAST_DIR, out / "img" / "beasts", dirs_exist_ok=True)
     (out / "index.html").write_text(page, encoding="utf-8")
     (out / "manifest.webmanifest").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "sw.js").write_text(sw, encoding="utf-8")
@@ -74,8 +87,9 @@ self.addEventListener("fetch", (e) => {{
     (out / "HUONG-DAN-CAI-DAT.txt").write_text(INSTALL_TXT, encoding="utf-8")
     z = DIST / "nhip-pwa.zip"
     with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED) as zf:
-        for f in sorted(out.iterdir()):
-            zf.write(f, f"nhip/{f.name}")
+        for f in sorted(out.rglob("*")):
+            if f.is_file():
+                zf.write(f, f"nhip/{f.relative_to(out)}")
     return z
 
 
@@ -100,7 +114,6 @@ Ghi chú:
 
 if __name__ == "__main__":
     DIST.mkdir(exist_ok=True)
-    html = assemble()
-    (DIST / "nhip.html").write_text(html, encoding="utf-8")
-    z = pwa(html)
-    print(f"dist/nhip.html {len(html.encode()) // 1024} KB; {z.name} {z.stat().st_size // 1024} KB")
+    (DIST / "nhip.html").write_text(assemble(inline_images=True), encoding="utf-8")
+    z = pwa(assemble(inline_images=False))
+    print(f"dist/nhip.html {(DIST / 'nhip.html').stat().st_size // 1024} KB; {z.name} {z.stat().st_size // 1024} KB")

@@ -7,6 +7,8 @@ Cấu trúc:
 - `src/farm.js` – logic nông trại (cây trồng, vật nuôi, đơn hàng, nhà kho, trang trí); xu kiếm được từ việc học.
   Giới hạn chơi (`GATE`): 1 phút học = 0,75 phút chơi, cần học tối thiểu 10 phút, lượt làm mới sau 5 tiếng.
 - `src/app.js`, `src/index.html` – giao diện.
+- `src/online.js`, `src/online.config.js` – bảng xếp hạng lớp (Supabase); `supabase/schema.sql` – máy chủ. Hướng dẫn bật: **ONLINE.md**.
+- `src/img/beasts/` – ảnh 12 Linh Thú (cắt từ ảnh 12 con giáp).
 - `build_app.py` – ghép thành `dist/nhip.html` (1 file) và `dist/nhip-pwa.zip` (bản cài đặt offline).
 - `tests/` – `node --test tests/*.test.js` (unit + dữ liệu), `python3 tests/e2e_test.py` (Playwright).
 
@@ -15,7 +17,8 @@ Build:
 
 Test:
     python3 build_data.py && node --test tests/*.test.js     # unit (core, nông trại) + kiểm tra dữ liệu
-    python3 build_app.py && python3 tests/e2e_test.py        # 67 kiểm tra trên Chromium
+    python3 build_app.py && python3 tests/e2e_test.py        # 75 kiểm tra trên Chromium
+    cd tests && python3 sql_test.py && python3 online_test.py  # máy chủ trên PostgreSQL thật + 10–16 người dùng (cần PostgreSQL, psycopg)
 
 Phiên bản `playwright` (pip) phải khớp với Chromium đã cài (`playwright install chromium`).
 

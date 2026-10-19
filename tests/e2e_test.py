@@ -13,7 +13,8 @@ SHOWCASE = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1') || '{
   s.farm = Object.assign(s.farm || {}, { coins: 2400, fert: 4, xp: 700, cap: 80, orders: [], goalDay: null, earned: 900,
     plots: [{c:'corn',at:0},{c:'tomato',at:0},{c:'strawberry',at:now-60*M},{c:'pumpkin',at:now-30*M},{c:'wheat',at:now},{c:null,at:0},{c:'carrot',at:0},{c:'sunflower',at:now-100*M}],
     animals: [{a:'chicken',at:0},{a:'chicken',at:now},{a:'chicken',at:now},{a:'cow',at:now},{a:'cow',at:0},{a:'sheep',at:now},{a:'sheep',at:now},{a:'bee',at:now}],
-    deco: ['flowers','fence','tree','dog','well','house','tractor','rainbow'], barn: {wheat: 4, egg: 3, milk: 1} });
+    deco: ['flowers','fence','tree','dog','well','house','tractor','rainbow'], barn: {wheat: 40, carrot: 20, corn: 20, egg: 3, milk: 1},
+    beasts: {dragon: {lv: 5, st: 6, day: ''}, tiger: {lv: 3, st: 10, day: ''}} });
   localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
 UNLOCK = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1'));
   s.gate = { start: Date.now(), study: 12 * 60000, play: 0 }; localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
@@ -61,7 +62,7 @@ def main():
         check("app renders Today", page.locator("h1").first.inner_text().startswith("Hôm nay"))
         check("two level buttons", page.locator("[data-level]").count() == 2)
         check("TOEIC is default level", page.get_attribute("#lv-toeic", "aria-pressed") == "true")
-        for tab in ["words", "sent", "ipa", "me", "today"]:
+        for tab in ["words", "sent", "ipa", "rank", "me", "today"]:
             page.click(f"[data-tab={tab}]")
             check(f"tab {tab} renders", page.locator("#view h1").count() >= 1)
 
@@ -206,6 +207,19 @@ def main():
         other = ctx.new_page(); other.goto(url, wait_until="networkidle"); other.evaluate(SHOWCASE); other.close()
         page.wait_for_timeout(400)
         check("owned animals walk on the farm scene", page.locator("svg.scene .peck").count() == 3 and page.locator("svg.scene .walk").count() == 1)
+        check("12 spirit beast cards with the zodiac art", page.locator(".beast img").count() == 12)
+        page.click("[data-beastbuy=rat]")
+        s = state(page)
+        check("buy a spirit beast with coins + crops", "rat" in s["farm"]["beasts"] and s["farm"]["barn"]["wheat"] == 30 and s["farm"]["coins"] == 2200)
+        page.click("[data-beastcast=rat]")
+        n = page.locator("#sheet [data-castpick]:checked").count()
+        cost_txt = page.inner_text("#castcost")
+        page.click("#sheet [data-castgo=rat]")
+        s = state(page)
+        check("beast blesses growing crops and spends stamina", n == 4 and "tốn 4/10" in cost_txt and s["farm"]["beasts"]["rat"]["st"] == 6, f"{n} {cost_txt}")
+        check("blessed plots show a badge", page.locator(".plot .bbadge").count() == 4)
+        page.click("[data-beastinfo=rat]"); page.click("#sheet [data-beastup=rat]")
+        check("beast levels up with harvested crops", state(page)["farm"]["beasts"]["rat"]["lv"] == 2)
         page.screenshot(path=str(SHOTS / "desktop-farm.png"), full_page=True)
 
         # 11. Service worker for offline use
@@ -221,7 +235,7 @@ def main():
             merr = []
             mp.on("pageerror", lambda e: merr.append(str(e)))
             mp.goto(url, wait_until="networkidle")
-            for tab in ["today", "words", "sent", "ipa", "me"]:
+            for tab in ["today", "words", "sent", "ipa", "rank", "me"]:
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
             mp.click("#farm-btn")

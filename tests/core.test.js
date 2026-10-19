@@ -105,3 +105,11 @@ test("badges unlock by stats", () => {
   const on = b.filter((x) => x.on).map((x) => x.name);
   assert.deepEqual(on, ["Từ đầu tiên", "50 từ", "Chuỗi 3 ngày", "10 âm IPA", "Đủ 44 âm"]);
 });
+
+test("ISO week keys for the weekly leaderboard", () => {
+  assert.equal(C.isoWeek("2026-10-19"), "2026-W43");
+  assert.equal(C.isoWeek("2026-10-25"), "2026-W43");
+  assert.equal(C.isoWeek("2026-10-26"), "2026-W44");
+  assert.equal(C.isoWeek("2021-01-03"), "2020-W53");
+  assert.equal(C.isoWeek("2024-12-30"), "2025-W01");
+});
