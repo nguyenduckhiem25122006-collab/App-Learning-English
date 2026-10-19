@@ -57,7 +57,7 @@
   const STAMINA_PER_CROP = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]; // by beast level
   const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700]; // farm xp needed for level 1..10
   const START = { coins: 50, fert: 1, plots: 6, cap: 40 };
-  const MAX_PLOTS = 15, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20;
+  const MAX_PLOTS = 30, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20, PLOTS_PER_LEVEL = 3;
   const REWARD = { lesson: [20, 1], review: [15, 1], goal: [50, 2] }; // [coins, fertilizer]
   // Play-time gate: each study minute buys RATIO farm minutes; the farm opens after MIN_STUDY
   // of study in a window, and the window (study + play time) resets WINDOW after it started.
@@ -121,10 +121,14 @@
     f.fert--; p.at = now - CROP[p.c].min * MIN;
     return { ok: true };
   }
+  /** Farm level needed for plot number n (1-based): 6 to start, then 3 more at each farm level 1–8, up to 30. */
+  const plotLevel = (n) => (n <= START.plots ? 1 : Math.floor((n - START.plots - 1) / PLOTS_PER_LEVEL) + 1);
   const plotCost = (f) => (f.plots.length >= MAX_PLOTS ? null : 60 * (f.plots.length - START.plots + 1));
   function buyPlot(f) {
     const cost = plotCost(f);
     if (cost == null) return fail("Cánh đồng đã rộng tối đa");
+    const need = plotLevel(f.plots.length + 1);
+    if (need > level(f.xp)) return fail(`Ô đất này mở ở nông trại cấp ${need}`);
     if (f.coins < cost) return fail("Chưa đủ xu để mở ô đất mới");
     f.coins -= cost; f.plots.push({ c: null, at: 0 });
     return { ok: true };
@@ -296,7 +300,7 @@
   const unlocks = (lv) => [...CROPS, ...ANIMALS, ...DECOS, ...BEASTS].filter((x) => x.lv === lv);
 
   const Farm = {
-    MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
+    MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, plotLevel, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
     fresh, level, nextXp, bonus, stock, unlockedItems, earn, reward, remaining, plotReady, plant, harvest, fertilize, plotCost, buyPlot,
     animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks, uproot,
     BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, upgradeCost, upgradeBeast, castTargets, cast, missing,

@@ -74,13 +74,18 @@ test("animals: unlock level, max count, collect product", () => {
   assert.ok(F.collect(f, 1, T0).ok);
 });
 
-test("plots expand with rising cost up to the maximum", () => {
+test("plots expand to 30, more unlocking at higher farm levels", () => {
+  assert.deepEqual([1, 6, 7, 9, 10, 12, 13, 28, 30].map(F.plotLevel), [1, 1, 1, 1, 2, 2, 3, 8, 8]);
   const f = F.fresh(); f.coins = 100000;
   assert.equal(F.plotCost(f), 60);
   F.buyPlot(f);
   assert.equal(F.plotCost(f), 120);
   while (F.buyPlot(f).ok);
-  assert.equal(f.plots.length, F.MAX_PLOTS); assert.equal(F.plotCost(f), null);
+  assert.equal(f.plots.length, 9, "level 1 farm stops at 9 plots");
+  assert.match(F.buyPlot(f).msg, /cấp 2/);
+  f.xp = F.LVXP[7];
+  while (F.buyPlot(f).ok);
+  assert.equal(f.plots.length, F.MAX_PLOTS); assert.equal(F.MAX_PLOTS, 30); assert.equal(F.plotCost(f), null);
 });
 
 test("orders use only unlocked items and pay more than selling", () => {

@@ -221,6 +221,7 @@ details[open] summary { margin-bottom: 8px }
 .pill.time { background: #E3F6FF; box-shadow: 0 3px 0 #8CC8E6; color: #0E5A7D }
 .scene-wrap { position: relative; border-radius: 22px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 5px 0 #8CC8E6, 0 10px 24px rgba(30,80,120,.18); background: #8FD8FF }
 svg.scene { display: block; width: 100%; height: clamp(200px, 33vw, 300px) }
+svg.scene.wide { height: auto; aspect-ratio: 1300 / 300 }
 .bubble { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 24px); background: #fff; color: #3B2A14;
   border-radius: 16px; padding: 8px 14px; font-weight: 600; font-size: .92rem; text-align: center; box-shadow: 0 3px 0 rgba(0,0,0,.12) }
 @media (max-width: 640px) { .bubble { font-size: .78rem; padding: 6px 10px; top: 8px } }
@@ -289,18 +290,116 @@ svg.scene { display: block; width: 100%; height: clamp(200px, 33vw, 300px) }
 /* Spirit beasts */
 .beasts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px }
 .beast { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 0 #EBD3A0; display: grid; grid-template-rows: auto 1fr; min-width: 0 }
-.beast img, .beast .noimg { width: 100%; aspect-ratio: 360 / 266; object-fit: cover; display: block; background: #2B2B33 }
-.beast .noimg { display: grid; place-items: center; color: #fff; font: 700 2rem var(--f-display) }
+.art { position: relative; overflow: hidden; aspect-ratio: 476 / 350; background: #1E1E26 }
+.art img, .art .noimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block }
+.art .noimg { display: grid; place-items: center; color: #fff; font: 700 2rem var(--f-display) }
+.art.big { border-radius: 14px }
+.art .aura { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 55% at 50% 62%, var(--aura), transparent 70%); mix-blend-mode: screen; opacity: .15 }
+.art .spark { position: absolute; bottom: -8px; left: var(--x); width: 6px; height: 6px; border-radius: 50%; background: var(--aura); box-shadow: 0 0 6px 2px var(--aura); opacity: 0; pointer-events: none }
+.art .shine { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%); transform: translateX(-130%) }
+.art .flash { position: absolute; inset: 0; pointer-events: none; background: rgba(220,240,255,.9); opacity: 0; mix-blend-mode: overlay }
+.beast { transition: transform .25s }
 .beast.locked img { filter: grayscale(1) brightness(.55) }
-.beast:not(.owned):not(.locked) img { filter: saturate(.7) brightness(.85) }
+.beast:not(.owned):not(.locked) img { filter: saturate(.75) brightness(.88) }
 .beast.owned { box-shadow: 0 0 0 3px #FFC83D, 0 3px 0 #EBD3A0 }
+@media (prefers-reduced-motion: no-preference) {
+  .beast:not(.locked) .art img, .art.big img { animation: breathe 5.5s ease-in-out infinite }
+  .beast.owned .art img, .art.big img { animation-duration: 4s }
+  .beast:not(.locked) .aura, .art.big .aura { animation: aura 3.2s ease-in-out infinite }
+  .beast.owned .spark, .art.big .spark { animation: rise var(--s) linear infinite; animation-delay: var(--d) }
+  .beast:not(.locked) .shine, .art.big .shine { animation: shine 5s ease-in-out infinite }
+  .beast:not(.locked) .storm .flash, .art.big.storm .flash { animation: flash 4.2s linear infinite }
+  .beast:not(.locked):hover { transform: translateY(-4px) rotate(-.4deg) }
+  .beast.owned { animation: glowcard 2.6s ease-in-out infinite }
+  @keyframes breathe { 0%, 100% { transform: scale(1.03) translateY(0) } 50% { transform: scale(1.08) translateY(-5px) } }
+  @keyframes aura { 0%, 100% { opacity: .12 } 50% { opacity: .45 } }
+  @keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0 } 12% { opacity: 1 } 100% { transform: translate(12px, -260px) scale(.3); opacity: 0 } }
+  @keyframes shine { 0%, 60% { transform: translateX(-130%) } 85%, 100% { transform: translateX(130%) } }
+  @keyframes flash { 0%, 89%, 92%, 95%, 100% { opacity: 0 } 90% { opacity: .9 } 93% { opacity: .55 } }
+  @keyframes glowcard { 0%, 100% { box-shadow: 0 0 0 3px #FFC83D, 0 3px 0 #EBD3A0 } 50% { box-shadow: 0 0 0 3px #FFC83D, 0 0 24px 5px var(--aura) } }
+}
 .beast .bd { padding: 10px 12px 12px; display: grid; gap: 6px; align-content: start; min-width: 0 }
 .stars { color: #F5A623; letter-spacing: 1px; font-size: .9rem }
 .stamina { height: 10px; border-radius: 999px; background: #DDEBFA; overflow: hidden }
 .stamina > i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #7CC8FF, #3B82F6) }
-.beast-big { width: 100%; border-radius: 14px; display: block }
 .plot .pbadge { position: absolute; left: 4px; top: 4px; background: #FFD84D; color: #6B3410; font-size: .6rem; font-weight: 800; border-radius: 999px; padding: 1px 5px }
 .plot .bbadge { position: absolute; right: 4px; bottom: 4px; background: #6C5CE7; color: #fff; font-size: .6rem; font-weight: 800; border-radius: 999px; padding: 1px 5px }
+
+/* Farm layout, field, farmer, pens and effects */
+body.farm-wide main { max-width: min(1760px, 100%) }
+body.farm-full .top, body.farm-full::before { display: none }
+body.farm-full main { padding-top: 12px; padding-bottom: 24px }
+.fullbtn { border: 0; cursor: pointer; font: inherit; font-weight: 700 }
+.farm-grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 2.3fr) minmax(280px, 1fr); align-items: start }
+@media (max-width: 1000px) { .farm-grid { grid-template-columns: 1fr } }
+.land { position: relative }
+.field { grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)) }
+.plot.buy { background: rgba(255,255,255,.35); border: 3px dashed #fff; box-shadow: none; color: #2E7D32 }
+.plot.buy .e { font-size: 1.6rem; filter: none }
+.plot.buy:disabled { opacity: .7 }
+.plot.locked { background: repeating-linear-gradient(180deg, #8DBF6F 0 9px, #7FB262 9px 12px); box-shadow: inset 0 0 0 2px rgba(255,255,255,.35); opacity: .78 }
+.plot.locked .e { font-size: 1.4rem; filter: none }
+@media (max-width: 640px) { .plot.far { display: none } }
+.plot.blessed::before { content: ""; position: absolute; inset: -4px; border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 3px #fff, 0 0 18px 6px #FFE66D; animation: fadeout 1.8s ease-out forwards }
+@keyframes fadeout { from { opacity: 1 } to { opacity: 0 } }
+.floater { position: absolute; left: 50%; top: 10%; transform: translateX(-50%); z-index: 3; pointer-events: none; white-space: nowrap;
+  font: 800 1rem var(--f-display); color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.4); animation: floatup 1.3s ease-out forwards }
+@keyframes floatup { from { transform: translate(-50%, 0); opacity: 1 } to { transform: translate(-50%, -60px); opacity: 0 } }
+.pen { position: relative }
+.pen .floater { color: #6B3410; text-shadow: 0 1px 0 #fff; font-size: 1.4rem; top: 28% }
+.farmer-bot { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; transition: transform 1.3s ease-in-out; will-change: transform }
+.farmer-bot.left .fb-flip { transform: scaleX(-1) }
+.farmer-bot svg { display: block; overflow: visible }
+.farmer-bot .drops { opacity: 0 }
+.pens { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) }
+.pen { background: #fff; border-radius: 16px; padding: 10px; display: grid; gap: 8px; box-shadow: 0 3px 0 #EBD3A0; min-width: 0 }
+.pen-svg { width: 100%; height: auto; display: block; border-radius: 12px }
+.pen.new { animation: popin .9s ease-out }
+@keyframes popin { 0% { transform: scale(.92); box-shadow: 0 0 0 5px #FFD84D } 60% { transform: scale(1.02) } 100% { transform: none } }
+.scene .sglow { opacity: .45 }
+.road-fx { position: fixed; left: 0; right: 0; bottom: calc(70px + env(safe-area-inset-bottom, 0px)); height: 100px; z-index: 55; pointer-events: none; overflow: hidden }
+@media (max-width: 640px) { .road-fx { bottom: calc(132px + env(safe-area-inset-bottom, 0px)) } }
+.road-fx .road { position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: #8A7A68; border-top: 3px solid #6E5F50; animation: roadin 3.4s ease forwards }
+.road-fx .road::after { content: ""; position: absolute; left: 0; right: 0; top: 8px; border-top: 3px dashed #FFE9A8 }
+.road-fx .truck { position: absolute; left: -150px; bottom: 10px; animation: drive 3.2s cubic-bezier(.45,0,.6,1) forwards }
+.road-fx .cargo { position: absolute; left: 6px; bottom: 48px; font-size: 20px; letter-spacing: -3px; white-space: nowrap }
+.road-fx .coinpop { position: absolute; left: 50%; bottom: 44px; background: #FFD84D; color: #6B3410; font: 800 1.1rem var(--f-display); padding: 4px 14px;
+  border-radius: 999px; box-shadow: 0 3px 0 #C77D12; animation: coin 3s ease-out forwards }
+@keyframes roadin { 0% { opacity: 0 } 10%, 85% { opacity: .95 } 100% { opacity: 0 } }
+@keyframes drive { to { transform: translateX(calc(100vw + 200px)) } }
+@keyframes coin { 0% { opacity: 0; transform: translate(-50%, 20px) } 20%, 70% { opacity: 1; transform: translate(-50%, 0) } 100% { opacity: 0; transform: translate(-50%, -30px) } }
+.bless-fx { position: fixed; left: 50%; top: 45%; width: 180px; height: 180px; margin: -90px 0 0 -90px; z-index: 58; pointer-events: none; display: grid; place-items: center; animation: blessin 1.9s ease-out forwards }
+.bless-fx img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; border: 4px solid #fff; box-shadow: 0 0 30px 10px var(--aura) }
+.bless-fx .ring { position: absolute; inset: 0; border-radius: 50%; border: 4px solid var(--aura); animation: ring 1.9s ease-out forwards }
+.bless-fx .burst i { position: absolute; left: 50%; top: 50%; margin: -12px 0 0 -8px; color: var(--aura); font-size: 22px; font-style: normal; text-shadow: 0 0 8px var(--aura);
+  transform: rotate(var(--r)) translateY(-40px); animation: burst 1.6s ease-out forwards }
+@keyframes blessin { 0% { opacity: 0; transform: scale(.4) } 20% { opacity: 1; transform: scale(1.08) } 70% { opacity: 1; transform: scale(1) } 100% { opacity: 0; transform: scale(1.15) translateY(-20px) } }
+@keyframes ring { from { transform: scale(.6); opacity: 1 } to { transform: scale(1.8); opacity: 0 } }
+@keyframes burst { from { transform: rotate(var(--r)) translateY(-40px); opacity: 1 } to { transform: rotate(var(--r)) translateY(-120px); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .road-fx .truck { animation-duration: .01s } .bless-fx, .bless-fx * { animation-duration: .01s } }
+@media (prefers-reduced-motion: no-preference) {
+  .farmer-bot.run .leg { animation: swing .3s ease-in-out infinite alternate }
+  .farmer-bot.run .leg.b { animation-delay: -.3s }
+  .farmer-bot.run svg { animation: hopstep .3s ease-in-out infinite alternate }
+  .farmer-bot.work .can { animation: pour 1.2s ease-in-out infinite alternate }
+  .farmer-bot.work .drops { animation: drip .6s linear infinite }
+  .pen-svg .wander { animation: wander 6s ease-in-out infinite alternate }
+  .pen-svg .ready-bubble { animation: bob 1.4s ease-in-out infinite }
+  .pen-svg .peck { animation: peck 1.8s ease-in-out infinite }
+  .pen-svg .tail { animation: tail 1.4s ease-in-out infinite alternate }
+  .pen-svg .chew { animation: chew 2.4s ease-in-out infinite }
+  .pen-svg .hop { animation: hop 1.6s ease-in-out infinite }
+  .pen-svg .orbit { animation: spin 3s linear infinite }
+  .road-fx .spin { animation: spin .45s linear infinite }
+  .scene .spirit { animation: hover 3.4s ease-in-out infinite }
+  .scene .sglow { animation: pulse 2.4s ease-in-out infinite }
+  @keyframes hopstep { to { transform: translateY(-3px) } }
+  @keyframes pour { from { transform: rotate(-20deg) } to { transform: rotate(-70deg) } }
+  @keyframes drip { 0% { opacity: 1; transform: translateY(0) } 100% { opacity: 0; transform: translateY(10px) } }
+  @keyframes wander { from { transform: translateX(0) } to { transform: translateX(var(--dx)) } }
+  @keyframes hover { 50% { transform: translateY(-7px) } }
+  @keyframes pulse { 0%, 100% { opacity: .25 } 50% { opacity: .6 } }
+}
 
 /* Leaderboard */
 .ranks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
