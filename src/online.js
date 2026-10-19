@@ -22,8 +22,10 @@
   /** cfg: { url, key }; deps (for tests): { fetch, now, random } */
   function create(cfg, deps = {}) {
     const doFetch = deps.fetch || ((...a) => root.fetch(...a)), now = deps.now || Date.now, random = deps.random || Math.random;
-    const configured = !!(cfg && /^https?:\/\//.test(cfg.url || "") && cfg.key);
+    const configured = !!(cfg && /^https?:\/\//.test(String(cfg.url || "").trim()) && String(cfg.key || "").trim());
     const st = { fails: 0, until: 0, inflight: {} };
+    // Accept the Project URL with or without the "/rest/v1/" suffix Supabase shows on its API page.
+    const base = configured ? cfg.url.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "") : "";
     const jwt = configured && cfg.key.startsWith("eyJ"); // legacy "anon" key; new "sb_publishable_" keys go in apikey only
 
     function call(fn, args) {
@@ -36,7 +38,7 @@
         try {
           let res;
           try {
-            res = await doFetch(`${cfg.url.replace(/\/+$/, "")}/rest/v1/rpc/${fn}`, {
+            res = await doFetch(`${base}/rest/v1/rpc/${fn}`, {
               method: "POST", body: JSON.stringify(args), signal: ctl ? ctl.signal : undefined,
               headers: { "Content-Type": "application/json", apikey: cfg.key, ...(jwt ? { Authorization: `Bearer ${cfg.key}` } : {}) },
             });

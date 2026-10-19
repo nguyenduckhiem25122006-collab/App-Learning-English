@@ -361,8 +361,8 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 <script>/* Chế độ trực tuyến (bảng xếp hạng lớp). Điền 2 giá trị dưới đây theo hướng dẫn trong ONLINE.md.
    Để trống thì app vẫn chạy bình thường, chỉ không có bảng xếp hạng. Khoá "anon public" được phép công khai. */
 window.NHIP_ONLINE = window.NHIP_ONLINE || {
-  url: "", // Project URL, ví dụ "https://abcdxyzabcdxyz.supabase.co"
-  key: "", // Khoá "anon public" (một chuỗi dài bắt đầu bằng eyJ...)
+  url: "https://ntohywwhcynusujybrun.supabase.co/rest/v1/", // Project URL, ví dụ "https://abcdxyzabcdxyz.supabase.co"
+  key: "sb_publishable_I4DJhW9uHRMpdbfH8oLWLQ_VCdPjcrX", // Khoá "anon public" (một chuỗi dài bắt đầu bằng eyJ...)
 };
 </script>
 <script>window.BEAST_IMG={"cat": "img/beasts/cat.webp", "dog": "img/beasts/dog.webp", "dragon": "img/beasts/dragon.webp", "goat": "img/beasts/goat.webp", "horse": "img/beasts/horse.webp", "monkey": "img/beasts/monkey.webp", "ox": "img/beasts/ox.webp", "pig": "img/beasts/pig.webp", "rat": "img/beasts/rat.webp", "rooster": "img/beasts/rooster.webp", "snake": "img/beasts/snake.webp", "tiger": "img/beasts/tiger.webp"};</script>
@@ -871,8 +871,10 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   /** cfg: { url, key }; deps (for tests): { fetch, now, random } */
   function create(cfg, deps = {}) {
     const doFetch = deps.fetch || ((...a) => root.fetch(...a)), now = deps.now || Date.now, random = deps.random || Math.random;
-    const configured = !!(cfg && /^https?:\/\//.test(cfg.url || "") && cfg.key);
+    const configured = !!(cfg && /^https?:\/\//.test(String(cfg.url || "").trim()) && String(cfg.key || "").trim());
     const st = { fails: 0, until: 0, inflight: {} };
+    // Accept the Project URL with or without the "/rest/v1/" suffix Supabase shows on its API page.
+    const base = configured ? cfg.url.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "") : "";
     const jwt = configured && cfg.key.startsWith("eyJ"); // legacy "anon" key; new "sb_publishable_" keys go in apikey only
 
     function call(fn, args) {
@@ -885,7 +887,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         try {
           let res;
           try {
-            res = await doFetch(`${cfg.url.replace(/\/+$/, "")}/rest/v1/rpc/${fn}`, {
+            res = await doFetch(`${base}/rest/v1/rpc/${fn}`, {
               method: "POST", body: JSON.stringify(args), signal: ctl ? ctl.signal : undefined,
               headers: { "Content-Type": "application/json", apikey: cfg.key, ...(jwt ? { Authorization: `Bearer ${cfg.key}` } : {}) },
             });

@@ -77,3 +77,12 @@ test("new publishable keys go in the apikey header only", async () => {
   await net.leave("t");
   assert.equal(seen.apikey, "sb_publishable_abc"); assert.equal(seen.Authorization, undefined);
 });
+
+test("Project URL works with or without the /rest/v1/ suffix", async () => {
+  for (const url of ["https://x.supabase.co", "https://x.supabase.co/", "https://x.supabase.co/rest/v1/", " https://x.supabase.co/rest/v1 "]) {
+    let seen;
+    const net = O.create({ url, key: "sb_publishable_abc" }, { fetch: (u) => { seen = u; return ok({ ok: true }); } });
+    await net.leave("t");
+    assert.equal(seen, "https://x.supabase.co/rest/v1/rpc/nhip_leave", url);
+  }
+});
