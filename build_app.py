@@ -15,6 +15,7 @@ def assemble():
     html = (SRC / "index.html").read_text(encoding="utf-8")
     parts = {"/*DATA*/": (BUILD / "data.js").read_text(encoding="utf-8"),
              "/*CORE*/": (SRC / "core.js").read_text(encoding="utf-8"),
+             "/*FARM*/": (SRC / "farm.js").read_text(encoding="utf-8"),
              "/*APP*/": (SRC / "app.js").read_text(encoding="utf-8")}
     for k, v in parts.items():
         assert html.count(k) == 1, k

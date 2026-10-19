@@ -11,6 +11,7 @@
   --paper: #F3F5F9; --card: #FFFFFF; --ink: #15223A; --muted: #59687F; --rule: #DAE1EC; --chip: #E7EDF7;
   --hl: #FFE066; --hl-swipe: #FFE066; --hl-ink: #3A2F00; --action: #2450B8; --action-ink: #FFFFFF;
   --good: #1D8556; --warn: #A86A12; --bad: #BE3B35;
+  --soil: #EEDFC6; --soil-edge: #C8A97E; --soil-ink: #5A4026; --sky: #DDEEFF; --grass: #BFE3A6;
   --f-display: "Lexend", "Be Vietnam Pro", system-ui, sans-serif;
   --f-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-ipa: "Noto Sans", "Lucida Sans Unicode", "DejaVu Sans", "Segoe UI", sans-serif;
@@ -19,11 +20,13 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #0D1421; --card: #142034; --ink: #E4EBF5; --muted: #98A7BD; --rule: #24324B; --chip: #1C2A43;
   --hl: #E3C23C; --hl-swipe: rgba(227, 194, 60, .34); --hl-ink: #211A00; --action: #84A6FF; --action-ink: #0A1430;
-  --good: #4BC48B; --warn: #E2A64C; --bad: #F2807A; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25); color-scheme: dark } }
+  --good: #4BC48B; --warn: #E2A64C; --bad: #F2807A; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25); color-scheme: dark;
+  --soil: #3A2D20; --soil-edge: #6B5136; --soil-ink: #EBD8BC; --sky: #1B2A44; --grass: #23452C } }
 :root[data-theme="dark"] {
   --paper: #0D1421; --card: #142034; --ink: #E4EBF5; --muted: #98A7BD; --rule: #24324B; --chip: #1C2A43;
   --hl: #E3C23C; --hl-swipe: rgba(227, 194, 60, .34); --hl-ink: #211A00; --action: #84A6FF; --action-ink: #0A1430;
-  --good: #4BC48B; --warn: #E2A64C; --bad: #F2807A; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25); color-scheme: dark }
+  --good: #4BC48B; --warn: #E2A64C; --bad: #F2807A; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25); color-scheme: dark;
+  --soil: #3A2D20; --soil-edge: #6B5136; --soil-ink: #EBD8BC; --sky: #1B2A44; --grass: #23452C }
 
 * { box-sizing: border-box }
 [hidden] { display: none !important }
@@ -193,6 +196,34 @@ details[open] summary { margin-bottom: 8px }
 .setting:last-child { border-bottom: 0 }
 @media (max-width: 520px) { .setting { grid-template-columns: 1fr } }
 
+/* Farm */
+.farm-btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid color-mix(in srgb, var(--good) 45%, var(--rule)); background: color-mix(in srgb, var(--good) 12%, var(--card));
+  padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem; min-height: 38px }
+.farm-btn b { font-family: var(--f-display); color: var(--good) }
+.farm-btn[aria-pressed="true"] { border-color: var(--good); box-shadow: 0 0 0 2px var(--good) inset }
+.scene { border-radius: var(--r); border: 1px solid var(--rule); background: linear-gradient(var(--sky) 0 52%, var(--grass) 52%); padding: 14px 16px 10px;
+  display: flex; flex-wrap: wrap; align-items: end; gap: 6px 10px; font-size: 2rem; line-height: 1; min-height: 92px }
+.scene .sun { margin-left: auto; align-self: start; font-size: 1.6rem }
+.field { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px }
+.plot { position: relative; aspect-ratio: 1; border: 2px solid var(--soil-edge); border-radius: 14px; color: var(--soil-ink); font-size: .74rem; font-weight: 600;
+  background: repeating-linear-gradient(0deg, var(--soil) 0 11px, color-mix(in srgb, var(--soil-edge) 35%, var(--soil)) 11px 13px);
+  display: grid; place-items: center; align-content: center; gap: 3px; padding: 6px; min-width: 0 }
+.plot .e { font-size: 2.1rem; line-height: 1 }
+.plot.empty { border-style: dashed } .plot.empty .e { font-size: 1.6rem; opacity: .6 }
+.plot.ready { border-color: var(--good); box-shadow: 0 0 0 2px var(--good) inset }
+.plot .bar { width: 80%; height: 5px } .plot .bar > i, .animal .bar > i { background: var(--good) }
+@media (prefers-reduced-motion: no-preference) { .plot.ready .e { animation: bob 1.4s ease-in-out infinite } @keyframes bob { 50% { transform: translateY(-4px) } } }
+.orders { display: grid; gap: 10px }
+.order { border: 1px solid var(--rule); border-radius: 12px; padding: 12px; display: grid; gap: 10px }
+.need { display: flex; flex-wrap: wrap; gap: 6px }
+.need span { padding: 3px 10px; border-radius: 999px; background: var(--chip); font-weight: 600; font-size: .86rem }
+.need .ok { color: var(--good) } .need .no { color: var(--bad) }
+.shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px }
+.shop .it { border: 1px solid var(--rule); border-radius: 12px; padding: 10px; display: grid; gap: 4px; align-content: start; min-width: 0 }
+.shop .it .e { font-size: 1.8rem; line-height: 1.1 }
+.shop .it.owned { border-color: var(--good) }
+.earn { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px }
+
 /* Modal + toast */
 .modal { position: fixed; inset: 0; z-index: 50; background: rgba(10,16,28,.55); display: grid; place-items: center; padding: 16px }
 .sheet { background: var(--card); border-radius: 18px; width: min(560px, 100%); max-height: calc(100% - 24px); overflow: auto; padding: 18px; display: grid; gap: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.35) }
@@ -218,6 +249,7 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
       <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
       <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
     </div>
+    <button type="button" class="farm-btn" id="farm-btn" data-farm aria-pressed="false"><span aria-hidden="true">🌾</span> Nông trại <b class="num" id="coins"></b></button>
     <div class="streak" id="streak" aria-live="polite"></div>
   </div>
   <div class="tabs-wrap">
@@ -230,4 +262,5 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 
 <script>/*DATA*/</script>
 <script>/*CORE*/</script>
+<script>/*FARM*/</script>
 <script>/*APP*/</script>

@@ -1,7 +1,7 @@
 /* UI: five views (Hôm nay, Từ vựng, Câu, IPA, Tiến độ), local storage, speech, and custom word pictures. */
 (function () {
   "use strict";
-  const C = window.Core, D = window.APP_DATA;
+  const C = window.Core, D = window.APP_DATA, F = window.Farm;
 
   // ===== CONFIG =====
   const KEY = "nhip.v1";
@@ -41,13 +41,14 @@
 
   // ---------- State ----------
   const fresh = () => ({ v: 1, level: "toeic", perday: 8, sentPerDay: 3, track: "daily", progress: { kids: {}, toeic: {} },
-    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto" });
+    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh() });
   function merge(o) {
     const d = fresh(), s = { ...d, ...(o || {}) };
     s.progress = { ...d.progress, ...(s.progress || {}) };
     s.streak = { ...d.streak, ...(s.streak || {}) };
     if (!LEVELS[s.level]) s.level = d.level;
     if (!Array.isArray(s.ipa)) s.ipa = [];
+    s.farm = { ...F.fresh(), ...(s.farm || {}) };
     return s;
   }
   function load() {
@@ -81,8 +82,16 @@
   }
   function addXP(n) {
     S.xp += n; bump("xp", n);
+    F.earn(S.farm, n);
     S.streak = C.touchStreak(S.streak, today());
     save(); renderHeader();
+  }
+
+  /** Bonus coins + fertilizer for finishing a lesson (kind: lesson | review | goal). */
+  function farmReward(kind, why) {
+    const r = F.reward(S.farm, kind);
+    save(); renderHeader();
+    toast(`🌾 ${why}: +${r.coins} xu, +${r.fert} 🧪 phân bón cho nông trại`, 3200);
   }
 
   // Screen state that is not persisted
@@ -227,9 +236,11 @@
   function renderHeader() {
     document.querySelectorAll("[data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === S.level)));
     const st = C.liveStreak(S.streak, today());
+    $("#farm-btn").setAttribute("aria-pressed", String(U.tab === "farm"));
+    $("#coins").textContent = `🪙 ${S.farm.coins}`;
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
   }
-  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, me: vMe };
+  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, me: vMe, farm: vFarm };
   function render() {
     $("#view").innerHTML = VIEWS[U.tab]();
     renderTabs(); renderHeader();
@@ -275,7 +286,10 @@
       <section class="panel stack"><h2>Mục tiêu mỗi ngày</h2>
         <div class="row">${stepper("perday", S.perday)}<span>từ mới mỗi ngày</span></div>
         <p>${plan}</p></section>
-    </div>`;
+    </div>
+    <section class="panel row" style="justify-content:space-between"><div><p class="label">Nông trại</p>
+      <p>🪙 <b class="num">${S.farm.coins}</b> xu · 🧪 ${S.farm.fert} phân bón · ${S.farm.plots.filter((x) => F.plotReady(x, Date.now())).length} ô đã chín</p></div>
+      <button class="btn" data-farm>Vào nông trại 🌾</button></section>`;
   }
   const stepper = (id, v) => `<div class="stepper"><button type="button" data-step="${id}" data-d="-1" aria-label="Giảm">−</button><output id="${id}">${v}</output><button type="button" data-step="${id}" data-d="1" aria-label="Tăng">+</button></div>`;
   function week() {
@@ -353,6 +367,9 @@
     for (const w of words) if (!p[w.key]) { p[w.key] = C.newCard(t); added++; }
     bump("w", added);
     if (added) addXP(XP.learn * added); else save();
+    if (Object.values(p).filter((c) => c.added === t).length >= S.perday && S.farm.goalDay !== t) {
+      S.farm.goalDay = t; farmReward("goal", "Đạt mục tiêu từ mới hôm nay 🎯");
+    }
     U.vocab = { mode: "quiz", words, qs: C.makeQuiz(words, WORDS[S.level]), i: 0, right: 0, answered: null };
     render(); scrollTo(0, 0);
   }
@@ -431,6 +448,7 @@
     if (g === 0 && !v.again[w.key]) { v.again[w.key] = 1; v.queue.push(w); }
     v.i++; v.reveal = false;
     render();
+    if (v.i >= v.queue.length && !v.rewarded) { v.rewarded = true; farmReward("review", "Ôn tập xong"); }
   }
   function vBrowse() {
     const topics = D.levels[S.level];
@@ -677,6 +695,153 @@
     if (matchMedia("(max-width: 900px)").matches) $("#snd-detail").scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
+  // ---------- Nông trại ----------
+  const pad2 = (n) => String(n).padStart(2, "0");
+  function fmtLeft(ms) {
+    const s = Math.ceil(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    return h ? `${h}g ${pad2(m)}p` : `${m}:${pad2(s % 60)}`;
+  }
+  const fmtMin = (m) => (m >= 60 ? `${m / 60} giờ` : `${m} phút`);
+  const sayEn = (en) => `<button type="button" class="btn icon-btn ghost" data-say="${esc(en)}" aria-label="Nghe “${esc(en)}”">${I.speak}</button>`;
+  const itemName = (it) => `${esc(it.vi)} · <i>${esc(it.en)}</i>`;
+  const timer = (end, dur) => `data-end="${end}" data-dur="${dur}"`;
+
+  function vFarm() {
+    const f = S.farm, now = Date.now(), lv = F.level(f.xp), next = F.nextXp(f.xp), prev = F.LVXP[lv - 1];
+    if (f.orders.length < 3) { F.fillOrders(f, Math.random); save(); }
+    const R = F.REWARD, bonus = F.bonus(f);
+    const scene = [...f.deco.map((id) => F.DECO[id].emo), ...f.animals.map((a) => F.ANIMAL[a.a].emo)];
+    return `<section class="hello"><div><p class="label">Cấp ${lv} · ${next ? `${f.xp}/${next} điểm trại` : "cấp tối đa"}</p><h1>Nông trại của bạn</h1></div>
+        <div class="row"><span class="chip" style="font-size:.95rem">🪙 <b class="num">${f.coins}</b> xu</span><span class="chip" style="font-size:.95rem">🧪 ${f.fert} phân bón</span></div></section>
+      ${next ? bar((f.xp - prev) / (next - prev)) : ""}
+      <div class="scene" aria-hidden="true">${scene.length ? scene.join(" ") : "🌱"}<span class="sun">☀️</span></div>
+      <div class="grid g2" style="align-items:start">
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Cánh đồng</h2>
+            <div class="row"><button type="button" class="btn sm" data-harvestall>Thu hoạch tất cả</button>
+            ${F.plotCost(f) != null ? `<button type="button" class="btn sm ghost" data-buyplot>+ Ô đất (${F.plotCost(f)} xu)</button>` : ""}</div></div>
+          <div class="field">${f.plots.map((p, i) => plotHTML(p, i, now)).join("")}</div>
+          <p class="small muted">Chạm ô trống để gieo hạt. Dùng 🧪 phân bón để cây chín ngay. Mỗi loại cây có tên tiếng Anh — bấm loa để nghe.</p></section>
+        <section class="panel stack"><h2>Học để kiếm xu</h2>
+          <ul class="earn"><li>📘 Mỗi 1 XP khi học = 1 xu${bonus ? ` <span class="chip good">+${bonus}% nhờ đồ trang trí</span>` : ""}</li>
+            <li>✅ Xong một lượt học từ mới: +${R.lesson[0]} xu, +${R.lesson[1]} 🧪</li>
+            <li>🔁 Ôn hết các từ đến hạn: +${R.review[0]} xu, +${R.review[1]} 🧪</li>
+            <li>🎯 Đạt mục tiêu từ mới trong ngày: +${R.goal[0]} xu, +${R.goal[1]} 🧪</li></ul>
+          <div class="row"><button type="button" class="btn primary" data-go="learn">Học từ mới</button><button type="button" class="btn" data-go="review">Ôn tập</button><button type="button" class="btn" data-go="sent">Luyện câu</button></div>
+          <p class="small muted">Tổng xu kiếm được từ việc học: ${f.earned}</p></section>
+      </div>
+      <div class="grid g2" style="align-items:start">
+        <section class="panel stack"><h2>Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
+          <div class="orders">${f.orders.map((o, i) => {
+            const can = F.canDeliver(f, o);
+            return `<div class="order"><div class="need">${Object.entries(o.need).map(([id, q]) => {
+              const have = f.barn[id] || 0, it = F.ITEMS[id];
+              return `<span class="${have >= q ? "ok" : "no"}" title="${esc(it.vi)} (${esc(it.en)})">${it.emo} ${Math.min(have, q)}/${q}</span>`;
+            }).join("")}</div>
+              <div class="row" style="justify-content:space-between"><span class="small"><b>🪙 ${o.coins}</b> xu · ⭐ ${o.xp} điểm</span>
+                <span class="row"><button type="button" class="btn sm ghost" data-skiporder="${i}">Đổi đơn</button><button type="button" class="btn sm primary" data-deliver="${i}"${can ? "" : " disabled"}>Giao hàng</button></span></div></div>`;
+          }).join("")}</div></section>
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Chuồng trại</h2><button type="button" class="btn sm" data-animalshop>Mua vật nuôi</button></div>
+          ${f.animals.length ? `<div class="list">${f.animals.map((a, i) => animalHTML(a, i, now)).join("")}</div>`
+            : `<p class="muted">Chưa có vật nuôi. Gà mở ở cấp 2, bò ở cấp 3 — chúng cho trứng, sữa để giao đơn hàng.</p>`}</section>
+      </div>
+      <div class="grid g2" style="align-items:start">
+        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
+          ${bar(F.stock(f) / f.cap)}
+          ${Object.keys(f.barn).length ? `<div class="list">${Object.entries(f.barn).map(([id, n]) => {
+            const it = F.ITEMS[id];
+            return `<div class="item"><span class="pic sm">${it.emo}</span><span class="t"><b class="num">${n}</b> × ${itemName(it)}<br><span class="small muted">Bán ${it.sell} xu/cái</span></span>
+              <span style="display:flex;gap:6px;align-items:center">${sayEn(it.en)}<button type="button" class="btn sm" data-sell="${id}">Bán 1</button></span></div>`;
+          }).join("")}</div>` : `<p class="muted">Kho trống. Thu hoạch cây để có hàng.</p>`}
+          <div><button type="button" class="btn sm" data-upbarn>Nâng cấp kho +20 chỗ (${F.barnCost(f)} xu)</button></div></section>
+        <section class="panel stack"><h2>Trang trí</h2><p class="small muted">Mỗi món làm nông trại đẹp hơn và tăng % xu nhận được khi học (tối đa 30%).</p>
+          <div class="shop">${F.DECOS.map((d) => {
+            const own = f.deco.includes(d.id), locked = d.lv > lv;
+            return `<div class="it${own ? " owned" : ""}"><span class="e">${d.emo}</span><b>${esc(d.vi)}</b><span class="small muted"><i>${esc(d.en)}</i> · +${d.bonus}% xu</span>
+              ${own ? `<span class="chip good">✓ Đã có</span>` : locked ? `<span class="chip">🔒 Cấp ${d.lv}</span>`
+                : `<button type="button" class="btn sm" data-buydeco="${d.id}"${f.coins < d.cost ? " disabled" : ""}>Mua · ${d.cost} xu</button>`}</div>`;
+          }).join("")}</div></section>
+      </div>`;
+  }
+  function plotHTML(p, i, now) {
+    if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">＋</span>Gieo hạt</button>`;
+    const c = F.CROP[p.c], dur = c.min * F.MIN, left = F.remaining(p.at, c.min, now);
+    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span>Thu hoạch</button>`;
+    const frac = 1 - left / dur;
+    return `<button type="button" class="plot" data-plotidx="${i}" ${timer(p.at + dur, dur)} aria-label="${esc(c.vi)} đang lớn">
+      <span class="e">${frac < 0.5 ? "🌱" : "🌿"}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}</button>`;
+  }
+  function animalHTML(a, i, now) {
+    const an = F.ANIMAL[a.a], pr = F.ITEMS[an.prod], dur = an.min * F.MIN, left = F.remaining(a.at, an.min, now);
+    return `<div class="item animal"${left ? ` ${timer(a.at + dur, dur)}` : ""}><span class="pic sm">${an.emo}</span>
+      <span class="t">${itemName(an)}<br>${left ? `<span class="small muted">${pr.emo} sau <span class="t num">${fmtLeft(left)}</span></span>${bar(1 - left / dur)}`
+        : `<span class="small" style="color:var(--good)">Có ${pr.emo} ${esc(pr.vi.toLowerCase())}!</span>`}</span>
+      <span style="display:flex;gap:6px;align-items:center">${sayEn(an.en)}${left
+        ? `<button type="button" class="btn sm ghost" data-boost="${i}"${S.farm.fert ? "" : " disabled"} aria-label="Dùng phân bón">🧪</button>`
+        : `<button type="button" class="btn sm primary" data-collect="${i}">Thu</button>`}</span></div>`;
+  }
+  function farmDone(r, msg, en) {
+    if (!r.ok) { toast(r.msg); return false; }
+    save();
+    if (r.levelUp) {
+      const news = F.unlocks(r.levelUp).map((x) => `${x.emo} ${x.vi}`).join(", ");
+      toast(`🎉 Nông trại lên cấp ${r.levelUp}!${news ? ` Mở khoá: ${news}` : ""}`, 4500);
+    } else if (msg) toast(msg);
+    if (en) say(en);
+    if ($("#modal").hidden) render(); else { closeModal(); render(); }
+    return true;
+  }
+  function seedSheet(i) {
+    const f = S.farm, lv = F.level(f.xp);
+    sheet(`<div class="row" style="justify-content:space-between"><h2>Gieo hạt · ô ${i + 1}</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <p class="small muted">Bạn có 🪙 ${f.coins} xu. Cây càng lâu chín càng bán được giá.</p>
+      <div class="list">${F.CROPS.map((c) => {
+        const locked = c.lv > lv, poor = f.coins < c.seed;
+        return `<div class="item"><span class="pic sm">${c.emo}</span><span class="t"><b>${esc(c.vi)}</b> · <i>${esc(c.en)}</i><br>
+          <span class="small muted">${locked ? `🔒 Mở ở cấp ${c.lv}` : `Hạt ${c.seed} xu · chín sau ${fmtMin(c.min)} · bán ${c.sell} xu`}</span></span>
+          <span style="display:flex;gap:6px;align-items:center">${sayEn(c.en)}${locked ? "" : `<button type="button" class="btn sm ghost" data-plantall="${c.id}"${poor ? " disabled" : ""}>Mọi ô</button>
+            <button type="button" class="btn sm primary" data-plant="${c.id}" data-plot="${i}"${poor ? " disabled" : ""}>Gieo</button>`}</span></div>`;
+      }).join("")}</div>`, "Gieo hạt");
+  }
+  function growSheet(i) {
+    const f = S.farm, p = f.plots[i], c = F.CROP[p.c];
+    sheet(`<div class="row" style="justify-content:space-between"><h2>${c.emo} ${esc(c.vi)}</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <div class="row"><span class="word" style="font-size:1.6rem">${esc(c.en)}</span>${sayBtns(c.en)}</div>
+      <p>Còn <b>${fmtLeft(F.remaining(p.at, c.min, Date.now()))}</b> nữa là chín. Bán được ${c.sell} xu.</p>
+      <div class="row"><button type="button" class="btn primary" data-fert="${i}"${f.fert ? "" : " disabled"}>Dùng 🧪 phân bón (còn ${f.fert})</button>
+        <button type="button" class="btn ghost" data-uproot="${i}">Nhổ bỏ</button><button type="button" class="btn ghost" data-close>Đóng</button></div>
+      ${f.fert ? "" : `<p class="small muted">Hoàn thành bài học để nhận thêm phân bón.</p>`}`, c.vi);
+  }
+  function animalShop() {
+    const f = S.farm, lv = F.level(f.xp);
+    sheet(`<div class="row" style="justify-content:space-between"><h2>Mua vật nuôi</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <p class="small muted">Bạn có 🪙 ${f.coins} xu. Mỗi loại tối đa ${F.MAX_PER_ANIMAL} con.</p>
+      <div class="list">${F.ANIMALS.map((a) => {
+        const n = f.animals.filter((x) => x.a === a.id).length, pr = F.ITEMS[a.prod], locked = a.lv > lv;
+        return `<div class="item"><span class="pic sm">${a.emo}</span><span class="t"><b>${esc(a.vi)}</b> · <i>${esc(a.en)}</i> <span class="small muted">(${n}/${F.MAX_PER_ANIMAL})</span><br>
+          <span class="small muted">${locked ? `🔒 Mở ở cấp ${a.lv}` : `${a.cost} xu · cho ${pr.emo} ${esc(pr.en)} mỗi ${fmtMin(a.min)}`}</span></span>
+          <span style="display:flex;gap:6px;align-items:center">${sayEn(a.en)}${locked ? "" :
+            `<button type="button" class="btn sm primary" data-buyanimal="${a.id}"${f.coins < a.cost || n >= F.MAX_PER_ANIMAL ? " disabled" : ""}>Mua</button>`}</span></div>`;
+      }).join("")}</div>`, "Mua vật nuôi");
+  }
+  function plotClick(i) {
+    const p = S.farm.plots[i]; if (!p) return;
+    if (!p.c) seedSheet(i);
+    else if (F.plotReady(p, Date.now())) { const c = F.CROP[p.c]; farmDone(F.harvest(S.farm, i, Date.now()), `+1 ${c.emo} ${c.en} (${c.vi})`, c.en); }
+    else growSheet(i);
+  }
+  // Live countdowns on the farm; re-render when something becomes ready.
+  setInterval(() => {
+    if (U.tab !== "farm") return;
+    const now = Date.now(); let ripe = false;
+    document.querySelectorAll("#view [data-end]").forEach((el) => {
+      const left = +el.dataset.end - now;
+      if (left <= 0) { ripe = true; return; }
+      const t = el.querySelector(".t.num") || el.querySelector(".t .t"); if (t) t.textContent = fmtLeft(left);
+      const b = el.querySelector(".bar > i"); if (b) b.style.width = `${Math.round((1 - left / +el.dataset.dur) * 100)}%`;
+    });
+    if (ripe && $("#modal").hidden) render();
+  }, 1000);
+
   // ---------- Tiến độ ----------
   function vMe() {
     const learned = (l) => Object.keys(S.progress[l]).length;
@@ -706,7 +871,7 @@
         <div class="setting"><div><b>Giao diện</b></div>${seg("data-theme", S.theme, [["auto", "Tự động"], ["light", "Sáng"], ["dark", "Tối"]])}</div>
         <div class="setting"><div><b>Sao lưu</b><p class="small muted">Lưu tiến độ và hình tự đổi ra file để chuyển sang máy khác.</p></div>
           <div class="row"><button type="button" class="btn sm" data-export>Xuất file</button><label class="btn sm">Nhập file<input type="file" accept="application/json,.json" id="import-in" hidden></label></div></div>
-        <div class="setting"><div><b>Xoá tiến độ</b><p class="small muted">Xoá từ đã học, câu, IPA, XP và chuỗi ngày. Cài đặt được giữ lại.</p></div>
+        <div class="setting"><div><b>Xoá tiến độ</b><p class="small muted">Xoá từ đã học, câu, IPA, XP, chuỗi ngày và nông trại. Cài đặt được giữ lại.</p></div>
           ${U.reset ? `<div class="row"><span class="small" style="color:var(--bad)">Chắc chắn? Không thể hoàn tác.</span><button type="button" class="btn sm" data-reset="yes" style="color:var(--bad)">Xoá hết</button><button type="button" class="btn sm primary" data-reset="no">Huỷ</button></div>`
             : `<button type="button" class="btn sm" data-reset="ask">Xoá tiến độ…</button>`}</div>
       </section>`;
@@ -750,7 +915,7 @@
     quiznext: () => {
       const v = U.vocab;
       if (v.i < v.qs.length - 1) { v.i++; v.answered = null; v.picked = null; render(); if (v.qs[v.i].type === "spell") say(v.qs[v.i].word.w); }
-      else { v.mode = "result"; render(); }
+      else { v.mode = "result"; render(); farmReward("lesson", "Hoàn thành lượt học"); }
     },
     reveal: () => { U.vocab.reveal = true; render(); say(U.vocab.queue[U.vocab.i].w); },
     grade: (v) => gradeReview(+v),
@@ -803,6 +968,35 @@
     },
     accent: (v) => { S.accent = v; save(); render(); say("Hello! Nice to meet you."); },
     theme: (v) => { S.theme = v; applyTheme(); save(); render(); },
+    farm: () => go("farm"),
+    plotidx: (v) => plotClick(+v),
+    plant: (v, t) => { const c = F.CROP[v]; farmDone(F.plant(S.farm, +t.dataset.plot, v, Date.now()), `Đã gieo ${c.emo} ${c.vi} — chín sau ${fmtMin(c.min)}`); },
+    plantall: (v) => {
+      const c = F.CROP[v]; let n = 0, r = { ok: true };
+      S.farm.plots.forEach((p, i) => { if (!p.c && r.ok) { r = F.plant(S.farm, i, v, Date.now()); if (r.ok) n++; } });
+      farmDone(n ? { ok: true } : r, `Đã gieo ${n} ô ${c.emo} ${c.vi}${r.ok ? "" : " (hết xu)"}`);
+    },
+    harvestall: () => {
+      const got = {}; let r = { ok: true }, lvUp = 0;
+      S.farm.plots.forEach((p, i) => {
+        if (r.ok && F.plotReady(p, Date.now())) { r = F.harvest(S.farm, i, Date.now()); if (r.ok) { got[r.item] = (got[r.item] || 0) + 1; lvUp = r.levelUp || lvUp; } }
+      });
+      const list = Object.entries(got).map(([id, n]) => `${n} ${F.ITEMS[id].emo}`).join(", ");
+      if (!list) { toast(r.ok ? "Chưa có cây nào chín" : r.msg); return; }
+      farmDone({ ok: true, levelUp: lvUp }, `Thu hoạch: ${list}${r.ok ? "" : " — kho đã đầy"}`);
+    },
+    fert: (v) => farmDone(F.fertilize(S.farm, +v, Date.now()), "Cây đã chín nhờ phân bón 🧪"),
+    uproot: (v) => { const p = S.farm.plots[+v]; if (p) { p.c = null; p.at = 0; } farmDone({ ok: true }, "Đã dọn ô đất"); },
+    buyplot: () => farmDone(F.buyPlot(S.farm), "Đã mở thêm một ô đất 🟫"),
+    animalshop: () => animalShop(),
+    buyanimal: (v) => { const a = F.ANIMAL[v]; farmDone(F.buyAnimal(S.farm, v, Date.now()), `Chào mừng ${a.emo} ${a.vi} đến nông trại!`, a.en); },
+    collect: (v) => { const r = F.collect(S.farm, +v, Date.now()), it = r.ok && F.ITEMS[r.item]; farmDone(r, it && `+1 ${it.emo} ${it.en} (${it.vi})`, it && it.en); },
+    boost: (v) => farmDone(F.feedBoost(S.farm, +v, Date.now()), "Vật nuôi đã sẵn sàng 🧪"),
+    sell: (v) => { const r = F.sell(S.farm, v, 1); farmDone(r, r.ok && `+${r.coins} xu`); },
+    upbarn: () => farmDone(F.upgradeBarn(S.farm), "Nhà kho đã rộng hơn"),
+    deliver: (v) => { const r = F.deliver(S.farm, +v, Math.random); farmDone(r, r.ok && `Đã giao hàng 🚚 +${r.coins} xu`); },
+    skiporder: (v) => farmDone(F.skipOrder(S.farm, +v, Math.random), "Đã đổi đơn hàng mới"),
+    buydeco: (v) => { const d = F.DECO[v]; farmDone(F.buyDeco(S.farm, v), `Đã đặt ${d.emo} ${d.vi} — xu khi học +${d.bonus}%`, d.en); },
     export: () => exportData(),
     reset: (v) => {
       if (v === "ask") U.reset = true;

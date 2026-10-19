@@ -173,6 +173,22 @@ def main():
         page.click("[data-reset=no]")
         check("cancel keeps progress", len(state(page)["progress"]["kids"]) == 5)
 
+        # 10b. Farm: separate header button, coins from lessons, plant → fertilize → harvest
+        page.click("#farm-btn")
+        check("farm button opens farm", page.inner_text("#view h1").startswith("Nông trại") and page.get_attribute("#farm-btn", "aria-pressed") == "true")
+        s = state(page); coins0 = s["farm"]["coins"]
+        check("studying earned coins", coins0 >= 50 + 50 + 20 + 15, str(coins0))
+        check("lessons gave fertilizer", s["farm"]["fert"] == 3, str(s["farm"]["fert"]))
+        page.click("[data-plotidx='0']"); page.click("#sheet [data-plant=wheat]")
+        s = state(page)
+        check("planting wheat costs 5 coins", s["farm"]["plots"][0]["c"] == "wheat" and s["farm"]["coins"] == coins0 - 5)
+        page.click("[data-plotidx='0']"); page.click("#sheet [data-fert='0']")
+        check("fertilizer ripens the crop", page.locator(".plot.ready").count() == 1)
+        page.click("[data-plotidx='0']")
+        check("harvest goes to the barn", state(page)["farm"]["barn"].get("wheat") == 1)
+        check("3 orders on the board", page.locator(".order").count() == 3)
+        page.screenshot(path=str(SHOTS / "desktop-farm.png"), full_page=True)
+
         # 11. Service worker for offline use
         sw = page.evaluate("navigator.serviceWorker.getRegistration().then(r => !!r)")
         check("service worker registered", sw)
@@ -189,6 +205,9 @@ def main():
             for tab in ["today", "words", "sent", "ipa", "me"]:
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
+            mp.click("#farm-btn")
+            check(f"{scheme} 390px no h-scroll: farm", no_hscroll(mp))
+            mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm.png"))
             mp.click("[data-tab=words]"); mp.click("button[data-vocab=learn]")
             check(f"{scheme} 390px card fits", no_hscroll(mp))
             mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-card.png"))
