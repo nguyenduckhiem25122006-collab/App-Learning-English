@@ -786,7 +786,14 @@
     <path d="M-16 0q0-34 16-34q16 0 16 34z" fill="#F5B942" stroke="#C98A1B" stroke-width="2"/><path d="M-15 -10h30M-12 -21h24" stroke="#C98A1B" stroke-width="2"/>
     <ellipse cx="0" cy="-5" rx="4.5" ry="3.5" fill="#6B3E1E"/>
     <g transform="translate(0,-20)"><g class="orbit" style="animation-delay:${d}s"><text x="22" y="5" font-size="13">🐝</text></g></g>`;
-  const ANIMAL_SVG = { chicken: svgChicken, cow: svgCow, sheep: svgSheep, bee: svgHive };
+  const svgPig = (d) => `<ellipse cx="0" cy="21" rx="24" ry="3.5" fill="rgba(0,0,0,.15)"/>
+    ${[-15, -6, 6, 14].map((x) => `<rect x="${x}" y="6" width="6" height="14" rx="2" fill="#F4A6B5"/>`).join("")}
+    <g transform="translate(-22,-4)"><g class="tail" style="animation-delay:${d}s"><path d="M0 0q-7-3-4-8q3-3 4 1" stroke="#E88A9E" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></g>
+    <ellipse cx="0" cy="-2" rx="23" ry="15" fill="#F7B6C2" stroke="#E88A9E" stroke-width="1.5"/><ellipse cx="-6" cy="-8" rx="7" ry="3" fill="#FFD1DA" opacity=".8"/>
+    <g transform="translate(16,-6)"><g class="chew" style="animation-delay:${d}s"><path d="M0 -9l4-10l7 8z" fill="#F4A6B5" stroke="#E88A9E"/>
+      <circle cx="6" cy="0" r="11" fill="#F7B6C2" stroke="#E88A9E" stroke-width="1.5"/><ellipse cx="15" cy="3" rx="5.5" ry="4.5" fill="#F4A6B5" stroke="#E88A9E"/>
+      <circle cx="13.5" cy="3" r="1.1" fill="#B05A6E"/><circle cx="16.5" cy="3" r="1.1" fill="#B05A6E"/><circle cx="8" cy="-3" r="1.7" fill="#222"/><circle cx="3" cy="3" r="2.2" fill="#FF9EB0" opacity=".7"/></g></g>`;
+  const ANIMAL_SVG = { chicken: svgChicken, cow: svgCow, pig: svgPig, sheep: svgSheep, bee: svgHive };
   const cloud = (x, y, s, dur, delay) => `<g transform="translate(${x},${y}) scale(${s})"><g class="cloud" style="animation-duration:${dur}s;animation-delay:${delay}s;--x:${x}px">
     <g fill="#fff"><ellipse cx="0" cy="0" rx="34" ry="13"/><ellipse cx="-16" cy="-6" rx="16" ry="12"/><ellipse cx="12" cy="-10" rx="18" ry="14"/></g></g></g>`;
 
@@ -884,7 +891,9 @@
       <div class="scene-wrap">${farmScene(f, false)}<div class="bubble">${TIPS[Math.floor(now / 60000) % TIPS.length]}</div></div>
       <div class="farm-grid">
         ${fieldSection(f, now, lv)}
-        <div class="stack" style="gap:16px">
+        ${pensSection(f, now)}
+      </div>
+      <div class="grid g2" style="align-items:start">
           <section class="panel stack"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
             <div class="orders">${f.orders.map((o, i) => {
               const can = F.canDeliver(f, o);
@@ -903,9 +912,7 @@
               <li>⏱️ 1 phút học = ${String(F.GATE.RATIO).replace(".", ",")} phút chơi · lượt mới sau ${fmtLeft(g.resetIn)}</li></ul>
             <div class="row"><button type="button" class="btn primary" data-go="learn">Học từ mới</button><button type="button" class="btn" data-go="review">Ôn tập</button><button type="button" class="btn" data-go="sent">Luyện câu</button></div>
             <p class="small muted">Tổng xu kiếm được từ việc học: ${f.earned}</p></section>
-        </div>
       </div>
-      ${pensSection(f, now)}
       ${beastsSection(f, now)}
       <div class="grid g2" style="align-items:start">
         <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🏚️ Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
@@ -1002,6 +1009,7 @@
 
   // ---- Animal pens: each kind of animal gets its own fenced pen with a building; animals wander, ready ones show their product ----
   const PEN = { chicken: { vi: "Chuồng gà", roof: "#B83229", wall: "#F2D49B", grass: "#9BD86E" }, cow: { vi: "Chuồng bò", roof: "#7A4514", wall: "#D9443A", grass: "#8FD165" },
+    pig: { vi: "Chuồng lợn", roof: "#8B5A2B", wall: "#F2C9A0", grass: "#B9CF6E" },
     sheep: { vi: "Bãi cừu", roof: "#4F7396", wall: "#EFE6D2", grass: "#A6DE7A" }, bee: { vi: "Vườn ong", roof: "#C98A1B", wall: "#FFE6A3", grass: "#B5E585" } };
   const PEN_SPOT = [[168, 104], [232, 122], [282, 96]];
   function penSVG(a, list, now) {
@@ -1013,26 +1021,32 @@
       return `<g transform="translate(${bx},${by})">${a.id === "bee" ? body : `<g class="wander" style="--dx:${k % 2 ? -30 : 30}px;animation-duration:${6 + k * 1.5}s;animation-delay:${-k * 1.7}s">${body}</g>`}</g>`;
     }).join("");
     const flowers = a.id === "bee" ? `<text x="150" y="140" font-size="18">🌼</text><text x="214" y="146" font-size="18">🌸</text><text x="262" y="140" font-size="18">🌻</text>` : "";
+    const mud = a.id === "pig" ? `<ellipse cx="236" cy="120" rx="66" ry="17" fill="#8A5A32" opacity=".55"/><ellipse cx="216" cy="116" rx="18" ry="5" fill="#A8744A" opacity=".5"/>` : "";
+    const sign = list.length ? "" : `<g transform="translate(206,82)"><rect x="-2" y="18" width="5" height="26" fill="#8B5A2B"/><rect x="-46" y="-6" width="96" height="28" rx="5" fill="#E9C46A" stroke="#8B5A2B" stroke-width="2"/>
+      <text x="2" y="13" text-anchor="middle" font-size="12" font-weight="700" fill="#6B3410">Chuồng trống</text></g>`;
     const hay = a.id === "sheep" || a.id === "cow" ? `<g transform="translate(118,112)"><rect width="28" height="20" rx="4" fill="#E9C46A"/><path d="M3 6h22M3 12h22" stroke="#C99A3B" stroke-width="2"/></g>` : "";
     return `<svg class="pen-svg" viewBox="0 0 320 160" role="img" aria-label="${esc(st.vi)}">
       <rect width="320" height="160" rx="14" fill="${st.grass}"/>
       <g fill="#C98A4B">${Array.from({ length: 11 }, (_, i) => `<rect x="${8 + i * 30}" y="44" width="6" height="26" rx="2"/>`).join("")}<rect x="6" y="50" width="308" height="4" rx="2"/><rect x="6" y="61" width="308" height="4" rx="2"/></g>
       <g transform="translate(14,38)"><path d="M0 34L42 4L84 34Z" fill="${st.roof}"/><rect x="6" y="32" width="72" height="54" fill="${st.wall}" stroke="rgba(0,0,0,.15)"/>
         <rect x="30" y="52" width="24" height="34" rx="11" fill="#6B3E1E"/><rect x="12" y="42" width="12" height="10" fill="#8FD8FF"/><rect x="60" y="42" width="12" height="10" fill="#8FD8FF"/></g>
-      ${hay}${flowers}${animals}
+      ${mud}${hay}${flowers}${sign}${animals}
       <g fill="#C98A4B">${Array.from({ length: 11 }, (_, i) => `<rect x="${8 + i * 30}" y="140" width="6" height="18" rx="2"/>`).join("")}<rect x="6" y="146" width="308" height="4" rx="2"/></g>
     </svg>`;
   }
   function pensSection(f, now) {
-    const kinds = F.ANIMALS.filter((a) => f.animals.some((x) => x.a === a.id));
-    return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐔 Chuồng trại</h2><button type="button" class="btn sm primary" data-animalshop>Mua vật nuôi</button></div>
-      ${kinds.length ? `<div class="pens">${kinds.map((a) => {
-        const list = f.animals.map((x, i) => [x, i]).filter(([x]) => x.a === a.id);
-        return `<div class="pen" data-pen="${a.id}">${penSVG(a, list, now)}
-          <div class="row" style="justify-content:space-between"><b>${esc(PEN[a.id].vi)} · <i>${esc(a.en)}</i></b><span class="chip num">${list.length}/${F.MAX_PER_ANIMAL}</span></div>
-          <div class="list">${list.map(([x, i]) => animalHTML(x, i, now)).join("")}</div></div>`;
-      }).join("")}</div>`
-        : `<p class="muted">Chưa có vật nuôi. Gà mở ở cấp 2, bò ở cấp 3 — mua xong chúng sẽ có chuồng riêng và cho trứng, sữa để giao đơn hàng.</p>`}</section>`;
+    const lv = F.level(f.xp);
+    return `<section class="panel stack pensp"><div class="row" style="justify-content:space-between"><h2>🐔 Chuồng trại</h2><span class="chip num">${f.animals.length} con</span></div>
+      <div class="pens">${F.ANIMALS.map((a) => {
+        const list = f.animals.map((x, i) => [x, i]).filter(([x]) => x.a === a.id), pr = F.ITEMS[a.prod], locked = a.lv > lv;
+        const buy = locked ? `<span class="chip">🔒 Cấp ${a.lv}</span>`
+          : list.length >= F.MAX_PER_ANIMAL ? `<span class="chip good">Đủ ${F.MAX_PER_ANIMAL} con</span>`
+          : `<button type="button" class="btn sm primary" data-buyanimal="${a.id}"${f.coins < a.cost ? " disabled" : ""}>${list.length ? "Mua thêm" : "Mua"} ${a.emo} · ${a.cost} xu</button>`;
+        return `<div class="pen${list.length ? "" : " empty"}" data-pen="${a.id}">${penSVG(a, list, now)}
+          <div class="row" style="justify-content:space-between;gap:6px"><b>${esc(PEN[a.id].vi)} · <i>${esc(a.en)}</i> <span class="small muted num">${list.length}/${F.MAX_PER_ANIMAL}</span></b>${buy}</div>
+          ${list.length ? `<div class="list">${list.map(([x, i]) => animalHTML(x, i, now)).join("")}</div>`
+            : `<p class="small muted">Cho ${pr.emo} ${esc(pr.vi.toLowerCase())} (<i>${esc(pr.en)}</i>) mỗi ${fmtMin(a.min)}</p>`}</div>`;
+      }).join("")}</div></section>`;
   }
   function animalHTML(a, i, now) {
     const an = F.ANIMAL[a.a], pr = F.ITEMS[an.prod], dur = an.min * F.MIN, left = F.remaining(a.at, an.min, now);
@@ -1052,13 +1066,57 @@
     el.appendChild(s);
     setTimeout(() => s.remove(), 1400);
   }
+  // Delivery truck: loads crates at the barn, drives the farm road and unloads at the produce market (~6.5 s).
+  const DELIVERY_TRUCK = `<svg class="dv-svg" viewBox="0 0 170 92" aria-hidden="true">
+    <rect x="4" y="34" width="98" height="32" rx="3" fill="#B7793F"/><path d="M4 44h98M4 55h98" stroke="#8B5A2B" stroke-width="2.5"/><rect x="2" y="30" width="102" height="6" rx="2" fill="#8B5A2B"/>
+    <rect x="0" y="62" width="164" height="12" rx="6" fill="#3E9B4F"/>
+    <path d="M100 66V28q0-8 8-8h28q8 0 13 9l12 20q3 5 3 10v7z" fill="#46A85A"/><path d="M107 28h24q4 0 6 4l7 14h-37z" fill="#CFEFFF"/>
+    <circle cx="122" cy="36" r="7" fill="#FFD1A6"/><path d="M114 33q8-10 16 0z" fill="#D9443A"/><rect x="127" y="31" width="6" height="2.5" rx="1" fill="#D9443A"/>
+    <circle cx="154" cy="53" r="7.5" fill="#fff" stroke="#2F6B3A" stroke-width="1.5"/><circle cx="156" cy="53" r="3.6" fill="#1E2A38"/><circle cx="157.5" cy="51.5" r="1.2" fill="#fff"/>
+    <path d="M146 63q6 4 12 0" stroke="#1E2A38" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="158" y="62" width="10" height="7" rx="3" fill="#AEB6C1"/>
+    <rect x="0" y="58" width="6" height="4" rx="1" fill="#6C7480"/>
+    <g transform="translate(34,76)"><g class="spin"><circle r="13" fill="#2B2B33"/><circle r="6" fill="#C9CED6"/><rect x="-1.5" y="-12" width="3" height="24" fill="#8A929E"/></g></g>
+    <g transform="translate(130,76)"><g class="spin"><circle r="13" fill="#2B2B33"/><circle r="6" fill="#C9CED6"/><rect x="-1.5" y="-12" width="3" height="24" fill="#8A929E"/></g></g>
+  </svg>`;
+  const DELIVERY_BG = `<svg class="dv-bg" viewBox="0 0 720 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs><linearGradient id="dvsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6CCBFF"/><stop offset="1" stop-color="#D9F4FF"/></linearGradient></defs>
+    <rect width="720" height="220" fill="url(#dvsky)"/>
+    <g fill="#fff" opacity=".9"><ellipse cx="190" cy="34" rx="30" ry="11"/><ellipse cx="208" cy="27" rx="18" ry="11"/><ellipse cx="470" cy="46" rx="26" ry="9"/><ellipse cx="486" cy="40" rx="15" ry="9"/></g>
+    <path d="M0 120Q140 80 300 112T720 104V220H0Z" fill="#A6E07A"/><path d="M0 140Q360 126 720 140V220H0Z" fill="#74C54F"/>
+    ${Array.from({ length: 9 }, (_, i) => `<path d="M${215 + i * 34} 146q6-8 12 0" stroke="#3E8E2E" stroke-width="3" fill="none"/>`).join("")}
+    <path d="M0 176Q360 160 720 176V206Q360 192 0 206Z" fill="#D9B98A"/><path d="M0 191Q360 176 720 191" stroke="#fff" stroke-width="2" stroke-dasharray="12 10" fill="none" opacity=".7"/>
+    <g transform="translate(18,52)"><path d="M-6 44L62 0L130 44Z" fill="#9E2B25"/><rect x="4" y="40" width="116" height="84" fill="#D9443A"/><rect x="4" y="40" width="116" height="5" fill="#fff" opacity=".85"/>
+      <rect x="38" y="62" width="48" height="62" fill="#fff"/><rect x="42" y="66" width="40" height="58" fill="#7A2A22"/><path d="M42 66L82 124M82 66L42 124" stroke="#fff" stroke-width="4"/></g>
+    <g transform="translate(548,40)"><rect x="0" y="40" width="160" height="96" fill="#F6E3B8"/><path d="M-6 42L80 6L166 42Z" fill="#C0563A"/>
+      <rect x="40" y="16" width="80" height="22" rx="5" fill="#fff" stroke="#C0563A" stroke-width="2"/><text x="80" y="31" text-anchor="middle" font-size="11" font-weight="800" fill="#B83229">CHỢ NÔNG SẢN</text>
+      ${Array.from({ length: 8 }, (_, i) => `<path d="M${i * 20} 52h20v16q-10 8-20 0z" fill="${i % 2 ? "#fff" : "#E5533D"}"/>`).join("")}
+      <text x="22" y="104" font-size="26">🧑‍🌾</text><text x="118" y="112" font-size="22">👩</text><text x="140" y="118" font-size="20">🧒</text>
+      <rect x="0" y="106" width="110" height="30" rx="3" fill="#B7793F"/><path d="M0 116h110" stroke="#8B5A2B" stroke-width="2"/></g>
+  </svg>`;
+  let deliveryBusy = false, deliveryNext = null;
   function truckRun(items, coins) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (deliveryBusy) {
+      deliveryNext = deliveryNext ? { items: deliveryNext.items.concat(items), coins: deliveryNext.coins + coins } : { items, coins };
+      return;
+    }
+    deliveryBusy = true;
+    const goods = items.slice(0, 6);
+    const crate = (emo, k, cls) => `<span class="crate ${cls}" style="--k:${k}"><span>${emo}</span></span>`;
     const el = document.createElement("div");
-    el.className = "road-fx"; el.setAttribute("aria-hidden", "true");
-    el.innerHTML = `<div class="road"></div><div class="truck"><div class="cargo">${items.slice(0, 6).join("")}</div><svg viewBox="0 0 122 62" width="122" height="62">${TRUCK_SVG_G}</svg></div>
-      ${coins ? `<div class="coinpop">+${coins} 🪙</div>` : ""}`;
+    el.className = "delivery"; el.setAttribute("aria-hidden", "true");
+    el.innerHTML = `<div class="dv-stage">${DELIVERY_BG}
+      <div class="dv-truck"><div class="dv-body"><div class="dv-bed">${goods.map((e, k) => crate(e, k, "load")).join("")}</div>${DELIVERY_TRUCK}</div>
+        <i class="puff" style="--k:0"></i><i class="puff" style="--k:1"></i><i class="puff" style="--k:2"></i></div>
+      <div class="dv-shop">${goods.map((e, k) => crate(e, k, "sold")).join("")}</div>
+      ${coins ? `<div class="dv-coins">+${coins} 🪙</div>` : ""}
+      <div class="dv-cap c1">📦 Chất nông sản lên xe ở kho</div><div class="dv-cap c2">🚚 Đang chở ra chợ nông sản…</div><div class="dv-cap c3">🏪 Bán xong ở chợ!${coins ? ` +${coins} xu` : ""}</div>
+    </div>`;
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 3600);
+    setTimeout(() => {
+      el.remove(); deliveryBusy = false;
+      if (deliveryNext) { const n = deliveryNext; deliveryNext = null; truckRun(n.items, n.coins); }
+    }, 6700);
   }
   function blessFx(id, plots) {
     const el = document.createElement("div");

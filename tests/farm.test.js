@@ -231,3 +231,13 @@ test("price buff pays extra coins at harvest, capped, cleared after", () => {
   for (const b of ["pig", "rooster", "dragon", "snake"]) F.cast(f, b, [0], T0, DAY);
   assert.equal(f.plots[0].pb, F.PRICE_CAP);
 });
+
+test("pig pen: pigs unlock at level 4 and find truffles", () => {
+  const f = F.fresh(); f.coins = 1000; f.xp = F.LVXP[2];
+  assert.match(F.buyAnimal(f, "pig", T0).msg, /cấp 4/);
+  f.xp = F.LVXP[3];
+  assert.ok(F.buyAnimal(f, "pig", T0).ok);
+  assert.ok(F.collect(f, 0, T0 + 90 * F.MIN).ok);
+  assert.equal(f.barn.truffle, 1);
+  assert.ok(F.unlockedItems(4).some((x) => x.id === "truffle") && !F.unlockedItems(3).some((x) => x.id === "truffle"));
+});

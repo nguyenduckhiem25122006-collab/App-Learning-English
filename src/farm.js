@@ -18,12 +18,14 @@
   const PRODUCTS = [
     { id: "egg", en: "egg", vi: "Trứng gà", emo: "🥚", sell: 18, xp: 2 },
     { id: "milk", en: "milk", vi: "Sữa bò", emo: "🥛", sell: 50, xp: 4 },
+    { id: "truffle", en: "truffle", vi: "Nấm truffle", emo: "🍄", sell: 70, xp: 5 },
     { id: "wool", en: "wool", vi: "Len cừu", emo: "🧶", sell: 90, xp: 6 },
     { id: "honey", en: "honey", vi: "Mật ong", emo: "🍯", sell: 130, xp: 8 },
   ];
   const ANIMALS = [ // price, minutes per product, product id, unlock level
     { id: "chicken", en: "chicken", vi: "Gà mái", emo: "🐔", cost: 80, min: 20, prod: "egg", lv: 2 },
     { id: "cow", en: "cow", vi: "Bò sữa", emo: "🐄", cost: 250, min: 60, prod: "milk", lv: 3 },
+    { id: "pig", en: "pig", vi: "Lợn", emo: "🐖", cost: 350, min: 90, prod: "truffle", lv: 4 },
     { id: "sheep", en: "sheep", vi: "Cừu", emo: "🐑", cost: 400, min: 120, prod: "wool", lv: 5 },
     { id: "bee", en: "beehive", vi: "Tổ ong", emo: "🐝", cost: 600, min: 180, prod: "honey", lv: 6 },
   ];
