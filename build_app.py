@@ -58,7 +58,7 @@ def pwa(html):
                 "background_color": BG, "theme_color": THEME, "description": "Học từ mới, câu giao tiếp và 44 âm IPA mỗi ngày — chạy offline.",
                 "icons": [{"src": f"icon-{n}.png", "sizes": f"{n}x{n}", "type": "image/png", "purpose": "any maskable"} for n in ICON_SIZES]}
     version = hashlib.sha1(page.encode()).hexdigest()[:10]
-    sw = f"""/* Offline cache: app shell cache-first, Google Fonts stale-while-revalidate. */
+    sw = f"""/* Offline cache: pages network-first, other app files cache-first, Google Fonts stale-while-revalidate. */
 const CACHE = "nhip-{version}";
 const SHELL = ["./", "index.html", "manifest.webmanifest", {", ".join(f'"icon-{n}.png"' for n in ICON_SIZES)}, {", ".join(f'"img/beasts/{f.name}"' for f in sorted(BEAST_DIR.glob("*.webp")))}];
 self.addEventListener("install", (e) => e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())));
@@ -66,7 +66,13 @@ self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((ks) => 
 self.addEventListener("fetch", (e) => {{
   const url = new URL(e.request.url);
   if (e.request.method !== "GET") return;
-  if (url.origin === location.origin) {{
+  if (url.origin === location.origin && e.request.mode === "navigate") {{
+    // Pages: network first so a new release shows up on the next open; cached copy when offline.
+    e.respondWith(fetch(e.request).then((res) => {{
+      if (res.ok) {{ const copy = res.clone(); caches.open(CACHE).then((c) => c.put("index.html", copy)); }}
+      return res;
+    }}).catch(() => caches.match("index.html").then((r) => r || caches.match("./"))));
+  }} else if (url.origin === location.origin) {{
     e.respondWith(caches.match(e.request, {{ ignoreSearch: true }}).then((r) => r || fetch(e.request)));
   }} else if (/fonts\\.(googleapis|gstatic)\\.com$/.test(url.hostname)) {{
     e.respondWith(caches.open(CACHE).then((c) => c.match(e.request).then((hit) => {{

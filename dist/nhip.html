@@ -96,7 +96,7 @@ main { max-width: 980px; margin: 0 auto; padding-block: 20px 40px; padding-left:
 .stepper { display: inline-flex; align-items: center; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden }
 .stepper button { border: 0; background: var(--chip); width: 38px; height: 38px; font-size: 1.1rem; font-weight: 700 }
 .stepper output { min-width: 46px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums }
-input[type=search], input[type=text], select { border: 1px solid var(--rule); background: var(--card); border-radius: 10px; padding: 9px 12px; min-height: 40px; min-width: 0 }
+input[type=search], input[type=text], input[type=password], select { border: 1px solid var(--rule); background: var(--card); border-radius: 10px; padding: 9px 12px; min-height: 40px; min-width: 0 }
 input[type=range] { accent-color: var(--action); width: 100% }
 
 /* Today */
@@ -1048,7 +1048,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   }
 
   // Screen state that is not persisted
-  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false };
+  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false, joinMode: "new", showPin: false };
   const inSession = () => U.tab === "words" && ["learn", "quiz", "review"].includes(U.vocab.mode);
 
   // ---------- Helpers ----------
@@ -2085,15 +2085,24 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (U.tab === "rank" || U.tab === "today") render();
   }
   async function joinClass() {
-    const room = $("#j-room").value.trim().toUpperCase(), name = $("#j-name").value.trim(), pin = $("#j-pin").value.trim();
-    Object.assign(U, { joinRoom: room, joinName: name, joinErr: "", joining: true });
-    render();
+    const isNew = U.joinMode !== "login";
+    const room = $("#j-room").value.trim().toUpperCase(), name = $("#j-name").value.trim().replace(/\s+/g, " "), pin = $("#j-pin").value.trim();
+    Object.assign(U, { joinRoom: room, joinName: name, joinErr: "" });
+    const bad = !/^[A-Z0-9]{4,12}$/.test(room) ? "Mã lớp gồm 4–12 chữ cái hoặc số (thầy cô sẽ gửi cho bạn)"
+      : name.length < 2 || name.length > 20 ? "Tên hiển thị cần 2–20 ký tự"
+      : !/^[0-9]{4,6}$/.test(pin) ? (isNew ? "Hãy tự đặt một mã PIN gồm 4–6 chữ số" : "Mã PIN gồm 4–6 chữ số")
+      : isNew && pin !== $("#j-pin2").value.trim() ? "Hai lần nhập mã PIN chưa giống nhau" : "";
+    if (bad) { U.joinErr = bad; render(); return; }
+    U.joining = true; render();
     try {
       const r = await NET.join(room, name, pin);
       if (r.ok) {
         S.online = { room: r.room, name: r.name, token: r.token, avatar: "" };
         board = null; lastPushAt = 0; lastPushed = ""; flush();
-        toast(`🎉 Chào ${r.name}! Bạn đã vào lớp ${r.room}.`);
+        toast(r.new ? `🎉 Đã tạo tài khoản cho ${r.name} trong lớp ${r.room}. Nhớ mã PIN của bạn nhé!`
+          : isNew ? `Tên ${r.name} đã có sẵn và PIN khớp — bạn đã đăng nhập lại.` : `👋 Chào mừng ${r.name} quay lại lớp ${r.room}!`, 4500);
+      } else if (isNew && r.error === "wrong_pin") {
+        U.joinErr = `Tên “${name}” đã có người dùng trong lớp. Hãy chọn tên khác (thêm họ hoặc số), hoặc chọn “Đã có tài khoản” nếu đó là bạn.`;
       } else U.joinErr = Online.message(r.error) + (r.error === "room_full" && r.max ? ` (${r.max} người)` : "");
     } catch (e) { U.joinErr = Online.message(e.code); }
     U.joining = false;
@@ -2115,14 +2124,21 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         <p class="small muted">Mọi tính năng học và nông trại vẫn chạy đầy đủ khi chưa bật.</p></section>`;
     }
     if (!S.online) {
+      const isNew = U.joinMode !== "login", show = U.showPin ? "text" : "password";
+      const field = (label, input, hint = "") => `<label class="stack" style="gap:4px"><span class="label">${label}</span>${input}${hint ? `<span class="small muted">${hint}</span>` : ""}</label>`;
       return head() + `<section class="panel stack"><h2>Tham gia lớp</h2>
-        <p class="muted">Nhập mã lớp do thầy cô hoặc người quản lý gửi, chọn tên hiển thị và mã PIN 4–6 chữ số. Dùng đúng tên + PIN để đăng nhập lại trên máy khác.</p>
-        <form data-joinform class="stack" style="max-width:420px">
-          <label class="stack" style="gap:4px"><span class="label">Mã lớp</span><input type="text" id="j-room" value="${esc(U.joinRoom || urlRoom)}" maxlength="12" autocapitalize="characters" autocomplete="off" required></label>
-          <label class="stack" style="gap:4px"><span class="label">Tên hiển thị</span><input type="text" id="j-name" value="${esc(U.joinName || "")}" maxlength="20" autocomplete="nickname" required></label>
-          <label class="stack" style="gap:4px"><span class="label">Mã PIN (4–6 số)</span><input type="password" id="j-pin" inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" autocomplete="off" required></label>
+        <div class="seg" role="group" aria-label="Bạn đã có tài khoản chưa?">
+          <button type="button" data-joinmode="new" aria-pressed="${isNew}">Lần đầu tham gia</button><button type="button" data-joinmode="login" aria-pressed="${!isNew}">Đã có tài khoản</button></div>
+        <p class="muted">${isNew ? "Nhập mã lớp thầy cô gửi, chọn tên hiển thị và <b>tự đặt mã PIN</b> (4–6 chữ số). Ghi nhớ tên + PIN để đăng nhập lại trên máy khác."
+          : "Nhập đúng mã lớp, tên và mã PIN bạn đã tạo lần đầu."}</p>
+        <form data-joinform class="stack" style="max-width:420px" novalidate>
+          ${field("Mã lớp", `<input type="text" id="j-room" value="${esc(U.joinRoom || urlRoom)}" maxlength="12" autocapitalize="characters" autocomplete="off">`)}
+          ${field("Tên hiển thị", `<input type="text" id="j-name" value="${esc(U.joinName || "")}" maxlength="20" autocomplete="nickname">`, isNew ? "2–20 ký tự, ví dụ: Lan Anh, Minh 7A" : "")}
+          ${field(isNew ? "Tạo mã PIN của bạn" : "Mã PIN", `<input type="${show}" id="j-pin" inputmode="numeric" maxlength="6" autocomplete="${isNew ? "new-password" : "current-password"}">`, isNew ? "4–6 chữ số, tự nghĩ ra, không chia sẻ cho bạn khác" : "")}
+          ${isNew ? field("Nhập lại mã PIN", `<input type="${show}" id="j-pin2" inputmode="numeric" maxlength="6" autocomplete="new-password">`) : ""}
+          <label class="row small" style="gap:6px"><input type="checkbox" id="j-show"${U.showPin ? " checked" : ""}> Hiện mã PIN</label>
           ${U.joinErr ? `<p class="feedback no" role="alert">${esc(U.joinErr)}</p>` : ""}
-          <div><button class="btn primary"${U.joining ? " disabled" : ""}>${U.joining ? "Đang kết nối…" : "Tham gia lớp"}</button></div>
+          <div><button class="btn primary"${U.joining ? " disabled" : ""}>${U.joining ? "Đang kết nối…" : isNew ? "Tạo tài khoản & vào lớp" : "Đăng nhập"}</button></div>
         </form>
         <p class="small muted">Bạn cùng lớp chỉ thấy tên, XP, chuỗi ngày, số từ đã học và cấp nông trại của bạn.</p></section>`;
     }
@@ -2320,6 +2336,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
       farmDone(r, r.ok && `✨ ${b.zo} đã ban phúc ${r.n} cây (−${r.cost} ⚡)`);
     },
     rankby: (v) => { U.rankBy = v; render(); },
+    joinmode: (v) => { keepJoinFields(); U.joinMode = v; U.joinErr = ""; render(); },
     rankrefresh: () => { if (board && Date.now() - board.at < 10000) toast("Bảng vừa được cập nhật"); else fetchBoard(true); },
     avatar: (v) => { S.online.avatar = v; save(); lastPushed = ""; pushStats(true); render(); },
     leave: (v) => {
@@ -2376,11 +2393,18 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     answerQuiz(C.checkSpelling($("#spell-in").value, q.answer), null);
   });
   let bqT;
+  // Keep what the learner typed when the join form re-renders; PIN boxes accept digits only.
+  function keepJoinFields() { const r = $("#j-room"), n = $("#j-name"); if (r) U.joinRoom = r.value.trim().toUpperCase(); if (n) U.joinName = n.value; }
   document.addEventListener("input", (e) => {
+    if (e.target.id === "j-pin" || e.target.id === "j-pin2") { const v = e.target.value.replace(/\D/g, ""); if (v !== e.target.value) e.target.value = v; }
     if (e.target.id === "bq") { U.bq = e.target.value; clearTimeout(bqT); bqT = setTimeout(() => { const l = $("#blist"); if (l) l.innerHTML = browseList(); }, 200); }
     if (e.target.id === "rate") { S.rate = +e.target.value; $("#rate-v").textContent = S.rate.toFixed(1) + "×"; save(); }
   });
   document.addEventListener("change", (e) => {
+    if (e.target.id === "j-show") {
+      U.showPin = e.target.checked;
+      document.querySelectorAll("#j-pin, #j-pin2").forEach((x) => { x.type = U.showPin ? "text" : "password"; });
+    }
     if (e.target.matches("[data-castpick]")) { const go = $("#sheet [data-castgo]"); if (go) castCost(go.dataset.castgo); }
     if (e.target.id === "btopic") { U.btopic = e.target.value; $("#blist").innerHTML = browseList(); }
     if (e.target.id === "import-in" && e.target.files[0]) importData(e.target.files[0]);

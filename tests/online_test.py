@@ -56,8 +56,11 @@ def main():
                 pg_.on("console", lambda m: m.type == "error" and "Failed to load resource" not in m.text and errors.append(m.text))
                 return pg_
 
-            def join(pg_, name, pin, room="LOP7A"):
+            def join(pg_, name, pin, room="LOP7A", login=False):
+                pg_.click("[data-joinmode=login]" if login else "[data-joinmode=new]")
                 pg_.fill("#j-room", room); pg_.fill("#j-name", name); pg_.fill("#j-pin", pin)
+                if not login:
+                    pg_.fill("#j-pin2", pin)
                 pg_.click("[data-joinform] button")
 
             # 1. Invite link opens the leaderboard with the class code filled in
@@ -73,9 +76,17 @@ def main():
             # 2. Someone else tries Lan's name with a wrong PIN
             bpg = page()
             bpg.goto(url, wait_until="networkidle"); bpg.click("[data-tab=rank]")
+            check("first-time form asks to create a PIN and confirm it", bpg.locator("#j-pin2").count() == 1 and "tạo mã pin" in bpg.inner_text("[data-joinform]").lower())
+            bpg.fill("#j-room", "LOP7A"); bpg.fill("#j-name", "Minh"); bpg.fill("#j-pin", "56ab78"); bpg.fill("#j-pin2", "5679")
+            check("PIN boxes keep digits only", bpg.input_value("#j-pin") == "5678")
+            n_calls = len(api.calls); bpg.click("[data-joinform] button")
+            check("PIN mismatch caught before contacting the server", "chưa giống nhau" in bpg.inner_text("[role=alert]") and len(api.calls) == n_calls)
             join(bpg, "lan", "9999")
             bpg.wait_for_selector("[role=alert]")
-            check("wrong PIN for a taken name is refused", "Sai PIN" in bpg.inner_text("[role=alert]"))
+            check("new account with a taken name → choose another name", "đã có người dùng" in bpg.inner_text("[role=alert]"), bpg.inner_text("[role=alert]"))
+            join(bpg, "lan", "9999", login=True)
+            bpg.wait_for_selector("[role=alert]")
+            check("wrong PIN when logging in is refused", "Sai PIN" in bpg.inner_text("[role=alert]"))
             join(bpg, "Minh", "5678")
             bpg.wait_for_selector(".rk.me", timeout=10000)
             check("second learner joins, both on the board", bpg.locator(".rk").count() == 2)
@@ -111,7 +122,7 @@ def main():
             for i, pp in enumerate(pages):
                 pp.goto(url, wait_until="domcontentloaded")
             for i, pp in enumerate(pages):
-                pp.click("[data-tab=rank]"); join(pp, f"Ban {i}", "1111")
+                pp.click("[data-tab=rank]"); join(pp, f"Ban {i}", "1111", login=True)
             for pp in pages:
                 pp.wait_for_selector(".rk.me", timeout=10000)
             check("logging back in on another device (same name + PIN)", all(pp.locator(".rk").count() == 10 for pp in pages))
