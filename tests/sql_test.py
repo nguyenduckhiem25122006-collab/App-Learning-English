@@ -61,7 +61,7 @@ def main():
         pg.admin("update nhip_players set last_sync = now() - interval '2 hours'")
         s2 = rpc("nhip_sync", p_token=tok, p_stats={"xp": 2500, "week_xp": "lots", "week": "bad", "words": -5, "streak": 1e30, "farm_lv": 99, "beasts": 7.9, "avatar": "<img>"})
         row = pg.admin("select xp, week_xp, week, words, streak, farm_lv, beasts, avatar from nhip_players where token = %s", (tok,))[0]
-        check("garbage values are clamped, not stored", s2["ok"] and row == (2500, 0, "", 0, 3650, 10, 7, ""), row)
+        check("garbage values are clamped, not stored", s2["ok"] and row == (2500, 0, "", 0, 3650, 30, 7, ""), row)
         check("unknown token", rpc("nhip_sync", p_token=str(uuid.uuid4()), p_stats={})["error"] == "no_player")
         check("non-object stats", rpc("nhip_sync", p_token=tok, p_stats=[1, 2])["error"] == "bad_input")
 

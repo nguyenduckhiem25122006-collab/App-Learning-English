@@ -57,9 +57,9 @@
   ];
   const BEAST_MAX_LV = 8, STAMINA = 10, PRICE_CAP = 150;
   const STAMINA_PER_CROP = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]; // by beast level
-  const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700]; // farm xp needed for level 1..10
+  const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700, 2200, 2750, 3350, 4000, 4700, 5450, 6250, 7100, 8000, 8950, 9950, 11000, 12100, 13250]; // farm xp needed for level 1..24
   const START = { coins: 50, fert: 1, plots: 6, cap: 40 };
-  const MAX_PLOTS = 30, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20, PLOTS_PER_LEVEL = 3;
+  const MAX_PLOTS = 30, MAX_PER_ANIMAL = 3, ORDERS = 3, CAP_STEP = 20;
   const REWARD = { lesson: [20, 1], review: [15, 1], goal: [50, 2] }; // [coins, fertilizer]
   // Play-time gate: each study minute buys RATIO farm minutes; the farm opens after MIN_STUDY
   // of study in a window, and the window (study + play time) resets WINDOW after it started.
@@ -124,7 +124,8 @@
     return { ok: true };
   }
   /** Farm level needed for plot number n (1-based): 6 to start, then 3 more at each farm level 1–8, up to 30. */
-  const plotLevel = (n) => (n <= START.plots ? 1 : Math.floor((n - START.plots - 1) / PLOTS_PER_LEVEL) + 1);
+  // Plot 7 opens at level 1, then each farm level opens exactly one more (plot 30 at level 24).
+  const plotLevel = (n) => (n <= START.plots ? 1 : n - START.plots);
   const plotCost = (f) => (f.plots.length >= MAX_PLOTS ? null : 60 * (f.plots.length - START.plots + 1));
   function buyPlot(f) {
     const cost = plotCost(f);

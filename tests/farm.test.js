@@ -74,16 +74,21 @@ test("animals: unlock level, max count, collect product", () => {
   assert.ok(F.collect(f, 1, T0).ok);
 });
 
-test("plots expand to 30, more unlocking at higher farm levels", () => {
-  assert.deepEqual([1, 6, 7, 9, 10, 12, 13, 28, 30].map(F.plotLevel), [1, 1, 1, 1, 2, 2, 3, 8, 8]);
+test("plots expand to 30, one more per farm level", () => {
+  assert.deepEqual([1, 6, 7, 8, 9, 10, 29, 30].map(F.plotLevel), [1, 1, 1, 2, 3, 4, 23, 24]);
+  const need = Array.from({ length: F.MAX_PLOTS - F.START.plots }, (_, i) => F.plotLevel(F.START.plots + 1 + i));
+  assert.equal(new Set(need).size, need.length, "no two plots share an unlock level");
+  assert.ok(F.LVXP.length >= F.plotLevel(F.MAX_PLOTS), "the last plot is reachable");
   const f = F.fresh(); f.coins = 100000;
   assert.equal(F.plotCost(f), 60);
   F.buyPlot(f);
   assert.equal(F.plotCost(f), 120);
   while (F.buyPlot(f).ok);
-  assert.equal(f.plots.length, 9, "level 1 farm stops at 9 plots");
+  assert.equal(f.plots.length, 7, "level 1 farm stops at 7 plots");
   assert.match(F.buyPlot(f).msg, /cấp 2/);
-  f.xp = F.LVXP[7];
+  f.xp = F.LVXP[1];
+  assert.ok(F.buyPlot(f).ok); assert.equal(F.buyPlot(f).ok, false, "level 2 opens exactly one more");
+  f.xp = F.LVXP[F.LVXP.length - 1];
   while (F.buyPlot(f).ok);
   assert.equal(f.plots.length, F.MAX_PLOTS); assert.equal(F.MAX_PLOTS, 30); assert.equal(F.plotCost(f), null);
 });

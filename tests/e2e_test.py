@@ -205,6 +205,7 @@ def main():
         check("harvest pops a floating +1 over the plot", page.locator(".land .floater").count() >= 1)
         check("harvest goes to the barn", state(page)["farm"]["barn"].get("wheat") == 1)
         check("field shows all 30 slots (owned, buyable, locked by level)", page.locator(".field .plot").count() == 30 and page.locator(".plot.locked").count() == 23
+              and page.locator(".plot.locked .lbl").all_inner_texts() == [f"Cấp {n}" for n in range(2, 25)]
               and page.locator("[data-buyplot]").count() == 1)
         page.wait_for_timeout(1800)
         check("farmer runs to the crops and tends them", page.locator(".farmer-bot.run, .farmer-bot.work").count() == 1)
@@ -220,6 +221,7 @@ def main():
         check("field and ranch share one farm frame", page.locator(".landp .land .field").count() == 1 and page.locator(".landp .land .ranch").count() == 1 and page.locator(".landp").count() == 1)
         check("animals are tiles like the field, animated", page.locator(".pgroup").count() == 5 and page.locator(".atile[data-animalidx]").count() == 8
               and page.locator(".anim .peck").count() == 3 and page.locator(".anim .wander").count() == 7)
+        check("empty animal slots say Nuôi", page.locator(".atile.slot .lbl").first.inner_text() == "Nuôi")
         check("empty pig pen shows empty slots; buy buttons sit in the bottom bar", page.locator(".pgroup[data-ranch=pig] .atile.slot").count() == 3
               and page.locator(".farm-actions [data-buyanimal=pig]").count() == 1 and page.locator(".pgroup [data-buyanimal]").count() == 0)
         egg0 = state(page)["farm"]["barn"].get("egg", 0)

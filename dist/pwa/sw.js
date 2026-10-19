@@ -1,5 +1,5 @@
 /* Offline cache: pages network-first, other app files cache-first, Google Fonts stale-while-revalidate. */
-const CACHE = "nhip-828a7dd5fe";
+const CACHE = "nhip-d7a6704c44";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "img/beasts/cat.webp", "img/beasts/dog.webp", "img/beasts/dragon.webp", "img/beasts/goat.webp", "img/beasts/horse.webp", "img/beasts/monkey.webp", "img/beasts/ox.webp", "img/beasts/pig.webp", "img/beasts/rat.webp", "img/beasts/rooster.webp", "img/beasts/snake.webp", "img/beasts/tiger.webp"];
 self.addEventListener("install", (e) => e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())));

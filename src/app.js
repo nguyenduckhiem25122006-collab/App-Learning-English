@@ -969,7 +969,7 @@
           <button type="button" class="btn primary" data-collectall>🧺 Thu sản phẩm${readyA ? ` (${readyA})` : ""}</button></div>
         <div class="row buyrow"><span class="label">Mua vật nuôi</span>${buy}</div>
       </div>
-      <p class="small muted">Chạm ô trống để gieo hạt, ô ➕ để mở thêm đất (mỗi cấp nông trại thêm 3 ô, tối đa ${F.MAX_PLOTS}). Chạm con vật để thu sản phẩm hoặc dùng 🧪 cho nhanh.</p></section>`;
+      <p class="small muted">Chạm ô trống để gieo hạt, ô ➕ để mở thêm đất (mỗi cấp nông trại mở thêm 1 ô, tối đa ${F.MAX_PLOTS}). Chạm con vật để thu sản phẩm hoặc dùng 🧪 cho nhanh.</p></section>`;
   }
   function plotHTML(p, i, now) {
     if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">+</span><span class="lbl">Gieo hạt</span></button>`;
@@ -1034,7 +1034,7 @@
       const list = f.animals.map((x, i) => [x, i]).filter(([x]) => x.a === a.id), locked = a.lv > lv, tiles = [];
       for (let k = 0; k < F.MAX_PER_ANIMAL; k++) {
         tiles.push(list[k] ? animalTile(a, list[k][0], list[k][1], k, now)
-          : `<div class="atile slot" aria-hidden="true"><span class="e">${locked ? "🔒" : a.emo}</span><span class="lbl">${locked ? `Cấp ${a.lv}` : "Trống"}</span></div>`);
+          : `<div class="atile slot" aria-hidden="true"><span class="e">${locked ? "🔒" : a.emo}</span><span class="lbl">${locked ? `Cấp ${a.lv}` : "Nuôi"}</span></div>`);
       }
       return `<div class="pgroup ${RANCH_BG[a.id]}${locked ? " locked" : ""}" data-ranch="${a.id}">
         <div class="pg-head"><b>${esc(PEN[a.id].vi)}</b> <i>${esc(a.en)}</i><span class="num">${list.length}/${F.MAX_PER_ANIMAL}</span></div>

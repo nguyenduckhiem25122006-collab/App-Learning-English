@@ -136,7 +136,7 @@ begin
     xp = v_xp, week = v_week, week_xp = v_wxp, avatar = v_av,
     words   = public.nhip_int(p_stats, 'words', 0, 5000),
     streak  = public.nhip_int(p_stats, 'streak', 0, 3650),
-    farm_lv = public.nhip_int(p_stats, 'farm_lv', 1, 10),
+    farm_lv = public.nhip_int(p_stats, 'farm_lv', 1, 30),
     beasts  = public.nhip_int(p_stats, 'beasts', 0, 12),
     last_sync = now()
   where id = pl.id;
