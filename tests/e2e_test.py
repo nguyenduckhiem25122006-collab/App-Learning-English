@@ -10,7 +10,7 @@ SHOTS = ROOT / "build" / "shots"
 PORT = 8765
 SHOWCASE = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1') || '{}'), now = Date.now(), M = 60000;
   s.gate = { start: now, study: 30 * M, play: 0 };
-  s.farm = Object.assign(s.farm || {}, { coins: 2400, fert: 4, xp: 700, cap: 80, orders: [], goalDay: null, earned: 900,
+  s.farm = Object.assign(s.farm || {}, { coins: 2400, fert: 4, xp: 700, cap: 120, orders: [], goalDay: null, earned: 900,
     plots: [{c:'corn',at:0},{c:'tomato',at:0},{c:'strawberry',at:now-60*M},{c:'pumpkin',at:now-30*M},{c:'wheat',at:now},{c:null,at:0},{c:'carrot',at:0},{c:'sunflower',at:now-100*M}],
     animals: [{a:'chicken',at:0},{a:'chicken',at:now},{a:'chicken',at:now},{a:'cow',at:now},{a:'cow',at:0},{a:'sheep',at:now},{a:'sheep',at:now},{a:'bee',at:now}],
     deco: ['flowers','fence','tree','dog','well','house','tractor','rainbow'], barn: {wheat: 40, carrot: 20, corn: 20, egg: 3, milk: 1},
@@ -217,8 +217,15 @@ def main():
         check("3 orders on the board", page.locator(".order").count() == 3)
         other = ctx.new_page(); other.goto(url, wait_until="networkidle"); other.evaluate(SHOWCASE); other.close()
         page.wait_for_timeout(400)
-        check("animals live in animated pens", page.locator(".pen:not(.empty)").count() == 4 and page.locator(".pen .peck").count() == 3 and page.locator(".pen .wander").count() == 7)
-        check("pens sit beside the field; pig pen offered, empty", page.locator(".farm-grid .pensp").count() == 1 and page.locator(".pen.empty[data-pen=pig] [data-buyanimal=pig]").count() == 1)
+        check("field and ranch share one farm frame", page.locator(".landp .land .field").count() == 1 and page.locator(".landp .land .ranch").count() == 1 and page.locator(".landp").count() == 1)
+        check("animals are tiles like the field, animated", page.locator(".pgroup").count() == 5 and page.locator(".atile[data-animalidx]").count() == 8
+              and page.locator(".anim .peck").count() == 3 and page.locator(".anim .wander").count() == 7)
+        check("empty pig pen shows empty slots; buy buttons sit in the bottom bar", page.locator(".pgroup[data-ranch=pig] .atile.slot").count() == 3
+              and page.locator(".farm-actions [data-buyanimal=pig]").count() == 1 and page.locator(".pgroup [data-buyanimal]").count() == 0)
+        egg0 = state(page)["farm"]["barn"].get("egg", 0)
+        page.click("[data-collectall]")
+        s = state(page)
+        check("collect all ready animal products from the bottom bar", s["farm"]["barn"].get("egg", 0) == egg0 + 1 and page.locator(".land .floater").count() >= 2)
         check("owned spirit beasts float over the farm", page.locator("svg.scene .spirit").count() == 2)
         page.click("[data-sell=wheat]"); page.click("[data-sell=wheat]")
         check("quick sales queue behind one truck instead of stacking", page.locator(".delivery").count() == 1)

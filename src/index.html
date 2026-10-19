@@ -332,11 +332,6 @@ body.farm-wide main { max-width: min(1760px, 100%) }
 body.farm-full .top, body.farm-full::before { display: none }
 body.farm-full main { padding-top: 12px; padding-bottom: 24px }
 .fullbtn { border: 0; cursor: pointer; font: inherit; font-weight: 700 }
-.farm-grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.55fr) minmax(320px, 1fr); align-items: start }
-.pensp .pens { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) }
-.pen .item { padding: 6px 2px } .pen .item .pic.sm { display: none } .pen .item { grid-template-columns: 1fr auto }
-.pen.empty .pen-svg { filter: saturate(.55); opacity: .8 }
-@media (max-width: 1000px) { .farm-grid { grid-template-columns: 1fr } }
 .land { position: relative }
 .field { grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)) }
 .plot.buy { background: rgba(255,255,255,.35); border: 3px dashed #fff; box-shadow: none; color: #2E7D32 }
@@ -350,16 +345,38 @@ body.farm-full main { padding-top: 12px; padding-bottom: 24px }
 .floater { position: absolute; left: 50%; top: 10%; transform: translateX(-50%); z-index: 3; pointer-events: none; white-space: nowrap;
   font: 800 1rem var(--f-display); color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.4); animation: floatup 1.3s ease-out forwards }
 @keyframes floatup { from { transform: translate(-50%, 0); opacity: 1 } to { transform: translate(-50%, -60px); opacity: 0 } }
-.pen { position: relative }
-.pen .floater { color: #6B3410; text-shadow: 0 1px 0 #fff; font-size: 1.4rem; top: 28% }
 .farmer-bot { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; transition: transform 1.3s ease-in-out; will-change: transform }
 .farmer-bot.left .fb-flip { transform: scaleX(-1) }
 .farmer-bot svg { display: block; overflow: visible }
 .farmer-bot .drops { opacity: 0 }
-.pens { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) }
-.pen { background: #fff; border-radius: 16px; padding: 10px; display: grid; gap: 8px; box-shadow: 0 3px 0 #EBD3A0; min-width: 0 }
-.pen-svg { width: 100%; height: auto; display: block; border-radius: 12px }
-.pen.new { animation: popin .9s ease-out }
+.land { display: grid; gap: 14px; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); align-items: start; padding: 12px; border-radius: 18px;
+  background: #7CC85A; border: 3px solid #5DAA3E; background-image: radial-gradient(#8FD66B 2px, transparent 2.5px); background-size: 18px 18px }
+@media (max-width: 1100px) { .land { grid-template-columns: 1fr } }
+.land .field { padding: 0; border: 0; background: none }
+.zone-head { width: max-content; margin-bottom: 8px; padding: 3px 12px; border-radius: 10px; background: #C98A4B; color: #fff; font: 700 .9rem var(--f-display); box-shadow: 0 3px 0 #8B5A2B }
+.ranch { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) }
+.pgroup { padding: 8px; border: 5px solid #C98A4B; border-radius: 14px; background: rgba(255,255,255,.16); box-shadow: inset 0 0 0 2px #E2B07A, 0 3px 0 #8B5A2B }
+.pgroup.locked { filter: grayscale(.8); opacity: .75 }
+.pgroup.new { animation: popin .9s ease-out }
+.pg-head { display: flex; gap: 6px; align-items: baseline; margin-bottom: 6px; color: #fff; font-weight: 700; text-shadow: 0 1px 0 rgba(0,0,0,.35) }
+.pg-head i { font-weight: 500; opacity: .9 } .pg-head .num { margin-left: auto }
+.pg-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px }
+.atile { position: relative; aspect-ratio: 1; border: 0; border-radius: 12px; display: grid; place-items: center; align-content: center; gap: 2px; padding: 4px; min-width: 0; color: #5A3A12;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.15), 0 3px 0 rgba(0,0,0,.18) }
+.atile .anim { width: 84%; height: auto; display: block; overflow: visible }
+.atile .t, .atile .lbl { background: rgba(255,255,255,.9); border-radius: 999px; padding: 1px 7px; font-size: .7rem; font-weight: 700 }
+.atile .bar { width: 78%; height: 5px; background: rgba(255,255,255,.5) } .atile .bar > i { background: #7ED957 }
+.atile.ready { box-shadow: 0 0 0 3px #FFD84D, inset 0 -4px 0 rgba(0,0,0,.15), 0 3px 0 rgba(0,0,0,.18) }
+.atile .prod { position: absolute; top: 3px; right: 5px; font-size: 1.35rem; filter: drop-shadow(0 2px 0 rgba(0,0,0,.2)) }
+.atile.slot { border: 3px dashed rgba(255,255,255,.75); background: rgba(255,255,255,.18); box-shadow: none; color: #fff }
+.atile.slot .e { font-size: 1.5rem; opacity: .65 } .atile.slot .lbl { color: #5A3A12 }
+.straw .atile:not(.slot) { background: repeating-linear-gradient(45deg, #EBC86C 0 6px, #DDB65A 6px 9px) }
+.meadow .atile:not(.slot) { background: #8FD165 radial-gradient(#A6E07A 2px, transparent 2.5px) 0 0 / 12px 12px }
+.mud .atile:not(.slot) { background: radial-gradient(ellipse at 50% 72%, #8A5A32 0 42%, #B98A5A 44%) }
+.pasture .atile:not(.slot) { background: #A6DE7A radial-gradient(#C3EB9E 2px, transparent 2.5px) 0 0 / 14px 14px }
+.flowers .atile:not(.slot) { background: #B5E585 radial-gradient(#FFB3D1 2px, transparent 2.5px) 0 0 / 16px 16px }
+.farm-actions { display: grid; gap: 10px; padding: 12px; border-radius: 16px; background: #FFE9B8; box-shadow: inset 0 0 0 2px #E7BF79 }
+.buyrow { gap: 8px }
 @keyframes popin { 0% { transform: scale(.92); box-shadow: 0 0 0 5px #FFD84D } 60% { transform: scale(1.02) } 100% { transform: none } }
 .scene .sglow { opacity: .45 }
 .delivery { position: fixed; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(720px, calc(100% - 24px)); z-index: 55;
@@ -411,13 +428,14 @@ body.farm-full main { padding-top: 12px; padding-bottom: 24px }
   .farmer-bot.run svg { animation: hopstep .3s ease-in-out infinite alternate }
   .farmer-bot.work .can { animation: pour 1.2s ease-in-out infinite alternate }
   .farmer-bot.work .drops { animation: drip .6s linear infinite }
-  .pen-svg .wander { animation: wander 6s ease-in-out infinite alternate }
-  .pen-svg .ready-bubble { animation: bob 1.4s ease-in-out infinite }
-  .pen-svg .peck { animation: peck 1.8s ease-in-out infinite }
-  .pen-svg .tail { animation: tail 1.4s ease-in-out infinite alternate }
-  .pen-svg .chew { animation: chew 2.4s ease-in-out infinite }
-  .pen-svg .hop { animation: hop 1.6s ease-in-out infinite }
-  .pen-svg .orbit { animation: spin 3s linear infinite }
+  .anim .wander { animation: wander 3s ease-in-out infinite alternate }
+  .atile.ready .prod { animation: bob 1.3s ease-in-out infinite }
+  .anim .ready-bubble { animation: bob 1.4s ease-in-out infinite }
+  .anim .peck { animation: peck 1.8s ease-in-out infinite }
+  .anim .tail { animation: tail 1.4s ease-in-out infinite alternate }
+  .anim .chew { animation: chew 2.4s ease-in-out infinite }
+  .anim .hop { animation: hop 1.6s ease-in-out infinite }
+  .anim .orbit { animation: spin 3s linear infinite }
   .scene .spirit { animation: hover 3.4s ease-in-out infinite }
   .scene .sglow { animation: pulse 2.4s ease-in-out infinite }
   @keyframes hopstep { to { transform: translateY(-3px) } }

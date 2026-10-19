@@ -889,10 +889,7 @@
     const R = F.REWARD, bonus = F.bonus(f);
     return `<div class="farmv">${hud(f, g)}
       <div class="scene-wrap">${farmScene(f, false)}<div class="bubble">${TIPS[Math.floor(now / 60000) % TIPS.length]}</div></div>
-      <div class="farm-grid">
-        ${fieldSection(f, now, lv)}
-        ${pensSection(f, now)}
-      </div>
+      ${farmLandSection(f, now, lv)}
       <div class="grid g2" style="align-items:start">
           <section class="panel stack"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
             <div class="orders">${f.orders.map((o, i) => {
@@ -934,8 +931,9 @@
   }
 
   // ---- Field: 30 slots (owned plots, the next plot to buy, plots locked until a farm level) + the farmer who tends them ----
-  function fieldSection(f, now, lv) {
-    const slots = [], ready = f.plots.filter((p) => F.plotReady(p, now)).length;
+  // ---- The farm frame: crop field and animal ranch share one piece of land; all actions sit in a bar at the bottom ----
+  function fieldSlots(f, now, lv) {
+    const slots = [];
     let locked = 0;
     for (let n = 1; n <= F.MAX_PLOTS; n++) {
       if (n <= f.plots.length) { slots.push(plotHTML(f.plots[n - 1], n - 1, now)); continue; }
@@ -949,10 +947,29 @@
         slots.push(`<div class="plot locked${locked > 4 ? " far" : ""}" title="Mở ở nông trại cấp ${need}"><span class="e" aria-hidden="true">🔒</span><span class="lbl">Cấp ${need}</span></div>`);
       }
     }
-    return `<section class="panel stack landp"><div class="row" style="justify-content:space-between"><h2>🌱 Cánh đồng <span class="chip num">${f.plots.length}/${F.MAX_PLOTS} ô</span></h2>
-        <button type="button" class="btn sm primary" data-harvestall>Thu hoạch tất cả${ready ? ` (${ready})` : ""}</button></div>
-      <div class="land"><div class="field">${slots.join("")}</div>${farmerBot()}</div>
-      <p class="small muted">Chạm ô trống để gieo hạt, ô ➕ để mở thêm đất. Mỗi cấp nông trại mở thêm 3 ô, tối đa ${F.MAX_PLOTS} ô. Dùng 🧪 để cây chín ngay; bấm loa trong ô gieo hạt để nghe tên tiếng Anh.</p></section>`;
+    return slots.join("");
+  }
+  function farmLandSection(f, now, lv) {
+    const readyC = f.plots.filter((p) => F.plotReady(p, now)).length, readyA = f.animals.filter((x) => F.animalReady(x, now)).length;
+    const buy = F.ANIMALS.map((a) => {
+      const n = f.animals.filter((x) => x.a === a.id).length;
+      if (a.lv > lv) return `<span class="chip">🔒 ${a.emo} cấp ${a.lv}</span>`;
+      if (n >= F.MAX_PER_ANIMAL) return `<span class="chip good">${a.emo} đủ ${F.MAX_PER_ANIMAL}</span>`;
+      return `<button type="button" class="btn sm" data-buyanimal="${a.id}"${f.coins < a.cost ? " disabled" : ""}>Mua ${a.emo} ${esc(a.vi.toLowerCase())} · ${a.cost} xu</button>`;
+    }).join("");
+    return `<section class="panel stack landp"><div class="row" style="justify-content:space-between"><h2>🌾 Trang trại</h2>
+        <span class="chip num">🌱 ${f.plots.length}/${F.MAX_PLOTS} ô đất · 🐾 ${f.animals.length} vật nuôi</span></div>
+      <div class="land">
+        <div class="zone"><div class="zone-head">🌱 Cánh đồng</div><div class="field">${fieldSlots(f, now, lv)}</div></div>
+        <div class="zone"><div class="zone-head">🐾 Khu chăn nuôi</div><div class="ranch">${ranchGroups(f, now, lv)}</div></div>
+        ${farmerBot()}
+      </div>
+      <div class="farm-actions">
+        <div class="row"><button type="button" class="btn primary" data-harvestall>🌾 Thu hoạch cây${readyC ? ` (${readyC})` : ""}</button>
+          <button type="button" class="btn primary" data-collectall>🧺 Thu sản phẩm${readyA ? ` (${readyA})` : ""}</button></div>
+        <div class="row buyrow"><span class="label">Mua vật nuôi</span>${buy}</div>
+      </div>
+      <p class="small muted">Chạm ô trống để gieo hạt, ô ➕ để mở thêm đất (mỗi cấp nông trại thêm 3 ô, tối đa ${F.MAX_PLOTS}). Chạm con vật để thu sản phẩm hoặc dùng 🧪 cho nhanh.</p></section>`;
   }
   function plotHTML(p, i, now) {
     if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">+</span><span class="lbl">Gieo hạt</span></button>`;
@@ -992,7 +1009,7 @@
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const step = () => {
       if (!document.contains(bot)) { clearInterval(farmerTimer); return; }
-      const tiles = [...land.querySelectorAll(".plot[data-plotidx]")], busy = tiles.filter((t) => !t.classList.contains("empty"));
+      const tiles = [...land.querySelectorAll(".plot[data-plotidx], .atile[data-animalidx]")], busy = tiles.filter((t) => !t.classList.contains("empty"));
       const pool = busy.length ? busy : tiles;
       if (!pool.length) return;
       const t = pool[Math.floor(Math.random() * pool.length)];
@@ -1011,51 +1028,35 @@
   const PEN = { chicken: { vi: "Chuồng gà", roof: "#B83229", wall: "#F2D49B", grass: "#9BD86E" }, cow: { vi: "Chuồng bò", roof: "#7A4514", wall: "#D9443A", grass: "#8FD165" },
     pig: { vi: "Chuồng lợn", roof: "#8B5A2B", wall: "#F2C9A0", grass: "#B9CF6E" },
     sheep: { vi: "Bãi cừu", roof: "#4F7396", wall: "#EFE6D2", grass: "#A6DE7A" }, bee: { vi: "Vườn ong", roof: "#C98A1B", wall: "#FFE6A3", grass: "#B5E585" } };
-  const PEN_SPOT = [[168, 104], [232, 122], [282, 96]];
-  function penSVG(a, list, now) {
-    const st = PEN[a.id], pr = F.ITEMS[a.prod];
-    const animals = list.map(([x], k) => {
-      const ready = F.animalReady(x, now), [bx, by] = PEN_SPOT[k];
-      const bubble = ready ? `<g transform="translate(0,${a.id === "cow" ? -46 : -40})"><g class="ready-bubble"><circle r="14" fill="#fff" stroke="#FFC83D" stroke-width="2.5"/><text x="-9.5" y="6" font-size="17">${pr.emo}</text></g></g>` : "";
-      const body = `${ANIMAL_SVG[a.id](-(k * 0.6).toFixed(1))}${bubble}`;
-      return `<g transform="translate(${bx},${by})">${a.id === "bee" ? body : `<g class="wander" style="--dx:${k % 2 ? -30 : 30}px;animation-duration:${6 + k * 1.5}s;animation-delay:${-k * 1.7}s">${body}</g>`}</g>`;
+  const RANCH_BG = { chicken: "straw", cow: "meadow", pig: "mud", sheep: "pasture", bee: "flowers" };
+  function ranchGroups(f, now, lv) {
+    return F.ANIMALS.map((a) => {
+      const list = f.animals.map((x, i) => [x, i]).filter(([x]) => x.a === a.id), locked = a.lv > lv, tiles = [];
+      for (let k = 0; k < F.MAX_PER_ANIMAL; k++) {
+        tiles.push(list[k] ? animalTile(a, list[k][0], list[k][1], k, now)
+          : `<div class="atile slot" aria-hidden="true"><span class="e">${locked ? "🔒" : a.emo}</span><span class="lbl">${locked ? `Cấp ${a.lv}` : "Trống"}</span></div>`);
+      }
+      return `<div class="pgroup ${RANCH_BG[a.id]}${locked ? " locked" : ""}" data-ranch="${a.id}">
+        <div class="pg-head"><b>${esc(PEN[a.id].vi)}</b> <i>${esc(a.en)}</i><span class="num">${list.length}/${F.MAX_PER_ANIMAL}</span></div>
+        <div class="pg-tiles">${tiles.join("")}</div></div>`;
     }).join("");
-    const flowers = a.id === "bee" ? `<text x="150" y="140" font-size="18">🌼</text><text x="214" y="146" font-size="18">🌸</text><text x="262" y="140" font-size="18">🌻</text>` : "";
-    const mud = a.id === "pig" ? `<ellipse cx="236" cy="120" rx="66" ry="17" fill="#8A5A32" opacity=".55"/><ellipse cx="216" cy="116" rx="18" ry="5" fill="#A8744A" opacity=".5"/>` : "";
-    const sign = list.length ? "" : `<g transform="translate(206,82)"><rect x="-2" y="18" width="5" height="26" fill="#8B5A2B"/><rect x="-46" y="-6" width="96" height="28" rx="5" fill="#E9C46A" stroke="#8B5A2B" stroke-width="2"/>
-      <text x="2" y="13" text-anchor="middle" font-size="12" font-weight="700" fill="#6B3410">Chuồng trống</text></g>`;
-    const hay = a.id === "sheep" || a.id === "cow" ? `<g transform="translate(118,112)"><rect width="28" height="20" rx="4" fill="#E9C46A"/><path d="M3 6h22M3 12h22" stroke="#C99A3B" stroke-width="2"/></g>` : "";
-    return `<svg class="pen-svg" viewBox="0 0 320 160" role="img" aria-label="${esc(st.vi)}">
-      <rect width="320" height="160" rx="14" fill="${st.grass}"/>
-      <g fill="#C98A4B">${Array.from({ length: 11 }, (_, i) => `<rect x="${8 + i * 30}" y="44" width="6" height="26" rx="2"/>`).join("")}<rect x="6" y="50" width="308" height="4" rx="2"/><rect x="6" y="61" width="308" height="4" rx="2"/></g>
-      <g transform="translate(14,38)"><path d="M0 34L42 4L84 34Z" fill="${st.roof}"/><rect x="6" y="32" width="72" height="54" fill="${st.wall}" stroke="rgba(0,0,0,.15)"/>
-        <rect x="30" y="52" width="24" height="34" rx="11" fill="#6B3E1E"/><rect x="12" y="42" width="12" height="10" fill="#8FD8FF"/><rect x="60" y="42" width="12" height="10" fill="#8FD8FF"/></g>
-      ${mud}${hay}${flowers}${sign}${animals}
-      <g fill="#C98A4B">${Array.from({ length: 11 }, (_, i) => `<rect x="${8 + i * 30}" y="140" width="6" height="18" rx="2"/>`).join("")}<rect x="6" y="146" width="308" height="4" rx="2"/></g>
-    </svg>`;
   }
-  function pensSection(f, now) {
-    const lv = F.level(f.xp);
-    return `<section class="panel stack pensp"><div class="row" style="justify-content:space-between"><h2>🐔 Chuồng trại</h2><span class="chip num">${f.animals.length} con</span></div>
-      <div class="pens">${F.ANIMALS.map((a) => {
-        const list = f.animals.map((x, i) => [x, i]).filter(([x]) => x.a === a.id), pr = F.ITEMS[a.prod], locked = a.lv > lv;
-        const buy = locked ? `<span class="chip">🔒 Cấp ${a.lv}</span>`
-          : list.length >= F.MAX_PER_ANIMAL ? `<span class="chip good">Đủ ${F.MAX_PER_ANIMAL} con</span>`
-          : `<button type="button" class="btn sm primary" data-buyanimal="${a.id}"${f.coins < a.cost ? " disabled" : ""}>${list.length ? "Mua thêm" : "Mua"} ${a.emo} · ${a.cost} xu</button>`;
-        return `<div class="pen${list.length ? "" : " empty"}" data-pen="${a.id}">${penSVG(a, list, now)}
-          <div class="row" style="justify-content:space-between;gap:6px"><b>${esc(PEN[a.id].vi)} · <i>${esc(a.en)}</i> <span class="small muted num">${list.length}/${F.MAX_PER_ANIMAL}</span></b>${buy}</div>
-          ${list.length ? `<div class="list">${list.map(([x, i]) => animalHTML(x, i, now)).join("")}</div>`
-            : `<p class="small muted">Cho ${pr.emo} ${esc(pr.vi.toLowerCase())} (<i>${esc(pr.en)}</i>) mỗi ${fmtMin(a.min)}</p>`}</div>`;
-      }).join("")}</div></section>`;
+  function animalTile(a, x, i, k, now) {
+    const pr = F.ITEMS[a.prod], dur = a.min * F.MIN, left = F.remaining(x.at, a.min, now), d = -(k * 0.6).toFixed(1);
+    const art = `<svg class="anim" viewBox="-44 -44 88 72" aria-hidden="true">${a.id === "bee" ? ANIMAL_SVG.bee(d)
+      : `<g class="wander" style="--dx:${k % 2 ? -6 : 6}px;animation-duration:${3 + k}s">${ANIMAL_SVG[a.id](d)}</g>`}</svg>`;
+    if (!left) return `<button type="button" class="atile ready" data-animalidx="${i}" aria-label="Thu ${esc(pr.vi)} từ ${esc(a.vi)}">${art}<span class="prod">${pr.emo}</span><span class="lbl">Thu ${pr.emo}</span></button>`;
+    return `<button type="button" class="atile" data-animalidx="${i}" ${timer(x.at + dur, dur)} aria-label="${esc(a.vi)}: còn ${fmtLeft(left)}">${art}<span class="t num">${fmtLeft(left)}</span>${bar(1 - left / dur)}</button>`;
   }
-  function animalHTML(a, i, now) {
-    const an = F.ANIMAL[a.a], pr = F.ITEMS[an.prod], dur = an.min * F.MIN, left = F.remaining(a.at, an.min, now);
-    return `<div class="item animal"${left ? ` ${timer(a.at + dur, dur)}` : ""}><span class="pic sm">${an.emo}</span>
-      <span class="t">${itemName(an)}<br>${left ? `<span class="small muted">${pr.emo} sau <span class="t num">${fmtLeft(left)}</span></span>${bar(1 - left / dur)}`
-        : `<span class="small" style="color:var(--good)">Có ${pr.emo} ${esc(pr.vi.toLowerCase())}!</span>`}</span>
-      <span style="display:flex;gap:6px;align-items:center">${sayEn(an.en)}${left
-        ? `<button type="button" class="btn sm ghost" data-boost="${i}"${S.farm.fert ? "" : " disabled"} aria-label="Dùng phân bón">🧪</button>`
-        : `<button type="button" class="btn sm primary" data-collect="${i}">Thu</button>`}</span></div>`;
+  function animalSheet(i) {
+    const f = S.farm, x = f.animals[i]; if (!x) return;
+    const a = F.ANIMAL[x.a], pr = F.ITEMS[a.prod], left = F.remaining(x.at, a.min, Date.now());
+    sheet(`<div class="row" style="justify-content:space-between"><h2>${a.emo} ${esc(a.vi)}</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <div class="row"><span class="word" style="font-size:1.6rem">${esc(a.en)}</span>${sayBtns(a.en)}</div>
+      <p>Còn <b>${fmtLeft(left)}</b> nữa sẽ có ${pr.emo} ${esc(pr.vi.toLowerCase())} (<i>${esc(pr.en)}</i>) · bán ${pr.sell} xu.</p>
+      <div class="row"><button type="button" class="btn primary" data-boost="${i}"${f.fert ? "" : " disabled"}>Dùng 🧪 phân bón (còn ${f.fert})</button>
+        <button type="button" class="btn ghost" data-close>Đóng</button></div>
+      ${f.fert ? "" : `<p class="small muted">Hoàn thành bài học để nhận thêm phân bón.</p>`}`, a.vi);
   }
 
   // ---- One-shot effects played after the farm re-renders ----
@@ -1634,13 +1635,24 @@
     buyanimal: (v) => {
       const a = F.ANIMAL[v];
       farmDone(F.buyAnimal(S.farm, v, Date.now()), `Chào mừng ${a.emo} ${a.vi} đến nông trại!`, a.en, () => {
-        const pen = $(`.pen[data-pen="${v}"]`);
+        const pen = $(`.pgroup[data-ranch="${v}"]`);
         if (pen) { pen.classList.add("new"); pen.scrollIntoView({ block: "center", behavior: "smooth" }); }
       });
     },
     collect: (v) => {
       const kind = S.farm.animals[+v] && S.farm.animals[+v].a, r = F.collect(S.farm, +v, Date.now()), it = r.ok && F.ITEMS[r.item];
-      farmDone(r, it && `+1 ${it.emo} ${it.en} (${it.vi})`, it && it.en, () => floatAt($(`.pen[data-pen="${kind}"]`), `+1 ${it.emo}`));
+      farmDone(r, it && `+1 ${it.emo} ${it.en} (${it.vi})`, it && it.en, () => floatAt($(`.land [data-animalidx="${v}"]`), `+1 ${it.emo}`));
+    },
+    animalidx: (v) => { const x = S.farm.animals[+v]; if (!x) return; if (F.animalReady(x, Date.now())) H.collect(v); else animalSheet(+v); },
+    collectall: () => {
+      const now = Date.now(), got = []; let r = { ok: true }, lvUp = 0;
+      S.farm.animals.forEach((x, i) => {
+        if (r.ok && F.animalReady(x, now)) { r = F.collect(S.farm, i, now); if (r.ok) { got.push([i, F.ITEMS[r.item].emo]); lvUp = r.levelUp || lvUp; } }
+      });
+      if (!got.length) { toast(r.ok ? "Chưa có sản phẩm nào sẵn sàng" : r.msg); return; }
+      const sum = {}; got.forEach(([, e]) => { sum[e] = (sum[e] || 0) + 1; });
+      farmDone({ ok: true, levelUp: lvUp }, `Thu: ${Object.entries(sum).map(([e, n]) => `${n} ${e}`).join(", ")}${r.ok ? "" : " — kho đã đầy"}`, null,
+        () => got.forEach(([i, e]) => floatAt($(`.land [data-animalidx="${i}"]`), `+1 ${e}`)));
     },
     boost: (v) => farmDone(F.feedBoost(S.farm, +v, Date.now()), "Vật nuôi đã sẵn sàng 🧪"),
     sell: (v) => { const r = F.sell(S.farm, v, 1); farmDone(r, r.ok && `🚚 Đã chở đi bán: +${r.coins} xu`, null, () => truckRun([F.ITEMS[v].emo], r.coins)); },
@@ -1663,7 +1675,7 @@
       render();
     },
   };
-  const FARM_ACTIONS = new Set(["plotidx", "plant", "plantall", "harvestall", "fert", "uproot", "buyplot", "animalshop", "buyanimal", "collect", "boost",
+  const FARM_ACTIONS = new Set(["plotidx", "plant", "plantall", "harvestall", "fert", "uproot", "buyplot", "animalshop", "buyanimal", "collect", "boost", "animalidx", "collectall",
     "beastbuy", "beastup", "beastcast", "castgo",
     "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
