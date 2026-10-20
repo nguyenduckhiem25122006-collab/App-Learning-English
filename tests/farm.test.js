@@ -150,6 +150,7 @@ test("play gate: window resets 5 hours after it started", () => {
 });
 
 const DAY = "2026-10-19", NEXT = "2026-10-20";
+const SCHOLAR = { words: 9999, best: 999, sents: 999, ipa: 44, mastered: 999 };
 const richFarm = () => { const f = F.fresh(); f.coins = 100000; f.xp = 99999; f.cap = 9999; f.barn = Object.fromEntries(F.CROPS.concat(F.PRODUCTS).map((x) => [x.id, 200])); return f; };
 
 test("12 spirit beasts: one per zodiac sign, valid materials and effects", () => {
@@ -167,29 +168,46 @@ test("12 spirit beasts: one per zodiac sign, valid materials and effects", () =>
   }
 });
 
-test("buying a beast needs farm level, coins and materials", () => {
+test("buying a beast needs farm level, a study challenge, coins and materials", () => {
   const f = F.fresh();
-  assert.match(F.buyBeast(f, "ox", DAY).msg, /cấp 2/);
+  assert.match(F.buyBeast(f, "ox", DAY, SCHOLAR).msg, /cấp 2/);
   f.coins = 1000;
-  assert.match(F.buyBeast(f, "rat", DAY).msg, /nguyên liệu/);
-  assert.deepEqual(F.missing(f, F.BEAST.rat.need), { wheat: 10 });
-  f.barn = { wheat: 12 };
-  assert.ok(F.buyBeast(f, "rat", DAY).ok);
-  assert.equal(f.coins, 800); assert.deepEqual(f.barn, { wheat: 2 });
+  assert.match(F.buyBeast(f, "rat", DAY).msg, /thử thách học tập/, "no study stats, no beast");
+  assert.deepEqual(F.learnMissing("rat", { words: 19 }), { words: 20 });
+  assert.deepEqual(F.learnMissing("rat", { words: 20 }), {});
+  assert.match(F.buyBeast(f, "rat", DAY, { words: 25 }).msg, /nguyên liệu/);
+  assert.deepEqual(F.missing(f, F.BEAST.rat.need), { wheat: 15 });
+  f.barn = { wheat: 17 };
+  assert.ok(F.buyBeast(f, "rat", DAY, { words: 25 }).ok);
+  assert.equal(f.coins, 700); assert.deepEqual(f.barn, { wheat: 2 });
   assert.deepEqual(f.beasts.rat, { lv: 1, st: F.STAMINA, day: DAY });
-  assert.equal(F.buyBeast(f, "rat", DAY).ok, false);
+  assert.equal(F.buyBeast(f, "rat", DAY, SCHOLAR).ok, false);
+});
+
+test("study challenges grow from days to months and use every kind of study", () => {
+  const byWords = F.BEASTS.slice().sort((a, b) => a.learn.words - b.learn.words);
+  assert.equal(byWords[0].id, "rat"); assert.equal(byWords[11].id, "dragon");
+  for (const b of F.BEASTS) {
+    assert.ok(b.learn.words >= 20, b.id);
+    for (const k of Object.keys(b.learn)) assert.ok(F.LEARN_KEYS.includes(k), `${b.id}: ${k}`);
+  }
+  const used = new Set(F.BEASTS.flatMap((b) => Object.keys(b.learn)));
+  assert.deepEqual([...used].sort(), [...F.LEARN_KEYS].sort());
+  assert.ok(F.BEASTS.every((b) => !b.learn.ipa || b.learn.ipa <= 44));
+  const higher = F.BEASTS.filter((b) => b.lv >= 6);
+  assert.ok(higher.every((b) => b.learn.mastered), "the strongest beasts need words you have really learned (mastered)");
 });
 
 test("beasts upgrade through 8 levels with harvested crops", () => {
   const f = richFarm();
-  F.buyBeast(f, "tiger", DAY);
+  F.buyBeast(f, "tiger", DAY, SCHOLAR);
   const c1 = F.upgradeCost(f, "tiger");
-  assert.deepEqual(c1, { coins: 225, need: { corn: 5 } });
+  assert.deepEqual(c1, { coins: 245, need: { corn: 5 } });
   for (let i = 0; i < 7; i++) assert.ok(F.upgradeBeast(f, "tiger").ok);
   assert.equal(f.beasts.tiger.lv, 8);
   assert.equal(F.upgradeCost(f, "tiger"), null);
   assert.match(F.upgradeBeast(f, "tiger").msg, /tối đa/);
-  const g = F.fresh(); g.coins = 10000; g.barn = { wheat: 10 }; F.buyBeast(g, "rat", DAY);
+  const g = F.fresh(); g.coins = 10000; g.barn = { wheat: 15 }; F.buyBeast(g, "rat", DAY, SCHOLAR);
   assert.match(F.upgradeBeast(g, "rat").msg, /nông sản/);
 });
 
@@ -197,7 +215,7 @@ test("stamina: 10 a day, more crops cost more, higher level costs less", () => {
   assert.equal(F.castCost(1, 1), 1); assert.equal(F.castCost(1, 6), 6);
   assert.equal(F.castCost(8, 6), 2); assert.equal(F.castCost(5, 3), 2);
   assert.ok(F.castCost(1, 10) > F.castCost(4, 10) && F.castCost(4, 10) > F.castCost(8, 10));
-  const f = richFarm(); F.buyBeast(f, "rat", DAY);
+  const f = richFarm(); F.buyBeast(f, "rat", DAY, SCHOLAR);
   for (let i = 0; i < 6; i++) F.plant(f, i, "wheat", T0);
   const r = F.cast(f, "rat", [0, 1, 2, 3, 4, 5], T0, DAY);
   assert.deepEqual([r.ok, r.n, r.cost], [true, 6, 6]);
@@ -211,7 +229,7 @@ test("stamina: 10 a day, more crops cost more, higher level costs less", () => {
 });
 
 test("speed buff cuts remaining grow time once per beast per crop", () => {
-  const f = richFarm(); F.buyBeast(f, "horse", DAY);
+  const f = richFarm(); F.buyBeast(f, "horse", DAY, SCHOLAR);
   F.plant(f, 0, "pumpkin", T0);
   const before = F.remaining(f.plots[0].at, 240, T0);
   assert.ok(F.cast(f, "horse", [0], T0, DAY).ok);
@@ -223,7 +241,7 @@ test("speed buff cuts remaining grow time once per beast per crop", () => {
 });
 
 test("price buff pays extra coins at harvest, capped, cleared after", () => {
-  const f = richFarm(); F.buyBeast(f, "pig", DAY); F.buyBeast(f, "rooster", DAY);
+  const f = richFarm(); F.buyBeast(f, "pig", DAY, SCHOLAR); F.buyBeast(f, "rooster", DAY, SCHOLAR);
   F.plant(f, 0, "watermelon", T0);
   F.cast(f, "pig", [0], T0, DAY); F.cast(f, "rooster", [0], T0, DAY);
   assert.equal(f.plots[0].pb, 45);

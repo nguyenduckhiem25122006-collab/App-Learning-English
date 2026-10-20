@@ -41,20 +41,23 @@
   ];
   // 12 spirit beasts (Linh Thú) from the zodiac art. speed = % of remaining grow time cut, price = % extra coins
   // when the buffed crop is harvested; [level 1, level 8] values, linear in between. need = coins + barn items to buy.
+  // learn = a study challenge that must be met too: words learned, best streak (days), sentences learned, IPA sounds
+  // learned, words mastered. The first beasts come within days; the dragon is a months-long goal.
   const BEASTS = [
-    { id: "rat", zo: "Tý", en: "rat", vi: "Thử Ảnh Sát Thủ", lore: "Ninja bóng đêm, giục cây lớn nhanh như chớp", lv: 1, cost: 200, need: { wheat: 10 }, fav: ["wheat", "carrot"], speed: [15, 40], price: [0, 0] },
-    { id: "ox", zo: "Sửu", en: "ox", vi: "Ngưu Hỏa Chiến Tướng", lore: "Búa lửa nện đất, nông sản chắc nặng, bán được giá", lv: 2, cost: 300, need: { wheat: 15, carrot: 8 }, fav: ["carrot", "wheat"], speed: [0, 0], price: [10, 35] },
-    { id: "tiger", zo: "Dần", en: "tiger", vi: "Hổ Viêm Đao", lore: "Đao lửa thiêu sâu bọ, cây vừa nhanh lớn vừa đẹp", lv: 3, cost: 450, need: { carrot: 10, corn: 8 }, fav: ["corn", "carrot"], speed: [12, 30], price: [8, 25] },
-    { id: "cat", zo: "Mão", en: "cat", vi: "Miêu Nguyệt Ảnh", lore: "Dưới trăng, móng vuốt gọi sương đêm tưới cây", lv: 3, cost: 500, need: { corn: 10, wheat: 10 }, fav: ["corn", "wheat"], speed: [20, 50], price: [0, 0] },
-    { id: "dragon", zo: "Thìn", en: "dragon", vi: "Lôi Long Thần", lore: "Gọi sấm mưa, mùa màng bội thu và quý giá", lv: 7, cost: 2500, need: { watermelon: 5, sunflower: 5, strawberry: 10 }, fav: ["watermelon", "sunflower"], speed: [15, 40], price: [15, 40] },
-    { id: "snake", zo: "Tỵ", en: "snake", vi: "Xà Độc Pháp Sư", lore: "Bùa lục xà khiến thương lái tranh nhau trả giá", lv: 4, cost: 700, need: { tomato: 10, strawberry: 5 }, fav: ["tomato", "strawberry"], speed: [0, 0], price: [15, 45] },
-    { id: "horse", zo: "Ngọ", en: "horse", vi: "Mã Liệt Hỏa Thương", lore: "Phi nước đại, thời gian như ngắn lại một nửa", lv: 5, cost: 1000, need: { pumpkin: 5, strawberry: 8 }, fav: ["strawberry", "pumpkin"], speed: [25, 55], price: [0, 0] },
-    { id: "goat", zo: "Mùi", en: "goat", vi: "Dương Băng Pháp Sư", lore: "Lửa băng nuôi rễ, cây khỏe và ngon hơn", lv: 4, cost: 800, need: { tomato: 8, milk: 5 }, fav: ["tomato", "corn"], speed: [8, 20], price: [12, 35] },
-    { id: "monkey", zo: "Thân", en: "monkey", vi: "Hầu Lôi Quyền", lore: "Quyền sấm sét đánh thức hạt giống ngủ quên", lv: 5, cost: 1200, need: { pumpkin: 6, egg: 10 }, fav: ["pumpkin", "tomato"], speed: [18, 45], price: [5, 15] },
-    { id: "rooster", zo: "Dậu", en: "rooster", vi: "Kê Phượng Song Kiếm", lore: "Tiếng gáy phượng hoàng khiến nông sản sáng như vàng", lv: 6, cost: 1600, need: { sunflower: 6, honey: 3 }, fav: ["sunflower", "strawberry"], speed: [0, 0], price: [20, 50] },
-    { id: "dog", zo: "Tuất", en: "dog", vi: "Khuyển Trung Kiếm Sĩ", lore: "Canh giữ ruộng vườn, cây lớn đều và bán đắt", lv: 2, cost: 350, need: { carrot: 10, wheat: 10 }, fav: ["carrot", "corn"], speed: [10, 30], price: [10, 30] },
-    { id: "pig", zo: "Hợi", en: "pig", vi: "Trư Chùy Bá Vương", lore: "Chùy gai dọa lui sâu hại, nông sản được giá cao nhất", lv: 6, cost: 2000, need: { pumpkin: 8, wool: 3 }, fav: ["pumpkin", "sunflower"], speed: [0, 0], price: [25, 60] },
+    { id: "rat", zo: "Tý", en: "rat", vi: "Thử Ảnh Sát Thủ", lore: "Ninja bóng đêm, giục cây lớn nhanh như chớp", lv: 1, cost: 300, need: { wheat: 15 }, learn: { words: 20 }, fav: ["wheat", "carrot"], speed: [15, 40], price: [0, 0] },
+    { id: "ox", zo: "Sửu", en: "ox", vi: "Ngưu Hỏa Chiến Tướng", lore: "Búa lửa nện đất, nông sản chắc nặng, bán được giá", lv: 2, cost: 450, need: { wheat: 20, carrot: 12 }, learn: { words: 60, sents: 10 }, fav: ["carrot", "wheat"], speed: [0, 0], price: [10, 35] },
+    { id: "tiger", zo: "Dần", en: "tiger", vi: "Hổ Viêm Đao", lore: "Đao lửa thiêu sâu bọ, cây vừa nhanh lớn vừa đẹp", lv: 3, cost: 700, need: { carrot: 15, corn: 12 }, learn: { words: 80, best: 5 }, fav: ["corn", "carrot"], speed: [12, 30], price: [8, 25] },
+    { id: "cat", zo: "Mão", en: "cat", vi: "Miêu Nguyệt Ảnh", lore: "Dưới trăng, móng vuốt gọi sương đêm tưới cây", lv: 3, cost: 750, need: { corn: 15, wheat: 15 }, learn: { words: 100, ipa: 10 }, fav: ["corn", "wheat"], speed: [20, 50], price: [0, 0] },
+    { id: "dragon", zo: "Thìn", en: "dragon", vi: "Lôi Long Thần", lore: "Gọi sấm mưa, mùa màng bội thu và quý giá", lv: 7, cost: 3800, need: { watermelon: 8, sunflower: 8, strawberry: 15 }, learn: { words: 450, best: 21, mastered: 60 }, fav: ["watermelon", "sunflower"], speed: [15, 40], price: [15, 40] },
+    { id: "snake", zo: "Tỵ", en: "snake", vi: "Xà Độc Pháp Sư", lore: "Bùa lục xà khiến thương lái tranh nhau trả giá", lv: 4, cost: 1050, need: { tomato: 15, strawberry: 8 }, learn: { words: 140, sents: 25 }, fav: ["tomato", "strawberry"], speed: [0, 0], price: [15, 45] },
+    { id: "horse", zo: "Ngọ", en: "horse", vi: "Mã Liệt Hỏa Thương", lore: "Phi nước đại, thời gian như ngắn lại một nửa", lv: 5, cost: 1500, need: { pumpkin: 8, strawberry: 12 }, learn: { words: 220, ipa: 20 }, fav: ["strawberry", "pumpkin"], speed: [25, 55], price: [0, 0] },
+    { id: "goat", zo: "Mùi", en: "goat", vi: "Dương Băng Pháp Sư", lore: "Lửa băng nuôi rễ, cây khỏe và ngon hơn", lv: 4, cost: 1200, need: { tomato: 12, milk: 8 }, learn: { words: 180, best: 7 }, fav: ["tomato", "corn"], speed: [8, 20], price: [12, 35] },
+    { id: "monkey", zo: "Thân", en: "monkey", vi: "Hầu Lôi Quyền", lore: "Quyền sấm sét đánh thức hạt giống ngủ quên", lv: 5, cost: 1800, need: { pumpkin: 9, egg: 15 }, learn: { words: 260, sents: 45 }, fav: ["pumpkin", "tomato"], speed: [18, 45], price: [5, 15] },
+    { id: "rooster", zo: "Dậu", en: "rooster", vi: "Kê Phượng Song Kiếm", lore: "Tiếng gáy phượng hoàng khiến nông sản sáng như vàng", lv: 6, cost: 2400, need: { sunflower: 9, honey: 5 }, learn: { words: 320, best: 14, mastered: 20 }, fav: ["sunflower", "strawberry"], speed: [0, 0], price: [20, 50] },
+    { id: "dog", zo: "Tuất", en: "dog", vi: "Khuyển Trung Kiếm Sĩ", lore: "Canh giữ ruộng vườn, cây lớn đều và bán đắt", lv: 2, cost: 500, need: { carrot: 12, wheat: 15 }, learn: { words: 40, best: 3 }, fav: ["carrot", "corn"], speed: [10, 30], price: [10, 30] },
+    { id: "pig", zo: "Hợi", en: "pig", vi: "Trư Chùy Bá Vương", lore: "Chùy gai dọa lui sâu hại, nông sản được giá cao nhất", lv: 6, cost: 3000, need: { pumpkin: 12, wool: 5 }, learn: { words: 380, sents: 70, mastered: 40 }, fav: ["pumpkin", "sunflower"], speed: [0, 0], price: [25, 60] },
   ];
+  const LEARN_KEYS = ["words", "best", "sents", "ipa", "mastered"];
   const BEAST_MAX_LV = 8, STAMINA = 10, PRICE_CAP = 150;
   const STAMINA_PER_CROP = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]; // by beast level
   const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700, 2200, 2750, 3350, 4000, 4700, 5450, 6250, 7100, 8000, 8950, 9950, 11000, 12100, 13250]; // farm xp needed for level 1..24
@@ -248,11 +251,18 @@
   const stamina = (f, id, today) => { const s = f.beasts[id]; return !s ? 0 : s.day === today ? s.st : STAMINA; };
   /** Stamina for buffing n crops: more crops cost more, higher levels cost less per crop. */
   const castCost = (lv, n) => (n <= 0 ? 0 : Math.ceil(n * STAMINA_PER_CROP[lv - 1] - 1e-9));
-  function buyBeast(f, id, today) {
+  /** Study goals of a beast's challenge not met yet: { key: needed }. stats: { words, best, sents, ipa, mastered }. */
+  function learnMissing(id, stats) {
+    const out = {};
+    for (const [k, q] of Object.entries(BEAST[id].learn)) if (((stats && stats[k]) || 0) < q) out[k] = q;
+    return out;
+  }
+  function buyBeast(f, id, today, stats) {
     const b = BEAST[id];
     if (!b) return fail("Không có Linh Thú này");
     if (f.beasts[id]) return fail("Bạn đã có Linh Thú này");
     if (b.lv > level(f.xp)) return fail(`Cần nông trại cấp ${b.lv}`);
+    if (Object.keys(learnMissing(id, stats)).length) return fail("Chưa hoàn thành thử thách học tập");
     if (f.coins < b.cost) return fail("Chưa đủ xu");
     if (!has(f, b.need)) return fail("Chưa đủ nguyên liệu trong kho");
     f.coins -= b.cost; take(f, b.need);
@@ -265,7 +275,7 @@
     if (!s || s.lv >= BEAST_MAX_LV) return null;
     const L = s.lv, need = { [b.fav[0]]: 3 + 2 * L };
     if (L >= 3) need[b.fav[1]] = L;
-    return { coins: Math.round(b.cost * 0.5 * L), need };
+    return { coins: Math.round(b.cost * 0.35 * L), need };
   }
   function upgradeBeast(f, id) {
     const c = upgradeCost(f, id);
@@ -306,7 +316,7 @@
     MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, plotLevel, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
     fresh, level, nextXp, bonus, stock, unlockedItems, earn, reward, remaining, plotReady, plant, harvest, fertilize, plotCost, buyPlot,
     animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks, uproot,
-    BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, upgradeCost, upgradeBeast, castTargets, cast, missing,
+    BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, learnMissing, LEARN_KEYS, upgradeCost, upgradeBeast, castTargets, cast, missing,
   };
   if (typeof module === "object" && module.exports) module.exports = Farm;
   else root.Farm = Farm;

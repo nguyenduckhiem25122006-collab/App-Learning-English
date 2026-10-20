@@ -15,6 +15,9 @@ SHOWCASE = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1') || '{
     animals: [{a:'chicken',at:0},{a:'chicken',at:now},{a:'chicken',at:now},{a:'cow',at:now},{a:'cow',at:0},{a:'sheep',at:now},{a:'sheep',at:now},{a:'bee',at:now}],
     deco: ['flowers','fence','tree','dog','well','house','tractor','rainbow'], barn: {wheat: 40, carrot: 20, corn: 20, egg: 3, milk: 1},
     beasts: {dragon: {lv: 5, st: 6, day: ''}, tiger: {lv: 3, st: 10, day: ''}} });
+  const today = new Date().toISOString().slice(0, 10);
+  s.progress = s.progress || { kids: {}, toeic: {} };
+  window.APP_DATA.levels.toeic.flatMap((t) => t.words).slice(0, 25).forEach((w) => { s.progress.toeic[w[0] + '|' + w[1]] = s.progress.toeic[w[0] + '|' + w[1]] || { box: 0, due: today, added: today, reps: 0, lapses: 0 }; });
   localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
 UNLOCK = """() => { const s = JSON.parse(localStorage.getItem('nhip.v1'));
   s.gate = { start: Date.now(), study: 12 * 60000, play: 0 }; localStorage.setItem('nhip.v1', JSON.stringify(s)); }"""
@@ -252,9 +255,13 @@ def main():
         page.click("[data-sell=wheat]"); page.click("[data-sell=wheat]")
         check("quick sales queue behind one truck instead of stacking", page.locator(".delivery").count() == 1)
         check("12 spirit beast cards with the zodiac art", page.locator(".beast img").count() == 12)
+        check("beasts show their study challenge; unmet ones send you to study", page.locator(".beast .need.learn").count() == 10
+              and page.locator(".beast [data-go]").count() >= 1 and page.locator("[data-beastbuy=snake]").count() == 0)
+        before = state(page)["farm"]
         page.click("[data-beastbuy=rat]")
         s = state(page)
-        check("buy a spirit beast with coins + crops", "rat" in s["farm"]["beasts"] and s["farm"]["barn"]["wheat"] == 28 and s["farm"]["coins"] == 2220)
+        check("buy a spirit beast after its study challenge, with coins + crops", "rat" in s["farm"]["beasts"]
+              and s["farm"]["barn"]["wheat"] == before["barn"]["wheat"] - 15 and s["farm"]["coins"] == before["coins"] - 300, f'{before["coins"]} -> {s["farm"]["coins"]}')
         page.click("[data-beastcast=rat]")
         n = page.locator("#sheet [data-castpick]:checked").count()
         cost_txt = page.inner_text("#castcost")

@@ -1446,6 +1446,25 @@
   const BIMG = window.BEAST_IMG || {};
   const effectText = (pw) => [pw.speed && `⏩ Rút ngắn ${pw.speed}% thời gian chín còn lại`, pw.price && `💰 +${pw.price}% giá bán khi thu hoạch`].filter(Boolean).join(" · ");
   const stars = (lv) => `<span class="stars" aria-label="Cấp ${lv}/${F.BEAST_MAX_LV}">${"★".repeat(lv)}${"☆".repeat(F.BEAST_MAX_LV - lv)}</span>`;
+  // Study challenge of a spirit beast: icon, unit, and where to go to work on it.
+  const LEARN_UI = { words: ["📘", "từ đã học", "learn"], best: ["🔥", "ngày học liên tiếp", "learn"], sents: ["💬", "câu đã thuộc", "sent"],
+    ipa: ["🔤", "âm IPA đã học", "ipa"], mastered: ["🏅", "từ đã thuộc lòng", "review"] };
+  function learnStats() {
+    const mastered = Object.values(S.progress).reduce((n, pl) => n + Object.values(pl).filter((c) => c.box >= C.MASTER_BOX).length, 0);
+    return { words: Object.keys(S.progress.kids).length + Object.keys(S.progress.toeic).length, best: S.streak.best || 0,
+      sents: Object.keys(S.sent).length, ipa: S.ipa.length, mastered };
+  }
+  function learnChips(b, st) {
+    return `<div class="need learn">${Object.entries(b.learn).map(([k, q]) => {
+      const [emo, unit] = LEARN_UI[k], have = st[k] || 0;
+      return `<span class="${have >= q ? "ok" : "no"}" title="${unit}">${emo} ${Math.min(have, q)}/${q} ${unit}</span>`;
+    }).join("")}</div>`;
+  }
+  /** Button to the study page for the first unmet goal of a beast's challenge ("" when all are met). */
+  function learnGo(b, st, cls = "btn sm") {
+    const k = Object.keys(F.learnMissing(b.id, st))[0];
+    return k ? `<button type="button" class="${cls}" data-go="${LEARN_UI[k][2]}">${LEARN_UI[k][0]} Học để thu phục</button>` : "";
+  }
   function needChips(f, coins, items) {
     return `<div class="need"><span class="${f.coins >= coins ? "ok" : "no"}">🪙 ${coins}</span>${Object.entries(items).map(([id, q]) => {
       const it = F.ITEMS[id], have = f.barn[id] || 0;
@@ -1462,7 +1481,7 @@
   function beastsSection(f, now) {
     const owned = Object.keys(f.beasts).length;
     return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐉 Linh Thú 12 con giáp</h2><span class="chip num">${owned}/12</span></div>
-      <p class="small muted">Thu phục Linh Thú bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
+      <p class="small muted">Mỗi Linh Thú có một <b>thử thách học tập</b> (số từ đã học, chuỗi ngày học, số câu, âm IPA hoặc từ đã thuộc lòng); hoàn thành thử thách rồi thu phục bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
         Mỗi ngày mỗi Linh Thú có ${F.STAMINA} ⚡ thể lực — ban phúc càng nhiều cây càng tốn, cấp càng cao càng ít tốn. Nâng cấp (tối đa ${F.BEAST_MAX_LV}) bằng nông sản thu hoạch.</p>
       <div class="beasts">${F.BEASTS.map((b) => beastCard(f, b, now)).join("")}</div></section>`;
   }
@@ -1478,12 +1497,13 @@
         <div class="row"><button type="button" class="btn sm primary" data-beastcast="${b.id}"${targets && st ? "" : " disabled"}>✨ Ban phúc${targets ? ` (${targets})` : ""}</button>
           <button type="button" class="btn sm" data-beastinfo="${b.id}">${s.lv < F.BEAST_MAX_LV ? "Nâng cấp" : "Chi tiết"}</button></div>`;
     } else if (locked) {
-      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p><span class="chip">🔒 Nông trại cấp ${b.lv}</span>
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p><span class="chip">🔒 Nông trại cấp ${b.lv}</span>${learnChips(b, learnStats())}
         <div><button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
     } else {
-      const can = f.coins >= b.cost && Object.entries(b.need).every(([id, q]) => (f.barn[id] || 0) >= q);
-      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p>${needChips(f, b.cost, b.need)}
-        <div class="row"><button type="button" class="btn sm primary" data-beastbuy="${b.id}"${can ? "" : " disabled"}>Thu phục</button>
+      const st = learnStats(), studied = !Object.keys(F.learnMissing(b.id, st)).length;
+      const can = studied && f.coins >= b.cost && Object.entries(b.need).every(([id, q]) => (f.barn[id] || 0) >= q);
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p>${learnChips(b, st)}${needChips(f, b.cost, b.need)}
+        <div class="row">${studied ? `<button type="button" class="btn sm primary" data-beastbuy="${b.id}"${can ? "" : " disabled"}>Thu phục</button>` : learnGo(b, st, "btn sm primary")}
           <button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
     }
     return `<div class="beast${s ? " owned" : ""}${locked ? " locked" : ""}" style="--aura:${AURA[b.id]}">${img}<div class="bd">
@@ -1499,6 +1519,7 @@
       <p class="muted">${esc(b.lore)}</p>
       ${s ? `<p>${stars(s.lv)} <b>Cấp ${s.lv}/${F.BEAST_MAX_LV}</b></p><p>Hiện tại: ${effectText(F.beastPower(id, s.lv))} · ${F.STAMINA_PER_CROP[s.lv - 1]} ⚡/cây</p>`
         : `<p>Khi thu phục (cấp 1): ${effectText(F.beastPower(id, 1))}</p><p class="small muted">Cấp tối đa ${F.BEAST_MAX_LV}: ${effectText(F.beastPower(id, F.BEAST_MAX_LV))} · ${F.STAMINA_PER_CROP[F.BEAST_MAX_LV - 1]} ⚡/cây</p>
+           <p class="label">Thử thách học tập</p>${learnChips(b, learnStats())}${learnGo(b, learnStats(), "btn sm") ? `<div>${learnGo(b, learnStats(), "btn sm")}</div>` : ""}
            <p class="label">Cần để thu phục${b.lv > F.level(f.xp) ? ` · 🔒 nông trại cấp ${b.lv}` : ""}</p>${needChips(f, b.cost, b.need)}`}
       ${up ? `<p class="label">Nâng lên cấp ${s.lv + 1}: ${effectText(F.beastPower(id, s.lv + 1))} · ${F.STAMINA_PER_CROP[s.lv]} ⚡/cây</p>${needChips(f, up.coins, up.need)}
         <div><button type="button" class="btn primary" data-beastup="${id}"${can ? "" : " disabled"}>Nâng lên cấp ${s.lv + 1}</button></div>` : s ? `<p class="feedback ok">🏆 Đã đạt cấp tối đa!</p>` : ""}`, b.vi);
@@ -1733,7 +1754,7 @@
   const H = {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
     level: (v) => { if (S.level === v) return; S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); render(); },
-    go: (v) => (v === "learn" ? startLearn() : v === "review" ? startReview() : go(v)),
+    go: (v) => { if (!$("#modal").hidden) closeModal(); v === "learn" ? startLearn() : v === "review" ? startReview() : go(v); },
     step: (v, t) => {
       const d = +t.dataset.d;
       if (v === "perday") S.perday = clamp(S.perday + d, PERDAY);
@@ -1828,7 +1849,7 @@
     fert: (v) => farmDone(F.fertilize(S.farm, +v, Date.now()), "Cây đã chín nhờ phân bón 🧪"),
     uproot: (v) => farmDone(F.uproot(S.farm, +v), "Đã dọn ô đất"),
     beastinfo: (v) => beastSheet(v),
-    beastbuy: (v) => { const b = F.BEAST[v]; farmDone(F.buyBeast(S.farm, v, today()), `🎉 ${b.zo} – ${b.vi} đã về nông trại!`, b.en); },
+    beastbuy: (v) => { const b = F.BEAST[v]; farmDone(F.buyBeast(S.farm, v, today(), learnStats()), `🎉 ${b.zo} – ${b.vi} đã về nông trại!`, b.en); },
     beastup: (v) => { const b = F.BEAST[v], r = F.upgradeBeast(S.farm, v); farmDone(r, r.ok && `⭐ ${b.zo} lên cấp ${r.lv}!`); },
     beastcast: (v) => castSheet(v),
     castgo: (v) => {

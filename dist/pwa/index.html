@@ -240,6 +240,7 @@ svg.scene.wide { height: auto; aspect-ratio: 1300 / 300 }
 .orders { display: grid; gap: 10px }
 .order { background: #fff; border-radius: 14px; padding: 12px; display: grid; gap: 10px; box-shadow: 0 3px 0 #EBD3A0; border-left: 6px solid #F5A623 }
 .need { display: flex; flex-wrap: wrap; gap: 6px }
+.need.learn span.no { background: #EEF2FF; color: #3730A3 } .need.learn span.ok { font-weight: 700 }
 .need span { padding: 3px 10px; border-radius: 999px; background: #FFF1CC; font-weight: 700; font-size: .9rem }
 .need .ok { color: #2E7D32; background: #DDF6CF } .need .no { color: #B23A2E }
 .shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px }
@@ -789,20 +790,23 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   ];
   // 12 spirit beasts (Linh Thú) from the zodiac art. speed = % of remaining grow time cut, price = % extra coins
   // when the buffed crop is harvested; [level 1, level 8] values, linear in between. need = coins + barn items to buy.
+  // learn = a study challenge that must be met too: words learned, best streak (days), sentences learned, IPA sounds
+  // learned, words mastered. The first beasts come within days; the dragon is a months-long goal.
   const BEASTS = [
-    { id: "rat", zo: "Tý", en: "rat", vi: "Thử Ảnh Sát Thủ", lore: "Ninja bóng đêm, giục cây lớn nhanh như chớp", lv: 1, cost: 200, need: { wheat: 10 }, fav: ["wheat", "carrot"], speed: [15, 40], price: [0, 0] },
-    { id: "ox", zo: "Sửu", en: "ox", vi: "Ngưu Hỏa Chiến Tướng", lore: "Búa lửa nện đất, nông sản chắc nặng, bán được giá", lv: 2, cost: 300, need: { wheat: 15, carrot: 8 }, fav: ["carrot", "wheat"], speed: [0, 0], price: [10, 35] },
-    { id: "tiger", zo: "Dần", en: "tiger", vi: "Hổ Viêm Đao", lore: "Đao lửa thiêu sâu bọ, cây vừa nhanh lớn vừa đẹp", lv: 3, cost: 450, need: { carrot: 10, corn: 8 }, fav: ["corn", "carrot"], speed: [12, 30], price: [8, 25] },
-    { id: "cat", zo: "Mão", en: "cat", vi: "Miêu Nguyệt Ảnh", lore: "Dưới trăng, móng vuốt gọi sương đêm tưới cây", lv: 3, cost: 500, need: { corn: 10, wheat: 10 }, fav: ["corn", "wheat"], speed: [20, 50], price: [0, 0] },
-    { id: "dragon", zo: "Thìn", en: "dragon", vi: "Lôi Long Thần", lore: "Gọi sấm mưa, mùa màng bội thu và quý giá", lv: 7, cost: 2500, need: { watermelon: 5, sunflower: 5, strawberry: 10 }, fav: ["watermelon", "sunflower"], speed: [15, 40], price: [15, 40] },
-    { id: "snake", zo: "Tỵ", en: "snake", vi: "Xà Độc Pháp Sư", lore: "Bùa lục xà khiến thương lái tranh nhau trả giá", lv: 4, cost: 700, need: { tomato: 10, strawberry: 5 }, fav: ["tomato", "strawberry"], speed: [0, 0], price: [15, 45] },
-    { id: "horse", zo: "Ngọ", en: "horse", vi: "Mã Liệt Hỏa Thương", lore: "Phi nước đại, thời gian như ngắn lại một nửa", lv: 5, cost: 1000, need: { pumpkin: 5, strawberry: 8 }, fav: ["strawberry", "pumpkin"], speed: [25, 55], price: [0, 0] },
-    { id: "goat", zo: "Mùi", en: "goat", vi: "Dương Băng Pháp Sư", lore: "Lửa băng nuôi rễ, cây khỏe và ngon hơn", lv: 4, cost: 800, need: { tomato: 8, milk: 5 }, fav: ["tomato", "corn"], speed: [8, 20], price: [12, 35] },
-    { id: "monkey", zo: "Thân", en: "monkey", vi: "Hầu Lôi Quyền", lore: "Quyền sấm sét đánh thức hạt giống ngủ quên", lv: 5, cost: 1200, need: { pumpkin: 6, egg: 10 }, fav: ["pumpkin", "tomato"], speed: [18, 45], price: [5, 15] },
-    { id: "rooster", zo: "Dậu", en: "rooster", vi: "Kê Phượng Song Kiếm", lore: "Tiếng gáy phượng hoàng khiến nông sản sáng như vàng", lv: 6, cost: 1600, need: { sunflower: 6, honey: 3 }, fav: ["sunflower", "strawberry"], speed: [0, 0], price: [20, 50] },
-    { id: "dog", zo: "Tuất", en: "dog", vi: "Khuyển Trung Kiếm Sĩ", lore: "Canh giữ ruộng vườn, cây lớn đều và bán đắt", lv: 2, cost: 350, need: { carrot: 10, wheat: 10 }, fav: ["carrot", "corn"], speed: [10, 30], price: [10, 30] },
-    { id: "pig", zo: "Hợi", en: "pig", vi: "Trư Chùy Bá Vương", lore: "Chùy gai dọa lui sâu hại, nông sản được giá cao nhất", lv: 6, cost: 2000, need: { pumpkin: 8, wool: 3 }, fav: ["pumpkin", "sunflower"], speed: [0, 0], price: [25, 60] },
+    { id: "rat", zo: "Tý", en: "rat", vi: "Thử Ảnh Sát Thủ", lore: "Ninja bóng đêm, giục cây lớn nhanh như chớp", lv: 1, cost: 300, need: { wheat: 15 }, learn: { words: 20 }, fav: ["wheat", "carrot"], speed: [15, 40], price: [0, 0] },
+    { id: "ox", zo: "Sửu", en: "ox", vi: "Ngưu Hỏa Chiến Tướng", lore: "Búa lửa nện đất, nông sản chắc nặng, bán được giá", lv: 2, cost: 450, need: { wheat: 20, carrot: 12 }, learn: { words: 60, sents: 10 }, fav: ["carrot", "wheat"], speed: [0, 0], price: [10, 35] },
+    { id: "tiger", zo: "Dần", en: "tiger", vi: "Hổ Viêm Đao", lore: "Đao lửa thiêu sâu bọ, cây vừa nhanh lớn vừa đẹp", lv: 3, cost: 700, need: { carrot: 15, corn: 12 }, learn: { words: 80, best: 5 }, fav: ["corn", "carrot"], speed: [12, 30], price: [8, 25] },
+    { id: "cat", zo: "Mão", en: "cat", vi: "Miêu Nguyệt Ảnh", lore: "Dưới trăng, móng vuốt gọi sương đêm tưới cây", lv: 3, cost: 750, need: { corn: 15, wheat: 15 }, learn: { words: 100, ipa: 10 }, fav: ["corn", "wheat"], speed: [20, 50], price: [0, 0] },
+    { id: "dragon", zo: "Thìn", en: "dragon", vi: "Lôi Long Thần", lore: "Gọi sấm mưa, mùa màng bội thu và quý giá", lv: 7, cost: 3800, need: { watermelon: 8, sunflower: 8, strawberry: 15 }, learn: { words: 450, best: 21, mastered: 60 }, fav: ["watermelon", "sunflower"], speed: [15, 40], price: [15, 40] },
+    { id: "snake", zo: "Tỵ", en: "snake", vi: "Xà Độc Pháp Sư", lore: "Bùa lục xà khiến thương lái tranh nhau trả giá", lv: 4, cost: 1050, need: { tomato: 15, strawberry: 8 }, learn: { words: 140, sents: 25 }, fav: ["tomato", "strawberry"], speed: [0, 0], price: [15, 45] },
+    { id: "horse", zo: "Ngọ", en: "horse", vi: "Mã Liệt Hỏa Thương", lore: "Phi nước đại, thời gian như ngắn lại một nửa", lv: 5, cost: 1500, need: { pumpkin: 8, strawberry: 12 }, learn: { words: 220, ipa: 20 }, fav: ["strawberry", "pumpkin"], speed: [25, 55], price: [0, 0] },
+    { id: "goat", zo: "Mùi", en: "goat", vi: "Dương Băng Pháp Sư", lore: "Lửa băng nuôi rễ, cây khỏe và ngon hơn", lv: 4, cost: 1200, need: { tomato: 12, milk: 8 }, learn: { words: 180, best: 7 }, fav: ["tomato", "corn"], speed: [8, 20], price: [12, 35] },
+    { id: "monkey", zo: "Thân", en: "monkey", vi: "Hầu Lôi Quyền", lore: "Quyền sấm sét đánh thức hạt giống ngủ quên", lv: 5, cost: 1800, need: { pumpkin: 9, egg: 15 }, learn: { words: 260, sents: 45 }, fav: ["pumpkin", "tomato"], speed: [18, 45], price: [5, 15] },
+    { id: "rooster", zo: "Dậu", en: "rooster", vi: "Kê Phượng Song Kiếm", lore: "Tiếng gáy phượng hoàng khiến nông sản sáng như vàng", lv: 6, cost: 2400, need: { sunflower: 9, honey: 5 }, learn: { words: 320, best: 14, mastered: 20 }, fav: ["sunflower", "strawberry"], speed: [0, 0], price: [20, 50] },
+    { id: "dog", zo: "Tuất", en: "dog", vi: "Khuyển Trung Kiếm Sĩ", lore: "Canh giữ ruộng vườn, cây lớn đều và bán đắt", lv: 2, cost: 500, need: { carrot: 12, wheat: 15 }, learn: { words: 40, best: 3 }, fav: ["carrot", "corn"], speed: [10, 30], price: [10, 30] },
+    { id: "pig", zo: "Hợi", en: "pig", vi: "Trư Chùy Bá Vương", lore: "Chùy gai dọa lui sâu hại, nông sản được giá cao nhất", lv: 6, cost: 3000, need: { pumpkin: 12, wool: 5 }, learn: { words: 380, sents: 70, mastered: 40 }, fav: ["pumpkin", "sunflower"], speed: [0, 0], price: [25, 60] },
   ];
+  const LEARN_KEYS = ["words", "best", "sents", "ipa", "mastered"];
   const BEAST_MAX_LV = 8, STAMINA = 10, PRICE_CAP = 150;
   const STAMINA_PER_CROP = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]; // by beast level
   const LVXP = [0, 20, 60, 130, 240, 400, 620, 900, 1250, 1700, 2200, 2750, 3350, 4000, 4700, 5450, 6250, 7100, 8000, 8950, 9950, 11000, 12100, 13250]; // farm xp needed for level 1..24
@@ -996,11 +1000,18 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const stamina = (f, id, today) => { const s = f.beasts[id]; return !s ? 0 : s.day === today ? s.st : STAMINA; };
   /** Stamina for buffing n crops: more crops cost more, higher levels cost less per crop. */
   const castCost = (lv, n) => (n <= 0 ? 0 : Math.ceil(n * STAMINA_PER_CROP[lv - 1] - 1e-9));
-  function buyBeast(f, id, today) {
+  /** Study goals of a beast's challenge not met yet: { key: needed }. stats: { words, best, sents, ipa, mastered }. */
+  function learnMissing(id, stats) {
+    const out = {};
+    for (const [k, q] of Object.entries(BEAST[id].learn)) if (((stats && stats[k]) || 0) < q) out[k] = q;
+    return out;
+  }
+  function buyBeast(f, id, today, stats) {
     const b = BEAST[id];
     if (!b) return fail("Không có Linh Thú này");
     if (f.beasts[id]) return fail("Bạn đã có Linh Thú này");
     if (b.lv > level(f.xp)) return fail(`Cần nông trại cấp ${b.lv}`);
+    if (Object.keys(learnMissing(id, stats)).length) return fail("Chưa hoàn thành thử thách học tập");
     if (f.coins < b.cost) return fail("Chưa đủ xu");
     if (!has(f, b.need)) return fail("Chưa đủ nguyên liệu trong kho");
     f.coins -= b.cost; take(f, b.need);
@@ -1013,7 +1024,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (!s || s.lv >= BEAST_MAX_LV) return null;
     const L = s.lv, need = { [b.fav[0]]: 3 + 2 * L };
     if (L >= 3) need[b.fav[1]] = L;
-    return { coins: Math.round(b.cost * 0.5 * L), need };
+    return { coins: Math.round(b.cost * 0.35 * L), need };
   }
   function upgradeBeast(f, id) {
     const c = upgradeCost(f, id);
@@ -1054,7 +1065,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     MIN, CROPS, PRODUCTS, ANIMALS, DECOS, ITEMS, CROP, ANIMAL, DECO, LVXP, START, MAX_PLOTS, plotLevel, MAX_PER_ANIMAL, REWARD, GATE, gate, addStudy, addPlay,
     fresh, level, nextXp, bonus, stock, unlockedItems, earn, reward, remaining, plotReady, plant, harvest, fertilize, plotCost, buyPlot,
     animalReady, buyAnimal, collect, feedBoost, sell, barnCost, upgradeBarn, buyDeco, makeOrder, fillOrders, canDeliver, deliver, skipOrder, unlocks, uproot,
-    BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, upgradeCost, upgradeBeast, castTargets, cast, missing,
+    BEASTS, BEAST, BEAST_MAX_LV, STAMINA, STAMINA_PER_CROP, PRICE_CAP, beastPower, stamina, castCost, buyBeast, learnMissing, LEARN_KEYS, upgradeCost, upgradeBeast, castTargets, cast, missing,
   };
   if (typeof module === "object" && module.exports) module.exports = Farm;
   else root.Farm = Farm;
@@ -2602,6 +2613,25 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const BIMG = window.BEAST_IMG || {};
   const effectText = (pw) => [pw.speed && `⏩ Rút ngắn ${pw.speed}% thời gian chín còn lại`, pw.price && `💰 +${pw.price}% giá bán khi thu hoạch`].filter(Boolean).join(" · ");
   const stars = (lv) => `<span class="stars" aria-label="Cấp ${lv}/${F.BEAST_MAX_LV}">${"★".repeat(lv)}${"☆".repeat(F.BEAST_MAX_LV - lv)}</span>`;
+  // Study challenge of a spirit beast: icon, unit, and where to go to work on it.
+  const LEARN_UI = { words: ["📘", "từ đã học", "learn"], best: ["🔥", "ngày học liên tiếp", "learn"], sents: ["💬", "câu đã thuộc", "sent"],
+    ipa: ["🔤", "âm IPA đã học", "ipa"], mastered: ["🏅", "từ đã thuộc lòng", "review"] };
+  function learnStats() {
+    const mastered = Object.values(S.progress).reduce((n, pl) => n + Object.values(pl).filter((c) => c.box >= C.MASTER_BOX).length, 0);
+    return { words: Object.keys(S.progress.kids).length + Object.keys(S.progress.toeic).length, best: S.streak.best || 0,
+      sents: Object.keys(S.sent).length, ipa: S.ipa.length, mastered };
+  }
+  function learnChips(b, st) {
+    return `<div class="need learn">${Object.entries(b.learn).map(([k, q]) => {
+      const [emo, unit] = LEARN_UI[k], have = st[k] || 0;
+      return `<span class="${have >= q ? "ok" : "no"}" title="${unit}">${emo} ${Math.min(have, q)}/${q} ${unit}</span>`;
+    }).join("")}</div>`;
+  }
+  /** Button to the study page for the first unmet goal of a beast's challenge ("" when all are met). */
+  function learnGo(b, st, cls = "btn sm") {
+    const k = Object.keys(F.learnMissing(b.id, st))[0];
+    return k ? `<button type="button" class="${cls}" data-go="${LEARN_UI[k][2]}">${LEARN_UI[k][0]} Học để thu phục</button>` : "";
+  }
   function needChips(f, coins, items) {
     return `<div class="need"><span class="${f.coins >= coins ? "ok" : "no"}">🪙 ${coins}</span>${Object.entries(items).map(([id, q]) => {
       const it = F.ITEMS[id], have = f.barn[id] || 0;
@@ -2618,7 +2648,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   function beastsSection(f, now) {
     const owned = Object.keys(f.beasts).length;
     return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐉 Linh Thú 12 con giáp</h2><span class="chip num">${owned}/12</span></div>
-      <p class="small muted">Thu phục Linh Thú bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
+      <p class="small muted">Mỗi Linh Thú có một <b>thử thách học tập</b> (số từ đã học, chuỗi ngày học, số câu, âm IPA hoặc từ đã thuộc lòng); hoàn thành thử thách rồi thu phục bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
         Mỗi ngày mỗi Linh Thú có ${F.STAMINA} ⚡ thể lực — ban phúc càng nhiều cây càng tốn, cấp càng cao càng ít tốn. Nâng cấp (tối đa ${F.BEAST_MAX_LV}) bằng nông sản thu hoạch.</p>
       <div class="beasts">${F.BEASTS.map((b) => beastCard(f, b, now)).join("")}</div></section>`;
   }
@@ -2634,12 +2664,13 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         <div class="row"><button type="button" class="btn sm primary" data-beastcast="${b.id}"${targets && st ? "" : " disabled"}>✨ Ban phúc${targets ? ` (${targets})` : ""}</button>
           <button type="button" class="btn sm" data-beastinfo="${b.id}">${s.lv < F.BEAST_MAX_LV ? "Nâng cấp" : "Chi tiết"}</button></div>`;
     } else if (locked) {
-      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p><span class="chip">🔒 Nông trại cấp ${b.lv}</span>
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p><span class="chip">🔒 Nông trại cấp ${b.lv}</span>${learnChips(b, learnStats())}
         <div><button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
     } else {
-      const can = f.coins >= b.cost && Object.entries(b.need).every(([id, q]) => (f.barn[id] || 0) >= q);
-      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p>${needChips(f, b.cost, b.need)}
-        <div class="row"><button type="button" class="btn sm primary" data-beastbuy="${b.id}"${can ? "" : " disabled"}>Thu phục</button>
+      const st = learnStats(), studied = !Object.keys(F.learnMissing(b.id, st)).length;
+      const can = studied && f.coins >= b.cost && Object.entries(b.need).every(([id, q]) => (f.barn[id] || 0) >= q);
+      body = `<p class="small">${effectText(F.beastPower(b.id, 1))}</p>${learnChips(b, st)}${needChips(f, b.cost, b.need)}
+        <div class="row">${studied ? `<button type="button" class="btn sm primary" data-beastbuy="${b.id}"${can ? "" : " disabled"}>Thu phục</button>` : learnGo(b, st, "btn sm primary")}
           <button type="button" class="btn sm" data-beastinfo="${b.id}">Chi tiết</button></div>`;
     }
     return `<div class="beast${s ? " owned" : ""}${locked ? " locked" : ""}" style="--aura:${AURA[b.id]}">${img}<div class="bd">
@@ -2655,6 +2686,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
       <p class="muted">${esc(b.lore)}</p>
       ${s ? `<p>${stars(s.lv)} <b>Cấp ${s.lv}/${F.BEAST_MAX_LV}</b></p><p>Hiện tại: ${effectText(F.beastPower(id, s.lv))} · ${F.STAMINA_PER_CROP[s.lv - 1]} ⚡/cây</p>`
         : `<p>Khi thu phục (cấp 1): ${effectText(F.beastPower(id, 1))}</p><p class="small muted">Cấp tối đa ${F.BEAST_MAX_LV}: ${effectText(F.beastPower(id, F.BEAST_MAX_LV))} · ${F.STAMINA_PER_CROP[F.BEAST_MAX_LV - 1]} ⚡/cây</p>
+           <p class="label">Thử thách học tập</p>${learnChips(b, learnStats())}${learnGo(b, learnStats(), "btn sm") ? `<div>${learnGo(b, learnStats(), "btn sm")}</div>` : ""}
            <p class="label">Cần để thu phục${b.lv > F.level(f.xp) ? ` · 🔒 nông trại cấp ${b.lv}` : ""}</p>${needChips(f, b.cost, b.need)}`}
       ${up ? `<p class="label">Nâng lên cấp ${s.lv + 1}: ${effectText(F.beastPower(id, s.lv + 1))} · ${F.STAMINA_PER_CROP[s.lv]} ⚡/cây</p>${needChips(f, up.coins, up.need)}
         <div><button type="button" class="btn primary" data-beastup="${id}"${can ? "" : " disabled"}>Nâng lên cấp ${s.lv + 1}</button></div>` : s ? `<p class="feedback ok">🏆 Đã đạt cấp tối đa!</p>` : ""}`, b.vi);
@@ -2889,7 +2921,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const H = {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
     level: (v) => { if (S.level === v) return; S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); render(); },
-    go: (v) => (v === "learn" ? startLearn() : v === "review" ? startReview() : go(v)),
+    go: (v) => { if (!$("#modal").hidden) closeModal(); v === "learn" ? startLearn() : v === "review" ? startReview() : go(v); },
     step: (v, t) => {
       const d = +t.dataset.d;
       if (v === "perday") S.perday = clamp(S.perday + d, PERDAY);
@@ -2984,7 +3016,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     fert: (v) => farmDone(F.fertilize(S.farm, +v, Date.now()), "Cây đã chín nhờ phân bón 🧪"),
     uproot: (v) => farmDone(F.uproot(S.farm, +v), "Đã dọn ô đất"),
     beastinfo: (v) => beastSheet(v),
-    beastbuy: (v) => { const b = F.BEAST[v]; farmDone(F.buyBeast(S.farm, v, today()), `🎉 ${b.zo} – ${b.vi} đã về nông trại!`, b.en); },
+    beastbuy: (v) => { const b = F.BEAST[v]; farmDone(F.buyBeast(S.farm, v, today(), learnStats()), `🎉 ${b.zo} – ${b.vi} đã về nông trại!`, b.en); },
     beastup: (v) => { const b = F.BEAST[v], r = F.upgradeBeast(S.farm, v); farmDone(r, r.ok && `⭐ ${b.zo} lên cấp ${r.lv}!`); },
     beastcast: (v) => castSheet(v),
     castgo: (v) => {
