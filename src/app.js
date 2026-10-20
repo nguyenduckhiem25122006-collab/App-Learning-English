@@ -6,7 +6,7 @@
   // ===== CONFIG =====
   const KEY = "nhip.v1";
   const SAVE_MS = 250;
-  const LEVELS = { kids: "Lớp 7", toeic: "TOEIC 750" };
+  const LEVELS = { kids: "Tiếng Anh 7", toeic: "TOEIC 750" };
   const TRACKS = { daily: "Hằng ngày", work: "Công sở", toeic: "TOEIC LR & SW" };
   const STAGES = { Basic: "Cơ bản", Intermediate: "Trung cấp", Advanced: "Nâng cao" };
   const POS = { n: "danh từ", v: "động từ", adj: "tính từ", adv: "trạng từ", phr: "cụm từ", prep: "giới từ", conj: "liên từ" };
@@ -1812,7 +1812,7 @@
     return `<section class="hello"><div><p class="label">Tiến độ</p><h1>Tiến độ của bạn</h1></div></section>
       <div class="grid g3">
         <section class="panel goal"><p class="label">Tổng XP</p><p class="big">${S.xp}</p><p class="small muted">Chuỗi hiện tại ${C.liveStreak(S.streak, today())} ngày · kỷ lục ${stats.best} ngày</p></section>
-        <section class="panel goal"><p class="label">Từ đã học</p><p class="big">${stats.words}</p><p class="small muted">Lớp 7: ${learned("kids")}/${WORDS.kids.length} · TOEIC: ${learned("toeic")}/${WORDS.toeic.length} · đã thuộc ${mastered}</p></section>
+        <section class="panel goal"><p class="label">Từ đã học</p><p class="big">${stats.words}</p><p class="small muted">Tiếng Anh 7: ${learned("kids")}/${WORDS.kids.length} · TOEIC: ${learned("toeic")}/${WORDS.toeic.length} · đã thuộc ${mastered}</p></section>
         <section class="panel goal"><p class="label">Câu & âm</p><p class="big">${stats.sentences}<small> câu</small></p><p class="small muted">IPA: ${stats.ipa}/44 âm đã học · Toán ${stemDone("math")} bài · Vật lí ${stemDone("phys")} bài</p></section>
       </div>
       <div class="grid g2">
@@ -1859,17 +1859,12 @@
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
     level: (v) => {
       lvMenu(false);
-      const toEnglish = !EN_TABS.has(U.tab) && U.tab !== "rank" && U.tab !== "me";
-      if (S.level === v && !toEnglish) return;
-      S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save();
+      const toEnglish = subjectNow() !== "en";
+      if (S.level !== v) { S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); } else if (!toEnglish) return;
       if (toEnglish) go(U.enTab || "today"); else render();
     },
     subject: (v) => {
-      if (v === "en") {
-        if (subjectNow() === "en") lvMenu($("#lvmenu").hidden); // already in English: open / close the level menu
-        else { lvMenu(false); go(U.enTab || "today"); }
-        return;
-      }
+      if (v === "en") { lvMenu($("#lvmenu").hidden); return; } // Tiếng Anh always asks: Tiếng Anh 7 or TOEIC
       lvMenu(false);
       if (U.stemSubj !== v) U.stemOpen = null;
       U.stemSubj = v; go("stem");

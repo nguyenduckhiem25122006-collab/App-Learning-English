@@ -82,8 +82,8 @@ def main():
         page.click("#subj-en")
         check("Tiếng Anh opens its level menu", page.locator("#lv-kids").is_visible() and page.locator("#lv-toeic").is_visible())
         page.click("#lv-kids")
-        check("menu closes after choosing", not page.locator("#lv-kids").is_visible() and "Lớp 7" in page.inner_text("#subj-en"))
-        check("switch to Lớp 7", page.get_attribute("#lv-kids", "aria-pressed") == "true" and "Lớp 7" in page.inner_text("main"))
+        check("menu closes after choosing", not page.locator("#lv-kids").is_visible() and "Tiếng Anh 7" in page.inner_text("#subj-en"))
+        check("switch to Tiếng Anh 7", page.get_attribute("#lv-kids", "aria-pressed") == "true" and "Tiếng Anh 7" in page.inner_text("main"))
 
         page.click("#subj-math")
         check("Toán button opens the maths screen", page.get_attribute("#subj-math", "aria-pressed") == "true" and page.get_attribute("#subj-en", "aria-pressed") == "false")
@@ -139,7 +139,10 @@ def main():
         check("completed lesson is ticked in the list", page.locator("[data-stemopen=p9-06].done").count() == 1)
         page.click("#subj-math"); page.click("[data-stemgrade='7']")
         page.click("#subj-en")
-        check("Tiếng Anh brings you back to English", page.get_attribute("#subj-en", "aria-pressed") == "true" and page.locator("[data-stemgrade]").count() == 0)
+        check("Tiếng Anh always offers Tiếng Anh 7 and TOEIC", page.locator("#lv-kids").is_visible() and page.locator("#lv-toeic").is_visible()
+              and page.get_attribute("#subj-math", "aria-pressed") == "true")
+        page.click("#lv-kids")
+        check("choosing one brings you back to English", page.get_attribute("#subj-en", "aria-pressed") == "true" and page.locator("[data-stemgrade]").count() == 0)
 
         # 5. Persistence + review: make one word due yesterday, reload, review it
         other = ctx.new_page()  # a second tab edits the store; the first tab must not clobber it
@@ -330,6 +333,8 @@ def main():
             check(f"{scheme} 390px: subject buttons on one row, Vật lí screen fits", max(ys) - min(ys) < 2 and no_hscroll(mp))
             if scheme == "light": mp.screenshot(path=str(SHOTS / "mobile-subjects.png"))
             mp.click("#subj-en")
+            check(f"{scheme} 390px: Tiếng Anh menu fits on screen", mp.locator("#lv-toeic").is_visible() and no_hscroll(mp))
+            mp.click("#lv-toeic")
             mp.click("#farm-btn")
             check(f"{scheme} 390px no h-scroll: farm locked", no_hscroll(mp) and mp.locator("[data-lock]").count() == 1)
             mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm-locked.png"))

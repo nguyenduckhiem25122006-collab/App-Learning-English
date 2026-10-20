@@ -1,6 +1,6 @@
 <title>Nhịp Học Tiếng Anh</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Học từ mới (Lớp 7 & TOEIC 750), câu giao tiếp và 44 âm IPA mỗi ngày — chạy offline.">
+<meta name="description" content="Học từ mới (Tiếng Anh 7 & TOEIC 750), câu giao tiếp và 44 âm IPA mỗi ngày — chạy offline.">
 <!--PWA_HEAD-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,16 +54,17 @@ p { margin: 0 }
 .subjects { display: inline-flex; align-items: center; background: var(--chip); border-radius: 999px; padding: 3px; gap: 2px }
 .subjects button[data-subject] { border: 0; background: transparent; padding: 6px 13px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--muted); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px }
 .subjects button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow) }
-.subjects small { font-size: .72rem; font-weight: 700; color: var(--action); background: color-mix(in srgb, var(--action) 12%, transparent); border-radius: 999px; padding: 1px 7px }
+.subjects button[data-subject] small { font-size: .72rem; font-weight: 700; color: var(--action); background: color-mix(in srgb, var(--action) 12%, transparent); border-radius: 999px; padding: 1px 7px }
 .subjects .caret { font-size: .7rem; opacity: .7 }
 .subj-en { position: relative }
-.lvmenu { position: absolute; top: calc(100% + 8px); left: 0; z-index: 40; display: grid; gap: 4px; min-width: 170px; padding: 6px; border-radius: 14px; background: var(--card); border: 1px solid var(--rule); box-shadow: var(--shadow) }
+.lvmenu { position: absolute; top: calc(100% + 8px); left: 0; z-index: 40; display: grid; gap: 4px; min-width: 230px; padding: 6px; border-radius: 14px; background: var(--card); border: 1px solid var(--rule); box-shadow: var(--shadow) }
 .lvmenu[hidden] { display: none }
-.lvmenu button { border: 0; background: transparent; text-align: left; padding: 9px 12px; border-radius: 10px; font-weight: 600; color: var(--ink) }
+.lvmenu button { border: 0; background: transparent; text-align: left; padding: 9px 12px; border-radius: 10px; font-weight: 700; color: var(--ink); display: grid; grid-template-columns: auto 1fr; column-gap: 8px; align-items: center }
+.lvmenu button small { grid-column: 2; font-weight: 500; font-size: .76rem; color: var(--muted) }
 .lvmenu button:hover { background: var(--chip) }
 .lvmenu button[aria-pressed="true"] { background: color-mix(in srgb, var(--action) 14%, transparent); color: var(--action) }
-.lvmenu button[aria-pressed="true"]::after { content: " ✓" }
-@media (max-width: 420px) { .subjects button[data-subject] { padding: 6px 9px; font-size: .84rem } .subjects small { display: none } }
+.lvmenu button[aria-pressed="true"]::after { content: "✓"; grid-row: 1; grid-column: 3 }
+@media (max-width: 420px) { .subjects button[data-subject] { padding: 6px 9px; font-size: .84rem } .subjects button[data-subject] small { display: none } }
 .streak { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .9rem }
 .tabs { max-width: 980px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
   padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
@@ -586,8 +587,8 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
       <div class="subj-en">
         <button type="button" id="subj-en" data-subject="en" aria-pressed="true" aria-haspopup="true" aria-expanded="false"><span aria-hidden="true">🔤</span> Tiếng Anh <small id="lv-label"></small><span class="caret" aria-hidden="true">▾</span></button>
         <div class="lvmenu" id="lvmenu" role="group" aria-label="Chọn trình độ tiếng Anh" hidden>
-          <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
-          <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
+          <button type="button" id="lv-kids" data-level="kids"><span aria-hidden="true">📗</span> Tiếng Anh 7<small>Từ vựng chương trình lớp 7</small></button>
+          <button type="button" id="lv-toeic" data-level="toeic"><span aria-hidden="true">💼</span> TOEIC 750<small>Luyện thi TOEIC LR & SW</small></button>
         </div>
       </div>
       <button type="button" id="subj-math" data-subject="math" aria-pressed="false"><span aria-hidden="true">📐</span> Toán</button>
@@ -1832,7 +1833,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   // ===== CONFIG =====
   const KEY = "nhip.v1";
   const SAVE_MS = 250;
-  const LEVELS = { kids: "Lớp 7", toeic: "TOEIC 750" };
+  const LEVELS = { kids: "Tiếng Anh 7", toeic: "TOEIC 750" };
   const TRACKS = { daily: "Hằng ngày", work: "Công sở", toeic: "TOEIC LR & SW" };
   const STAGES = { Basic: "Cơ bản", Intermediate: "Trung cấp", Advanced: "Nâng cao" };
   const POS = { n: "danh từ", v: "động từ", adj: "tính từ", adv: "trạng từ", phr: "cụm từ", prep: "giới từ", conj: "liên từ" };
@@ -3638,7 +3639,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     return `<section class="hello"><div><p class="label">Tiến độ</p><h1>Tiến độ của bạn</h1></div></section>
       <div class="grid g3">
         <section class="panel goal"><p class="label">Tổng XP</p><p class="big">${S.xp}</p><p class="small muted">Chuỗi hiện tại ${C.liveStreak(S.streak, today())} ngày · kỷ lục ${stats.best} ngày</p></section>
-        <section class="panel goal"><p class="label">Từ đã học</p><p class="big">${stats.words}</p><p class="small muted">Lớp 7: ${learned("kids")}/${WORDS.kids.length} · TOEIC: ${learned("toeic")}/${WORDS.toeic.length} · đã thuộc ${mastered}</p></section>
+        <section class="panel goal"><p class="label">Từ đã học</p><p class="big">${stats.words}</p><p class="small muted">Tiếng Anh 7: ${learned("kids")}/${WORDS.kids.length} · TOEIC: ${learned("toeic")}/${WORDS.toeic.length} · đã thuộc ${mastered}</p></section>
         <section class="panel goal"><p class="label">Câu & âm</p><p class="big">${stats.sentences}<small> câu</small></p><p class="small muted">IPA: ${stats.ipa}/44 âm đã học · Toán ${stemDone("math")} bài · Vật lí ${stemDone("phys")} bài</p></section>
       </div>
       <div class="grid g2">
@@ -3685,17 +3686,12 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
     level: (v) => {
       lvMenu(false);
-      const toEnglish = !EN_TABS.has(U.tab) && U.tab !== "rank" && U.tab !== "me";
-      if (S.level === v && !toEnglish) return;
-      S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save();
+      const toEnglish = subjectNow() !== "en";
+      if (S.level !== v) { S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); } else if (!toEnglish) return;
       if (toEnglish) go(U.enTab || "today"); else render();
     },
     subject: (v) => {
-      if (v === "en") {
-        if (subjectNow() === "en") lvMenu($("#lvmenu").hidden); // already in English: open / close the level menu
-        else { lvMenu(false); go(U.enTab || "today"); }
-        return;
-      }
+      if (v === "en") { lvMenu($("#lvmenu").hidden); return; } // Tiếng Anh always asks: Tiếng Anh 7 or TOEIC
       lvMenu(false);
       if (U.stemSubj !== v) U.stemOpen = null;
       U.stemSubj = v; go("stem");
