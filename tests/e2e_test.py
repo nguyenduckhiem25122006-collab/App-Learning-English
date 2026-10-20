@@ -213,12 +213,13 @@ def main():
               and page.locator("[data-buyplot]").count() == 1)
         page.wait_for_timeout(1800)
         check("farmer runs to the crops and tends them", page.locator(".farmer-bot.run, .farmer-bot.work").count() == 1)
-        pos0 = page.eval_on_selector_all(".land .veh", "els => els.map(e => e.style.transform)")
+        pos0 = page.get_attribute(".map-svg [data-car=truck]", "transform")
         page.wait_for_timeout(600)
-        pos1 = page.eval_on_selector_all(".land .veh", "els => els.map(e => e.style.transform)")
-        check("roads ring the farm and split field from ranch; vehicles drive on them",
-              page.locator(".land .road-ring").count() == 1 and page.locator(".land .road.mid").count() == 1
-              and len(pos0) == 3 and all(a != b for a, b in zip(pos0, pos1)), (pos0, pos1))
+        pos1 = page.get_attribute(".map-svg [data-car=truck]", "transform")
+        check("one farm map: field, ranch, roads and buildings; the delivery truck drives its route",
+              page.locator(".map .map-svg").count() == 1 and page.locator(".map .field").count() == 1 and page.locator(".map .ranch").count() == 1
+              and page.locator(".map .bld").count() == 8 and pos0 != pos1, (pos0, pos1))
+        check("farmer carries a tool for every job (water, grain, hay, bucket, flowers)", page.locator(".farmer-bot .tool").count() == 5)
         page.click("[data-sell=wheat]")
         check("selling sends the delivery truck from the barn to the market", page.locator(".delivery .dv-truck").count() == 1 and page.locator(".delivery .crate.load").count() == 1)
         page.click("[data-farmfull]")
@@ -238,7 +239,16 @@ def main():
         page.click("[data-collectall]")
         s = state(page)
         check("collect all ready animal products from the bottom bar", s["farm"]["barn"].get("egg", 0) == egg0 + 1 and page.locator(".land .floater").count() >= 2)
-        check("owned spirit beasts float over the farm", page.locator("svg.scene .spirit").count() == 2)
+        check("owned spirit beasts float over the farm", page.locator(".map-svg .spirit").count() == 2)
+        check("buildings appear as the farm levels up (level 7: windmill, sawmill built; cotton mill, greenhouse, dock not yet)",
+              page.locator(".bld.locked").count() == 3 and page.locator(".bld.locked[data-bld=cotton]").count() == 1 and page.locator(".bld[data-bld=sawmill]:not(.locked)").count() == 1)
+        check("animals know their feed", page.locator(".atile[data-kind=chicken][data-food]").count() == 3 and page.locator(".atile[data-kind=cow][data-food]").count() == 2)
+        page.click(".bld[data-bld=sawmill]")
+        check("tapping a building shows its name in English", "sawmill" in page.inner_text("#sheet"))
+        page.click("#sheet [data-close] >> nth=0")
+        page.click(".bld[data-bld=warehouse]")
+        page.wait_for_timeout(500)
+        check("the warehouse opens the barn panel", page.locator("#barn-panel.flashp").count() == 1)
         page.click("[data-sell=wheat]"); page.click("[data-sell=wheat]")
         check("quick sales queue behind one truck instead of stacking", page.locator(".delivery").count() == 1)
         check("12 spirit beast cards with the zodiac art", page.locator(".beast img").count() == 12)

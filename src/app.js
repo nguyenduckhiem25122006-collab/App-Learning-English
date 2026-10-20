@@ -261,7 +261,7 @@
     }
     try { renderTabs(); renderHeader(); } catch (err) { console.error("header failed", err); }
     document.body.classList.toggle("farm-wide", U.tab === "farm");
-    if (U.tab === "farm") { startFarmer(); startTraffic(); }
+    if (U.tab === "farm") { startFarmer(); startMapTraffic(); }
     const sp = $("#spell-in"); if (sp) sp.focus({ preventScroll: true });
   }
   function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
@@ -888,10 +888,9 @@
     if (f.orders.length < 3) { F.fillOrders(f, Math.random); save(); }
     const R = F.REWARD, bonus = F.bonus(f);
     return `<div class="farmv">${hud(f, g)}
-      <div class="scene-wrap">${farmScene(f, false)}<div class="bubble">${TIPS[Math.floor(now / 60000) % TIPS.length]}</div></div>
       ${farmLandSection(f, now, lv)}
       <div class="grid g2" style="align-items:start">
-          <section class="panel stack"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
+          <section class="panel stack" id="orders-panel"><h2>🚚 Đơn hàng</h2><p class="small muted">Giao đủ hàng để nhận nhiều xu và điểm trại hơn bán lẻ.</p>
             <div class="orders">${f.orders.map((o, i) => {
               const can = F.canDeliver(f, o);
               return `<div class="order"><div class="need">${Object.entries(o.need).map(([id, q]) => {
@@ -912,7 +911,7 @@
       </div>
       ${beastsSection(f, now)}
       <div class="grid g2" style="align-items:start">
-        <section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🏚️ Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
+        <section class="panel stack" id="barn-panel"><div class="row" style="justify-content:space-between"><h2>🏚️ Nhà kho</h2><span class="chip num">${F.stock(f)}/${f.cap}</span></div>
           ${bar(F.stock(f) / f.cap)}
           ${Object.keys(f.barn).length ? `<div class="list">${Object.entries(f.barn).map(([id, n]) => {
             const it = F.ITEMS[id];
@@ -957,14 +956,7 @@
     }).join("");
     return `<section class="panel stack landp"><div class="row" style="justify-content:space-between"><h2>🌾 Trang trại</h2>
         <span class="chip num">🌱 ${f.plots.length}/${F.MAX_PLOTS} ô đất · 🐾 ${f.animals.length} vật nuôi</span></div>
-      <div class="land">
-        <div class="road-ring" aria-hidden="true"></div>
-        <div class="zone"><div class="zone-head">🌱 Cánh đồng</div><div class="field">${fieldSlots(f, now, lv)}</div></div>
-        <div class="road mid" aria-hidden="true"></div>
-        <div class="zone"><div class="zone-head">🐾 Khu chăn nuôi</div><div class="ranch">${ranchGroups(f, now, lv)}</div></div>
-        ${TRAFFIC.map((v, k) => `<div class="veh" data-veh="${k}" aria-hidden="true">${VEHICLE_SVG[v.kind]}</div>`).join("")}
-        ${farmerBot()}
-      </div>
+      ${farmMap(f, now, lv)}
       <div class="farm-actions">
         <div class="row"><button type="button" class="btn primary" data-harvestall>🌾 Thu hoạch cây${readyC ? ` (${readyC})` : ""}</button>
           <button type="button" class="btn primary" data-collectall>🧺 Thu sản phẩm${readyA ? ` (${readyA})` : ""}</button></div>
@@ -976,12 +968,14 @@
     if (!p.c) return `<button type="button" class="plot empty" data-plotidx="${i}" aria-label="Ô ${i + 1} trống: gieo hạt"><span class="e" aria-hidden="true">+</span><span class="lbl">Gieo hạt</span></button>`;
     const c = F.CROP[p.c], dur = c.min * F.MIN, left = F.remaining(p.at, c.min, now);
     const badge = (p.pb ? `<span class="pbadge" title="Linh Thú: +${p.pb}% giá bán">💰+${p.pb}%</span>` : "") + (p.bf && p.bf.length ? `<span class="bbadge" title="Được ${p.bf.length} Linh Thú ban phúc">✦${p.bf.length}</span>` : "");
-    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span><span class="lbl">Thu hoạch!</span>${badge}</button>`;
+    if (!left) return `<button type="button" class="plot ready" data-plotidx="${i}" aria-label="Thu hoạch ${esc(c.vi)}"><span class="e">${c.emo}</span><span class="lbl">Thu hoạch</span>${badge}</button>`;
     const frac = 1 - left / dur, stage = frac < 0.34 ? ["🌱", "s1"] : frac < 0.67 ? ["🌿", "s2"] : [c.emo, "s3"];
     return `<button type="button" class="plot" data-plotidx="${i}" ${timer(p.at + dur, dur)} aria-label="${esc(c.vi)} đang lớn">
       <span class="e ${stage[1]}">${stage[0]}</span><span class="t num">${fmtLeft(left)}</span>${bar(frac)}${badge}</button>`;
   }
-  const farmerBot = () => `<div class="farmer-bot" aria-hidden="true"><div class="fb-flip"><svg viewBox="-30 -54 64 104" width="54" height="88">
+  // What the farmer carries to each animal, and the food that appears in its pen while it eats.
+  const FEED = { chicken: ["grain", "🌾"], cow: ["hay", "🌿"], sheep: ["hay", "🌿"], pig: ["bucket", "🥬"], bee: ["flower", "🌸"] };
+  const farmerBot = () => `<div class="farmer-bot" data-tool="can" aria-hidden="true"><div class="fb-flip"><svg viewBox="-30 -54 64 104" width="54" height="88">
     <ellipse cx="0" cy="47" rx="15" ry="4" fill="rgba(0,0,0,.2)"/>
     <g transform="translate(-5,14)"><g class="leg"><rect x="-3.5" y="0" width="7" height="27" rx="3.5" fill="#2F5BB7"/><rect x="-5" y="25" width="11" height="7" rx="3" fill="#6B3E1E"/></g></g>
     <g transform="translate(5,14)"><g class="leg b"><rect x="-3.5" y="0" width="7" height="27" rx="3.5" fill="#2F5BB7"/><rect x="-5" y="25" width="11" height="7" rx="3" fill="#6B3E1E"/></g></g>
@@ -990,107 +984,266 @@
     <circle cx="0" cy="-26" r="12" fill="#FFD1A6"/><circle cx="4" cy="-27" r="1.7" fill="#3B2A14"/><circle cx="-4" cy="-27" r="1.7" fill="#3B2A14"/>
     <path d="M-5 -20q5 5 10 0" stroke="#3B2A14" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="-22" r="2.3" fill="#FF9E9E" opacity=".7"/>
     <ellipse cx="0" cy="-35" rx="21" ry="5" fill="#E2A93B"/><path d="M-11 -35q0-14 11-14q11 0 11 14z" fill="#F2C14E"/><rect x="-11" y="-39" width="22" height="3.5" fill="#D9443A"/>
-    <g transform="translate(11,-6)"><g class="can"><rect x="-3" y="0" width="6" height="16" rx="3" fill="#E5533D"/><circle cx="0" cy="17" r="3.6" fill="#FFD1A6"/>
-      <g transform="translate(2,14)"><rect x="0" y="0" width="14" height="11" rx="2" fill="#5DADE2"/><path d="M14 3l9-5" stroke="#5DADE2" stroke-width="3" stroke-linecap="round"/>
-        <g class="drops" fill="#4FA8E8"><circle cx="24" cy="2" r="1.8"/><circle cx="26" cy="7" r="1.6"/><circle cx="23" cy="11" r="1.5"/></g></g></g></g>
+    <g transform="translate(11,-6)"><g class="hand"><rect x="-3" y="0" width="6" height="16" rx="3" fill="#E5533D"/><circle cx="0" cy="17" r="3.6" fill="#FFD1A6"/>
+      <g class="tool t-can" transform="translate(2,14)"><rect x="0" y="0" width="14" height="11" rx="2" fill="#5DADE2"/><path d="M14 3l9-5" stroke="#5DADE2" stroke-width="3" stroke-linecap="round"/>
+        <g class="drops" fill="#4FA8E8"><circle cx="24" cy="2" r="1.8"/><circle cx="26" cy="7" r="1.6"/><circle cx="23" cy="11" r="1.5"/></g></g>
+      <g class="tool t-grain" transform="translate(0,13)"><path d="M-1 0h13l2 14h-17z" fill="#E8D3A2" stroke="#B99A5E" stroke-width="1.2"/><path d="M1 1q5-5 10 0" stroke="#B99A5E" fill="none" stroke-width="1.2"/>
+        <g class="grains" fill="#F2C14E"><circle cx="14" cy="6" r="1.9"/><circle cx="17" cy="3" r="1.6"/><circle cx="15" cy="10" r="1.7"/><circle cx="19" cy="8" r="1.5"/></g></g>
+      <g class="tool t-hay" transform="translate(1,11)"><path d="M0 2l22-7l3 9l-22 7z" fill="#E2C14E"/><path d="M2 5l21-7M3 8l21-7" stroke="#C9A02E" stroke-width="1.1"/>
+        <path d="M23 -5l7-3M25 0l7 0M25 4l6 3" stroke="#6CC04A" stroke-width="2.2" stroke-linecap="round"/><g class="bits" stroke="#6CC04A" stroke-width="2" stroke-linecap="round"><path d="M27 8l2 4"/><path d="M21 11l1 4"/></g></g>
+      <g class="tool t-bucket" transform="translate(1,12)"><g class="tilt"><path d="M0 0h16l-2 14h-12z" fill="#9AA3AD" stroke="#6E7883" stroke-width="1.2"/><path d="M0 0q8-9 16 0" stroke="#6E7883" fill="none" stroke-width="1.4"/>
+        <ellipse cx="8" cy="1" rx="7" ry="2" fill="#A0683A"/></g><g class="drops" fill="#A0683A"><circle cx="19" cy="5" r="2"/><circle cx="21" cy="10" r="1.7"/><circle cx="18" cy="14" r="1.5"/></g></g>
+      <g class="tool t-flower" transform="translate(1,4)"><path d="M2 16q2-10 9-17" stroke="#3FA34D" stroke-width="2" fill="none"/>
+        <g transform="translate(11,-3)">${[0, 72, 144, 216, 288].map((r) => `<circle cx="0" cy="-4" r="3.3" fill="#FF8FB8" transform="rotate(${r})"/>`).join("")}<circle r="2.6" fill="#FFD84D"/></g>
+        <g class="pollen" fill="#FFE14D"><circle cx="19" cy="-6" r="1.6"/><circle cx="23" cy="-1" r="1.4"/><circle cx="16" cy="-11" r="1.3"/></g></g></g></g>
   </svg></div></div>`;
   let farmerTimer = null, farmerPos = null;
-  /** The farmer runs from crop to crop and waters it; positions survive re-renders so he never teleports. */
+  /** The farmer runs between crops and animals: waters crops, and gives each animal its own feed. Positions survive re-renders. */
   function startFarmer() {
     clearInterval(farmerTimer);
-    const bot = $(".farmer-bot"), land = $(".land");
-    if (!bot || !land) return;
+    const bot = $(".farmer-bot"), map = $(".land");
+    if (!bot || !map) return;
     const place = (x, y, animate) => {
       if (!animate) bot.style.transition = "none";
       bot.style.transform = `translate(${x}px, ${y}px)`;
       if (!animate) { void bot.offsetWidth; bot.style.transition = ""; }
       farmerPos = { x, y };
     };
-    place(farmerPos ? farmerPos.x : 8, farmerPos ? farmerPos.y : 8, false);
+    place(farmerPos ? farmerPos.x : 160, farmerPos ? farmerPos.y : 160, false);
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const step = () => {
       if (!document.contains(bot)) { clearInterval(farmerTimer); return; }
-      const tiles = [...land.querySelectorAll(".plot[data-plotidx], .atile[data-animalidx]")], busy = tiles.filter((t) => !t.classList.contains("empty"));
+      const tiles = [...map.querySelectorAll(".plot[data-plotidx], .atile[data-animalidx]")], busy = tiles.filter((t) => !t.classList.contains("empty"));
       const pool = busy.length ? busy : tiles;
       if (!pool.length) return;
-      const t = pool[Math.floor(Math.random() * pool.length)];
-      const x = t.offsetLeft + t.offsetWidth / 2 - 27, y = t.offsetTop + t.offsetHeight - 70;
-      bot.classList.toggle("left", farmerPos && x < farmerPos.x);
+      const t = pool[Math.floor(Math.random() * pool.length)], kind = t.dataset.kind;
+      const mr = map.getBoundingClientRect(), r = t.getBoundingClientRect(), bw = bot.offsetWidth, bh = bot.offsetHeight;
+      // Crops: stand at the plot and water it. Animals: stand at the left of the tile, facing it, and feed it.
+      const x = kind ? r.left - mr.left - bw * 0.5 : r.left - mr.left + r.width / 2 - bw / 2, y = r.bottom - mr.top - bh * 0.92;
+      bot.classList.toggle("left", !kind && !!farmerPos && x < farmerPos.x);
+      bot.dataset.tool = kind ? FEED[kind][0] : "can";
       bot.classList.remove("work"); bot.classList.add("run");
       place(x, y, true);
       clearTimeout(bot._t);
-      bot._t = setTimeout(() => { bot.classList.remove("run"); bot.classList.add("work"); }, 1300);
+      bot._t = setTimeout(() => {
+        bot.classList.remove("run"); bot.classList.add("work");
+        if (kind && document.contains(t)) { t.classList.add("fed"); setTimeout(() => t.classList.remove("fed"), 2600); }
+      }, 1300);
     };
     setTimeout(step, 300);
     farmerTimer = setInterval(step, 3600);
   }
 
-  // ---- Traffic: vehicles drive laps on the dirt road around the farm (top-down drawings facing +x, centred on 0,0) ----
-  const VEHICLE_SVG = {
-    truck: `<svg width="34" height="19" viewBox="-17 -9.5 34 19"><rect class="wheel" x="-13" y="-9.5" width="6" height="3" rx="1"/><rect class="wheel" x="-13" y="6.5" width="6" height="3" rx="1"/>
-      <rect class="wheel" x="7" y="-9.5" width="6" height="3" rx="1"/><rect class="wheel" x="7" y="6.5" width="6" height="3" rx="1"/>
-      <rect x="-16" y="-7.5" width="21" height="15" rx="2" fill="#C98A4B"/><rect x="-14" y="-5.5" width="7.5" height="5" rx="1" fill="#F2C14E"/><rect x="-14" y=".5" width="7.5" height="5" rx="1" fill="#7ED957"/>
-      <rect x="-5.5" y="-5.5" width="8" height="11" rx="1" fill="#E5533D"/><rect x="6" y="-7.5" width="10" height="15" rx="3.5" fill="#E5533D"/><rect x="11" y="-6" width="3" height="12" rx="1" fill="#BFE6FF"/></svg>`,
-    tractor: `<svg width="30" height="21" viewBox="-15 -10.5 30 21"><rect class="wheel" x="-13" y="-10.5" width="10" height="4.5" rx="1.5"/><rect class="wheel" x="-13" y="6" width="10" height="4.5" rx="1.5"/>
-      <rect class="wheel" x="6" y="-8.5" width="6" height="3" rx="1"/><rect class="wheel" x="6" y="5.5" width="6" height="3" rx="1"/>
-      <rect x="-12" y="-6.5" width="25" height="13" rx="3" fill="#3FA34D"/><rect x="2" y="-4.5" width="11" height="9" rx="2.5" fill="#2E7D32"/><circle cx="9" cy="-2.5" r="1.3" fill="#FFE66D"/><circle cx="9" cy="2.5" r="1.3" fill="#FFE66D"/>
-      <rect x="-10" y="-5" width="9" height="10" rx="2" fill="#FFD84D"/><rect x="-8.5" y="-3.5" width="6" height="7" rx="1" fill="#BFE6FF"/></svg>`,
-    van: `<svg width="30" height="17" viewBox="-15 -8.5 30 17"><rect class="wheel" x="-11" y="-8.5" width="5" height="2.6" rx="1"/><rect class="wheel" x="-11" y="5.9" width="5" height="2.6" rx="1"/>
-      <rect class="wheel" x="5" y="-8.5" width="5" height="2.6" rx="1"/><rect class="wheel" x="5" y="5.9" width="5" height="2.6" rx="1"/>
-      <rect x="-14" y="-6.8" width="28" height="13.6" rx="4" fill="#4FA8E8"/><rect x="-12" y="-4.8" width="16" height="9.6" rx="2" fill="#fff"/><circle cx="-4" cy="0" r="2.6" fill="#4FA8E8"/>
-      <rect x="7" y="-5.5" width="3.5" height="11" rx="1" fill="#BFE6FF"/></svg>`,
+
+  // ---- Farm map: one big top-down map (1600×1000 world units) drawn in SVG, with the field, pens, buildings and farmer as
+  // interactive HTML layers on top. Everything inside scales with the map (CSS var --u = one world unit). ----
+  const MAPW = 1600, MAPH = 1000;
+  const at = (x, y, w, h) => `left:${x / 16}%;top:${y / 10}%${w ? `;width:${w / 16}%` : ""}${h ? `;height:${h / 10}%` : ""}`;
+  // Buildings: footprint in world units; lv = farm level that builds it (1 = there from the start).
+  const MAP_BLD = [
+    { id: "house", emo: "🏡", vi: "Nhà ở", en: "farmhouse", lv: 1, x: 40, y: 60, w: 240, h: 190, about: "Nhà của bác nông dân. Mua “Nhà trang trại” ở mục Trang trí để xây căn nhà lớn." },
+    { id: "windmill", emo: "🌬️", vi: "Cối xay gió", en: "windmill", lv: 3, x: 370, y: 40, w: 110, h: 210, about: "Cối xay gió xay lúa mì thành bột." },
+    { id: "cotton", emo: "🧶", vi: "Xưởng bông", en: "cotton mill", lv: 8, x: 495, y: 85, w: 190, h: 165, about: "Xưởng bông kéo sợi từ bông và lông cừu." },
+    { id: "sawmill", emo: "🪵", vi: "Xưởng gỗ", en: "sawmill", lv: 5, x: 705, y: 85, w: 190, h: 165, about: "Xưởng gỗ xẻ gỗ từ khu rừng phía sau trang trại." },
+    { id: "greenhouse", emo: "🪴", vi: "Nhà kính", en: "greenhouse", lv: 12, x: 930, y: 105, w: 185, h: 145, about: "Nhà kính giữ ấm cho cây quanh năm." },
+    { id: "warehouse", emo: "🏚️", vi: "Nhà kho", en: "warehouse", lv: 1, x: 1150, y: 45, w: 280, h: 205, go: "barn-panel" },
+    { id: "market", emo: "🛒", vi: "Chợ nông sản", en: "farmers' market", lv: 1, x: 620, y: 795, w: 270, h: 180, go: "orders-panel" },
+    { id: "dock", emo: "🎣", vi: "Bến cá", en: "fishing dock", lv: 16, x: 1150, y: 850, w: 170, h: 130, about: "Bến cá bên bờ sông, nơi thuyền nhỏ neo đậu." },
+  ];
+  const BLD = Object.fromEntries(MAP_BLD.map((b) => [b.id, b]));
+  // Roads (centre lines) and the routes vehicles drive along (lanes offset from the centre line, rounded corners).
+  const ROADS = "M30 285H1570M30 735H1570M30 285V735M1570 285V735M905 285V735M1290 232V285M720 735V805M160 248V285";
+  const ROUTE = {
+    truck: "M1290 236V266Q1290 276 1280 276H924Q914 276 914 286V734Q914 744 904 744H730Q720 744 720 754V798",
+    tractor: "M48 294H886Q896 294 896 304V716Q896 726 886 726H48Q38 726 38 716V304Q38 294 48 294Z",
   };
-  // lane: distance in from the land edge; dir 1 = clockwise (outer lane), -1 = counter-clockwise (inner lane); speed in px/s
-  const TRAFFIC = [{ kind: "truck", lane: "out", dir: 1, speed: 70, d: 0 }, { kind: "tractor", lane: "in", dir: -1, speed: 42, d: 0.45 }, { kind: "van", lane: "out", dir: 1, speed: 70, d: 0.55 }];
-  /** Point and heading (degrees) at distance d clockwise along a rounded rectangle; starts where the top edge leaves the top-left corner. */
-  function ringPoint(w, h, inset, r, d) {
-    const a = Math.max(0, w - 2 * inset - 2 * r), b = Math.max(0, h - 2 * inset - 2 * r), arc = (Math.PI * r) / 2;
-    const L = inset, T = inset, R = w - inset, B = h - inset;
-    const segs = [[a, (t) => [L + r + t, T, 0]], [arc, (t) => corner(R - r, T + r, -90, t)], [b, (t) => [R, T + r + t, 90]], [arc, (t) => corner(R - r, B - r, 0, t)],
-      [a, (t) => [R - r - t, B, 180]], [arc, (t) => corner(L + r, B - r, 90, t)], [b, (t) => [L, B - r - t, 270]], [arc, (t) => corner(L + r, T + r, 180, t)]];
-    function corner(cx, cy, from, t) { const th = from + (t / arc) * 90, rad = (th * Math.PI) / 180; return [cx + r * Math.cos(rad), cy + r * Math.sin(rad), th + 90]; }
-    const P = 2 * a + 2 * b + 4 * arc;
-    let x = ((d % P) + P) % P;
-    for (const [len, at] of segs) { if (x <= len) return at(x); x -= len; }
-    return segs[0][1](0);
+  const FIELD = { x: 90, y: 330, w: 664 }, RANCH = { x: 935, y: 311, w: 585 };
+
+  const treeR = (x, y, s, c) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cy="3" rx="22" ry="6" fill="rgba(0,0,0,.16)"/>
+    <rect x="-4" y="-16" width="8" height="19" rx="3" fill="#8B5A2B"/><circle cy="-34" r="24" fill="${c}"/><circle cx="-9" cy="-42" r="9" fill="#fff" opacity=".18"/></g>`;
+  const pine = (x, y, s) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cy="3" rx="16" ry="5" fill="rgba(0,0,0,.16)"/><rect x="-3.5" y="-10" width="7" height="13" fill="#7A4A22"/>
+    <path d="M0 -64L19 -28H-19ZM0 -48L23 -8H-23Z" fill="#2E7D32"/><path d="M0 -64L19 -28H7ZM0 -48L23 -8H9Z" fill="#256B29"/></g>`;
+  const apple = (x, y) => treeR(x, y, 1.1, "#4CAF50") + `<g fill="#E53935">${[[-10, -40], [6, -30], [12, -46], [-4, -24], [-16, -30]].map(([a, b]) => `<circle cx="${x + a * 1.1}" cy="${y + b * 1.1}" r="3.6"/>`).join("")}</g>`;
+  const bush = (x, y, c = "#5DBB47") => `<g fill="${c}"><circle cx="${x}" cy="${y}" r="11"/><circle cx="${x + 12}" cy="${y + 2}" r="9"/><circle cx="${x - 11}" cy="${y + 3}" r="8"/></g>`;
+  const flowersAt = (x, y, n) => Array.from({ length: n }, (_, i) => `<circle cx="${x + (i % 6) * 13}" cy="${y + Math.floor(i / 6) * 12 + (i % 2) * 4}" r="4.5" fill="${["#FF6B9A", "#FFD84D", "#FF8A3D", "#B57BFF", "#fff"][i % 5]}"/>`).join("");
+  const FOREST = (() => { // a deterministic band of trees along the top edge and a few at the sides
+    const out = [], cols = ["#3E9B3A", "#57B947", "#2F8A34", "#E8A33D", "#D9653B", "#4CAF50"];
+    for (let i = 0; i < 38; i++) { const x = 8 + i * 43 + ((i * 37) % 17), y = 44 + ((i * 53) % 22); out.push(i % 3 === 1 ? pine(x, y, 1) : treeR(x, y, 0.95, cols[(i * 7) % cols.length])); }
+    return out.join("");
+  })();
+
+  // Building drawings, each drawn in its own box (0,0 = top-left of the footprint).
+  const smoke = (x, y) => `<g transform="translate(${x},${y})">${[0, 1, 2].map((k) => `<circle class="smoke" r="${7 + k * 2}" fill="#fff" opacity=".8" style="animation-delay:${-k * 1}s"/>`).join("")}</g>`;
+  const DRAW = {
+    house: (big) => big ? `<ellipse cx="120" cy="186" rx="118" ry="10" fill="rgba(0,0,0,.15)"/>
+        <rect x="20" y="78" width="200" height="104" fill="#C68A4E"/><path d="M20 98h200M20 118h200M20 138h200M20 158h200" stroke="#A86F38" stroke-width="2"/>
+        <rect x="150" y="16" width="20" height="40" fill="#9E5B3C"/>${smoke(160, 10)}
+        <path d="M6 84L120 8L234 84Z" fill="#D2452F"/><path d="M6 84L120 8L234 84" fill="none" stroke="#9E2B25" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M44 60h152M70 42h100" stroke="#B83229" stroke-width="3"/>
+        <rect x="102" y="122" width="36" height="60" rx="4" fill="#7A4A22"/><circle cx="130" cy="154" r="2.5" fill="#FFD84D"/>
+        ${[34, 172].map((x) => `<rect x="${x}" y="104" width="36" height="30" rx="3" fill="#8FD8FF" stroke="#fff" stroke-width="4"/><path d="M${x + 18} 104v30M${x} 119h36" stroke="#fff" stroke-width="2"/>`).join("")}
+        <rect x="60" y="178" width="120" height="8" rx="3" fill="#8B5A2B"/>`
+      : `<ellipse cx="120" cy="186" rx="80" ry="8" fill="rgba(0,0,0,.15)"/><rect x="70" y="110" width="100" height="72" fill="#B98552"/>
+        <path d="M58 116L120 66L182 116Z" fill="#E2B85C"/><path d="M58 116L120 66L182 116" fill="none" stroke="#C19432" stroke-width="5" stroke-linejoin="round"/>
+        <rect x="106" y="140" width="28" height="42" rx="3" fill="#7A4A22"/><rect x="78" y="128" width="20" height="18" fill="#8FD8FF" stroke="#fff" stroke-width="3"/>`,
+    windmill: () => `<ellipse cx="55" cy="206" rx="40" ry="7" fill="rgba(0,0,0,.15)"/><path d="M33 206L43 80H67L77 206Z" fill="#F3E2C3" stroke="#C9A877" stroke-width="3"/>
+      <rect x="47" y="168" width="16" height="38" rx="7" fill="#8B5A2B"/><path d="M40 76L55 58L70 76Z" fill="#B83229"/>
+      <g transform="translate(55,76)"><g class="blades">${[0, 90, 180, 270].map((r) => `<g transform="rotate(${r})"><rect x="-6" y="-66" width="12" height="60" rx="2" fill="#fff" stroke="#C9A877" stroke-width="2"/></g>`).join("")}<circle r="8" fill="#D9443A" stroke="#fff" stroke-width="2"/></g></g>`,
+    cotton: () => `<ellipse cx="95" cy="160" rx="92" ry="8" fill="rgba(0,0,0,.15)"/><rect x="14" y="62" width="150" height="94" fill="#F4F1E8" stroke="#D8D0BC" stroke-width="2"/>
+      <path d="M2 68L32 22H146L176 68Z" fill="#4F86C6"/><path d="M2 68h174" stroke="#3B6FA8" stroke-width="5"/>
+      <rect x="72" y="100" width="34" height="56" fill="#6B8FB8"/>${[24, 124].map((x) => `<rect x="${x}" y="84" width="30" height="24" fill="#BDE6FF" stroke="#fff" stroke-width="3"/>`).join("")}
+      <g transform="translate(160,120)"><g class="wheel"><circle r="24" fill="none" stroke="#8B5A2B" stroke-width="5"/>${[0, 45, 90, 135].map((r) => `<rect x="-1.5" y="-24" width="3" height="48" fill="#8B5A2B" transform="rotate(${r})"/>`).join("")}<circle r="5" fill="#C98A4B"/></g></g>
+      ${[[22, 156], [42, 150], [32, 140]].map(([x, y]) => `<g fill="#fff" stroke="#E2DCCB"><circle cx="${x}" cy="${y}" r="9"/><circle cx="${x + 8}" cy="${y - 4}" r="7"/></g>`).join("")}`,
+    sawmill: () => `<ellipse cx="95" cy="160" rx="92" ry="8" fill="rgba(0,0,0,.15)"/>
+      ${[20, 160].map((x) => `<rect x="${x}" y="50" width="9" height="108" fill="#7A4A22"/>`).join("")}
+      <path d="M4 56L36 18H154L186 56Z" fill="#8B5A2B"/><path d="M4 56h182" stroke="#6B3E1E" stroke-width="5"/>
+      <rect x="40" y="104" width="110" height="18" rx="3" fill="#A86F38"/><rect x="34" y="121" width="122" height="10" fill="#6B3E1E"/>
+      <g transform="translate(95,98)"><g class="saw"><circle r="20" fill="#C9CED6" stroke="#8A929E" stroke-width="2"/>${Array.from({ length: 12 }, (_, i) => `<path d="M-3 -19L0 -25L3 -19Z" fill="#8A929E" transform="rotate(${i * 30})"/>`).join("")}<circle r="4" fill="#5A6270"/></g></g>
+      ${[[22, 152], [50, 152], [36, 136]].map(([x, y]) => `<rect x="${x - 14}" y="${y - 9}" width="30" height="18" rx="9" fill="#A86F38"/><circle cx="${x + 14}" cy="${y}" r="9" fill="#E2B985" stroke="#A86F38" stroke-width="2"/>`).join("")}
+      <circle cx="70" cy="146" r="3" fill="#E2B985"/><circle cx="78" cy="150" r="2" fill="#E2B985"/>`,
+    greenhouse: () => `<ellipse cx="92" cy="140" rx="90" ry="7" fill="rgba(0,0,0,.12)"/><path d="M10 136V60L92 18L174 60V136Z" fill="#CDEFFF" opacity=".9" stroke="#fff" stroke-width="4"/>
+      <path d="M38 136V45M66 136V31M92 136V18M118 136V31M146 136V45M10 98H174M10 60H174" stroke="#fff" stroke-width="3"/>
+      <g class="shine"><path d="M30 120L60 70" stroke="#fff" stroke-width="5" opacity=".7"/></g>
+      ${[28, 58, 88, 118, 148].map((x, i) => `<circle cx="${x + 8}" cy="${124 - (i % 2) * 6}" r="9" fill="${["#5DBB47", "#7ED957", "#FF8A3D"][i % 3]}"/>`).join("")}`,
+    warehouse: () => `<ellipse cx="140" cy="200" rx="138" ry="9" fill="rgba(0,0,0,.15)"/><rect x="22" y="70" width="196" height="126" fill="#D9443A"/>
+      <path d="M22 96h196M22 124h196M22 152h196M22 178h196" stroke="#B83229" stroke-width="2"/><path d="M8 78L120 8L232 78Z" fill="#7A3B2E"/><path d="M8 78L120 8L232 78" fill="none" stroke="#5A2A20" stroke-width="6" stroke-linejoin="round"/>
+      <rect x="22" y="70" width="196" height="6" fill="#fff" opacity=".8"/><rect x="104" y="30" width="32" height="26" fill="#fff"/><rect x="108" y="34" width="24" height="18" fill="#F2C14E"/>
+      <rect x="92" y="120" width="56" height="76" fill="#fff"/><rect x="96" y="124" width="48" height="72" fill="#B83229"/><path d="M96 124L144 196M144 124L96 196" stroke="#fff" stroke-width="4"/>
+      <rect x="228" y="60" width="40" height="136" rx="8" fill="#B8C4CE"/><path d="M228 74h40M228 110h40M228 146h40" stroke="#97A6B3" stroke-width="3"/><path d="M226 62Q248 34 270 62Z" fill="#7A8C99"/>
+      ${[[38, 182], [60, 186]].map(([x, y]) => `<g><rect x="${x - 12}" y="${y - 14}" width="24" height="20" rx="3" fill="#F2C14E" stroke="#C99A2E" stroke-width="2"/><path d="M${x - 12} ${y - 6}h24" stroke="#C99A2E" stroke-width="2"/></g>`).join("")}`,
+    market: () => `<ellipse cx="135" cy="176" rx="132" ry="8" fill="rgba(0,0,0,.15)"/><rect x="20" y="70" width="230" height="102" fill="#F5D9A8"/>
+      <rect x="20" y="70" width="230" height="102" fill="none" stroke="#C99A5B" stroke-width="3"/>
+      <g class="awning">${Array.from({ length: 10 }, (_, i) => `<path d="M${10 + i * 25} 40h25v34q-12.5 10-25 0z" fill="${i % 2 ? "#fff" : "#E5533D"}"/>`).join("")}</g>
+      <rect x="6" y="30" width="258" height="12" rx="4" fill="#B83229"/>
+      <rect x="34" y="118" width="200" height="22" rx="4" fill="#A86F38"/>
+      ${[[50, "🍅"], [92, "🥕"], [134, "🌽"], [176, "🍎"], [212, "🥚"]].map(([x, e]) => `<text x="${x}" y="122" font-size="26" text-anchor="middle">${e}</text>`).join("")}
+      <rect x="110" y="140" width="46" height="32" fill="#7A4A22"/>
+      <g transform="translate(250,18)"><rect x="-2" y="0" width="4" height="56" fill="#7A4A22"/><g class="flag"><path d="M2 2h30l-8 9l8 9H2z" fill="#FFD84D"/></g></g>`,
+    dock: () => `<rect x="30" y="0" width="34" height="120" fill="#A86F38"/><path d="M30 20h34M30 44h34M30 68h34M30 92h34" stroke="#7A4A22" stroke-width="3"/>
+      <g class="bob"><path d="M84 70h70l-12 22h-46z" fill="#8B5A2B"/><path d="M90 70h58" stroke="#C98A4B" stroke-width="4"/></g>`,
+  };
+  const SITE = (w, h) => `<rect x="10" y="${h * 0.35}" width="${w - 20}" height="${h * 0.6}" rx="12" fill="#D9B98A" stroke="#B98D55" stroke-width="3" stroke-dasharray="10 8"/>
+    <rect x="${w * 0.25}" y="${h * 0.62}" width="${w * 0.4}" height="9" rx="2" fill="#A86F38" transform="rotate(-6 ${w / 2} ${h * 0.66})"/>
+    <path d="M${w * 0.7} ${h * 0.9}l10-26l10 26z" fill="#FF8A3D"/><path d="M${w * 0.7 + 4} ${h * 0.82}h12" stroke="#fff" stroke-width="3"/>`;
+
+  const STAKES = `<g fill="#8B5A2B">${[40, 70, 100].map((x) => `<rect x="${x}" y="40" width="9" height="34" rx="3"/>`).join("")}</g><path d="M40 52h70" stroke="#C98A4B" stroke-width="4"/>`;
+  // Delivery truck and tractor seen from above (facing +x, centred on 0,0); the truck's crates show only when it is loaded.
+  const MAP_VEH = {
+    truck: `<g transform="scale(1.25)"><g fill="#2E2A25"><rect x="-13" y="-9.5" width="6" height="3" rx="1"/><rect x="-13" y="6.5" width="6" height="3" rx="1"/><rect x="7" y="-9.5" width="6" height="3" rx="1"/><rect x="7" y="6.5" width="6" height="3" rx="1"/></g>
+      <rect x="-16" y="-7.5" width="21" height="15" rx="2" fill="#C98A4B"/><g class="cargo"><rect x="-14" y="-5.5" width="7.5" height="5" rx="1" fill="#F2C14E"/><rect x="-14" y=".5" width="7.5" height="5" rx="1" fill="#7ED957"/>
+      <rect x="-5.5" y="-5.5" width="8" height="11" rx="1" fill="#E5533D"/></g><rect x="6" y="-7.5" width="10" height="15" rx="3.5" fill="#E5533D"/><rect x="11" y="-6" width="3" height="12" rx="1" fill="#BFE6FF"/></g>`,
+    tractor: `<g transform="scale(1.2)"><g fill="#2E2A25"><rect x="-13" y="-10.5" width="10" height="4.5" rx="1.5"/><rect x="-13" y="6" width="10" height="4.5" rx="1.5"/><rect x="6" y="-8.5" width="6" height="3" rx="1"/><rect x="6" y="5.5" width="6" height="3" rx="1"/></g>
+      <rect x="-12" y="-6.5" width="25" height="13" rx="3" fill="#E5533D"/><rect x="2" y="-4.5" width="11" height="9" rx="2.5" fill="#B83229"/><circle cx="9" cy="-2.5" r="1.3" fill="#FFE66D"/><circle cx="9" cy="2.5" r="1.3" fill="#FFE66D"/>
+      <rect x="-10" y="-5" width="9" height="10" rx="2" fill="#FFD84D"/><rect x="-8.5" y="-3.5" width="6" height="7" rx="1" fill="#BFE6FF"/></g>`,
+  };
+
+  function mapSVG(f, lv) {
+    const has = (id) => f.deco.includes(id), built = (b) => b.lv <= lv;
+    const bld = MAP_BLD.map((b) => `<g transform="translate(${b.x},${b.y})">${built(b) ? DRAW[b.id](b.id === "house" ? has("house") : 0) : b.id === "dock" ? STAKES : SITE(b.w, b.h)}</g>`).join("");
+    const spirits = F.BEASTS.filter((b) => f.beasts[b.id] && BIMG[b.id]).map((b, k) => `<g transform="translate(${500 + k * 80},${36 + (k % 2) * 10})"><g class="spirit" style="animation-delay:${-(k * 0.8).toFixed(1)}s">
+      <circle r="27" fill="${AURA[b.id]}" class="sglow"/><image href="${BIMG[b.id]}" x="-21" y="-21" width="42" height="42" preserveAspectRatio="xMidYMin slice" clip-path="url(#mclip)"/>
+      <circle r="21" fill="none" stroke="#fff" stroke-width="2.5"/></g></g>`).join("");
+    const fx = FIELD.x - 14, fy = FIELD.y - 14, fw = FIELD.w + 28, fh = 356;
+    const fence = has("fence") ? `<g fill="none" stroke="#C98A4B" stroke-linecap="round"><rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="10" stroke-width="5"/><rect x="${fx + 4}" y="${fy + 7}" width="${fw - 8}" height="${fh - 14}" rx="8" stroke-width="3"/></g>
+      <g fill="#A86F38">${Array.from({ length: 14 }, (_, i) => `<rect x="${fx - 3 + i * (fw / 13)}" y="${fy - 6}" width="7" height="16" rx="2"/><rect x="${fx - 3 + i * (fw / 13)}" y="${fy + fh - 10}" width="7" height="16" rx="2"/>`).join("")}</g>`
+      : `<rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="14" fill="none" stroke="#6FB24B" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>`;
+    const rainbow = has("rainbow") ? `<g fill="none" stroke-width="14" opacity=".45">${["#FF6B6B", "#FFB347", "#FFE66D", "#7ED957", "#5DADE2", "#A569BD"].map((c, i) =>
+      `<path d="M${300 + i * 14} 248A${520 - i * 14} 400 0 0 1 ${1340 - i * 14} 248" stroke="${c}"/>`).join("")}</g>` : "";
+    return `<svg class="map-svg" viewBox="0 0 ${MAPW} ${MAPH}" preserveAspectRatio="none" aria-hidden="true">
+      <defs><clipPath id="mclip"><circle r="21"/></clipPath>
+        <pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#86C95A"/><path d="M6 10l2-5l2 5M26 30l2-5l2 5" stroke="#74B84B" stroke-width="2" fill="none"/></pattern></defs>
+      <rect width="${MAPW}" height="${MAPH}" fill="url(#grass)"/>
+      <path d="M860 1000C980 900 1140 965 1320 880S1540 812 1600 826V1000Z" fill="#4FB3E8"/><path d="M860 1000C980 900 1140 965 1320 880S1540 812 1600 826" fill="none" stroke="#E9D9A8" stroke-width="10"/>
+      <path class="water" d="M920 975C1030 912 1160 958 1330 900S1530 846 1600 850" fill="none" stroke="#BFE9FF" stroke-width="4" stroke-dasharray="26 22"/>
+      <path d="${ROADS}" fill="none" stroke="#C9A469" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${ROADS}" fill="none" stroke="#E6CB93" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${ROADS}" fill="none" stroke="#F3E0B4" stroke-width="5" stroke-dasharray="3 16" stroke-linecap="round"/>
+      ${FOREST}${rainbow}
+      <rect x="${FIELD.x - 8}" y="${FIELD.y - 8}" width="${FIELD.w + 16}" height="344" rx="12" fill="#9A6A3A" opacity=".35"/>${fence}
+      <g transform="translate(800,520)"><rect x="-3" y="-10" width="6" height="60" fill="#8B5A2B"/><rect x="-26" y="2" width="52" height="5" fill="#8B5A2B"/>
+        <circle cy="-16" r="11" fill="#F2C14E"/><path d="M-16 -22h32l-5-10h-22z" fill="#C98A4B"/><rect x="-12" y="6" width="24" height="26" rx="4" fill="#5DADE2"/></g>
+      ${[[790, 640], [830, 650]].map(([x, y]) => `<g><rect x="${x - 16}" y="${y - 12}" width="32" height="24" rx="6" fill="#F2C14E" stroke="#C99A2E" stroke-width="2"/><path d="M${x - 16} ${y}h32" stroke="#C99A2E" stroke-width="2"/></g>`).join("")}
+      <ellipse cx="1377" cy="650" rx="118" ry="48" fill="#6EC6F0" stroke="#E9D9A8" stroke-width="6"/>
+      ${[[1340, 640], [1410, 662]].map(([x, y], k) => `<g transform="translate(${x},${y})"><g class="bob" style="animation-delay:${-k}s"><ellipse rx="12" ry="8" fill="#fff"/><circle cx="9" cy="-7" r="6" fill="#fff"/><path d="M14 -7l6 2l-6 2z" fill="#F5A623"/></g></g>`).join("")}
+      ${has("tree") ? [[50, 870], [130, 900], [220, 870], [80, 975], [180, 985], [280, 950]].map(([x, y]) => apple(x, y)).join("") : [[60, 900], [200, 960]].map(([x, y]) => treeR(x, y, 1, "#57B947")).join("") + bush(130, 880) + bush(270, 920, "#4CAF50")}
+      ${has("flowers") ? [[350, 800], [350, 870], [470, 800], [470, 870]].map(([x, y]) => `<rect x="${x - 8}" y="${y - 10}" width="96" height="44" rx="8" fill="#8B5A2B" opacity=".55"/>${flowersAt(x, y, 18)}`).join("") : bush(400, 840) + bush(520, 900, "#4CAF50")}
+      ${has("well") ? `<g transform="translate(320,200)"><ellipse cy="24" rx="26" ry="7" fill="rgba(0,0,0,.15)"/><rect x="-24" y="-2" width="48" height="26" rx="6" fill="#9AA3AD"/><ellipse cy="-2" rx="24" ry="8" fill="#3A6EA5"/>
+        <rect x="-22" y="-40" width="5" height="40" fill="#7A4A22"/><rect x="17" y="-40" width="5" height="40" fill="#7A4A22"/><path d="M-30 -38L0 -56L30 -38Z" fill="#B83229"/></g>` : ""}
+      ${has("dog") ? `<g transform="translate(305,252)"><g class="bob"><text font-size="30" text-anchor="middle">🐕</text></g></g>` : ""}
+      ${bld}
+      ${[[1490, 120], [1530, 180], [1100, 790], [560, 800], [30, 790]].map(([x, y]) => pine(x, y, 0.9)).join("")}
+      ${bush(1000, 268, "#4CAF50")}${bush(470, 262)}
+      <path id="mroute-truck" d="${ROUTE.truck}" fill="none" stroke="none"/><path id="mroute-tractor" d="${ROUTE.tractor}" fill="none" stroke="none"/>
+      <g class="mveh" data-car="truck">${MAP_VEH.truck}</g>${has("tractor") ? `<g class="mveh" data-car="tractor">${MAP_VEH.tractor}</g>` : ""}
+      ${spirits}
+    </svg>`;
   }
-  let trafficRaf = 0;
-  /** Vehicles keep their lap position (a fraction of the lap) across re-renders, so they never jump. */
-  function startTraffic() {
-    cancelAnimationFrame(trafficRaf);
-    const land = $(".land"), ring = $(".road-ring");
-    if (!land || !ring) return;
-    const cars = TRAFFIC.map((v, k) => ({ v, el: land.querySelector(`[data-veh="${k}"]`) })).filter((c) => c.el);
-    let w = 0, h = 0, last = 0;
-    const measure = () => {
-      const cs = getComputedStyle(land), rw = parseFloat(cs.getPropertyValue("--rw")) || 30, ri = parseFloat(cs.getPropertyValue("--ri")) || 8;
-      const rad = parseFloat(getComputedStyle(ring).borderTopLeftRadius) || 30;
-      w = land.clientWidth; h = land.clientHeight;
-      for (const c of cars) {
-        c.inset = ri + rw * (c.v.lane === "out" ? 0.27 : 0.73);
-        c.r = Math.max(4, rad - (c.inset - ri));
-        c.len = 2 * Math.max(0, w - 2 * c.inset - 2 * c.r) + 2 * Math.max(0, h - 2 * c.inset - 2 * c.r) + 2 * Math.PI * c.r;
-        c.hw = c.el.offsetWidth / 2; c.hh = c.el.offsetHeight / 2;
-      }
+  function mapSigns(f, lv) {
+    return MAP_BLD.map((b) => {
+      const ok = b.lv <= lv, extra = b.id === "warehouse" ? ` · ${F.stock(f)}/${f.cap}` : "";
+      return `<button type="button" class="bld${ok ? "" : " locked"}" data-bld="${b.id}" style="${at(b.x, b.y, b.w, b.h)}" aria-label="${esc(b.vi)}${ok ? "" : `: mở ở cấp ${b.lv}`}">
+        <span class="sign">${ok ? b.emo : "🔒"} ${esc(b.vi)}${ok ? extra : ` · cấp ${b.lv}`}</span></button>`;
+    }).join("");
+  }
+  function farmMap(f, now, lv) {
+    return `<div class="map-scroll"><div class="land map">
+      ${mapSVG(f, lv)}
+      ${mapSigns(f, lv)}
+      <div class="zone-head" style="${at(FIELD.x, FIELD.y - 34)}">🌱 Cánh đồng</div>
+      <div class="field" style="${at(FIELD.x, FIELD.y, FIELD.w)}">${fieldSlots(f, now, lv)}</div>
+      <div class="ranch" style="${at(RANCH.x, RANCH.y, RANCH.w)}">${ranchGroups(f, now, lv)}</div>
+      <div class="bubble">${TIPS[Math.floor(now / 60000) % TIPS.length]}</div>
+      ${farmerBot()}
+    </div></div><p class="small muted map-hint">👉 Kéo ngang bản đồ để xem toàn bộ trang trại</p>`;
+  }
+  function buildingSheet(id) {
+    const b = BLD[id], lv = F.level(S.farm.xp);
+    if (!b) return;
+    if (b.go && b.lv <= lv) { const el = $(`#${b.go}`); if (el) { el.scrollIntoView({ block: "start", behavior: "smooth" }); el.classList.remove("flashp"); void el.offsetWidth; el.classList.add("flashp"); } return; }
+    sheet(`<div class="row" style="justify-content:space-between"><h2>${b.emo} ${esc(b.vi)}</h2><button class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>
+      <div class="row"><span class="word" style="font-size:1.6rem">${esc(b.en)}</span>${sayEn(b.en)}</div>
+      ${b.lv <= lv ? `<p>${esc(b.about)}</p><p class="chip good" style="width:max-content">✓ Đã xây xong</p>`
+        : `<p>🚧 Công trình sẽ được xây khi nông trại đạt <b>cấp ${b.lv}</b> (bạn đang ở cấp ${lv}).</p><p class="small muted">${esc(b.about)}</p>`}
+      <div><button type="button" class="btn ghost" data-close>Đóng</button></div>`, b.vi);
+  }
+
+  // Vehicles drive their routes; positions live in MAP_CARS so a re-render never makes them jump.
+  const MAP_CARS = { truck: { d: 0, dir: 1, wait: 0, speed: 110 }, tractor: { d: 0, dir: 1, wait: 0, speed: 60, loop: true } };
+  let mapRaf = 0;
+  function startMapTraffic() {
+    cancelAnimationFrame(mapRaf);
+    const svg = $(".map-svg");
+    if (!svg) return;
+    const cars = [...svg.querySelectorAll("[data-car]")].map((g) => {
+      const p = svg.querySelector(`#mroute-${g.dataset.car}`);
+      return { g, p, len: p.getTotalLength(), st: MAP_CARS[g.dataset.car] };
+    });
+    const place = (c) => {
+      const d = Math.max(0, Math.min(c.len, c.st.d)), pt = c.p.getPointAtLength(d);
+      const a = c.p.getPointAtLength(Math.max(0, d - 2)), b = c.p.getPointAtLength(Math.min(c.len, d + 2));
+      const hd = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI + (c.st.dir < 0 ? 180 : 0);
+      c.g.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)}) rotate(${hd.toFixed(1)})`);
+      c.g.classList.toggle("empty", c.st.dir < 0); // the truck unloads at the market and drives back empty
     };
-    const draw = () => {
-      for (const c of cars) {
-        let [x, y, hd] = ringPoint(w, h, c.inset, c.r, c.v.d * c.len * c.v.dir);
-        if (c.v.dir < 0) hd += 180;
-        c.el.style.transform = `translate(${(x - c.hw).toFixed(1)}px, ${(y - c.hh).toFixed(1)}px) rotate(${hd.toFixed(1)}deg)`;
-      }
-    };
-    measure(); draw();
+    cars.forEach(place);
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let last = 0;
     const tick = (t) => {
-      if (!document.contains(land)) return;
+      if (!document.contains(svg)) return;
       const dt = last ? Math.min(0.1, (t - last) / 1000) : 0; last = t;
-      if (land.clientWidth !== w || land.clientHeight !== h) measure();
-      for (const c of cars) if (c.len) c.v.d = (c.v.d + (c.v.speed * dt) / c.len) % 1;
-      draw();
-      trafficRaf = requestAnimationFrame(tick);
+      for (const c of cars) {
+        const s = c.st;
+        if (s.loop) s.d = (s.d + s.speed * dt) % c.len;
+        else if (s.wait > 0) s.wait -= dt;
+        else {
+          s.d += s.speed * dt * s.dir;
+          if (s.d >= c.len) { s.d = c.len; s.dir = -1; s.wait = 2.5; } else if (s.d <= 0) { s.d = 0; s.dir = 1; s.wait = 2.5; }
+        }
+        place(c);
+      }
+      mapRaf = requestAnimationFrame(tick);
     };
-    trafficRaf = requestAnimationFrame(tick);
+    mapRaf = requestAnimationFrame(tick);
   }
 
   // ---- Animal pens: each kind of animal gets its own fenced pen with a building; animals wander, ready ones show their product ----
@@ -1114,8 +1267,9 @@
     const pr = F.ITEMS[a.prod], dur = a.min * F.MIN, left = F.remaining(x.at, a.min, now), d = -(k * 0.6).toFixed(1);
     const art = `<svg class="anim" viewBox="-44 -44 88 72" aria-hidden="true">${a.id === "bee" ? ANIMAL_SVG.bee(d)
       : `<g class="wander" style="--dx:${k % 2 ? -6 : 6}px;animation-duration:${3 + k}s">${ANIMAL_SVG[a.id](d)}</g>`}</svg>`;
-    if (!left) return `<button type="button" class="atile ready" data-animalidx="${i}" aria-label="Thu ${esc(pr.vi)} từ ${esc(a.vi)}">${art}<span class="prod">${pr.emo}</span><span class="lbl">Thu ${pr.emo}</span></button>`;
-    return `<button type="button" class="atile" data-animalidx="${i}" ${timer(x.at + dur, dur)} aria-label="${esc(a.vi)}: còn ${fmtLeft(left)}">${art}<span class="t num">${fmtLeft(left)}</span>${bar(1 - left / dur)}</button>`;
+    const kind = `data-kind="${a.id}" data-food="${FEED[a.id][1]}"`;
+    if (!left) return `<button type="button" class="atile ready" data-animalidx="${i}" ${kind} aria-label="Thu ${esc(pr.vi)} từ ${esc(a.vi)}">${art}<span class="prod">${pr.emo}</span><span class="lbl">Thu ${pr.emo}</span></button>`;
+    return `<button type="button" class="atile" data-animalidx="${i}" ${kind} ${timer(x.at + dur, dur)} aria-label="${esc(a.vi)}: còn ${fmtLeft(left)}">${art}<span class="t num">${fmtLeft(left)}</span>${bar(1 - left / dur)}</button>`;
   }
   function animalSheet(i) {
     const f = S.farm, x = f.animals[i]; if (!x) return;
@@ -1701,6 +1855,7 @@
     reload: () => location.reload(),
     buyplot: () => farmDone(F.buyPlot(S.farm), "Đã mở thêm một ô đất 🟫"),
     animalshop: () => animalShop(),
+    bld: (v) => buildingSheet(v),
     buyanimal: (v) => {
       const a = F.ANIMAL[v];
       farmDone(F.buyAnimal(S.farm, v, Date.now()), `Chào mừng ${a.emo} ${a.vi} đến nông trại!`, a.en, () => {
