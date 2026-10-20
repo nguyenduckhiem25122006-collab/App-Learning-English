@@ -1,0 +1,980 @@
+[
+  {
+    "id": "m9-01",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Hệ hai phương trình bậc nhất hai ẩn",
+    "title": "Hệ hai phương trình bậc nhất hai ẩn",
+    "sum": "Phương trình bậc nhất hai ẩn ax + by = c có vô số nghiệm, biểu diễn bởi một đường thẳng. Hệ hai phương trình như vậy có 1 nghiệm, vô nghiệm hoặc vô số nghiệm và được giải bằng phương pháp thế hoặc cộng đại số.",
+    "points": [
+      "Phương trình bậc nhất hai ẩn: ax + by = c, với a, b không đồng thời bằng 0.",
+      "Mỗi nghiệm là một cặp số (x; y); tập nghiệm được biểu diễn bởi một đường thẳng.",
+      "Nghiệm của hệ là nghiệm chung của hai phương trình = giao điểm của hai đường thẳng.",
+      "Phương pháp thế: rút một ẩn từ một phương trình rồi thế vào phương trình còn lại.",
+      "Phương pháp cộng đại số: nhân hệ số thích hợp rồi cộng/trừ vế theo vế để khử một ẩn.",
+      "Hai đường thẳng cắt nhau ⇒ 1 nghiệm; song song ⇒ vô nghiệm; trùng nhau ⇒ vô số nghiệm."
+    ],
+    "formulas": [
+      "ax + by = c (a ≠ 0 hoặc b ≠ 0)",
+      "Hệ: a₁x + b₁y = c₁ và a₂x + b₂y = c₂"
+    ],
+    "viz": {
+      "type": "system"
+    },
+    "vizNote": "Kéo bốn thanh trượt a₁, b₁, a₂, b₂: giao điểm hai đường thẳng là nghiệm của hệ; khi a₁ = a₂ và b₁ ≠ b₂ hai đường song song ⇒ hệ vô nghiệm.",
+    "memo": "“Cắt – một, Song – không, Trùng – vô số”: nhìn vị trí hai đường thẳng là biết hệ có bao nhiêu nghiệm.",
+    "example": {
+      "q": "Giải hệ phương trình: x + y = 5 và 2x − y = 1.",
+      "a": "Cộng vế theo vế hai phương trình (khử y): 3x = 6 ⇒ x = 2.\nThế x = 2 vào x + y = 5 ⇒ y = 3.\nThử lại: 2·2 − 3 = 1 ✓.\nVậy hệ có nghiệm duy nhất (x; y) = (2; 3)."
+    },
+    "terms": [
+      [
+        "linear equation in two variables",
+        "phương trình bậc nhất hai ẩn"
+      ],
+      [
+        "system of equations",
+        "hệ phương trình"
+      ],
+      [
+        "substitution method",
+        "phương pháp thế"
+      ],
+      [
+        "elimination method",
+        "phương pháp cộng đại số"
+      ],
+      [
+        "solution",
+        "nghiệm"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Cặp số nào là nghiệm của phương trình 2x + 3y = 7?",
+        "opts": [
+          "(1; 2)",
+          "(2; 1)",
+          "(3; 1)",
+          "(0; 2)"
+        ],
+        "a": 1,
+        "why": "Thay vào: 2·2 + 3·1 = 4 + 3 = 7. Các cặp khác cho 8, 9, 6."
+      },
+      {
+        "q": "Nghiệm của hệ x − y = 1 và x + y = 7 là:",
+        "opts": [
+          "(4; 3)",
+          "(3; 4)",
+          "(5; 2)",
+          "(8; 7)"
+        ],
+        "a": 0,
+        "why": "Cộng hai phương trình: 2x = 8 ⇒ x = 4, rồi y = 7 − 4 = 3."
+      },
+      {
+        "q": "Hệ gồm y = 2x + 1 và y = 2x − 3 có bao nhiêu nghiệm?",
+        "opts": [
+          "1 nghiệm",
+          "2 nghiệm",
+          "Vô nghiệm",
+          "Vô số nghiệm"
+        ],
+        "a": 2,
+        "why": "Cùng hệ số góc 2 nhưng tung độ gốc khác nhau ⇒ hai đường thẳng song song, không có điểm chung."
+      },
+      {
+        "q": "Mua 2 bút và 3 vở hết 36 000 đ; mua 1 bút và 2 vở hết 22 000 đ. Giá một chiếc bút là:",
+        "opts": [
+          "8 000 đ",
+          "5 000 đ",
+          "4 000 đ",
+          "6 000 đ"
+        ],
+        "a": 3,
+        "why": "Gọi giá bút b, vở v (nghìn đồng): b = 22 − 2v; 2(22 − 2v) + 3v = 36 ⇒ v = 8, b = 6."
+      }
+    ]
+  },
+  {
+    "id": "m9-02",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Phương trình và bất phương trình bậc nhất một ẩn",
+    "title": "Bất đẳng thức và bất phương trình bậc nhất một ẩn",
+    "sum": "Bất đẳng thức so sánh hai số hoặc hai biểu thức bằng <, >, ≤, ≥. Giải bất phương trình bậc nhất một ẩn bằng cách chuyển vế rồi chia hai vế cho hệ số, nhớ đổi chiều khi chia cho số âm.",
+    "points": [
+      "Bất đẳng thức có dạng a < b, a > b, a ≤ b, a ≥ b (a là vế trái, b là vế phải).",
+      "Tính chất bắc cầu: a < b và b < c ⇒ a < c.",
+      "Cộng cùng một số vào hai vế: chiều bất đẳng thức giữ nguyên.",
+      "Nhân hai vế với số dương: giữ nguyên chiều; nhân với số âm: đổi chiều.",
+      "Bất phương trình bậc nhất một ẩn: ax + b > 0 (hoặc <, ≤, ≥) với a ≠ 0.",
+      "Cách giải: chuyển vế đổi dấu, rồi chia hai vế cho a (a < 0 thì đổi chiều)."
+    ],
+    "formulas": [
+      "a < b ⇒ a + c < b + c",
+      "a < b, c > 0 ⇒ ac < bc",
+      "a < b, c < 0 ⇒ ac > bc",
+      "ax + b > 0 (a > 0) ⇔ x > −b/a"
+    ],
+    "viz": {
+      "type": "numberline"
+    },
+    "vizNote": "Kéo điểm x trên trục số và nhìn số đối −x: x tăng thì −x giảm — đó là lí do nhân hai vế với số âm phải đổi chiều bất đẳng thức.",
+    "memo": "“Nhân, chia số âm – lật ngược dấu ngay; số dương thì cứ để yên.”",
+    "example": {
+      "q": "Giải bất phương trình 3 − 2x ≥ 7 và biểu diễn tập nghiệm trên trục số.",
+      "a": "Chuyển 3 sang vế phải: −2x ≥ 7 − 3 = 4.\nChia hai vế cho −2 (số âm ⇒ đổi chiều): x ≤ −2.\nTrục số: lấy cả điểm −2 và toàn bộ phần bên trái nó.\nThử x = −3: 3 − 2·(−3) = 9 ≥ 7 ✓."
+    },
+    "terms": [
+      [
+        "inequality",
+        "bất đẳng thức"
+      ],
+      [
+        "linear inequality in one variable",
+        "bất phương trình bậc nhất một ẩn"
+      ],
+      [
+        "solution set",
+        "tập nghiệm"
+      ],
+      [
+        "less than or equal to",
+        "nhỏ hơn hoặc bằng"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Cho a < b. Khẳng định nào đúng?",
+        "opts": [
+          "−3a < −3b",
+          "a − 5 < b − 5",
+          "2a > 2b",
+          "a + 1 > b + 1"
+        ],
+        "a": 1,
+        "why": "Cộng −5 vào hai vế giữ nguyên chiều. Nhân với −3 phải đổi chiều: −3a > −3b."
+      },
+      {
+        "q": "Nghiệm của bất phương trình −4x + 8 ≤ 0 là:",
+        "opts": [
+          "x ≥ 2",
+          "x ≤ 2",
+          "x ≥ −2",
+          "x ≤ −2"
+        ],
+        "a": 0,
+        "why": "−4x ≤ −8; chia hai vế cho −4 (số âm) nên đổi chiều: x ≥ 2."
+      },
+      {
+        "q": "Bất phương trình nào là bất phương trình bậc nhất một ẩn?",
+        "opts": [
+          "0x + 3 > 0",
+          "x² − 1 < 0",
+          "5 − 2x ≥ 0",
+          "1/x + 2 > 0"
+        ],
+        "a": 2,
+        "why": "5 − 2x ≥ 0 có dạng ax + b ≥ 0 với a = −2 ≠ 0. Còn 0x + 3 > 0 có a = 0 nên không phải."
+      },
+      {
+        "q": "Số nguyên x lớn nhất thỏa mãn 3x + 1 < 14 là:",
+        "opts": [
+          "5",
+          "13",
+          "3",
+          "4"
+        ],
+        "a": 3,
+        "why": "3x < 13 ⇒ x < 13/3 ≈ 4,33. Số nguyên lớn nhất nhỏ hơn 4,33 là 4."
+      }
+    ]
+  },
+  {
+    "id": "m9-03",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Căn bậc hai và căn bậc ba",
+    "title": "Căn bậc hai, căn bậc ba và biến đổi biểu thức chứa căn",
+    "sum": "Căn bậc hai số học của a ≥ 0 là số không âm có bình phương bằng a; căn bậc ba của a là số có lập phương bằng a. Khai căn tích, thương, đưa thừa số ra ngoài dấu căn và trục căn ở mẫu giúp rút gọn biểu thức.",
+    "points": [
+      "Số dương a có hai căn bậc hai là √a và −√a; số 0 có căn bậc hai là 0; số âm không có.",
+      "√(A²) = |A|: khai căn một bình phương nhớ lấy giá trị tuyệt đối.",
+      "Căn thức bậc hai √A xác định khi A ≥ 0.",
+      "Khai căn tích, thương: √(ab) = √a·√b (a, b ≥ 0); √(a/b) = √a/√b (a ≥ 0, b > 0).",
+      "Đưa thừa số ra ngoài dấu căn: √(a²b) = |a|·√b (b ≥ 0); trục căn ở mẫu để mẫu không còn căn.",
+      "Mọi số thực có đúng một căn bậc ba: ∛8 = 2, ∛(−27) = −3."
+    ],
+    "formulas": [
+      "√(A²) = |A|",
+      "√(AB) = √A·√B (A, B ≥ 0)",
+      "√(A/B) = √A/√B (A ≥ 0, B > 0)",
+      "(∛a)³ = ∛(a³) = a"
+    ],
+    "viz": {
+      "type": "numberline"
+    },
+    "vizNote": "Kéo điểm x sang trái và sang phải 0, quan sát |x|: dù x âm hay dương, √(x²) luôn bằng |x| ≥ 0.",
+    "memo": "“Căn chẵn đòi dương, căn lẻ chẳng ngại âm”: √ chỉ nhận số ≥ 0, còn ∛ nhận mọi số. Bình phương rồi khai căn thì khoác áo trị tuyệt đối.",
+    "example": {
+      "q": "Rút gọn A = √50 − √18 + √8 và trục căn thức ở mẫu của 6/√3.",
+      "a": "√50 = √(25·2) = 5√2; √18 = √(9·2) = 3√2; √8 = √(4·2) = 2√2.\nA = 5√2 − 3√2 + 2√2 = 4√2.\n6/√3 = 6·√3/(√3·√3) = 6√3/3 = 2√3."
+    },
+    "terms": [
+      [
+        "square root",
+        "căn bậc hai"
+      ],
+      [
+        "principal square root",
+        "căn bậc hai số học"
+      ],
+      [
+        "cube root",
+        "căn bậc ba"
+      ],
+      [
+        "rationalize the denominator",
+        "trục căn thức ở mẫu"
+      ],
+      [
+        "radical expression",
+        "biểu thức chứa căn"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Rút gọn √((3 − √10)²) được:",
+        "opts": [
+          "3 − √10",
+          "√10 − 3",
+          "3 + √10",
+          "−3 − √10"
+        ],
+        "a": 1,
+        "why": "√(A²) = |A|; vì √10 ≈ 3,16 > 3 nên |3 − √10| = √10 − 3."
+      },
+      {
+        "q": "Biểu thức √(2x − 6) xác định khi:",
+        "opts": [
+          "x > 3",
+          "x ≤ 3",
+          "x ≥ −3",
+          "x ≥ 3"
+        ],
+        "a": 3,
+        "why": "Cần 2x − 6 ≥ 0 ⇒ x ≥ 3 (x = 3 vẫn được vì √0 = 0)."
+      },
+      {
+        "q": "Giá trị của ∛(−64) + √49 là:",
+        "opts": [
+          "3",
+          "11",
+          "−11",
+          "Không xác định"
+        ],
+        "a": 0,
+        "why": "∛(−64) = −4 vì (−4)³ = −64; √49 = 7; tổng là −4 + 7 = 3."
+      },
+      {
+        "q": "Trục căn thức ở mẫu: 2/(√5 − √3) bằng:",
+        "opts": [
+          "√5 − √3",
+          "2(√5 + √3)",
+          "√5 + √3",
+          "(√5 + √3)/2"
+        ],
+        "a": 2,
+        "why": "Nhân tử và mẫu với √5 + √3: mẫu = 5 − 3 = 2, nên được 2(√5 + √3)/2 = √5 + √3."
+      }
+    ]
+  },
+  {
+    "id": "m9-04",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Hệ thức lượng trong tam giác vuông",
+    "title": "Tỉ số lượng giác của góc nhọn",
+    "sum": "Trong tam giác vuông, với góc nhọn α: sin = đối/huyền, cos = kề/huyền, tan = đối/kề, cot = kề/đối. Hai góc phụ nhau thì sin góc này bằng cos góc kia, tan góc này bằng cot góc kia.",
+    "points": [
+      "sin α = cạnh đối / cạnh huyền; cos α = cạnh kề / cạnh huyền.",
+      "tan α = cạnh đối / cạnh kề; cot α = cạnh kề / cạnh đối.",
+      "Với góc nhọn α: 0 < sin α < 1, 0 < cos α < 1 và tan α · cot α = 1.",
+      "α + β = 90° ⇒ sin α = cos β, cos α = sin β, tan α = cot β, cot α = tan β.",
+      "Góc đặc biệt: sin 30° = 1/2, sin 45° = √2/2, sin 60° = √3/2; tan 45° = 1.",
+      "Khi góc α tăng (0° < α < 90°): sin α, tan α tăng; cos α, cot α giảm."
+    ],
+    "formulas": [
+      "sin α = đối/huyền; cos α = kề/huyền",
+      "tan α = đối/kề; cot α = kề/đối",
+      "sin α = cos(90° − α); tan α = cot(90° − α)",
+      "tan α · cot α = 1"
+    ],
+    "viz": {
+      "type": "trig"
+    },
+    "vizNote": "Kéo góc α: cạnh đối dài ra nên sin α và tan α tăng, còn cos α và cot α giảm; tại α = 45° thì sin α = cos α và tan α = cot α = 1.",
+    "memo": "“Sin đi học, Cos không hư, Tan đoàn kết, Cot kết đoàn”: sin = Đối/Huyền, cos = Kề/Huyền, tan = Đối/Kề, cot = Kề/Đối.",
+    "example": {
+      "q": "Tam giác ABC vuông tại A có AB = 3 cm, AC = 4 cm. Tính các tỉ số lượng giác của góc B.",
+      "a": "BC = √(3² + 4²) = √25 = 5 (cm).\nVới góc B: cạnh đối là AC = 4, cạnh kề là AB = 3, cạnh huyền BC = 5.\nsin B = 4/5; cos B = 3/5; tan B = 4/3; cot B = 3/4.\n(Góc C phụ góc B nên sin C = cos B = 3/5.)"
+    },
+    "terms": [
+      [
+        "trigonometric ratio",
+        "tỉ số lượng giác"
+      ],
+      [
+        "acute angle",
+        "góc nhọn"
+      ],
+      [
+        "hypotenuse",
+        "cạnh huyền"
+      ],
+      [
+        "opposite side",
+        "cạnh đối"
+      ],
+      [
+        "adjacent side",
+        "cạnh kề"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Tam giác vuông có cạnh huyền 10, cạnh đối của góc α bằng 6. cos α bằng:",
+        "opts": [
+          "0,6",
+          "0,75",
+          "0,8",
+          "4/3"
+        ],
+        "a": 2,
+        "why": "Cạnh kề = √(10² − 6²) = √64 = 8, nên cos α = 8/10 = 0,8."
+      },
+      {
+        "q": "sin 50° bằng:",
+        "opts": [
+          "cos 50°",
+          "cos 40°",
+          "sin 40°",
+          "tan 40°"
+        ],
+        "a": 1,
+        "why": "50° và 40° là hai góc phụ nhau (tổng 90°) nên sin 50° = cos 40°."
+      },
+      {
+        "q": "tan 60° bằng:",
+        "opts": [
+          "√3",
+          "√3/3",
+          "1/2",
+          "√3/2"
+        ],
+        "a": 0,
+        "why": "Tam giác vuông có góc 60°: cạnh đối : cạnh kề = √3 : 1, nên tan 60° = √3."
+      },
+      {
+        "q": "Khẳng định nào SAI với góc nhọn α?",
+        "opts": [
+          "0 < sin α < 1",
+          "tan α · cot α = 1",
+          "sin α = cos(90° − α)",
+          "cos α có thể lớn hơn 1"
+        ],
+        "a": 3,
+        "why": "Cạnh kề luôn ngắn hơn cạnh huyền nên cos α < 1 với mọi góc nhọn α."
+      }
+    ]
+  },
+  {
+    "id": "m9-05",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Hệ thức lượng trong tam giác vuông",
+    "title": "Hệ thức giữa cạnh và góc trong tam giác vuông",
+    "sum": "Trong tam giác vuông, mỗi cạnh góc vuông bằng cạnh huyền nhân sin góc đối (hay cos góc kề), hoặc bằng cạnh góc vuông kia nhân tan góc đối (hay cot góc kề). Hệ thức này dùng để giải tam giác vuông, đo chiều cao và khoảng cách.",
+    "points": [
+      "Tam giác ABC vuông tại A: BC = a là cạnh huyền, AC = b và AB = c là hai cạnh góc vuông.",
+      "Cạnh góc vuông = cạnh huyền × sin góc đối = cạnh huyền × cos góc kề.",
+      "Cạnh góc vuông = cạnh góc vuông kia × tan góc đối = cạnh góc vuông kia × cot góc kề.",
+      "Giải tam giác vuông: tìm mọi cạnh, góc khi biết 2 yếu tố (trong đó có ít nhất 1 cạnh).",
+      "Hai góc nhọn phụ nhau: B̂ + Ĉ = 90°.",
+      "Ứng dụng: đo chiều cao cây, tháp từ góc nâng và khoảng cách đến chân."
+    ],
+    "formulas": [
+      "b = a·sin B = a·cos C",
+      "c = a·sin C = a·cos B",
+      "b = c·tan B = c·cot C",
+      "c = b·tan C = b·cot B"
+    ],
+    "viz": {
+      "type": "trig"
+    },
+    "vizNote": "Kéo góc α và đối chiếu: cạnh đối = cạnh huyền · sin α, cạnh kề = cạnh huyền · cos α, cạnh đối = cạnh kề · tan α.",
+    "memo": "“Huyền nhân sin đối, nhân cos kề; vuông nhân tan đối, nhân cot kề.”",
+    "example": {
+      "q": "Một cái thang dài 4 m dựa vào tường, tạo với mặt đất góc 65°. Đầu thang cao bao nhiêu mét và chân thang cách tường bao xa (làm tròn đến 0,01 m)?",
+      "a": "Thang là cạnh huyền; chiều cao là cạnh đối của góc 65°, khoảng cách đến tường là cạnh kề.\nChiều cao: h = 4·sin 65° ≈ 4·0,9063 ≈ 3,63 (m).\nKhoảng cách: d = 4·cos 65° ≈ 4·0,4226 ≈ 1,69 (m)."
+    },
+    "terms": [
+      [
+        "right triangle",
+        "tam giác vuông"
+      ],
+      [
+        "leg",
+        "cạnh góc vuông"
+      ],
+      [
+        "solve a right triangle",
+        "giải tam giác vuông"
+      ],
+      [
+        "angle of elevation",
+        "góc nâng"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Tam giác ABC vuông tại A, BC = 12 cm, B̂ = 30°. Độ dài AC là:",
+        "opts": [
+          "6√3 cm",
+          "6 cm",
+          "12√3 cm",
+          "4√3 cm"
+        ],
+        "a": 1,
+        "why": "AC đối diện góc B: AC = BC·sin B = 12·sin 30° = 12·1/2 = 6 cm."
+      },
+      {
+        "q": "Tam giác ABC vuông tại A, AB = 5 cm, B̂ = 45°. Độ dài AC là:",
+        "opts": [
+          "5 cm",
+          "5√2 cm",
+          "10 cm",
+          "5√2/2 cm"
+        ],
+        "a": 0,
+        "why": "AC = AB·tan B = 5·tan 45° = 5·1 = 5 cm (tam giác vuông cân)."
+      },
+      {
+        "q": "Tam giác ABC vuông tại A có AB = 6, AC = 6√3. Góc B bằng:",
+        "opts": [
+          "30°",
+          "45°",
+          "60°",
+          "90°"
+        ],
+        "a": 2,
+        "why": "tan B = AC/AB = 6√3/6 = √3 ⇒ B̂ = 60°."
+      },
+      {
+        "q": "Đứng cách chân tháp 50 m, nhìn đỉnh tháp với góc nâng 60°. Chiều cao tháp là:",
+        "opts": [
+          "25 m",
+          "50√3/3 m ≈ 28,9 m",
+          "100 m",
+          "50√3 m ≈ 86,6 m"
+        ],
+        "a": 3,
+        "why": "Chiều cao là cạnh đối, 50 m là cạnh kề: h = 50·tan 60° = 50√3 ≈ 86,6 m."
+      }
+    ]
+  },
+  {
+    "id": "m9-06",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Đường tròn",
+    "title": "Góc ở tâm, góc nội tiếp và tứ giác nội tiếp",
+    "sum": "Góc ở tâm có đỉnh là tâm, số đo bằng số đo cung bị chắn; góc nội tiếp có đỉnh trên đường tròn, số đo bằng nửa số đo cung bị chắn. Tứ giác nội tiếp đường tròn có tổng hai góc đối bằng 180°.",
+    "points": [
+      "Góc ở tâm có đỉnh là tâm O; số đo cung nhỏ bằng số đo góc ở tâm chắn cung đó.",
+      "Góc nội tiếp có đỉnh nằm trên đường tròn và hai cạnh chứa hai dây cung.",
+      "Góc nội tiếp = ½ số đo cung bị chắn = ½ góc ở tâm cùng chắn cung đó.",
+      "Các góc nội tiếp cùng chắn một cung thì bằng nhau; chắn nửa đường tròn thì là góc vuông.",
+      "Tứ giác nội tiếp có 4 đỉnh cùng nằm trên một đường tròn; tổng hai góc đối bằng 180°.",
+      "Ngược lại: tứ giác có tổng hai góc đối bằng 180° thì nội tiếp được đường tròn."
+    ],
+    "formulas": [
+      "∠AOB = sđ cung AB nhỏ (góc ở tâm)",
+      "∠ACB = ½·sđ cung AB (góc nội tiếp)",
+      "ABCD nội tiếp ⇔ ∠A + ∠C = 180°"
+    ],
+    "viz": {
+      "type": "circle",
+      "mode": "inscribed"
+    },
+    "vizNote": "Kéo điểm M chạy trên cung lớn: góc nội tiếp AMB không đổi và luôn bằng một nửa góc ở tâm AOB cùng chắn cung AB; đổi số đo cung AB để thấy cả hai góc cùng thay đổi.",
+    "memo": "“Ở tâm thì trọn, nội tiếp thì nửa”: đỉnh ở tâm lấy đủ số đo cung, đỉnh trên đường tròn chỉ lấy một nửa. Chắn nửa đường tròn ⇒ góc vuông.",
+    "example": {
+      "q": "Cho đường tròn (O) có ∠AOB = 110°. Điểm C thuộc cung lớn AB, điểm D thuộc cung nhỏ AB. Tính ∠ACB và ∠ADB.",
+      "a": "∠ACB là góc nội tiếp chắn cung nhỏ AB (sđ 110°): ∠ACB = ½·110° = 55°.\nTứ giác ACBD nội tiếp, ∠ACB và ∠ADB là hai góc đối: ∠ADB = 180° − 55° = 125°.\nKiểm tra: ∠ADB chắn cung lớn AB = 360° − 110° = 250°, ½·250° = 125° ✓."
+    },
+    "terms": [
+      [
+        "central angle",
+        "góc ở tâm"
+      ],
+      [
+        "inscribed angle",
+        "góc nội tiếp"
+      ],
+      [
+        "arc",
+        "cung"
+      ],
+      [
+        "chord",
+        "dây cung"
+      ],
+      [
+        "cyclic quadrilateral",
+        "tứ giác nội tiếp"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Góc nội tiếp chắn cung có số đo 80° thì bằng:",
+        "opts": [
+          "80°",
+          "160°",
+          "40°",
+          "20°"
+        ],
+        "a": 2,
+        "why": "Góc nội tiếp bằng nửa số đo cung bị chắn: 80° : 2 = 40°."
+      },
+      {
+        "q": "Tứ giác ABCD nội tiếp có ∠A = 70°, ∠B = 95°. Khi đó ∠C và ∠D lần lượt bằng:",
+        "opts": [
+          "110° và 85°",
+          "70° và 95°",
+          "85° và 110°",
+          "20° và 5°"
+        ],
+        "a": 0,
+        "why": "Hai góc đối có tổng 180°: ∠C = 180° − 70° = 110°, ∠D = 180° − 95° = 85°."
+      },
+      {
+        "q": "AB là đường kính của (O), C là điểm trên đường tròn (C khác A, B). Góc ACB bằng:",
+        "opts": [
+          "45°",
+          "60°",
+          "180°",
+          "90°"
+        ],
+        "a": 3,
+        "why": "∠ACB là góc nội tiếp chắn nửa đường tròn (cung 180°) nên bằng 90°."
+      },
+      {
+        "q": "Tứ giác nào sau đây luôn nội tiếp được đường tròn?",
+        "opts": [
+          "Hình thoi",
+          "Hình bình hành",
+          "Hình chữ nhật",
+          "Hình thang vuông"
+        ],
+        "a": 2,
+        "why": "Hình chữ nhật có hai góc đối 90° + 90° = 180°. Các hình còn lại chỉ nội tiếp trong trường hợp đặc biệt."
+      }
+    ]
+  },
+  {
+    "id": "m9-07",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Đường tròn",
+    "title": "Độ dài cung tròn, diện tích hình quạt tròn và hình vành khuyên",
+    "sum": "Đường tròn bán kính R có độ dài C = 2πR; cung n° dài l = πRn/180. Hình quạt tròn n° có diện tích S = πR²n/360; hình vành khuyên giữa hai đường tròn đồng tâm có S = π(R² − r²).",
+    "points": [
+      "Độ dài đường tròn (chu vi): C = 2πR = πd.",
+      "Cung n° chiếm n/360 đường tròn ⇒ độ dài cung l = πRn/180.",
+      "Diện tích hình tròn S = πR²; hình quạt tròn n°: S = πR²n/360 = l·R/2.",
+      "Hình vành khuyên là phần nằm giữa hai đường tròn đồng tâm bán kính R và r (R > r).",
+      "Diện tích hình vành khuyên: S = π(R² − r²)."
+    ],
+    "formulas": [
+      "C = 2πR",
+      "l = πRn/180",
+      "S quạt = πR²n/360 = lR/2",
+      "S vành khuyên = π(R² − r²)"
+    ],
+    "viz": {
+      "type": "circle",
+      "mode": "arc"
+    },
+    "vizNote": "Kéo R và n°: l và S quạt tăng tỉ lệ thuận với n; tăng R gấp đôi thì l gấp đôi, còn diện tích hình quạt gấp bốn.",
+    "memo": "“Cả vòng nhân n/360”: l = 2πR · n/360, S = πR² · n/360 — chỉ cần nhớ chu vi và diện tích hình tròn.",
+    "example": {
+      "q": "Một chiếc quạt giấy khi mở ra là hình quạt tròn bán kính 20 cm, góc 120°. Tính độ dài cung và diện tích mặt quạt (lấy π ≈ 3,14).",
+      "a": "l = πRn/180 = π·20·120/180 = 40π/3 ≈ 41,87 (cm).\nS = πR²n/360 = π·400·120/360 = 400π/3 ≈ 418,67 (cm²).\nKiểm tra: S = l·R/2 = (40π/3)·20/2 = 400π/3 ✓."
+    },
+    "terms": [
+      [
+        "circumference",
+        "độ dài đường tròn"
+      ],
+      [
+        "arc length",
+        "độ dài cung"
+      ],
+      [
+        "sector",
+        "hình quạt tròn"
+      ],
+      [
+        "annulus",
+        "hình vành khuyên"
+      ],
+      [
+        "concentric circles",
+        "đường tròn đồng tâm"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Độ dài cung 90° của đường tròn bán kính 6 cm là:",
+        "opts": [
+          "6π cm",
+          "3π cm",
+          "9π cm",
+          "1,5π cm"
+        ],
+        "a": 1,
+        "why": "l = πRn/180 = π·6·90/180 = 3π cm (một phần tư chu vi 12π)."
+      },
+      {
+        "q": "Diện tích hình quạt tròn bán kính 4 cm, góc ở tâm 45° là:",
+        "opts": [
+          "2π cm²",
+          "4π cm²",
+          "π cm²",
+          "16π cm²"
+        ],
+        "a": 0,
+        "why": "S = πR²n/360 = π·16·45/360 = 2π cm² (một phần tám hình tròn 16π)."
+      },
+      {
+        "q": "Hình vành khuyên giới hạn bởi hai đường tròn đồng tâm bán kính 5 cm và 3 cm có diện tích:",
+        "opts": [
+          "4π cm²",
+          "2π cm²",
+          "34π cm²",
+          "16π cm²"
+        ],
+        "a": 3,
+        "why": "S = π(R² − r²) = π(25 − 9) = 16π cm². Chú ý: không phải π(5 − 3)²."
+      },
+      {
+        "q": "Tăng bán kính lên 3 lần, giữ nguyên số đo cung thì diện tích hình quạt tăng:",
+        "opts": [
+          "3 lần",
+          "6 lần",
+          "9 lần",
+          "27 lần"
+        ],
+        "a": 2,
+        "why": "S = πR²n/360 tỉ lệ với R²; R gấp 3 ⇒ S gấp 3² = 9 lần."
+      }
+    ]
+  },
+  {
+    "id": "m9-08",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Hàm số y = ax² và phương trình bậc hai một ẩn",
+    "title": "Hàm số y = ax² (a ≠ 0)",
+    "sum": "Đồ thị hàm số y = ax² (a ≠ 0) là một parabol đỉnh O, nhận trục Oy làm trục đối xứng. Nếu a > 0 parabol nằm phía trên trục hoành, nếu a < 0 parabol nằm phía dưới trục hoành.",
+    "points": [
+      "Đồ thị y = ax² là parabol đỉnh O(0; 0), nhận trục Oy làm trục đối xứng.",
+      "a > 0: đồ thị nằm phía trên trục Ox, O là điểm thấp nhất.",
+      "a < 0: đồ thị nằm phía dưới trục Ox, O là điểm cao nhất.",
+      "x và −x cho cùng giá trị y: hai điểm (x; y) và (−x; y) đối xứng nhau qua Oy.",
+      "|a| càng lớn thì parabol càng hẹp (càng khép về phía trục Oy).",
+      "Điểm M(x₀; y₀) thuộc đồ thị ⇔ y₀ = a·x₀²."
+    ],
+    "formulas": [
+      "y = ax² (a ≠ 0)",
+      "M(x₀; y₀) ∈ (P) ⇔ y₀ = a·x₀²",
+      "Biết (P) qua M(x₀; y₀), x₀ ≠ 0 ⇒ a = y₀/x₀²"
+    ],
+    "viz": {
+      "type": "parabola",
+      "mode": "ax2"
+    },
+    "vizNote": "Kéo a: a > 0 parabol quay bề lõm lên trên, a < 0 quay xuống dưới; |a| càng lớn parabol càng hẹp, đỉnh luôn ở O.",
+    "memo": "“a dương thì cười ∪, a âm thì mếu ∩” — miệng parabol luôn mở về phía dấu của a.",
+    "example": {
+      "q": "Cho hàm số y = ax². Tìm a biết đồ thị đi qua A(2; 8). Điểm B(−3; 18) có thuộc đồ thị không?",
+      "a": "A thuộc đồ thị ⇒ 8 = a·2² = 4a ⇒ a = 2, hàm số là y = 2x².\nThay x = −3: y = 2·(−3)² = 2·9 = 18.\nVậy B(−3; 18) thuộc đồ thị (B đối xứng với điểm (3; 18) qua Oy)."
+    },
+    "terms": [
+      [
+        "parabola",
+        "parabol"
+      ],
+      [
+        "vertex",
+        "đỉnh"
+      ],
+      [
+        "axis of symmetry",
+        "trục đối xứng"
+      ],
+      [
+        "graph of a function",
+        "đồ thị hàm số"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Cho y = −2x². Giá trị của y tại x = −3 là:",
+        "opts": [
+          "18",
+          "−18",
+          "36",
+          "12"
+        ],
+        "a": 1,
+        "why": "(−3)² = 9, nên y = −2·9 = −18."
+      },
+      {
+        "q": "Đồ thị hàm số y = ax² đi qua điểm (−2; 3). Giá trị của a là:",
+        "opts": [
+          "3/4",
+          "−3/2",
+          "3/2",
+          "−3/4"
+        ],
+        "a": 0,
+        "why": "3 = a·(−2)² = 4a ⇒ a = 3/4."
+      },
+      {
+        "q": "Đồ thị hàm số y = −0,5x² có đặc điểm nào?",
+        "opts": [
+          "Nằm phía trên trục Ox",
+          "Đi qua điểm (2; 2)",
+          "Đối xứng qua trục Ox",
+          "Nằm phía dưới trục Ox, đỉnh O là điểm cao nhất"
+        ],
+        "a": 3,
+        "why": "a = −0,5 < 0 nên parabol nằm dưới Ox, đỉnh O cao nhất. Tại x = 2 thì y = −2, không phải 2."
+      },
+      {
+        "q": "Hai điểm thuộc đồ thị y = 3x² có tung độ bằng 12. Hoành độ của chúng là:",
+        "opts": [
+          "4 và −4",
+          "√12 và −√12",
+          "2 và −2",
+          "0 và 4"
+        ],
+        "a": 2,
+        "why": "3x² = 12 ⇒ x² = 4 ⇒ x = 2 hoặc x = −2 (hai điểm đối xứng qua Oy)."
+      }
+    ]
+  },
+  {
+    "id": "m9-09",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Hàm số y = ax² và phương trình bậc hai một ẩn",
+    "title": "Phương trình bậc hai một ẩn và định lí Viète",
+    "sum": "Phương trình ax² + bx + c = 0 (a ≠ 0) được giải nhờ biệt thức Δ = b² − 4ac: Δ > 0 có hai nghiệm phân biệt, Δ = 0 có nghiệm kép, Δ < 0 vô nghiệm. Định lí Viète cho tổng và tích hai nghiệm mà không cần giải.",
+    "points": [
+      "Dạng tổng quát: ax² + bx + c = 0 với a ≠ 0.",
+      "Δ = b² − 4ac: Δ > 0 ⇒ 2 nghiệm phân biệt; Δ = 0 ⇒ nghiệm kép; Δ < 0 ⇒ vô nghiệm.",
+      "Công thức nghiệm: x = (−b ± √Δ)/(2a); nghiệm kép x₁ = x₂ = −b/(2a).",
+      "Khi b = 2b': dùng Δ' = b'² − ac và x = (−b' ± √Δ')/a cho gọn.",
+      "Viète: nếu có hai nghiệm thì x₁ + x₂ = −b/a và x₁·x₂ = c/a.",
+      "a + b + c = 0 ⇒ x₁ = 1, x₂ = c/a; a − b + c = 0 ⇒ x₁ = −1, x₂ = −c/a."
+    ],
+    "formulas": [
+      "Δ = b² − 4ac",
+      "x₁,₂ = (−b ± √Δ)/(2a)",
+      "x₁ + x₂ = −b/a; x₁·x₂ = c/a",
+      "u + v = S, u·v = P ⇒ u, v là nghiệm của x² − Sx + P = 0"
+    ],
+    "viz": {
+      "type": "parabola",
+      "mode": "quadratic"
+    },
+    "vizNote": "Kéo b và c của y = x² + bx + c: khi Δ = b² − 4c đổi từ dương sang 0 rồi âm, số giao điểm với trục Ox (số nghiệm) đổi từ 2 sang 1 rồi 0.",
+    "memo": "“Δ dương hai nghiệm, Δ không nghiệm kép, Δ âm vô nghiệm.” Viète: “tổng là trừ b trên a, tích là c trên a”.",
+    "example": {
+      "q": "Giải phương trình 2x² − 7x + 3 = 0 rồi kiểm tra bằng định lí Viète.",
+      "a": "a = 2, b = −7, c = 3.\nΔ = (−7)² − 4·2·3 = 49 − 24 = 25 > 0, √Δ = 5.\nx₁ = (7 + 5)/4 = 3; x₂ = (7 − 5)/4 = 1/2.\nViète: x₁ + x₂ = 7/2 = −b/a ✓; x₁·x₂ = 3/2 = c/a ✓."
+    },
+    "terms": [
+      [
+        "quadratic equation",
+        "phương trình bậc hai"
+      ],
+      [
+        "discriminant",
+        "biệt thức"
+      ],
+      [
+        "double root",
+        "nghiệm kép"
+      ],
+      [
+        "Vieta's formulas",
+        "định lí Viète"
+      ],
+      [
+        "coefficient",
+        "hệ số"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Phương trình x² − 6x + 9 = 0 có:",
+        "opts": [
+          "Hai nghiệm phân biệt",
+          "Nghiệm kép x = 3",
+          "Nghiệm kép x = −3",
+          "Vô nghiệm"
+        ],
+        "a": 1,
+        "why": "Δ = 36 − 36 = 0 ⇒ nghiệm kép x = −b/(2a) = 6/2 = 3. Thật vậy x² − 6x + 9 = (x − 3)²."
+      },
+      {
+        "q": "Phương trình 3x² + 5x − 8 = 0 có nghiệm x₁ = 1. Nghiệm còn lại là:",
+        "opts": [
+          "8/3",
+          "−5/3",
+          "−8/3",
+          "5/3"
+        ],
+        "a": 2,
+        "why": "a + b + c = 3 + 5 − 8 = 0 nên x₂ = c/a = −8/3."
+      },
+      {
+        "q": "Phương trình x² − 5x + 2 = 0 có hai nghiệm x₁, x₂. Giá trị x₁² + x₂² là:",
+        "opts": [
+          "21",
+          "25",
+          "29",
+          "23"
+        ],
+        "a": 0,
+        "why": "Δ = 17 > 0. x₁² + x₂² = (x₁ + x₂)² − 2x₁x₂ = 5² − 2·2 = 21."
+      },
+      {
+        "q": "Hai số có tổng 7 và tích 12 là nghiệm của phương trình:",
+        "opts": [
+          "x² + 7x + 12 = 0",
+          "x² − 12x + 7 = 0",
+          "x² + 7x − 12 = 0",
+          "x² − 7x + 12 = 0"
+        ],
+        "a": 3,
+        "why": "Hai số là nghiệm của x² − Sx + P = 0, tức x² − 7x + 12 = 0; đó là 3 và 4."
+      }
+    ]
+  },
+  {
+    "id": "m9-10",
+    "subj": "math",
+    "grade": 9,
+    "chap": "Một số hình khối trong thực tiễn",
+    "title": "Hình trụ, hình nón, hình cầu",
+    "sum": "Hình trụ, hình nón, hình cầu là các hình khối quen thuộc như lon nước, nón lá, quả bóng. Cần nhớ công thức diện tích xung quanh (diện tích mặt cầu) và thể tích của từng hình.",
+    "points": [
+      "Hình trụ bán kính đáy r, chiều cao h: Sxq = 2πrh, V = πr²h.",
+      "Diện tích toàn phần hình trụ = Sxq + 2 đáy = 2πrh + 2πr².",
+      "Hình nón bán kính đáy r, chiều cao h, đường sinh l: Sxq = πrl, V = (1/3)πr²h.",
+      "Trong hình nón: l² = r² + h² (định lí Pythagore).",
+      "Hình cầu bán kính R: diện tích mặt cầu S = 4πR², thể tích V = (4/3)πR³.",
+      "Nón và trụ cùng đáy, cùng chiều cao: V nón = 1/3 V trụ."
+    ],
+    "formulas": [
+      "Trụ: Sxq = 2πrh; V = πr²h",
+      "Nón: Sxq = πrl; V = (1/3)πr²h",
+      "Cầu: S = 4πR²; V = (4/3)πR³",
+      "l² = r² + h²"
+    ],
+    "viz": {
+      "type": "solid",
+      "shape": "cylinder"
+    },
+    "vizNote": "Kéo r và h của hình trụ: tăng h gấp đôi thì V gấp đôi, nhưng tăng r gấp đôi thì V gấp bốn (vì V = πr²h).",
+    "memo": "“Nón bằng một phần ba trụ.” Diện tích đi với R², thể tích đi với R³: cầu có S = 4πR², V = (4/3)πR³.",
+    "example": {
+      "q": "Một chiếc nón lá có bán kính đáy 20 cm, chiều cao 15 cm. Tính đường sinh, diện tích xung quanh và thể tích của nón (lấy π ≈ 3,14).",
+      "a": "Đường sinh: l = √(20² + 15²) = √(400 + 225) = √625 = 25 (cm).\nSxq = πrl = π·20·25 = 500π ≈ 1570 (cm²).\nV = (1/3)πr²h = (1/3)·π·400·15 = 2000π ≈ 6280 (cm³)."
+    },
+    "terms": [
+      [
+        "cylinder",
+        "hình trụ"
+      ],
+      [
+        "cone",
+        "hình nón"
+      ],
+      [
+        "sphere",
+        "hình cầu"
+      ],
+      [
+        "slant height",
+        "đường sinh"
+      ],
+      [
+        "lateral surface area",
+        "diện tích xung quanh"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Hình trụ có bán kính đáy 3 cm, chiều cao 10 cm. Thể tích của nó là:",
+        "opts": [
+          "30π cm³",
+          "60π cm³",
+          "90π cm³",
+          "300π cm³"
+        ],
+        "a": 2,
+        "why": "V = πr²h = π·9·10 = 90π cm³."
+      },
+      {
+        "q": "Quả bóng hình cầu bán kính 6 cm có thể tích:",
+        "opts": [
+          "144π cm³",
+          "288π cm³",
+          "864π cm³",
+          "48π cm³"
+        ],
+        "a": 1,
+        "why": "V = (4/3)πR³ = (4/3)·π·216 = 288π cm³. (144π cm² là diện tích mặt cầu.)"
+      },
+      {
+        "q": "Hình nón có bán kính đáy 6 cm, chiều cao 8 cm. Diện tích xung quanh là:",
+        "opts": [
+          "48π cm²",
+          "96π cm²",
+          "80π cm²",
+          "60π cm²"
+        ],
+        "a": 3,
+        "why": "l = √(6² + 8²) = 10 cm; Sxq = πrl = π·6·10 = 60π cm²."
+      },
+      {
+        "q": "Cốc hình trụ và phễu hình nón có cùng đáy, cùng chiều cao. Đổ đầy phễu nước mấy lần thì đầy cốc?",
+        "opts": [
+          "2 lần",
+          "3 lần",
+          "4 lần",
+          "6 lần"
+        ],
+        "a": 1,
+        "why": "V nón = (1/3)πr²h = 1/3 V trụ, nên cần 3 phễu nước."
+      }
+    ]
+  }
+]

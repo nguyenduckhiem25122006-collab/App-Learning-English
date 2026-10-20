@@ -1,0 +1,409 @@
+[
+  {
+    "id": "p8-01",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Khối lượng riêng và áp suất",
+    "title": "Khối lượng riêng",
+    "sum": "Khối lượng riêng cho biết khối lượng của một đơn vị thể tích chất: D = m/V. Mỗi chất có một khối lượng riêng xác định.",
+    "points": [
+      "Khối lượng riêng D là khối lượng của 1 đơn vị thể tích của chất: D = m/V.",
+      "Đơn vị: kg/m³ hoặc g/cm³; 1 g/cm³ = 1000 kg/m³.",
+      "Mỗi chất có một D riêng: nước 1000 kg/m³, nhôm 2700 kg/m³, sắt 7800 kg/m³.",
+      "Đo D: dùng cân đo m, dùng bình chia độ (hoặc đo kích thước) để có V, rồi lấy m chia V.",
+      "Cắt nhỏ vật thì m và V cùng giảm, nên D của chất không đổi.",
+      "Trọng lượng riêng d = 10·D (N/m³); nước có d = 10 000 N/m³."
+    ],
+    "formulas": ["D = m/V", "m = D·V ; V = m/D", "1 g/cm³ = 1000 kg/m³", "d = 10·D"],
+    "viz": { "type": "density" },
+    "vizNote": "Kéo m và V: quan sát D = m/V thay đổi; khối hộp chìm khi D > 1 g/cm³ và nổi khi D < 1 g/cm³.",
+    "memo": "“Mờ trên Vờ”: D = m/V, khối lượng chia thể tích. Đổi g/cm³ sang kg/m³ thì nhân 1000 (nước: 1 g/cm³ = 1000 kg/m³).",
+    "example": {
+      "q": "Một khối nhôm có khối lượng 540 g và thể tích 200 cm³. Tính khối lượng riêng của nhôm theo g/cm³ và kg/m³.",
+      "a": "Tóm tắt: m = 540 g; V = 200 cm³.\nD = m/V = 540 : 200 = 2,7 g/cm³.\nĐổi: 2,7 g/cm³ = 2,7 · 1000 = 2700 kg/m³.\nĐáp số: D = 2,7 g/cm³ = 2700 kg/m³."
+    },
+    "terms": [["density", "khối lượng riêng"], ["mass", "khối lượng"], ["volume", "thể tích"], ["specific weight", "trọng lượng riêng"]],
+    "quiz": [
+      {
+        "q": "Một vật có khối lượng 2 kg và thể tích 0,0025 m³. Khối lượng riêng của vật là bao nhiêu?",
+        "opts": ["8000 kg/m³", "800 kg/m³", "80 kg/m³", "0,005 kg/m³"],
+        "a": 1,
+        "why": "D = m/V = 2 : 0,0025 = 800 kg/m³."
+      },
+      {
+        "q": "Khối lượng của 2 lít nước (D = 1000 kg/m³) là bao nhiêu?",
+        "opts": ["0,2 kg", "20 kg", "2 kg", "2000 kg"],
+        "a": 2,
+        "why": "2 lít = 2 dm³ = 0,002 m³; m = D·V = 1000 · 0,002 = 2 kg."
+      },
+      {
+        "q": "Cắt đôi một thanh sắt. Khối lượng riêng của mỗi nửa thanh thay đổi thế nào?",
+        "opts": ["Giảm một nửa", "Tăng gấp đôi", "Không đổi"],
+        "a": 2,
+        "why": "m và V cùng giảm một nửa nên D = m/V giữ nguyên; D chỉ phụ thuộc chất làm vật."
+      },
+      {
+        "q": "Khối lượng riêng của sắt là 7,8 g/cm³. Đổi ra kg/m³ được bao nhiêu?",
+        "opts": ["78 kg/m³", "780 kg/m³", "78 000 kg/m³", "7800 kg/m³"],
+        "a": 3,
+        "why": "1 g/cm³ = 1000 kg/m³ nên 7,8 g/cm³ = 7,8 · 1000 = 7800 kg/m³."
+      }
+    ]
+  },
+  {
+    "id": "p8-02",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Khối lượng riêng và áp suất",
+    "title": "Áp suất trên một bề mặt",
+    "sum": "Áp suất là độ lớn của áp lực trên một đơn vị diện tích bị ép: p = F/S. Muốn tăng áp suất thì tăng lực hoặc giảm diện tích bị ép.",
+    "points": [
+      "Áp lực là lực ép có phương vuông góc với mặt bị ép.",
+      "Áp suất là độ lớn áp lực trên một đơn vị diện tích bị ép: p = F/S.",
+      "Đơn vị áp suất là pascal (Pa): 1 Pa = 1 N/m².",
+      "Tăng áp suất: tăng F hoặc giảm S (mài dao sắc, đinh có mũi nhọn).",
+      "Giảm áp suất: giảm F hoặc tăng S (xe tăng có bánh xích, móng nhà xây rộng).",
+      "Vật đặt trên mặt nằm ngang có áp lực bằng trọng lượng: F = P = 10·m."
+    ],
+    "formulas": ["p = F/S", "1 Pa = 1 N/m²", "1 cm² = 0,0001 m²", "P = 10·m"],
+    "viz": { "type": "pressure", "mode": "solid" },
+    "vizNote": "Kéo F và S: F tăng hoặc S giảm thì p tăng, viên gạch lún sâu hơn vào cát.",
+    "memo": "Áp suất là một “phép chia”: lực càng to, mặt ép càng nhỏ ⇒ lún càng sâu. Đinh nhọn đâm dễ, ván rộng đỡ lún.",
+    "example": {
+      "q": "Một thùng hàng khối lượng 60 kg đặt trên sàn nằm ngang, diện tích mặt tiếp xúc là 0,4 m². Tính áp suất thùng hàng tác dụng lên sàn.",
+      "a": "Áp lực bằng trọng lượng: F = P = 10·m = 10 · 60 = 600 N.\nÁp suất: p = F/S = 600 : 0,4 = 1500 Pa.\nĐáp số: p = 1500 Pa (= 1500 N/m²)."
+    },
+    "terms": [["pressure", "áp suất"], ["normal force", "áp lực (lực ép vuông góc)"], ["surface area", "diện tích bề mặt"], ["pascal (Pa)", "pascal – đơn vị áp suất"]],
+    "quiz": [
+      {
+        "q": "Một người nặng 50 kg đứng trên hai bàn chân, tổng diện tích tiếp xúc với sàn là 0,025 m². Áp suất người đó tác dụng lên sàn là?",
+        "opts": ["2000 Pa", "20 000 Pa", "12,5 Pa", "200 000 Pa"],
+        "a": 1,
+        "why": "F = 10·50 = 500 N; p = F/S = 500 : 0,025 = 20 000 Pa."
+      },
+      {
+        "q": "Vì sao lưỡi dao cần được mài sắc?",
+        "opts": ["Để giảm áp lực lên vật cắt", "Để giảm diện tích bị ép, làm tăng áp suất", "Để tăng diện tích bị ép", "Để dao nhẹ hơn"],
+        "a": 1,
+        "why": "Lưỡi sắc có S rất nhỏ, cùng lực F thì p = F/S lớn, dễ cắt vật."
+      },
+      {
+        "q": "Một lực 20 N ép vuông góc lên diện tích 4 cm². Áp suất gây ra là bao nhiêu?",
+        "opts": ["5 Pa", "80 Pa", "500 Pa", "50 000 Pa"],
+        "a": 3,
+        "why": "4 cm² = 0,0004 m²; p = 20 : 0,0004 = 50 000 Pa. Nhớ đổi cm² ra m² trước khi chia."
+      },
+      {
+        "q": "Một viên gạch có thể đặt nằm, nghiêng hoặc dựng đứng trên sàn. Cách đặt nào gây áp suất lên sàn lớn nhất?",
+        "opts": ["Dựng đứng (mặt tiếp xúc nhỏ nhất)", "Đặt nằm (mặt tiếp xúc lớn nhất)", "Như nhau vì trọng lượng không đổi"],
+        "a": 0,
+        "why": "F = P không đổi, S nhỏ nhất khi dựng đứng nên p = F/S lớn nhất."
+      }
+    ]
+  },
+  {
+    "id": "p8-03",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Khối lượng riêng và áp suất",
+    "title": "Áp suất chất lỏng. Áp suất khí quyển",
+    "sum": "Chất lỏng gây áp suất theo mọi phương, càng xuống sâu áp suất càng lớn: p = d·h. Lớp không khí bao quanh Trái Đất gây ra áp suất khí quyển.",
+    "points": [
+      "Chất lỏng gây áp suất theo mọi phương lên đáy bình, thành bình và các vật trong lòng nó.",
+      "Áp suất chất lỏng tăng theo độ sâu: p = d·h (d: trọng lượng riêng chất lỏng, h: độ sâu).",
+      "Các điểm cùng độ sâu trong một chất lỏng đứng yên có áp suất bằng nhau (bình thông nhau).",
+      "Áp suất tác dụng lên chất lỏng được truyền nguyên vẹn theo mọi hướng (máy nén thủy lực).",
+      "Không khí bao quanh Trái Đất gây áp suất khí quyển theo mọi phương, khoảng 76 cmHg ≈ 10⁵ Pa.",
+      "Ví dụ áp suất khí quyển: hút sữa bằng ống hút, giác mút dính vào tường, ù tai khi lên cao."
+    ],
+    "formulas": ["p = d·h", "d(nước) = 10 000 N/m³", "p₀ ≈ 76 cmHg ≈ 10⁵ Pa"],
+    "viz": { "type": "pressure", "mode": "liquid" },
+    "vizNote": "Kéo độ sâu h: người thợ lặn xuống sâu hơn, áp suất p = d·h tăng tỉ lệ thuận với h.",
+    "memo": "“Càng sâu càng nén”: p = d·h. Cứ xuống thêm 10 m nước, áp suất tăng 100 000 Pa ≈ 1 lần áp suất khí quyển.",
+    "example": {
+      "q": "Một thợ lặn ở độ sâu 12 m dưới mặt hồ (d = 10 000 N/m³). Tính áp suất do nước gây ra tại đó. Nếu lặn sâu thêm 3 m thì áp suất là bao nhiêu?",
+      "a": "Ở độ sâu 12 m: p = d·h = 10 000 · 12 = 120 000 Pa.\nSâu thêm 3 m ⇒ h = 15 m: p = 10 000 · 15 = 150 000 Pa.\nVậy áp suất tăng thêm 30 000 Pa."
+    },
+    "terms": [["liquid pressure", "áp suất chất lỏng"], ["atmospheric pressure", "áp suất khí quyển"], ["depth", "độ sâu"], ["communicating vessels", "bình thông nhau"], ["hydraulic press", "máy nén thủy lực"]],
+    "quiz": [
+      {
+        "q": "Tính áp suất của nước tại điểm A sâu 2,5 m dưới mặt nước (d = 10 000 N/m³).",
+        "opts": ["2500 Pa", "4000 Pa", "25 000 Pa", "250 000 Pa"],
+        "a": 2,
+        "why": "p = d·h = 10 000 · 2,5 = 25 000 Pa."
+      },
+      {
+        "q": "Áp suất của nước tại đáy một bể là 18 000 Pa. Nước trong bể sâu bao nhiêu?",
+        "opts": ["1,8 m", "18 m", "0,18 m", "180 m"],
+        "a": 0,
+        "why": "h = p/d = 18 000 : 10 000 = 1,8 m."
+      },
+      {
+        "q": "Vì sao thân đập thủy điện được xây dày dần về phía chân đập?",
+        "opts": ["Vì nước ở dưới lạnh hơn", "Vì càng sâu, áp suất nước càng lớn", "Để chống gió thổi", "Vì chân đập chịu áp suất khí quyển lớn hơn"],
+        "a": 1,
+        "why": "p = d·h tăng theo độ sâu nên phần dưới của đập chịu áp suất lớn nhất, phải làm dày hơn."
+      },
+      {
+        "q": "Hiện tượng nào chứng tỏ có áp suất khí quyển?",
+        "opts": ["Thả hòn đá thì nó chìm xuống nước", "Thanh sắt dài ra khi bị nung nóng", "Lá cây rơi xuống đất", "Hút hết sữa trong hộp giấy, vỏ hộp bị bẹp lại"],
+        "a": 3,
+        "why": "Khi hút, áp suất trong hộp giảm; áp suất khí quyển bên ngoài lớn hơn nên ép bẹp vỏ hộp."
+      }
+    ]
+  },
+  {
+    "id": "p8-04",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Khối lượng riêng và áp suất",
+    "title": "Lực đẩy Archimedes. Vật nổi, vật chìm",
+    "sum": "Chất lỏng đẩy vật nhúng trong nó một lực hướng lên FA = d·V. So sánh FA với trọng lượng P (hay d vật với d chất lỏng) để biết vật nổi hay chìm.",
+    "points": [
+      "Vật nhúng trong chất lỏng bị đẩy thẳng đứng từ dưới lên bởi lực đẩy Archimedes.",
+      "FA = d·V: d là trọng lượng riêng chất lỏng, V là thể tích phần chất lỏng bị vật chiếm chỗ.",
+      "Vật chìm khi P > FA, nổi lên khi P < FA, lơ lửng khi P = FA.",
+      "So sánh nhanh: d vật > d lỏng ⇒ chìm; d vật < d lỏng ⇒ nổi; bằng nhau ⇒ lơ lửng.",
+      "Vật nổi trên mặt thoáng thì FA = P và V chỉ là thể tích phần chìm.",
+      "Đo FA bằng lực kế: FA = số chỉ trong không khí − số chỉ khi nhúng chìm trong chất lỏng."
+    ],
+    "formulas": ["FA = d·V", "P = 10·m", "Vật nổi trên mặt: FA = P", "d = 10·D"],
+    "viz": { "type": "density" },
+    "vizNote": "Kéo m và V: D vật > 1 g/cm³ (P > FA) thì khối hộp chìm; D < 1 g/cm³ thì nó nổi, chỉ chìm một phần.",
+    "memo": "“Chiếm chỗ bao nhiêu, đẩy lên bấy nhiêu”: FA bằng trọng lượng phần chất lỏng bị vật chiếm chỗ.",
+    "example": {
+      "q": "Một quả cầu sắt có thể tích 200 cm³ được nhúng chìm hoàn toàn trong nước (d = 10 000 N/m³; D sắt = 7800 kg/m³). Tính FA và cho biết quả cầu nổi hay chìm.",
+      "a": "Đổi V = 200 cm³ = 0,0002 m³.\nFA = d·V = 10 000 · 0,0002 = 2 N.\nKhối lượng: m = D·V = 7800 · 0,0002 = 1,56 kg ⇒ P = 10·m = 15,6 N.\nP = 15,6 N > FA = 2 N ⇒ quả cầu chìm."
+    },
+    "terms": [["buoyant force", "lực đẩy Archimedes"], ["float", "nổi"], ["sink", "chìm"], ["displaced volume", "thể tích chất lỏng bị chiếm chỗ"]],
+    "quiz": [
+      {
+        "q": "Một vật có thể tích 300 cm³ được nhúng chìm hoàn toàn trong nước. Lực đẩy Archimedes tác dụng lên vật là?",
+        "opts": ["3000 N", "30 N", "3 N", "0,3 N"],
+        "a": 2,
+        "why": "V = 300 cm³ = 0,0003 m³; FA = d·V = 10 000 · 0,0003 = 3 N."
+      },
+      {
+        "q": "Treo vật vào lực kế, ngoài không khí lực kế chỉ 4 N; nhúng chìm vật trong nước lực kế chỉ 2,5 N. Lực đẩy Archimedes là?",
+        "opts": ["1,5 N", "6,5 N", "2,5 N", "4 N"],
+        "a": 0,
+        "why": "FA = 4 − 2,5 = 1,5 N: lực kế chỉ ít đi đúng bằng lực nước đẩy lên."
+      },
+      {
+        "q": "Lực đẩy Archimedes lên một vật chìm hẳn trong nước là 1,5 N. Thể tích của vật là?",
+        "opts": ["15 cm³", "150 cm³", "1500 cm³", "0,15 cm³"],
+        "a": 1,
+        "why": "V = FA/d = 1,5 : 10 000 = 0,00015 m³ = 150 cm³."
+      },
+      {
+        "q": "Vì sao con tàu bằng thép nặng hàng nghìn tấn vẫn nổi trên mặt nước?",
+        "opts": ["Vì thép nhẹ hơn nước", "Vì sóng biển nâng tàu lên", "Vì động cơ đẩy tàu lên", "Vì tàu rỗng, chiếm chỗ rất nhiều nước nên FA đủ cân bằng trọng lượng"],
+        "a": 3,
+        "why": "Thép nặng hơn nước, nhưng tàu rỗng nên V chiếm chỗ lớn, FA = d·V bằng được P của tàu."
+      }
+    ]
+  },
+  {
+    "id": "p8-05",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Tác dụng làm quay của lực",
+    "title": "Moment lực. Đòn bẩy",
+    "sum": "Lực có thể làm vật quay quanh một trục; tác dụng làm quay đo bằng moment lực M = F·d. Đòn bẩy cân bằng khi F₁·d₁ = F₂·d₂.",
+    "points": [
+      "Lực làm vật quay quanh trục khi giá của lực không song song và không đi qua trục quay.",
+      "Moment lực M = F·d, với d là khoảng cách từ trục quay đến giá của lực (cánh tay đòn).",
+      "Đơn vị moment lực là N·m; lực càng lớn, tay đòn càng dài thì tác dụng làm quay càng mạnh.",
+      "Đòn bẩy là thanh cứng quay quanh điểm tựa O; nó giúp đổi hướng lực hoặc được lợi về lực.",
+      "Đòn bẩy cân bằng khi F₁·d₁ = F₂·d₂; tay đòn của lực ta tác dụng dài hơn thì ta lợi về lực.",
+      "Ví dụ đòn bẩy: bập bênh, kéo cắt giấy, xà beng, xe cút kít, cần câu."
+    ],
+    "formulas": ["M = F·d", "F₁·d₁ = F₂·d₂", "F₁/F₂ = d₂/d₁"],
+    "viz": { "type": "lever" },
+    "vizNote": "Kéo hai quả nặng và khoảng cách đến điểm tựa: bập bênh nghiêng về phía có F·d lớn hơn, cân bằng khi F₁·d₁ = F₂·d₂.",
+    "memo": "“Lực nhân tay đòn ra moment”. Muốn đỡ tốn sức thì cầm xa điểm tựa: tay đòn dài gấp mấy lần, lực nhỏ đi bấy nhiêu lần.",
+    "example": {
+      "q": "Trên bập bênh, An (30 kg) ngồi cách trục quay 1,5 m. Bình (45 kg) phải ngồi phía bên kia, cách trục bao xa để bập bênh cân bằng?",
+      "a": "F₁ = 10 · 30 = 300 N; d₁ = 1,5 m ⇒ M₁ = 300 · 1,5 = 450 N·m.\nF₂ = 10 · 45 = 450 N.\nCân bằng: F₂·d₂ = M₁ ⇒ d₂ = 450 : 450 = 1 m.\nBình ngồi cách trục 1 m (người nặng hơn ngồi gần trục hơn)."
+    },
+    "terms": [["moment of force (torque)", "moment lực"], ["lever", "đòn bẩy"], ["fulcrum (pivot)", "điểm tựa"], ["lever arm", "cánh tay đòn"], ["axis of rotation", "trục quay"]],
+    "quiz": [
+      {
+        "q": "Tay tác dụng lực 20 N vuông góc với cờ lê, cách trục ốc 0,25 m. Moment lực bằng bao nhiêu?",
+        "opts": ["5 N·m", "80 N·m", "0,0125 N·m", "20,25 N·m"],
+        "a": 0,
+        "why": "M = F·d = 20 · 0,25 = 5 N·m."
+      },
+      {
+        "q": "Dùng đòn bẩy nâng vật nặng 600 N đặt cách điểm tựa 0,2 m; tay ấn cách điểm tựa 1,2 m. Lực tay tối thiểu là?",
+        "opts": ["3600 N", "100 N", "720 N", "120 N"],
+        "a": 1,
+        "why": "F₁·d₁ = F₂·d₂ ⇒ F = 600 · 0,2 : 1,2 = 100 N. Tay đòn dài gấp 6 lần nên lực nhỏ đi 6 lần."
+      },
+      {
+        "q": "Vì sao tay nắm cửa được lắp ở mép xa bản lề?",
+        "opts": ["Để cửa nhẹ hơn", "Để giảm moment lực", "Để tay đòn dài, chỉ cần lực nhỏ đã đủ moment làm cửa quay"],
+        "a": 2,
+        "why": "M = F·d: d lớn thì cần F nhỏ mà vẫn có cùng moment."
+      },
+      {
+        "q": "Đẩy cánh cửa bằng một lực có giá đi qua trục bản lề thì cửa sẽ thế nào?",
+        "opts": ["Quay nhanh nhất", "Quay ngược chiều", "Quay chậm", "Không quay vì d = 0 nên M = 0"],
+        "a": 3,
+        "why": "Giá lực đi qua trục thì cánh tay đòn d = 0, moment M = F·0 = 0, không gây quay."
+      }
+    ]
+  },
+  {
+    "id": "p8-06",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Điện",
+    "title": "Nhiễm điện, dòng điện và mạch điện đơn giản",
+    "sum": "Cọ xát làm vật nhiễm điện do electron dịch chuyển. Dòng điện là dòng các hạt mang điện dịch chuyển có hướng, chạy trong mạch kín nối với nguồn điện.",
+    "points": [
+      "Cọ xát làm vật nhiễm điện: vật nhận thêm electron nhiễm điện âm, mất bớt electron nhiễm điện dương.",
+      "Có hai loại điện tích: cùng loại thì đẩy nhau, khác loại thì hút nhau.",
+      "Dòng điện là dòng các hạt mang điện dịch chuyển có hướng; trong kim loại đó là các electron.",
+      "Nguồn điện (pin, acquy) có hai cực (+) và (−), cung cấp dòng điện cho các thiết bị điện.",
+      "Chiều dòng điện quy ước: từ cực dương qua dây dẫn và thiết bị tới cực âm của nguồn.",
+      "Mạch kín gồm nguồn, dây nối, công tắc, thiết bị; công tắc ngắt hoặc dây đứt ⇒ mạch hở, không có dòng điện."
+    ],
+    "formulas": ["Cùng loại: đẩy nhau · Khác loại: hút nhau", "Chiều quy ước: cực (+) → mạch ngoài → cực (−)"],
+    "viz": { "type": "circuit", "mode": "series" },
+    "vizNote": "Kéo U của nguồn và R₁, R₂ của hai bóng đèn: mạch kín chỉ có một vòng nên dòng điện qua hai đèn như nhau; tăng U thì đèn sáng hơn.",
+    "memo": "“Cùng đẩy, khác hút”. Dòng điện “dương ra, âm về”; còn electron thì chạy ngược lại, từ cực âm sang cực dương.",
+    "example": {
+      "q": "Cọ xát thanh nhựa vào mảnh vải khô, thanh nhựa nhiễm điện âm. a) Electron đã dịch chuyển thế nào? b) Mảnh vải nhiễm điện gì? c) Đưa thanh nhựa lại gần quả cầu nhiễm điện dương thì sao?",
+      "a": "a) Electron dịch chuyển từ mảnh vải sang thanh nhựa (thanh nhựa nhận thêm electron ⇒ âm).\nb) Mảnh vải mất bớt electron ⇒ nhiễm điện dương.\nc) Thanh nhựa (−) và quả cầu (+) nhiễm điện khác loại ⇒ hút nhau."
+    },
+    "terms": [["electric charge", "điện tích"], ["electric current", "dòng điện"], ["battery (power source)", "pin (nguồn điện)"], ["circuit", "mạch điện"], ["switch", "công tắc"]],
+    "quiz": [
+      {
+        "q": "Cọ xát thước nhựa vào len khô, thước nhựa nhiễm điện âm. Khi đó mảnh len",
+        "opts": ["nhiễm điện âm", "nhiễm điện dương", "không nhiễm điện"],
+        "a": 1,
+        "why": "Electron chuyển từ len sang thước; len mất electron nên nhiễm điện dương."
+      },
+      {
+        "q": "Treo hai quả cầu nhỏ gần nhau, thấy chúng đẩy nhau. Kết luận nào đúng?",
+        "opts": ["Hai quả cầu nhiễm điện cùng loại", "Hai quả cầu nhiễm điện khác loại", "Một quả cầu không nhiễm điện", "Cả hai không nhiễm điện"],
+        "a": 0,
+        "why": "Chỉ điện tích cùng loại mới đẩy nhau; khác loại, hoặc một vật trung hòa, thì hút nhau."
+      },
+      {
+        "q": "Chiều dòng điện quy ước trong mạch ngoài là",
+        "opts": ["từ cực âm qua thiết bị về cực dương", "cùng chiều chuyển động của electron", "từ cực dương qua thiết bị về cực âm"],
+        "a": 2,
+        "why": "Quy ước: dòng điện đi từ cực (+) qua mạch ngoài về cực (−), ngược chiều electron."
+      },
+      {
+        "q": "Đóng công tắc nhưng bóng đèn không sáng. Nguyên nhân có thể là gì?",
+        "opts": ["Pin còn mới", "Dây nối làm bằng đồng", "Bóng đèn còn tốt", "Có chỗ dây nối bị đứt nên mạch hở"],
+        "a": 3,
+        "why": "Dòng điện chỉ chạy trong mạch kín; dây đứt làm mạch hở nên đèn không sáng."
+      }
+    ]
+  },
+  {
+    "id": "p8-07",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Điện",
+    "title": "Cường độ dòng điện, hiệu điện thế và tác dụng của dòng điện",
+    "sum": "Dòng điện có tác dụng nhiệt, phát sáng, từ, hóa học, sinh lí. Cường độ dòng điện (A) đo bằng ampe kế, hiệu điện thế (V) đo bằng vôn kế.",
+    "points": [
+      "Dòng điện có 5 tác dụng: nhiệt, phát sáng, từ, hóa học và sinh lí.",
+      "Cường độ dòng điện I cho biết độ mạnh yếu của dòng điện; đơn vị ampe (A), đo bằng ampe kế.",
+      "Hiệu điện thế U giữa hai đầu dụng cụ hay hai cực nguồn có đơn vị vôn (V), đo bằng vôn kế.",
+      "Ampe kế mắc nối tiếp, vôn kế mắc song song với dụng cụ cần đo; chốt (+) nối về phía cực dương nguồn.",
+      "Với cùng một bóng đèn, hiệu điện thế càng lớn thì cường độ dòng điện càng lớn, đèn càng sáng."
+    ],
+    "formulas": ["1 A = 1000 mA", "1 V = 1000 mV", "1 kV = 1000 V"],
+    "viz": { "type": "circuit", "mode": "ohm" },
+    "vizNote": "Kéo U: cùng một bóng đèn, U tăng thì số chỉ ampe kế I tăng và đèn sáng hơn; thử đổi R để thấy I thay đổi theo.",
+    "memo": "“Ampe nối tiếp, Vôn song song”: ampe kế xếp hàng trong mạch, vôn kế đứng hai bên dụng cụ. 5 tác dụng: “Nhiệt – Sáng – Từ – Hóa – Sinh”.",
+    "example": {
+      "q": "a) Đổi: 0,35 A = ? mA; 2500 mV = ? V; 0,22 kV = ? V.\nb) Bóng đèn ghi 6 V mắc vào nguồn 6 V, ampe kế chỉ 500 mA. Cường độ dòng điện qua đèn là bao nhiêu ampe?",
+      "a": "a) 0,35 A = 0,35 · 1000 = 350 mA.\n2500 mV = 2500 : 1000 = 2,5 V.\n0,22 kV = 0,22 · 1000 = 220 V.\nb) I = 500 mA = 500 : 1000 = 0,5 A."
+    },
+    "terms": [["electric current (I)", "cường độ dòng điện"], ["voltage (potential difference)", "hiệu điện thế"], ["ammeter", "ampe kế"], ["voltmeter", "vôn kế"]],
+    "quiz": [
+      {
+        "q": "Đổi 0,25 A ra miliampe (mA).",
+        "opts": ["2500 mA", "25 mA", "250 mA", "0,00025 mA"],
+        "a": 2,
+        "why": "1 A = 1000 mA nên 0,25 A = 0,25 · 1000 = 250 mA."
+      },
+      {
+        "q": "Muốn đo hiệu điện thế giữa hai đầu bóng đèn, ta mắc vôn kế như thế nào?",
+        "opts": ["Nối tiếp với bóng đèn", "Song song với bóng đèn", "Ở chỗ nào trong mạch cũng được"],
+        "a": 1,
+        "why": "Vôn kế mắc song song, hai chốt nối vào hai đầu dụng cụ cần đo hiệu điện thế."
+      },
+      {
+        "q": "Mắc cùng một bóng đèn lần lượt vào nguồn 3 V rồi 6 V. Khi mắc vào nguồn 6 V thì",
+        "opts": ["ampe kế chỉ số lớn hơn, đèn sáng hơn", "ampe kế chỉ số nhỏ hơn, đèn tối hơn", "đèn sáng như cũ"],
+        "a": 0,
+        "why": "Với cùng một đèn, hiệu điện thế lớn hơn thì dòng điện mạnh hơn nên đèn sáng hơn."
+      },
+      {
+        "q": "Mạ vàng cho đồ trang sức là ứng dụng tác dụng nào của dòng điện?",
+        "opts": ["Tác dụng phát sáng", "Tác dụng từ", "Tác dụng sinh lí", "Tác dụng hóa học"],
+        "a": 3,
+        "why": "Dòng điện qua dung dịch muối kim loại làm kim loại bám lên vật: đó là tác dụng hóa học."
+      }
+    ]
+  },
+  {
+    "id": "p8-08",
+    "subj": "phys",
+    "grade": 8,
+    "chap": "Nhiệt",
+    "title": "Nội năng, truyền nhiệt và sự nở vì nhiệt",
+    "sum": "Nhiệt độ càng cao, phân tử chuyển động càng nhanh, nội năng càng lớn. Nhiệt truyền bằng dẫn nhiệt, đối lưu, bức xạ; các chất nở ra khi nóng lên.",
+    "points": [
+      "Các phân tử chuyển động không ngừng; nhiệt độ càng cao thì chúng chuyển động càng nhanh.",
+      "Nội năng là tổng động năng và thế năng của các phân tử tạo nên vật; vật nóng lên thì nội năng tăng.",
+      "Năng lượng nhiệt truyền từ vật nóng hơn sang vật lạnh hơn; đơn vị năng lượng là jun (J).",
+      "Dẫn nhiệt: chủ yếu ở chất rắn (kim loại dẫn tốt); đối lưu: ở chất lỏng và khí.",
+      "Bức xạ nhiệt: truyền nhiệt bằng tia nhiệt đi thẳng, xảy ra cả trong chân không (Mặt Trời → Trái Đất).",
+      "Các chất nở ra khi nóng lên, co lại khi lạnh đi; khí nở nhiều nhất, rắn nở ít nhất."
+    ],
+    "formulas": ["Nhiệt độ ↑ ⇒ phân tử chuyển động nhanh hơn ⇒ nội năng ↑", "Nở vì nhiệt: khí > lỏng > rắn"],
+    "viz": { "type": "heat" },
+    "vizNote": "Kéo nhiệt độ: các phân tử chuyển động nhanh hơn (nội năng tăng), thanh kim loại dài ra và cột nhiệt kế dâng lên.",
+    "memo": "“Rắn dẫn – Lỏng, khí đối lưu – Chân không bức xạ”. Nở vì nhiệt: “Khí nở nhiều, rắn nở ít” — nên đường ray phải chừa khe hở.",
+    "example": {
+      "q": "Một thanh ray thép dài 12 m. Khi nhiệt độ tăng 1 °C, mỗi mét thép dài thêm khoảng 0,012 mm. Nhiệt độ tăng từ 20 °C lên 50 °C thì thanh ray dài thêm bao nhiêu? Vì sao phải chừa khe hở giữa hai thanh ray?",
+      "a": "Độ tăng nhiệt độ: 50 − 20 = 30 °C.\nĐộ dài tăng thêm: 12 · 0,012 · 30 = 4,32 mm.\nNếu không chừa khe hở ≥ 4,32 mm, thanh ray nở ra bị cản sẽ gây lực rất lớn làm cong đường ray."
+    },
+    "terms": [["internal energy", "nội năng"], ["conduction", "dẫn nhiệt"], ["convection", "đối lưu"], ["thermal radiation", "bức xạ nhiệt"], ["thermal expansion", "sự nở vì nhiệt"]],
+    "quiz": [
+      {
+        "q": "Đun nước trong nồi, nhiệt truyền đi khắp khối nước chủ yếu bằng hình thức nào?",
+        "opts": ["Dẫn nhiệt", "Đối lưu", "Bức xạ nhiệt"],
+        "a": 1,
+        "why": "Nước nóng ở đáy nhẹ hơn nổi lên, nước lạnh chìm xuống tạo dòng đối lưu."
+      },
+      {
+        "q": "Năng lượng nhiệt từ Mặt Trời truyền đến Trái Đất bằng hình thức nào?",
+        "opts": ["Dẫn nhiệt", "Đối lưu", "Bức xạ nhiệt"],
+        "a": 2,
+        "why": "Giữa Mặt Trời và Trái Đất phần lớn là chân không; chỉ bức xạ nhiệt truyền được qua chân không."
+      },
+      {
+        "q": "Khi đun nóng một vật rắn, đại lượng nào của vật tăng lên?",
+        "opts": ["Khối lượng", "Khối lượng riêng", "Số phân tử", "Nội năng và thể tích"],
+        "a": 3,
+        "why": "Phân tử chuyển động nhanh hơn nên nội năng tăng, vật nở ra; m không đổi nên D = m/V giảm."
+      },
+      {
+        "q": "Thanh nhôm dài 2 m; mỗi mét nhôm dài thêm 0,024 mm khi tăng 1 °C. Nung từ 20 °C lên 70 °C thì thanh dài thêm bao nhiêu?",
+        "opts": ["2,4 mm", "1,2 mm", "0,048 mm", "24 mm"],
+        "a": 0,
+        "why": "Tăng 50 °C: 2 · 0,024 · 50 = 2,4 mm."
+      }
+    ]
+  }
+]

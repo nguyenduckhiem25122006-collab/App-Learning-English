@@ -1,0 +1,768 @@
+[
+  {
+    "id": "p7-01",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Tốc độ",
+    "title": "Tốc độ chuyển động",
+    "sum": "Tốc độ cho biết vật chuyển động nhanh hay chậm, bằng quãng đường đi được trong một đơn vị thời gian. Đơn vị thường dùng là m/s và km/h.",
+    "points": [
+      "Tốc độ = quãng đường đi được chia cho thời gian đi hết quãng đường đó.",
+      "Tốc độ càng lớn, vật chuyển động càng nhanh.",
+      "Đơn vị đo tốc độ trong hệ SI là m/s; trong giao thông hay dùng km/h.",
+      "1 m/s = 3,6 km/h: đổi m/s sang km/h thì nhân 3,6; đổi km/h sang m/s thì chia 3,6.",
+      "Trước khi tính phải đưa s và t về cùng hệ đơn vị: m với s, hoặc km với h."
+    ],
+    "formulas": [
+      "v = s/t",
+      "s = v·t ; t = s/v",
+      "1 m/s = 3,6 km/h"
+    ],
+    "viz": {
+      "type": "motion"
+    },
+    "vizNote": "Kéo thanh trượt v và t: xe chạy trên đường, quãng đường s = v·t tăng khi tăng tốc độ hoặc tăng thời gian.",
+    "memo": "Tam giác “s ở trên, v và t ở dưới”: che đại lượng cần tìm là ra công thức. Đổi đơn vị nhớ số 3,6 vì 1 h = 3 600 s và 1 km = 1 000 m.",
+    "example": {
+      "q": "Một xe máy đi quãng đường 54 km hết 1,5 h. Tính tốc độ của xe theo km/h và m/s.",
+      "a": "v = s/t = 54 km : 1,5 h = 36 km/h.\nĐổi sang m/s: 36 : 3,6 = 10 m/s.\nVậy v = 36 km/h = 10 m/s."
+    },
+    "terms": [
+      [
+        "speed",
+        "tốc độ"
+      ],
+      [
+        "distance",
+        "quãng đường"
+      ],
+      [
+        "time",
+        "thời gian"
+      ],
+      [
+        "metre per second (m/s)",
+        "mét trên giây"
+      ],
+      [
+        "kilometre per hour (km/h)",
+        "kilômét trên giờ"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Đổi 72 km/h sang m/s.",
+        "opts": [
+          "259,2 m/s",
+          "7,2 m/s",
+          "20 m/s",
+          "72 m/s"
+        ],
+        "a": 2,
+        "why": "Đổi km/h sang m/s thì chia cho 3,6: 72 : 3,6 = 20 m/s."
+      },
+      {
+        "q": "Bạn An đi bộ 1,2 km hết 20 phút. Tốc độ của An là bao nhiêu?",
+        "opts": [
+          "1 m/s",
+          "0,06 m/s",
+          "6 m/s",
+          "60 m/s"
+        ],
+        "a": 0,
+        "why": "1,2 km = 1 200 m; 20 phút = 1 200 s ⇒ v = 1 200 : 1 200 = 1 m/s (= 3,6 km/h)."
+      },
+      {
+        "q": "Ô tô chạy đều với tốc độ 15 m/s trong 2 phút. Quãng đường ô tô đi được là",
+        "opts": [
+          "30 m",
+          "1,8 km",
+          "180 m",
+          "900 m"
+        ],
+        "a": 1,
+        "why": "Đổi 2 phút = 120 s; s = v·t = 15 · 120 = 1 800 m = 1,8 km."
+      },
+      {
+        "q": "Xe A chạy với tốc độ 10 m/s, xe B chạy với tốc độ 30 km/h. Xe nào nhanh hơn?",
+        "opts": [
+          "Xe B, vì 30 > 10",
+          "Hai xe nhanh như nhau",
+          "Không so sánh được vì khác đơn vị",
+          "Xe A, vì 10 m/s = 36 km/h > 30 km/h"
+        ],
+        "a": 3,
+        "why": "Phải đổi về cùng đơn vị: 10 m/s · 3,6 = 36 km/h, lớn hơn 30 km/h."
+      }
+    ]
+  },
+  {
+    "id": "p7-02",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Tốc độ",
+    "title": "Đo tốc độ, đồ thị quãng đường – thời gian",
+    "sum": "Đo tốc độ bằng cách đo quãng đường và thời gian rồi tính v = s/t. Đồ thị quãng đường – thời gian cho biết vật đi nhanh, chậm hay đứng yên; tốc độ ảnh hưởng trực tiếp đến an toàn giao thông.",
+    "points": [
+      "Đo tốc độ: đo s bằng thước, đo t bằng đồng hồ bấm giây, rồi tính v = s/t.",
+      "Đo chính xác hơn: dùng đồng hồ đo thời gian hiện số nối với cổng quang điện.",
+      "Trên đường, cảnh sát giao thông dùng thiết bị “bắn tốc độ” (camera, súng đo tốc độ).",
+      "Đồ thị s–t: trục ngang là t, trục đứng là s; tốc độ không đổi ⇒ đồ thị là đoạn thẳng xiên.",
+      "Đoạn càng dốc ⇒ tốc độ càng lớn; đoạn nằm ngang ⇒ vật đứng yên.",
+      "Tốc độ càng cao, quãng đường dừng xe càng dài ⇒ không vượt tốc độ cho phép, giữ khoảng cách an toàn."
+    ],
+    "formulas": [
+      "v = s/t (đọc s và t trên đồ thị)",
+      "v = (s₂ − s₁)/(t₂ − t₁)"
+    ],
+    "viz": {
+      "type": "motion"
+    },
+    "vizNote": "Thay đổi v rồi nhìn đồ thị s–t: v càng lớn đường thẳng càng dốc, v càng nhỏ đường càng thoải.",
+    "memo": "“Dốc đứng – chạy nhanh, nằm ngang – đứng im”: chỉ cần nhìn độ dốc của đồ thị s–t là biết vật nhanh hay chậm.",
+    "example": {
+      "q": "Đồ thị s–t của một người đi xe đạp: từ 0 đến 2 h đi được 30 km; từ 2 h đến 3 h đồ thị nằm ngang; từ 3 h đến 4 h, s tăng từ 30 km lên 50 km. Mô tả chuyển động và tính tốc độ từng đoạn.",
+      "a": "Đoạn 1 (0 – 2 h): v₁ = 30 : 2 = 15 km/h.\nĐoạn 2 (2 – 3 h): s không đổi ⇒ người dừng nghỉ, v₂ = 0.\nĐoạn 3 (3 – 4 h): v₃ = (50 − 30) : (4 − 3) = 20 km/h.\nĐoạn 3 dốc hơn đoạn 1 nên người đi nhanh hơn."
+    },
+    "terms": [
+      [
+        "distance–time graph",
+        "đồ thị quãng đường – thời gian"
+      ],
+      [
+        "stopwatch",
+        "đồng hồ bấm giây"
+      ],
+      [
+        "photogate",
+        "cổng quang điện"
+      ],
+      [
+        "speed limit",
+        "tốc độ giới hạn"
+      ],
+      [
+        "safe distance",
+        "khoảng cách an toàn"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Trên đồ thị s–t, đoạn thẳng song song với trục thời gian cho biết vật",
+        "opts": [
+          "chuyển động nhanh dần",
+          "đứng yên",
+          "chuyển động với tốc độ lớn nhất",
+          "chuyển động ngược chiều"
+        ],
+        "a": 1,
+        "why": "Thời gian tăng mà s không đổi ⇒ vật không đi thêm quãng đường nào, tức là đứng yên."
+      },
+      {
+        "q": "Đồ thị s–t là đường thẳng đi qua gốc toạ độ; tại t = 4 s thì s = 20 m. Tốc độ của vật là",
+        "opts": [
+          "80 m/s",
+          "0,2 m/s",
+          "16 m/s",
+          "5 m/s"
+        ],
+        "a": 3,
+        "why": "v = s/t = 20 : 4 = 5 m/s."
+      },
+      {
+        "q": "Muốn đo thật chính xác thời gian viên bi chạy qua một đoạn ngắn, nên dùng dụng cụ nào?",
+        "opts": [
+          "Đồng hồ đo thời gian hiện số nối với cổng quang điện",
+          "Đồng hồ treo tường",
+          "Thước cuộn",
+          "Nhiệt kế"
+        ],
+        "a": 0,
+        "why": "Cổng quang điện tự bật, tắt đồng hồ khi vật đi qua nên sai số nhỏ hơn nhiều so với bấm tay."
+      },
+      {
+        "q": "Camera đo được một ô tô chạy 25 m/s trên đoạn đường giới hạn 80 km/h. Ô tô có vi phạm không?",
+        "opts": [
+          "Không, vì 25 < 80",
+          "Có, vượt 10 km/h vì 25 m/s = 90 km/h",
+          "Có, vượt 55 km/h",
+          "Không, vì 25 m/s ≈ 69 km/h"
+        ],
+        "a": 1,
+        "why": "25 · 3,6 = 90 km/h > 80 km/h ⇒ ô tô vượt quá tốc độ cho phép 10 km/h."
+      }
+    ]
+  },
+  {
+    "id": "p7-03",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Âm thanh",
+    "title": "Sóng âm và sự truyền âm",
+    "sum": "Âm do các vật dao động phát ra và lan truyền thành sóng âm qua chất rắn, lỏng, khí. Âm không truyền được trong chân không.",
+    "points": [
+      "Nguồn âm là vật dao động phát ra âm (dây đàn, mặt trống, dây thanh quản).",
+      "Sóng âm là dao động lan truyền trong môi trường, từ nguồn âm ra xung quanh.",
+      "Âm truyền được qua chất rắn, lỏng, khí; không truyền được trong chân không.",
+      "Tốc độ truyền âm: rắn > lỏng > khí (thép ≈ 6 000 m/s, nước ≈ 1 500 m/s, không khí ≈ 340 m/s).",
+      "Sóng âm truyền đến tai làm màng nhĩ dao động, nhờ đó ta nghe được âm."
+    ],
+    "formulas": [
+      "s = v·t",
+      "v (không khí) ≈ 340 m/s"
+    ],
+    "viz": {
+      "type": "sound"
+    },
+    "vizNote": "Kéo thanh trượt tần số và biên độ: quan sát sóng âm là dao động lặp đi lặp lại, lan ra từ nguồn âm.",
+    "memo": "“Rắn – Lỏng – Khí: nhanh – vừa – chậm”; chân không thì im lặng tuyệt đối (ngoài vũ trụ không nghe được tiếng nổ).",
+    "example": {
+      "q": "Thấy tia chớp, 3 s sau mới nghe tiếng sấm. Tốc độ âm trong không khí là 340 m/s. Chỗ sét đánh cách bạn bao xa?",
+      "a": "Ánh sáng truyền rất nhanh nên coi như thấy chớp ngay lúc sét đánh.\nQuãng đường âm truyền: s = v·t = 340 · 3 = 1 020 m.\nVậy chỗ sét đánh cách khoảng 1 020 m ≈ 1 km."
+    },
+    "terms": [
+      [
+        "sound wave",
+        "sóng âm"
+      ],
+      [
+        "vibration",
+        "dao động"
+      ],
+      [
+        "sound source",
+        "nguồn âm"
+      ],
+      [
+        "medium",
+        "môi trường (truyền âm)"
+      ],
+      [
+        "vacuum",
+        "chân không"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Âm KHÔNG truyền được trong môi trường nào?",
+        "opts": [
+          "Nước",
+          "Tường bê tông",
+          "Không khí",
+          "Chân không"
+        ],
+        "a": 3,
+        "why": "Âm cần môi trường vật chất (rắn, lỏng, khí) để truyền; chân không không có hạt nào để dao động."
+      },
+      {
+        "q": "Sắp xếp tốc độ truyền âm từ lớn đến nhỏ:",
+        "opts": [
+          "Khí > lỏng > rắn",
+          "Rắn > lỏng > khí",
+          "Lỏng > rắn > khí",
+          "Như nhau trong mọi môi trường"
+        ],
+        "a": 1,
+        "why": "Ví dụ: thép ≈ 6 000 m/s, nước ≈ 1 500 m/s, không khí ≈ 340 m/s."
+      },
+      {
+        "q": "Thấy chớp 5 s sau mới nghe tiếng sấm. Chỗ sét đánh cách bạn khoảng (âm trong không khí 340 m/s)",
+        "opts": [
+          "68 m",
+          "850 m",
+          "1 700 m",
+          "3 400 m"
+        ],
+        "a": 2,
+        "why": "s = v·t = 340 · 5 = 1 700 m."
+      },
+      {
+        "q": "Áp tai xuống đường ray, ta nghe tiếng tàu sớm hơn nghe qua không khí vì",
+        "opts": [
+          "âm truyền trong thép nhanh hơn trong không khí",
+          "đường ray làm âm to hơn",
+          "không khí không truyền được âm",
+          "tai áp sát nên chỉ nghe rõ hơn chứ không sớm hơn"
+        ],
+        "a": 0,
+        "why": "Âm truyền trong chất rắn (thép) nhanh hơn nhiều so với trong chất khí."
+      }
+    ]
+  },
+  {
+    "id": "p7-04",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Âm thanh",
+    "title": "Độ to và độ cao của âm",
+    "sum": "Độ to của âm phụ thuộc biên độ dao động; độ cao của âm phụ thuộc tần số dao động của nguồn âm.",
+    "points": [
+      "Biên độ dao động là độ lệch lớn nhất của vật so với vị trí cân bằng.",
+      "Biên độ càng lớn ⇒ âm càng to; độ to của âm đo bằng đêxiben (dB).",
+      "Tần số là số dao động vật thực hiện trong 1 giây; đơn vị là héc (Hz).",
+      "Tần số càng lớn ⇒ âm càng cao (bổng); tần số càng nhỏ ⇒ âm càng thấp (trầm).",
+      "Tai người nghe được âm từ 20 Hz đến 20 000 Hz; dưới 20 Hz là hạ âm, trên 20 000 Hz là siêu âm."
+    ],
+    "formulas": [
+      "f = N/t (N: số dao động, t: thời gian tính bằng s)",
+      "1 Hz = 1 dao động trong 1 giây"
+    ],
+    "viz": {
+      "type": "sound"
+    },
+    "vizNote": "Tăng tần số: sóng dày hơn, âm cao hơn; tăng biên độ: sóng nhô cao hơn, âm to hơn.",
+    "memo": "“To nhờ Biên, Cao nhờ Tần”: gảy đàn mạnh thì tiếng to; dây căng hơn, ngắn hơn thì tần số lớn, tiếng bổng.",
+    "example": {
+      "q": "Trong 10 s, cánh một con ong thực hiện 3 000 dao động. Tính tần số dao động và cho biết tai người có nghe được âm này không.",
+      "a": "f = N/t = 3 000 : 10 = 300 Hz.\nVì 20 Hz < 300 Hz < 20 000 Hz nên tai người nghe được tiếng vo ve của ong."
+    },
+    "terms": [
+      [
+        "amplitude",
+        "biên độ"
+      ],
+      [
+        "frequency",
+        "tần số"
+      ],
+      [
+        "loudness",
+        "độ to"
+      ],
+      [
+        "pitch",
+        "độ cao (của âm)"
+      ],
+      [
+        "ultrasound",
+        "siêu âm"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Một con lắc thực hiện 40 dao động trong 20 s. Tần số của nó là bao nhiêu và tai người có nghe được âm nó phát ra không?",
+        "opts": [
+          "2 Hz, không nghe được (hạ âm)",
+          "800 Hz, nghe được",
+          "0,5 Hz, nghe được",
+          "2 Hz, nghe được"
+        ],
+        "a": 0,
+        "why": "f = 40 : 20 = 2 Hz < 20 Hz ⇒ hạ âm, tai người không nghe được."
+      },
+      {
+        "q": "Gảy cùng một dây đàn mạnh hơn thì",
+        "opts": [
+          "âm cao hơn vì tần số tăng",
+          "âm trầm hơn",
+          "âm to hơn vì biên độ dao động lớn hơn",
+          "âm nhỏ hơn"
+        ],
+        "a": 2,
+        "why": "Gảy mạnh làm dây lệch xa hơn (biên độ lớn hơn) nên âm to hơn; dây không đổi nên độ cao gần như không đổi."
+      },
+      {
+        "q": "Vật A dao động 500 lần trong 5 s, vật B dao động 3 000 lần trong 20 s. Vật nào phát âm cao hơn?",
+        "opts": [
+          "Vật A",
+          "Vật B",
+          "Hai vật như nhau",
+          "Không đủ dữ kiện"
+        ],
+        "a": 1,
+        "why": "f_A = 500 : 5 = 100 Hz; f_B = 3 000 : 20 = 150 Hz ⇒ B có tần số lớn hơn nên âm cao hơn."
+      },
+      {
+        "q": "Dơi phát ra âm có tần số 50 000 Hz. Âm này là",
+        "opts": [
+          "hạ âm",
+          "âm tai người nghe được",
+          "tiếng ồn",
+          "siêu âm"
+        ],
+        "a": 3,
+        "why": "50 000 Hz > 20 000 Hz ⇒ siêu âm, tai người không nghe được."
+      }
+    ]
+  },
+  {
+    "id": "p7-05",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Âm thanh",
+    "title": "Phản xạ âm, chống ô nhiễm tiếng ồn",
+    "sum": "Âm gặp vật cản bị dội lại gọi là âm phản xạ. Hiểu sự phản xạ và hấp thụ âm giúp ta giải thích tiếng vang, đo khoảng cách và chống ô nhiễm tiếng ồn.",
+    "points": [
+      "Âm gặp vật cản bị dội ngược lại gọi là âm phản xạ.",
+      "Vật cứng, bề mặt nhẵn (tường gạch, kính, kim loại) phản xạ âm tốt.",
+      "Vật mềm, xốp, bề mặt gồ ghề (thảm, rèm, đệm mút) phản xạ âm kém, hấp thụ âm tốt.",
+      "Tiếng vang: nghe được âm phản xạ tách rời âm phát ra (đến tai chậm hơn ít nhất 1/15 s).",
+      "Đo độ sâu đáy biển bằng siêu âm: âm đi xuống rồi dội về nên độ sâu d = v·t/2.",
+      "Chống ồn: giảm độ to tại nguồn, ngăn đường truyền (cây xanh, tường cách âm), dùng vật liệu hấp thụ âm."
+    ],
+    "formulas": [
+      "d = v·t/2 (t: thời gian âm đi và về)"
+    ],
+    "viz": {
+      "type": "sound"
+    },
+    "vizNote": "Giảm biên độ để thấy âm nhỏ đi: giảm độ to ngay tại nguồn là cách chống tiếng ồn hiệu quả nhất.",
+    "memo": "“Cứng – nhẵn dội lại, mềm – xốp nuốt vào”. Tính khoảng cách bằng âm phản xạ nhớ chia 2, vì âm đi một vòng: đi + về.",
+    "example": {
+      "q": "Tàu phát siêu âm thẳng xuống đáy biển, sau 1,2 s nhận được âm phản xạ. Tốc độ âm trong nước biển là 1 500 m/s. Tính độ sâu của biển.",
+      "a": "Quãng đường âm đi cả đi lẫn về: s = v·t = 1 500 · 1,2 = 1 800 m.\nĐộ sâu bằng nửa quãng đường đó: d = 1 800 : 2 = 900 m."
+    },
+    "terms": [
+      [
+        "echo",
+        "tiếng vang"
+      ],
+      [
+        "reflection of sound",
+        "phản xạ âm"
+      ],
+      [
+        "noise pollution",
+        "ô nhiễm tiếng ồn"
+      ],
+      [
+        "soundproofing",
+        "cách âm"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Vật nào phản xạ âm TỐT nhất?",
+        "opts": [
+          "Rèm nhung",
+          "Đệm mút",
+          "Tấm kim loại phẳng",
+          "Thảm len"
+        ],
+        "a": 2,
+        "why": "Vật cứng, có bề mặt nhẵn phản xạ âm tốt; rèm, đệm, thảm mềm và xốp nên hấp thụ âm."
+      },
+      {
+        "q": "Bạn hét to trước một vách núi và nghe tiếng vang sau 2 s. Vách núi cách bạn bao xa? (âm trong không khí 340 m/s)",
+        "opts": [
+          "680 m",
+          "340 m",
+          "170 m",
+          "1 360 m"
+        ],
+        "a": 1,
+        "why": "Âm đi và về mất 2 s ⇒ d = 340 · 2 : 2 = 340 m."
+      },
+      {
+        "q": "Biện pháp nào chống ô nhiễm tiếng ồn bằng cách NGĂN ĐƯỜNG TRUYỀN âm?",
+        "opts": [
+          "Trồng nhiều cây xanh quanh trường học",
+          "Treo biển cấm bóp còi",
+          "Bảo dưỡng máy móc cho chạy êm",
+          "Vặn nhỏ âm lượng loa"
+        ],
+        "a": 0,
+        "why": "Cây xanh chặn và làm phân tán âm trên đường truyền; ba cách còn lại làm giảm độ to ngay tại nguồn."
+      },
+      {
+        "q": "Phòng thu âm thường dán mút xốp lên tường và trải thảm để",
+        "opts": [
+          "âm phản xạ mạnh hơn",
+          "hấp thụ âm, giảm âm phản xạ và tiếng vang",
+          "tăng tần số của âm",
+          "làm âm truyền nhanh hơn"
+        ],
+        "a": 1,
+        "why": "Vật liệu mềm, xốp hấp thụ âm tốt nên giảm âm phản xạ, tiếng thu được rõ, không bị vang."
+      }
+    ]
+  },
+  {
+    "id": "p7-06",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Ánh sáng",
+    "title": "Ánh sáng, tia sáng và sự phản xạ ánh sáng",
+    "sum": "Ánh sáng là một dạng năng lượng, truyền theo đường thẳng và được biểu diễn bằng tia sáng. Khi gặp gương phẳng, ánh sáng phản xạ theo định luật: góc phản xạ bằng góc tới.",
+    "points": [
+      "Ánh sáng là một dạng năng lượng (pin mặt trời biến năng lượng ánh sáng thành điện năng).",
+      "Tia sáng: đường thẳng có mũi tên chỉ hướng truyền; chùm sáng có thể song song, hội tụ hoặc phân kì.",
+      "Sau vật cản sáng có vùng tối (không nhận ánh sáng) và vùng nửa tối (nhận một phần ánh sáng).",
+      "Định luật phản xạ: tia phản xạ nằm trong mặt phẳng chứa tia tới và pháp tuyến tại điểm tới.",
+      "Góc phản xạ bằng góc tới: i' = i (góc đo so với pháp tuyến, không phải so với mặt gương).",
+      "Mặt nhẵn ⇒ phản xạ gương; mặt gồ ghề ⇒ phản xạ khuếch tán (ánh sáng hắt ra mọi hướng)."
+    ],
+    "formulas": [
+      "i' = i",
+      "i = 90° − (góc giữa tia tới và mặt gương)",
+      "góc giữa tia tới và tia phản xạ = i + i' = 2i"
+    ],
+    "viz": {
+      "type": "reflection"
+    },
+    "vizNote": "Kéo góc tới i: tia phản xạ luôn đối xứng với tia tới qua pháp tuyến, góc phản xạ i' = i.",
+    "memo": "“Tới bao nhiêu, phản bấy nhiêu” — nhưng nhớ đo góc từ PHÁP TUYẾN (đường vuông góc với gương), không đo từ mặt gương.",
+    "example": {
+      "q": "Chiếu một tia sáng tới gương phẳng, tia tới hợp với mặt gương góc 30°. Tính góc tới, góc phản xạ và góc tạo bởi tia tới với tia phản xạ.",
+      "a": "Pháp tuyến vuông góc với gương ⇒ góc tới i = 90° − 30° = 60°.\nĐịnh luật phản xạ: i' = i = 60°.\nGóc giữa tia tới và tia phản xạ: i + i' = 60° + 60° = 120°."
+    },
+    "terms": [
+      [
+        "light ray",
+        "tia sáng"
+      ],
+      [
+        "reflection",
+        "sự phản xạ"
+      ],
+      [
+        "angle of incidence",
+        "góc tới"
+      ],
+      [
+        "angle of reflection",
+        "góc phản xạ"
+      ],
+      [
+        "normal",
+        "pháp tuyến"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Tia tới hợp với mặt gương phẳng một góc 25°. Góc phản xạ bằng",
+        "opts": [
+          "25°",
+          "50°",
+          "65°",
+          "130°"
+        ],
+        "a": 2,
+        "why": "Góc tới i = 90° − 25° = 65°; theo định luật phản xạ i' = i = 65°."
+      },
+      {
+        "q": "Góc tạo bởi tia tới và tia phản xạ trên gương phẳng là 80°. Góc tới bằng",
+        "opts": [
+          "40°",
+          "80°",
+          "160°",
+          "10°"
+        ],
+        "a": 0,
+        "why": "i + i' = 2i = 80° ⇒ i = 40°."
+      },
+      {
+        "q": "Hiện tượng phản xạ khuếch tán xảy ra khi chiếu ánh sáng vào",
+        "opts": [
+          "gương soi",
+          "mặt nước phẳng lặng",
+          "tấm kim loại nhẵn bóng",
+          "tờ giấy trắng"
+        ],
+        "a": 3,
+        "why": "Bề mặt tờ giấy gồ ghề (nhìn rõ dưới kính lúp) nên hắt ánh sáng ra mọi hướng."
+      },
+      {
+        "q": "Phía sau vật cản sáng, vùng chỉ nhận được một phần ánh sáng từ nguồn sáng gọi là",
+        "opts": [
+          "vùng tối",
+          "vùng nửa tối",
+          "vùng sáng",
+          "vùng phản xạ"
+        ],
+        "a": 1,
+        "why": "Vùng tối không nhận ánh sáng; vùng nửa tối nhận ánh sáng từ một phần của nguồn sáng."
+      }
+    ]
+  },
+  {
+    "id": "p7-07",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Ánh sáng",
+    "title": "Ảnh của vật tạo bởi gương phẳng",
+    "sum": "Gương phẳng tạo ảnh ảo, lớn bằng vật và đối xứng với vật qua mặt gương.",
+    "points": [
+      "Ảnh tạo bởi gương phẳng là ảnh ảo: không hứng được trên màn chắn.",
+      "Ảnh lớn bằng vật.",
+      "Khoảng cách từ ảnh đến gương bằng khoảng cách từ vật đến gương.",
+      "Ảnh và vật đối xứng nhau qua mặt gương ⇒ chữ nhìn trong gương bị đảo ngược trái – phải.",
+      "Vẽ ảnh của điểm S: lấy S' đối xứng với S qua gương; mọi tia phản xạ có đường kéo dài đi qua S'."
+    ],
+    "formulas": [
+      "d' = d (ảnh – gương = vật – gương)",
+      "khoảng cách vật – ảnh = 2d",
+      "chiều cao ảnh = chiều cao vật"
+    ],
+    "viz": {
+      "type": "reflection"
+    },
+    "vizNote": "Đổi góc tới i: tia phản xạ luôn đối xứng với tia tới qua pháp tuyến; ảnh S' của điểm sáng S nằm sau gương, đối xứng với S qua mặt gương.",
+    "memo": "“Gương phẳng là gương công bằng”: ảnh ảo, bằng vật, cách gương đúng bằng vật — vật lùi 1 bước, ảnh cũng lùi 1 bước.",
+    "example": {
+      "q": "Bạn Lan cao 1,6 m đứng cách gương phẳng treo thẳng đứng 1,5 m. a) Ảnh của Lan cao bao nhiêu, cách Lan bao xa? b) Lan tiến lại gần gương 0,5 m thì ảnh cách Lan bao xa?",
+      "a": "a) Ảnh lớn bằng vật: cao 1,6 m. Ảnh cách gương 1,5 m ⇒ cách Lan 1,5 + 1,5 = 3 m.\nb) Lan cách gương 1,5 − 0,5 = 1 m ⇒ ảnh cách gương 1 m ⇒ ảnh cách Lan 1 + 1 = 2 m."
+    },
+    "terms": [
+      [
+        "plane mirror",
+        "gương phẳng"
+      ],
+      [
+        "image",
+        "ảnh"
+      ],
+      [
+        "virtual image",
+        "ảnh ảo"
+      ],
+      [
+        "symmetric",
+        "đối xứng"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Ảnh của một vật tạo bởi gương phẳng có tính chất nào?",
+        "opts": [
+          "Ảnh thật, lớn hơn vật",
+          "Ảnh ảo, lớn bằng vật",
+          "Ảnh ảo, nhỏ hơn vật",
+          "Ảnh thật, hứng được trên màn"
+        ],
+        "a": 1,
+        "why": "Gương phẳng luôn cho ảnh ảo (không hứng được trên màn), lớn bằng vật."
+      },
+      {
+        "q": "Một vật đặt cách gương phẳng 40 cm. Khoảng cách giữa vật và ảnh của nó là",
+        "opts": [
+          "40 cm",
+          "20 cm",
+          "80 cm",
+          "160 cm"
+        ],
+        "a": 2,
+        "why": "Ảnh cách gương 40 cm, ở phía sau gương ⇒ vật cách ảnh 40 + 40 = 80 cm."
+      },
+      {
+        "q": "Bạn Nam đứng cách gương phẳng 2 m rồi lùi ra xa gương thêm 1 m. Lúc này ảnh cách Nam",
+        "opts": [
+          "6 m",
+          "3 m",
+          "4 m",
+          "5 m"
+        ],
+        "a": 0,
+        "why": "Nam cách gương 3 m ⇒ ảnh cách gương 3 m ⇒ ảnh cách Nam 3 + 3 = 6 m."
+      },
+      {
+        "q": "Bóng đèn treo cách mặt nước ao phẳng lặng 3 m (mặt nước coi như gương phẳng). Ảnh của đèn cách đèn bao nhiêu?",
+        "opts": [
+          "3 m",
+          "1,5 m",
+          "9 m",
+          "6 m"
+        ],
+        "a": 3,
+        "why": "Ảnh nằm dưới mặt nước 3 m, đối xứng với đèn ⇒ cách đèn 3 + 3 = 6 m."
+      }
+    ]
+  },
+  {
+    "id": "p7-08",
+    "subj": "phys",
+    "grade": 7,
+    "chap": "Từ",
+    "title": "Nam châm, từ trường và la bàn",
+    "sum": "Nam châm có hai cực, hút các vật liệu từ và tạo ra từ trường xung quanh. Trái Đất cũng có từ trường nên kim la bàn luôn chỉ hướng Bắc – Nam.",
+    "points": [
+      "Nam châm có hai cực: cực Bắc (N) và cực Nam (S); bẻ đôi, mỗi mảnh vẫn có đủ hai cực.",
+      "Các cực cùng tên thì đẩy nhau, khác tên thì hút nhau.",
+      "Nam châm hút sắt, thép, niken, coban; không hút đồng, nhôm, nhựa, gỗ.",
+      "Quanh nam châm và quanh dòng điện có từ trường, tác dụng lực từ lên kim nam châm đặt trong đó.",
+      "Đường sức từ bên ngoài nam châm đi ra từ cực Bắc, đi vào cực Nam; chỗ đường sức dày thì từ trường mạnh.",
+      "Trái Đất là nam châm khổng lồ: cực Bắc địa lí gần cực Nam địa từ ⇒ kim la bàn chỉ hướng Bắc – Nam."
+    ],
+    "formulas": [
+      "Cùng tên (N–N, S–S): đẩy · Khác tên (N–S): hút",
+      "Bên ngoài nam châm: đường sức từ đi từ N sang S"
+    ],
+    "viz": {
+      "type": "magnet"
+    },
+    "vizNote": "Kéo la bàn đi quanh thanh nam châm: kim luôn nằm dọc đường sức từ, cực Bắc của kim chỉ theo chiều đường sức (từ N sang S).",
+    "memo": "“Bắc ra – Nam vào” cho đường sức từ; “khác tên thì thương, cùng tên thì ghét” cho tương tác giữa hai cực.",
+    "example": {
+      "q": "Một thanh nam châm bị mờ chữ ở hai đầu A và B. Dùng la bàn, làm sao biết đầu A là cực gì?",
+      "a": "Đưa đầu A lại gần cực Bắc của kim la bàn (đầu kim chỉ hướng Bắc).\nNếu cực Bắc của kim bị đẩy ra ⇒ A cùng tên ⇒ A là cực Bắc (N).\nNếu cực Bắc của kim bị hút lại ⇒ A khác tên ⇒ A là cực Nam (S), còn B là cực Bắc.\nCách khác: treo thanh nam châm tự do, đầu quay về hướng Bắc địa lí là cực Bắc."
+    },
+    "terms": [
+      [
+        "magnet",
+        "nam châm"
+      ],
+      [
+        "north pole / south pole",
+        "cực Bắc / cực Nam"
+      ],
+      [
+        "magnetic field",
+        "từ trường"
+      ],
+      [
+        "magnetic field line",
+        "đường sức từ"
+      ],
+      [
+        "compass",
+        "la bàn"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Nam châm hút được vật nào sau đây?",
+        "opts": [
+          "Dây đồng",
+          "Thìa nhôm",
+          "Đinh sắt",
+          "Thước nhựa"
+        ],
+        "a": 2,
+        "why": "Nam châm hút vật liệu từ như sắt, thép, niken, coban; đồng, nhôm, nhựa không bị hút."
+      },
+      {
+        "q": "Đưa cực Nam của nam châm A lại gần cực Nam của nam châm B thì hai nam châm",
+        "opts": [
+          "đẩy nhau",
+          "hút nhau",
+          "không tương tác",
+          "hút nhau rồi dính chặt"
+        ],
+        "a": 0,
+        "why": "Hai cực cùng tên (S – S) thì đẩy nhau."
+      },
+      {
+        "q": "Bên ngoài thanh nam châm, đường sức từ có chiều",
+        "opts": [
+          "đi ra từ cực Nam, đi vào cực Bắc",
+          "đi ra từ cực Bắc, đi vào cực Nam",
+          "là các đường tròn quanh tâm nam châm",
+          "không có chiều xác định"
+        ],
+        "a": 1,
+        "why": "Quy ước: bên ngoài nam châm, đường sức từ đi ra từ cực Bắc (N), đi vào cực Nam (S)."
+      },
+      {
+        "q": "Đầu kim la bàn chỉ về hướng Bắc địa lí là cực nào của kim? Vì sao?",
+        "opts": [
+          "Cực Nam, vì bị cực Bắc địa từ hút",
+          "Cực Bắc, vì bị cực Bắc địa từ đẩy",
+          "Cực Nam, vì gần xích đạo hơn",
+          "Cực Bắc, vì gần Bắc địa lí là cực Nam địa từ, hút cực Bắc của kim"
+        ],
+        "a": 3,
+        "why": "Khác tên thì hút: cực Nam địa từ (nằm gần Bắc địa lí) hút cực Bắc của kim la bàn."
+      }
+    ]
+  }
+]

@@ -328,6 +328,29 @@ svg.scene.wide { height: auto; aspect-ratio: 1300 / 300 }
 .plot .pbadge { position: absolute; left: 4px; top: 4px; background: #FFD84D; color: #6B3410; font-size: .6rem; font-weight: 800; border-radius: 999px; padding: 1px 5px }
 .plot .bbadge { position: absolute; right: 4px; bottom: 4px; background: #6C5CE7; color: #fff; font-size: .6rem; font-weight: 800; border-radius: 999px; padding: 1px 5px }
 
+/* Toán & Vật lí */
+.stem-list { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) }
+.stem-item { display: flex; gap: 10px; align-items: flex-start; text-align: left; padding: 12px; border-radius: 14px; border: 1px solid var(--rule); background: var(--card); color: inherit; font: inherit; cursor: pointer }
+.stem-item:hover { border-color: var(--action) } .stem-item.done { background: color-mix(in srgb, #3FB66B 9%, var(--card)) }
+.stem-item .si-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--chip); font-weight: 800 }
+.stem-item.done .si-ic { background: #3FB66B; color: #fff }
+.viz-box { border-radius: 16px; background: #F8FBFF; border: 1px solid #DCE6F2; overflow: hidden }
+.viz-svg { display: block; width: 100%; height: auto; max-height: 420px; font-family: var(--f-body, system-ui), sans-serif }
+.viz-info { margin: 0; padding: 10px 12px; border-radius: 12px; background: var(--chip); line-height: 1.55 }
+.viz-ctrls { display: grid; gap: 10px 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) }
+.viz-ctl { display: grid; gap: 4px; font-size: .92rem } .viz-ctl input { width: 100%; accent-color: var(--action) }
+.stem-points { margin: 0; padding-left: 20px; display: grid; gap: 6px }
+.formulas { display: grid; gap: 6px } .formulas div { padding: 8px 12px; border-radius: 10px; background: #FFF6DC; color: #6B3410; font-weight: 700; border-left: 4px solid #F2C14E }
+.memo { margin: 0; padding: 10px 12px; border-radius: 12px; background: #EEF2FF; color: #3730A3 }
+.stem-sol { white-space: pre-line; margin: 8px 0 0 }
+.stem-q { display: grid; gap: 8px; padding-bottom: 10px; border-bottom: 1px dashed var(--rule) } .stem-q p { margin: 0 }
+@media (prefers-reduced-motion: no-preference) {
+  .viz-svg .jig { animation: jig 1s ease-in-out infinite alternate }
+  .viz-svg .flow { stroke-dasharray: 10 6; animation: flowdash 1.2s linear infinite }
+  @keyframes jig { from { transform: translate(calc(var(--j) * -1), 0) } 50% { transform: translate(0, var(--j)) } to { transform: translate(var(--j), calc(var(--j) * -.6)) } }
+  @keyframes flowdash { to { stroke-dashoffset: -32 } }
+}
+
 /* Farm layout, field, farmer, pens and effects */
 body.farm-wide main { max-width: min(2400px, 100%) }
 body.farm-full .top, body.farm-full::before { display: none }
@@ -569,4 +592,5 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 <script>/*CORE*/</script>
 <script>/*FARM*/</script>
 <script>/*ONLINE*/</script>
+<script>/*STEM*/</script>
 <script>/*APP*/</script>

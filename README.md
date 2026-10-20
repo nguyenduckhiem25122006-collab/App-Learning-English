@@ -2,6 +2,8 @@
 
 Cấu trúc:
 - `data/` – nguồn dữ liệu dạng văn bản: `kids*.txt`, `toeic*.txt` (từ|loại từ|nghĩa|ví dụ|hình), `sent_*.txt` (câu giao tiếp hằng ngày, công sở và cấu trúc câu TOEIC LR & SW), `ipa.json` (44 âm).
+- `data/stem/*.json` – bài Toán & Vật lí lớp 7–9 (tóm tắt, ý chính, công thức, mô phỏng, mẹo nhớ, ví dụ, thuật ngữ tiếng Anh, 4 câu kiểm tra).
+- `src/stem.js` – các mô phỏng trực quan có thanh trượt cho bài Toán & Vật lí (vẽ SVG, không phụ thuộc DOM nên test được bằng Node).
 - `build_data.py` – gắn IPA (từ điển CMU), kiểm tra trùng lặp, xuất `build/data.js`.
 - `src/core.js` – logic thuần (lịch ôn tập Leitner, chuỗi ngày, quiz) dùng chung cho app và test.
 - `src/farm.js` – logic nông trại (cây trồng, vật nuôi, đơn hàng, nhà kho, trang trí); xu kiếm được từ việc học.

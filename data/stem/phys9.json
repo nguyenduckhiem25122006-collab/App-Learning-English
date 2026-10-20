@@ -1,0 +1,864 @@
+[
+  {
+    "id": "p9-01",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Năng lượng cơ học",
+    "title": "Động năng, thế năng, cơ năng",
+    "sum": "Vật chuyển động có động năng, vật ở trên cao có thế năng trọng trường; tổng của chúng là cơ năng, được bảo toàn khi bỏ qua ma sát và sức cản.",
+    "points": [
+      "Động năng là năng lượng vật có do chuyển động: Wđ = ½·m·v².",
+      "Tốc độ tăng gấp đôi thì động năng tăng gấp 4 (vì v được bình phương).",
+      "Thế năng trọng trường: Wt = P·h = 10·m·h, với h là độ cao so với mốc chọn (thường là mặt đất).",
+      "Cơ năng W = Wđ + Wt; cả ba đại lượng đều đo bằng jun (J).",
+      "Bỏ qua ma sát, cơ năng bảo toàn: thế năng giảm bao nhiêu thì động năng tăng bấy nhiêu và ngược lại."
+    ],
+    "formulas": [
+      "Wđ = ½·m·v²  (m: kg, v: m/s, Wđ: J)",
+      "Wt = P·h = 10·m·h  (h: m)",
+      "W = Wđ + Wt = hằng số (bỏ qua ma sát)"
+    ],
+    "viz": {
+      "type": "energy"
+    },
+    "vizNote": "Kéo quả bóng lên xuống trên dốc: khi Wt giảm thì Wđ tăng đúng bấy nhiêu, còn tổng cơ năng W không đổi.",
+    "memo": "“Động – chạy, Thế – cao, Cơ – cộng vào.” Nhanh gấp đôi thì động năng gấp bốn.",
+    "example": {
+      "q": "Thả rơi quả bóng 0,5 kg từ độ cao 5 m so với mặt đất (bỏ qua sức cản). a) Tính cơ năng của bóng. b) Tốc độ của bóng ngay trước khi chạm đất?",
+      "a": "Chọn mốc thế năng tại mặt đất.\na) Lúc thả: v = 0 ⇒ Wđ = 0; Wt = 10·m·h = 10·0,5·5 = 25 J ⇒ W = 25 J.\nb) Chạm đất: h = 0 ⇒ Wt = 0, nên Wđ = W = 25 J.\n½·0,5·v² = 25 ⇒ v² = 100 ⇒ v = 10 m/s."
+    },
+    "terms": [
+      [
+        "kinetic energy",
+        "động năng"
+      ],
+      [
+        "potential energy",
+        "thế năng"
+      ],
+      [
+        "mechanical energy",
+        "cơ năng"
+      ],
+      [
+        "conservation of energy",
+        "bảo toàn năng lượng"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Ô tô khối lượng 1 000 kg chạy với tốc độ 10 m/s. Động năng của ô tô là",
+        "opts": [
+          "5 000 J",
+          "10 000 J",
+          "50 000 J",
+          "100 000 J"
+        ],
+        "a": 2,
+        "why": "Wđ = ½·m·v² = ½·1 000·10² = 50 000 J."
+      },
+      {
+        "q": "Tốc độ của một vật tăng gấp 3 lần (khối lượng không đổi) thì động năng của vật",
+        "opts": [
+          "Tăng 9 lần",
+          "Tăng 3 lần",
+          "Tăng 6 lần",
+          "Không đổi"
+        ],
+        "a": 0,
+        "why": "Wđ tỉ lệ với v², nên v gấp 3 thì Wđ gấp 3² = 9 lần."
+      },
+      {
+        "q": "Vật 1 kg rơi từ độ cao 6 m (mốc thế năng ở mặt đất, bỏ qua sức cản). Khi vật ở độ cao 2 m, động năng của vật là",
+        "opts": [
+          "20 J",
+          "60 J",
+          "80 J",
+          "40 J"
+        ],
+        "a": 3,
+        "why": "W = 10·1·6 = 60 J. Ở 2 m: Wt = 10·1·2 = 20 J ⇒ Wđ = 60 − 20 = 40 J."
+      },
+      {
+        "q": "Quả lắc dao động, bỏ qua ma sát. Ở vị trí thấp nhất thì",
+        "opts": [
+          "Thế năng lớn nhất, động năng bằng 0",
+          "Động năng lớn nhất, thế năng nhỏ nhất",
+          "Cơ năng lớn nhất",
+          "Động năng và thế năng đều bằng 0"
+        ],
+        "a": 1,
+        "why": "Thấp nhất ⇒ h nhỏ nhất nên Wt nhỏ nhất; cơ năng không đổi nên Wđ lớn nhất (quả lắc đi nhanh nhất)."
+      }
+    ]
+  },
+  {
+    "id": "p9-02",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Năng lượng cơ học",
+    "title": "Công và công suất",
+    "sum": "Lực sinh công khi làm vật dịch chuyển theo phương của lực; công suất cho biết công được thực hiện nhanh hay chậm.",
+    "points": [
+      "Công cơ học A = F·s khi lực F làm vật dịch chuyển quãng đường s theo phương của lực.",
+      "Đơn vị công là jun (J): 1 J = 1 N·m; 1 kJ = 1 000 J.",
+      "Vật không dịch chuyển, hoặc lực vuông góc với phương dịch chuyển, thì lực không sinh công.",
+      "Nâng vật lên cao h: A = P·h = 10·m·h, đúng bằng phần thế năng vật nhận thêm.",
+      "Công suất P = A/t là công thực hiện trong một đơn vị thời gian.",
+      "Đơn vị công suất là oát (W): 1 W = 1 J/s; 1 kW = 1 000 W; 1 HP ≈ 746 W."
+    ],
+    "formulas": [
+      "A = F·s  (F: N, s: m, A: J)",
+      "A = 10·m·h  (nâng vật lên cao h)",
+      "P = A/t  (P: công suất, W; t: s)"
+    ],
+    "viz": {
+      "type": "energy"
+    },
+    "vizNote": "Kéo quả bóng lên cao: công nâng vật bằng phần thế năng tăng thêm 10·m·h; thả xuống, trọng lực sinh công biến Wt thành Wđ.",
+    "memo": "“Công = Lực × Đường, Suất = Công ÷ Giờ.” Cùng một việc, ai xong trước thì công suất lớn hơn.",
+    "example": {
+      "q": "Cần cẩu nâng thùng hàng 500 kg lên cao 12 m trong 20 s. Tính công và công suất của cần cẩu.",
+      "a": "Lực nâng bằng trọng lượng: F = 10·m = 10·500 = 5 000 N.\nCông: A = F·s = 5 000·12 = 60 000 J = 60 kJ.\nCông suất: P = A/t = 60 000 : 20 = 3 000 W = 3 kW."
+    },
+    "terms": [
+      [
+        "work",
+        "công (cơ học)"
+      ],
+      [
+        "power",
+        "công suất"
+      ],
+      [
+        "joule",
+        "jun"
+      ],
+      [
+        "watt",
+        "oát"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Kéo thùng hàng bằng lực 200 N làm nó dịch chuyển 15 m theo phương của lực. Công của lực kéo là",
+        "opts": [
+          "215 J",
+          "3 000 J",
+          "1 500 J",
+          "30 000 J"
+        ],
+        "a": 1,
+        "why": "A = F·s = 200·15 = 3 000 J."
+      },
+      {
+        "q": "Một máy thực hiện công 36 000 J trong 1 phút. Công suất của máy là",
+        "opts": [
+          "36 000 W",
+          "6 000 W",
+          "60 W",
+          "600 W"
+        ],
+        "a": 3,
+        "why": "Đổi t = 1 phút = 60 s; P = A/t = 36 000 : 60 = 600 W."
+      },
+      {
+        "q": "Trường hợp nào KHÔNG có công cơ học?",
+        "opts": [
+          "Lực sĩ đứng yên giữ quả tạ trên cao",
+          "Cần cẩu nâng thùng hàng lên cao",
+          "Con ngựa kéo xe đi trên đường",
+          "Quả táo rơi từ trên cây xuống"
+        ],
+        "a": 0,
+        "why": "Quả tạ không dịch chuyển (s = 0) nên A = F·s = 0, dù lực sĩ vẫn thấy mỏi."
+      },
+      {
+        "q": "An và Bình cùng đưa bao gạo 50 kg lên cùng một độ cao; An mất 40 s, Bình mất 50 s. Kết luận đúng là",
+        "opts": [
+          "An thực hiện công lớn hơn",
+          "Công như nhau, Bình có công suất lớn hơn",
+          "Công như nhau, An có công suất lớn hơn",
+          "Công suất hai bạn bằng nhau"
+        ],
+        "a": 2,
+        "why": "A = 10·m·h như nhau; An làm xong trong thời gian ngắn hơn nên P = A/t của An lớn hơn."
+      }
+    ]
+  },
+  {
+    "id": "p9-03",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Ánh sáng",
+    "title": "Khúc xạ ánh sáng và phản xạ toàn phần",
+    "sum": "Ánh sáng bị gãy khúc khi đi qua mặt phân cách hai môi trường vì tốc độ truyền thay đổi; chiết suất n = c/v cho biết mức độ lệch. Đi từ môi trường chiết suất lớn sang nhỏ với góc tới đủ lớn thì xảy ra phản xạ toàn phần.",
+    "points": [
+      "Khúc xạ: tia sáng bị gãy khúc tại mặt phân cách khi truyền từ môi trường trong suốt này sang môi trường khác.",
+      "Nguyên nhân: tốc độ ánh sáng trong các môi trường khác nhau.",
+      "Tia khúc xạ nằm trong mặt phẳng tới, ở bên kia pháp tuyến; sin i / sin r là hằng số.",
+      "Chiết suất tuyệt đối n = c/v (c ≈ 3·10⁸ m/s); nước ≈ 1,33, thủy tinh ≈ 1,5.",
+      "Không khí → nước: r < i (lệch gần pháp tuyến); nước → không khí: r > i. Tia vuông góc thì đi thẳng.",
+      "Phản xạ toàn phần: đi từ n lớn sang n nhỏ và i ≥ i_th; ứng dụng trong cáp quang."
+    ],
+    "formulas": [
+      "n = c/v",
+      "sin i / sin r = n₂₁ = n₂/n₁",
+      "sin i_th = n₂/n₁  (n₁ > n₂)"
+    ],
+    "viz": {
+      "type": "refraction"
+    },
+    "vizNote": "Kéo góc tới i: tia khúc xạ trong nước luôn lệch gần pháp tuyến hơn (r < i); i = 0° thì tia sáng đi thẳng.",
+    "memo": "“Vào chậm thì khép, ra nhanh thì xòe” (khép về pháp tuyến). Phản xạ toàn phần: từ ĐẶC ra LOÃNG, góc LỚN.",
+    "example": {
+      "q": "Tốc độ ánh sáng trong một loại thủy tinh là 2·10⁸ m/s. a) Tính chiết suất của thủy tinh. b) Tính góc tới hạn khi ánh sáng đi từ thủy tinh ra không khí (n = 1).",
+      "a": "a) n = c/v = 3·10⁸ : (2·10⁸) = 1,5.\nb) sin i_th = n₂/n₁ = 1 : 1,5 ≈ 0,667 ⇒ i_th ≈ 41,8°.\nVậy nếu góc tới i ≥ 41,8° thì tia sáng bị phản xạ toàn phần, không ló ra không khí."
+    },
+    "terms": [
+      [
+        "refraction",
+        "khúc xạ"
+      ],
+      [
+        "refractive index",
+        "chiết suất"
+      ],
+      [
+        "normal",
+        "pháp tuyến"
+      ],
+      [
+        "total internal reflection",
+        "phản xạ toàn phần"
+      ],
+      [
+        "optical fibre",
+        "sợi quang"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Tốc độ ánh sáng trong nước khoảng 225 000 km/s, trong chân không là 300 000 km/s. Chiết suất của nước là",
+        "opts": [
+          "0,75",
+          "1,5",
+          "2,25",
+          "≈ 1,33"
+        ],
+        "a": 3,
+        "why": "n = c/v = 300 000 : 225 000 ≈ 1,33."
+      },
+      {
+        "q": "Chiếu tia sáng từ không khí vào nước (n = 1,33) với góc tới 45°. Góc khúc xạ gần nhất với",
+        "opts": [
+          "45°",
+          "≈ 32°",
+          "≈ 60°",
+          "0°"
+        ],
+        "a": 1,
+        "why": "sin r = sin 45° : 1,33 ≈ 0,53 ⇒ r ≈ 32° < i: tia khúc xạ lệch gần pháp tuyến."
+      },
+      {
+        "q": "Hiện tượng phản xạ toàn phần có thể xảy ra khi ánh sáng truyền",
+        "opts": [
+          "Từ không khí vào nước với góc tới lớn",
+          "Từ không khí vào thủy tinh, góc tới bất kì",
+          "Từ thủy tinh ra không khí, góc tới ≥ góc tới hạn",
+          "Từ nước ra không khí, góc tới bất kì"
+        ],
+        "a": 2,
+        "why": "Cần hai điều kiện: đi từ môi trường chiết suất lớn sang nhỏ, và góc tới i ≥ i_th."
+      },
+      {
+        "q": "Chiếc đũa nhúng xiên trong cốc nước trông như bị gãy ở mặt nước vì",
+        "opts": [
+          "Ánh sáng từ phần đũa trong nước bị khúc xạ khi ra không khí",
+          "Nước làm chiếc đũa bị cong",
+          "Ánh sáng bị phản xạ trên mặt nước",
+          "Nước hấp thụ hết ánh sáng"
+        ],
+        "a": 0,
+        "why": "Tia sáng từ đũa trong nước bị lệch tại mặt nước, mắt nhìn theo tia ló nên thấy phần đũa trong nước như bị nâng lên."
+      }
+    ]
+  },
+  {
+    "id": "p9-04",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Ánh sáng",
+    "title": "Thấu kính hội tụ và kính lúp",
+    "sum": "Thấu kính hội tụ (rìa mỏng) cho ảnh thật ngược chiều khi vật ở ngoài tiêu cự, ảnh ảo cùng chiều lớn hơn vật khi vật ở trong tiêu cự — đó là nguyên tắc của kính lúp.",
+    "points": [
+      "Thấu kính hội tụ có rìa mỏng hơn phần giữa; chùm tia tới song song trục chính hội tụ tại tiêu điểm F'.",
+      "Ba tia đặc biệt: qua quang tâm O đi thẳng; song song trục chính → ló qua F'; qua F → ló song song trục chính.",
+      "d > f: ảnh thật, ngược chiều; d > 2f ảnh nhỏ hơn vật, d = 2f bằng vật, f < d < 2f lớn hơn vật.",
+      "d < f: ảnh ảo, cùng chiều, lớn hơn vật; d = f: không cho ảnh (chùm ló song song).",
+      "Kính lúp là thấu kính hội tụ tiêu cự ngắn; đặt vật trong khoảng tiêu cự để thấy ảnh ảo phóng to.",
+      "Số bội giác kính lúp G = 25/f (f tính bằng cm); f càng nhỏ, G càng lớn."
+    ],
+    "formulas": [
+      "OF = OF' = f (tiêu cự)",
+      "A'B'/AB = OA'/OA  (tam giác đồng dạng)",
+      "G = 25/f  (f: cm)"
+    ],
+    "viz": {
+      "type": "lens",
+      "kind": "converging"
+    },
+    "vizNote": "Kéo vật từ xa lại gần: d > 2f ảnh thật nhỏ, d = 2f bằng vật, f < d < 2f lớn hơn, d < f thành ảnh ảo cùng chiều (kính lúp).",
+    "memo": "“Ngoài F: thật, lộn ngược; trong F: ảo, to, cùng chiều.” Xa hơn 2f – nhỏ, đúng 2f – bằng, giữa f và 2f – to.",
+    "example": {
+      "q": "Vật AB cao 2 cm đặt vuông góc với trục chính của thấu kính hội tụ có f = 10 cm, cách thấu kính 30 cm. Dựng ảnh và tính khoảng cách từ ảnh đến thấu kính, chiều cao ảnh.",
+      "a": "Dựng ảnh: tia từ B qua O đi thẳng; tia từ B song song trục chính (tới I) ló qua F'. Giao điểm hai tia ló là B'.\nΔOAB ∽ ΔOA'B': A'B'/AB = OA'/OA = OA'/30 (1).\nΔF'OI ∽ ΔF'A'B' (OI = AB): A'B'/AB = F'A'/OF' = (OA' − 10)/10 (2).\nTừ (1), (2): OA'/30 = (OA' − 10)/10 ⇒ OA' = 3·OA' − 30 ⇒ OA' = 15 cm.\nA'B' = 2·15/30 = 1 cm. Ảnh thật, ngược chiều, nhỏ hơn vật (vì d > 2f)."
+    },
+    "terms": [
+      [
+        "converging lens",
+        "thấu kính hội tụ"
+      ],
+      [
+        "focal length",
+        "tiêu cự"
+      ],
+      [
+        "principal axis",
+        "trục chính"
+      ],
+      [
+        "real image",
+        "ảnh thật"
+      ],
+      [
+        "magnifying glass",
+        "kính lúp"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Một kính lúp có tiêu cự 5 cm. Số bội giác của kính là",
+        "opts": [
+          "5×",
+          "2,5×",
+          "20×",
+          "125×"
+        ],
+        "a": 0,
+        "why": "G = 25/f = 25/5 = 5×."
+      },
+      {
+        "q": "Vật đặt trước thấu kính hội tụ f = 10 cm, cách thấu kính 15 cm. Ảnh của vật là",
+        "opts": [
+          "Ảnh thật, ngược chiều, nhỏ hơn vật",
+          "Ảnh ảo, cùng chiều, lớn hơn vật",
+          "Ảnh thật, ngược chiều, lớn hơn vật",
+          "Không có ảnh"
+        ],
+        "a": 2,
+        "why": "f < d < 2f (10 cm < 15 cm < 20 cm) ⇒ ảnh thật, ngược chiều, lớn hơn vật."
+      },
+      {
+        "q": "Tia sáng tới đi qua tiêu điểm F của thấu kính hội tụ thì tia ló",
+        "opts": [
+          "Đi qua quang tâm O",
+          "Song song với trục chính",
+          "Truyền thẳng, không đổi hướng",
+          "Đi qua tiêu điểm F'"
+        ],
+        "a": 1,
+        "why": "Đây là tia đặc biệt thứ ba: tia qua F cho tia ló song song với trục chính."
+      },
+      {
+        "q": "Vật AB cao 2 cm, cách thấu kính hội tụ (f = 10 cm) 20 cm. Ảnh A'B' cách thấu kính và cao",
+        "opts": [
+          "10 cm; 1 cm",
+          "40 cm; 4 cm",
+          "30 cm; 3 cm",
+          "20 cm; 2 cm"
+        ],
+        "a": 3,
+        "why": "d = 2f ⇒ ảnh thật, ngược chiều, bằng vật: cách thấu kính 2f = 20 cm, cao 2 cm."
+      }
+    ]
+  },
+  {
+    "id": "p9-05",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Ánh sáng",
+    "title": "Thấu kính phân kì",
+    "sum": "Thấu kính phân kì (rìa dày) làm chùm sáng loe rộng ra; vật thật đặt ở mọi vị trí đều cho ảnh ảo, cùng chiều, nhỏ hơn vật, nằm trong khoảng tiêu cự.",
+    "points": [
+      "Thấu kính phân kì có phần rìa dày hơn phần giữa; chùm tia tới song song cho chùm tia ló loe rộng ra.",
+      "Tia qua quang tâm O truyền thẳng; tia song song trục chính cho tia ló có đường kéo dài qua tiêu điểm F.",
+      "Vật thật ở mọi vị trí: ảnh ảo, cùng chiều, nhỏ hơn vật, nằm trong khoảng tiêu cự OF.",
+      "Vật ở rất xa thì ảnh ở tiêu điểm F; vật càng gần thấu kính thì ảnh càng gần và càng lớn (vẫn nhỏ hơn vật).",
+      "Kính cận là thấu kính phân kì; nhìn chữ qua kính thấy nhỏ hơn ⇒ đó là thấu kính phân kì."
+    ],
+    "formulas": [
+      "A'B'/AB = OA'/OA  (ΔOAB ∽ ΔOA'B')",
+      "A'B'/OI = FA'/FO  (ΔFOI ∽ ΔFA'B', OI = AB)",
+      "Ảnh ảo: OA' < OF và OA' < OA"
+    ],
+    "viz": {
+      "type": "lens",
+      "kind": "diverging"
+    },
+    "vizNote": "Kéo vật lại gần thấu kính: ảnh luôn ảo, cùng chiều, nhỏ hơn vật và chỉ nằm trong khoảng OF; vật càng gần, ảnh càng to.",
+    "memo": "“Phân kì rìa dày – ảnh ảo, nhỏ, cùng chiều – mãi ở trong F.” Cận thị đeo kính phân kì.",
+    "example": {
+      "q": "Vật AB cao 3 cm đặt vuông góc với trục chính của thấu kính phân kì có f = 12 cm, cách thấu kính 24 cm. Tính khoảng cách từ ảnh đến thấu kính và chiều cao ảnh.",
+      "a": "Dựng ảnh: tia từ B qua O đi thẳng; tia từ B song song trục chính (tới I) ló ra có đường kéo dài qua F. B' là giao điểm của tia BO và đường kéo dài đó.\nΔOAB ∽ ΔOA'B': A'B'/AB = OA'/24 (1).\nΔFOI ∽ ΔFA'B' (OI = AB): A'B'/AB = FA'/FO = (12 − OA')/12 (2).\nTừ (1), (2): OA'/24 = (12 − OA')/12 ⇒ OA' = 24 − 2·OA' ⇒ OA' = 8 cm.\nA'B' = 3·8/24 = 1 cm. Ảnh ảo, cùng chiều, nhỏ hơn vật."
+    },
+    "terms": [
+      [
+        "diverging lens",
+        "thấu kính phân kì"
+      ],
+      [
+        "virtual image",
+        "ảnh ảo"
+      ],
+      [
+        "optical centre",
+        "quang tâm"
+      ],
+      [
+        "focal point",
+        "tiêu điểm"
+      ],
+      [
+        "short-sightedness",
+        "cận thị"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Ảnh của một vật thật tạo bởi thấu kính phân kì luôn là",
+        "opts": [
+          "Ảnh thật, ngược chiều, nhỏ hơn vật",
+          "Ảnh ảo, cùng chiều, lớn hơn vật",
+          "Ảnh ảo, cùng chiều, nhỏ hơn vật",
+          "Ảnh thật, cùng chiều, bằng vật"
+        ],
+        "a": 2,
+        "why": "Với thấu kính phân kì, vật thật ở mọi vị trí đều cho ảnh ảo, cùng chiều, nhỏ hơn vật."
+      },
+      {
+        "q": "Tia tới song song với trục chính của thấu kính phân kì cho tia ló",
+        "opts": [
+          "Đi qua tiêu điểm F' phía sau thấu kính",
+          "Song song với trục chính",
+          "Đi qua quang tâm O",
+          "Có đường kéo dài đi qua tiêu điểm F"
+        ],
+        "a": 3,
+        "why": "Tia ló loe ra xa trục chính; kéo dài ngược lại thì đi qua tiêu điểm F."
+      },
+      {
+        "q": "Vật AB đặt cách thấu kính phân kì 10 cm, tiêu cự của thấu kính là 10 cm. Ảnh A'B' cách thấu kính",
+        "opts": [
+          "5 cm",
+          "Không có ảnh",
+          "10 cm",
+          "20 cm"
+        ],
+        "a": 0,
+        "why": "OA'/10 = (10 − OA')/10 ⇒ OA' = 5 cm: ảnh ảo, cao bằng nửa vật (khác thấu kính hội tụ, ở đây vẫn có ảnh)."
+      },
+      {
+        "q": "Cách nhận biết nhanh một thấu kính phân kì là",
+        "opts": [
+          "Đặt gần trang sách thấy chữ to hơn",
+          "Đặt gần trang sách thấy chữ nhỏ hơn",
+          "Hứng được ảnh Mặt Trời rõ nét trên tờ giấy",
+          "Phần giữa dày hơn phần rìa"
+        ],
+        "a": 1,
+        "why": "Thấu kính phân kì luôn cho ảnh ảo nhỏ hơn vật; các dấu hiệu còn lại là của thấu kính hội tụ."
+      }
+    ]
+  },
+  {
+    "id": "p9-06",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Điện",
+    "title": "Điện trở. Định luật Ohm",
+    "sum": "Điện trở cho biết vật dẫn cản trở dòng điện nhiều hay ít; cường độ dòng điện tỉ lệ thuận với hiệu điện thế và tỉ lệ nghịch với điện trở: I = U/R.",
+    "points": [
+      "Điện trở R đặc trưng cho mức độ cản trở dòng điện của vật dẫn; đơn vị là ôm (Ω); 1 kΩ = 1 000 Ω.",
+      "Định luật Ohm: I tỉ lệ thuận với U, tỉ lệ nghịch với R: I = U/R.",
+      "Đồ thị I theo U của một điện trở là đường thẳng đi qua gốc tọa độ.",
+      "R = ρ·l/S: dây càng dài, tiết diện càng nhỏ thì điện trở càng lớn; ρ (điện trở suất) phụ thuộc vật liệu.",
+      "Đo điện trở: ampe kế mắc nối tiếp, vôn kế mắc song song với điện trở, rồi tính R = U/I."
+    ],
+    "formulas": [
+      "I = U/R  (U: V, R: Ω, I: A)",
+      "U = I·R ;  R = U/I",
+      "R = ρ·l/S  (ρ: Ω·m, l: m, S: m²)"
+    ],
+    "viz": {
+      "type": "circuit",
+      "mode": "ohm"
+    },
+    "vizNote": "Tăng U thì I tăng, đèn sáng hơn; tăng R thì I giảm — đọc số chỉ ampe kế để kiểm tra I = U/R.",
+    "memo": "Tam giác Ohm: U ở đỉnh, I và R ở đáy — che đại lượng cần tìm, phần còn lại chính là công thức.",
+    "example": {
+      "q": "Dây nicrom dài 2 m, tiết diện 0,5 mm², điện trở suất ρ = 1,1·10⁻⁶ Ω·m, được mắc vào hiệu điện thế 11 V. Tính điện trở của dây và cường độ dòng điện qua dây.",
+      "a": "Đổi S = 0,5 mm² = 0,5·10⁻⁶ m².\nR = ρ·l/S = 1,1·10⁻⁶·2 : (0,5·10⁻⁶) = 4,4 Ω.\nI = U/R = 11 : 4,4 = 2,5 A."
+    },
+    "terms": [
+      [
+        "resistance",
+        "điện trở"
+      ],
+      [
+        "Ohm's law",
+        "định luật Ohm"
+      ],
+      [
+        "current",
+        "cường độ dòng điện"
+      ],
+      [
+        "voltage",
+        "hiệu điện thế"
+      ],
+      [
+        "resistivity",
+        "điện trở suất"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Đặt hiệu điện thế 12 V vào hai đầu điện trở 20 Ω. Cường độ dòng điện qua điện trở là",
+        "opts": [
+          "240 A",
+          "0,6 A",
+          "1,67 A",
+          "32 A"
+        ],
+        "a": 1,
+        "why": "I = U/R = 12 : 20 = 0,6 A."
+      },
+      {
+        "q": "Khi U = 6 V thì I = 0,3 A. Tăng U lên 9 V (R không đổi) thì I bằng",
+        "opts": [
+          "0,45 A",
+          "0,2 A",
+          "0,6 A",
+          "0,9 A"
+        ],
+        "a": 0,
+        "why": "R = 6 : 0,3 = 20 Ω ⇒ I = 9 : 20 = 0,45 A (U tăng 1,5 lần thì I cũng tăng 1,5 lần)."
+      },
+      {
+        "q": "Hai dây đồng cùng tiết diện, dây 1 dài gấp 3 lần dây 2. Điện trở của chúng thỏa mãn",
+        "opts": [
+          "R₁ = R₂/3",
+          "R₁ = R₂",
+          "R₁ = 9R₂",
+          "R₁ = 3R₂"
+        ],
+        "a": 3,
+        "why": "Cùng vật liệu, cùng tiết diện: R tỉ lệ thuận với chiều dài l, nên R₁ = 3R₂."
+      },
+      {
+        "q": "Muốn có dòng điện 0,25 A chạy qua điện trở 40 Ω thì hiệu điện thế giữa hai đầu điện trở phải là",
+        "opts": [
+          "160 V",
+          "0,00625 V",
+          "10 V",
+          "40,25 V"
+        ],
+        "a": 2,
+        "why": "U = I·R = 0,25·40 = 10 V."
+      }
+    ]
+  },
+  {
+    "id": "p9-07",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Điện",
+    "title": "Đoạn mạch nối tiếp và song song",
+    "sum": "Mạch nối tiếp có chung cường độ dòng điện, điện trở tương đương bằng tổng các điện trở; mạch song song có chung hiệu điện thế, điện trở tương đương nhỏ hơn mỗi điện trở thành phần.",
+    "points": [
+      "Nối tiếp: cường độ dòng điện như nhau tại mọi điểm: I = I₁ = I₂.",
+      "Nối tiếp: U = U₁ + U₂ và Rtđ = R₁ + R₂ (lớn hơn mỗi điện trở thành phần).",
+      "Song song: hiệu điện thế hai đầu mỗi nhánh như nhau: U = U₁ = U₂; I = I₁ + I₂.",
+      "Song song: 1/Rtđ = 1/R₁ + 1/R₂ (Rtđ nhỏ hơn mỗi điện trở thành phần).",
+      "Đồ dùng điện trong nhà mắc song song để cùng dùng 220 V và bật, tắt riêng từng cái."
+    ],
+    "formulas": [
+      "Nối tiếp: Rtđ = R₁ + R₂ ;  U₁/U₂ = R₁/R₂",
+      "Song song: 1/Rtđ = 1/R₁ + 1/R₂",
+      "Song song: Rtđ = R₁·R₂/(R₁ + R₂) ;  I₁/I₂ = R₂/R₁"
+    ],
+    "viz": {
+      "type": "circuit",
+      "mode": "parallel"
+    },
+    "vizNote": "Kéo R₁, R₂ và U: hai nhánh luôn cùng U, I = I₁ + I₂, và Rtđ luôn nhỏ hơn điện trở nhỏ nhất.",
+    "memo": "“Nối tiếp chung dòng, song song chung áp.” Thêm nhánh song song thì Rtđ giảm, dòng mạch chính tăng.",
+    "example": {
+      "q": "Cho R₁ = 6 Ω, R₂ = 12 Ω, U = 12 V. Tính Rtđ, cường độ dòng điện và hiệu điện thế/dòng điện từng điện trở khi a) mắc nối tiếp; b) mắc song song.",
+      "a": "a) Nối tiếp: Rtđ = 6 + 12 = 18 Ω; I = 12 : 18 = 2/3 A ≈ 0,67 A.\nU₁ = (2/3)·6 = 4 V; U₂ = (2/3)·12 = 8 V (4 + 8 = 12 V ✓).\nb) Song song: Rtđ = 6·12/(6 + 12) = 4 Ω.\nI₁ = 12 : 6 = 2 A; I₂ = 12 : 12 = 1 A; I = 2 + 1 = 3 A (= 12 : 4 ✓)."
+    },
+    "terms": [
+      [
+        "series circuit",
+        "đoạn mạch nối tiếp"
+      ],
+      [
+        "parallel circuit",
+        "đoạn mạch song song"
+      ],
+      [
+        "equivalent resistance",
+        "điện trở tương đương"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "R₁ = 10 Ω mắc nối tiếp với R₂ = 15 Ω. Điện trở tương đương của đoạn mạch là",
+        "opts": [
+          "6 Ω",
+          "5 Ω",
+          "150 Ω",
+          "25 Ω"
+        ],
+        "a": 3,
+        "why": "Nối tiếp: Rtđ = R₁ + R₂ = 10 + 15 = 25 Ω (6 Ω là kết quả nếu mắc song song)."
+      },
+      {
+        "q": "Hai điện trở cùng 30 Ω mắc song song. Điện trở tương đương là",
+        "opts": [
+          "60 Ω",
+          "30 Ω",
+          "15 Ω",
+          "900 Ω"
+        ],
+        "a": 2,
+        "why": "Rtđ = 30·30/(30 + 30) = 15 Ω; hai điện trở giống nhau song song thì Rtđ bằng một nửa."
+      },
+      {
+        "q": "R₁ = 4 Ω mắc song song với R₂ = 6 Ω, hiệu điện thế 12 V. Cường độ dòng điện mạch chính là",
+        "opts": [
+          "1,2 A",
+          "5 A",
+          "2 A",
+          "3 A"
+        ],
+        "a": 1,
+        "why": "I₁ = 12 : 4 = 3 A; I₂ = 12 : 6 = 2 A ⇒ I = 5 A (hoặc Rtđ = 2,4 Ω, I = 12 : 2,4 = 5 A)."
+      },
+      {
+        "q": "R₁ = 2 Ω mắc nối tiếp với R₂ = 8 Ω, hiệu điện thế 20 V. Hiệu điện thế giữa hai đầu R₂ là",
+        "opts": [
+          "16 V",
+          "4 V",
+          "10 V",
+          "20 V"
+        ],
+        "a": 0,
+        "why": "Rtđ = 10 Ω ⇒ I = 2 A ⇒ U₂ = 2·8 = 16 V (U₁ = 4 V; 4 + 16 = 20 V)."
+      }
+    ]
+  },
+  {
+    "id": "p9-08",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Điện",
+    "title": "Năng lượng điện và công suất điện",
+    "sum": "Dòng điện mang năng lượng; công suất điện P = U·I cho biết năng lượng tiêu thụ mỗi giây, còn năng lượng điện W = P·t được công tơ đo bằng kWh.",
+    "points": [
+      "Dòng điện có năng lượng, chuyển hóa thành nhiệt năng, quang năng, cơ năng… trong các dụng cụ điện.",
+      "Công suất điện P = U·I, đơn vị oát (W): năng lượng điện tiêu thụ trong 1 giây.",
+      "Số ghi 220 V – 1 000 W là hiệu điện thế định mức và công suất định mức khi dùng đúng 220 V.",
+      "Năng lượng điện tiêu thụ W = P·t = U·I·t; đơn vị J, trong thực tế dùng kWh (1 “số điện”).",
+      "1 kWh = 1 000 W·3 600 s = 3 600 000 J.",
+      "Với điện trở R: P = I²·R = U²/R."
+    ],
+    "formulas": [
+      "P = U·I",
+      "W = P·t = U·I·t",
+      "1 kWh = 3,6·10⁶ J",
+      "P = I²·R = U²/R"
+    ],
+    "viz": {
+      "type": "power"
+    },
+    "vizNote": "Kéo U, I và thời gian t: quan sát P = U·I, năng lượng điện W = P·t (Wh, kWh) và tiền điện thay đổi theo.",
+    "memo": "“Suất = Áp × Dòng, Năng = Suất × Giờ.” Tính tiền điện: đổi sang kW và giờ, rồi nhân với giá mỗi số.",
+    "example": {
+      "q": "Ấm điện 220 V – 1 000 W dùng đúng định mức, mỗi ngày 30 phút, trong 30 ngày. Giá điện 2 000 đồng/kWh. Tính cường độ dòng điện, năng lượng điện tiêu thụ và tiền điện.",
+      "a": "I = P/U = 1 000 : 220 ≈ 4,55 A.\nThời gian dùng: t = 0,5 h·30 = 15 h; P = 1 000 W = 1 kW.\nW = P·t = 1 kW·15 h = 15 kWh.\nTiền điện = 15·2 000 = 30 000 đồng."
+    },
+    "terms": [
+      [
+        "electrical power",
+        "công suất điện"
+      ],
+      [
+        "electrical energy",
+        "năng lượng điện"
+      ],
+      [
+        "kilowatt-hour",
+        "kilôoát giờ"
+      ],
+      [
+        "rated power",
+        "công suất định mức"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Bóng đèn 220 V – 100 W sáng bình thường. Cường độ dòng điện qua đèn khoảng",
+        "opts": [
+          "0,45 A",
+          "2,2 A",
+          "4,5 A",
+          "22 000 A"
+        ],
+        "a": 0,
+        "why": "I = P/U = 100 : 220 ≈ 0,45 A."
+      },
+      {
+        "q": "Quạt điện 50 W chạy đúng định mức trong 8 giờ tiêu thụ năng lượng điện là",
+        "opts": [
+          "4 kWh",
+          "0,4 kWh",
+          "6,25 kWh",
+          "400 kWh"
+        ],
+        "a": 1,
+        "why": "W = P·t = 0,05 kW·8 h = 0,4 kWh (= 400 Wh)."
+      },
+      {
+        "q": "1 kWh bằng bao nhiêu jun?",
+        "opts": [
+          "1 000 J",
+          "3 600 J",
+          "60 000 J",
+          "3 600 000 J"
+        ],
+        "a": 3,
+        "why": "1 kWh = 1 000 W·3 600 s = 3 600 000 J."
+      },
+      {
+        "q": "Hai bóng 220 V – 40 W và 220 V – 100 W cùng dùng đúng 220 V trong 5 giờ. Nhận xét đúng là",
+        "opts": [
+          "Hai bóng tiêu thụ điện như nhau vì cùng 220 V",
+          "Bóng 40 W tiêu thụ nhiều điện hơn",
+          "Bóng 100 W tiêu thụ 0,5 kWh, gấp 2,5 lần bóng 40 W",
+          "Bóng 100 W tiêu thụ 500 kWh"
+        ],
+        "a": 2,
+        "why": "W = P·t: 0,1 kW·5 h = 0,5 kWh và 0,04 kW·5 h = 0,2 kWh; 0,5 : 0,2 = 2,5."
+      }
+    ]
+  },
+  {
+    "id": "p9-09",
+    "subj": "phys",
+    "grade": 9,
+    "chap": "Điện từ",
+    "title": "Cảm ứng điện từ và dòng điện xoay chiều",
+    "sum": "Khi số đường sức từ xuyên qua cuộn dây kín biến thiên, trong cuộn dây xuất hiện dòng điện cảm ứng; cho nam châm hoặc cuộn dây quay liên tục sẽ tạo ra dòng điện xoay chiều.",
+    "points": [
+      "Dòng điện cảm ứng xuất hiện trong cuộn dây kín khi số đường sức từ xuyên qua tiết diện cuộn dây biến thiên.",
+      "Đưa nam châm vào, kéo ra hoặc quay nó trước cuộn dây đều tạo dòng cảm ứng; nam châm đứng yên thì không.",
+      "Đưa vào rồi kéo ra thì dòng cảm ứng đổi chiều; chuyển động càng nhanh, dòng càng mạnh.",
+      "Dòng điện xoay chiều luân phiên đổi chiều; tạo ra khi quay nam châm trước cuộn dây hoặc quay cuộn dây trong từ trường.",
+      "Dòng điện xoay chiều có tác dụng nhiệt, phát sáng, từ, sinh lí — như dòng điện một chiều.",
+      "Điện lưới Việt Nam: 220 V – 50 Hz, dòng điện đổi chiều 100 lần mỗi giây."
+    ],
+    "formulas": [
+      "f = 1/T  (f: Hz, T: s)",
+      "Số lần đổi chiều trong 1 s = 2·f"
+    ],
+    "viz": {
+      "type": "induction"
+    },
+    "vizNote": "Kéo nam châm vào rồi ra khỏi cuộn dây: kim điện kế chỉ lệch khi nam châm đang chuyển động, và lệch ngược chiều khi đổi hướng.",
+    "memo": "“Từ đổi thì điện sinh — từ đứng yên, kim đứng yên.” Vào lệch một bên, ra lệch bên kia: xoay chiều là vào – ra liên tục.",
+    "example": {
+      "q": "Máy phát điện xoay chiều có rôto là nam châm một cặp cực, quay 3 000 vòng/phút; mỗi vòng quay dòng điện đổi chiều 2 lần. a) Tần số dòng điện là bao nhiêu? b) Trong 1 s dòng điện đổi chiều mấy lần?",
+      "a": "a) 3 000 vòng/phút = 3 000 : 60 = 50 vòng/s. Mỗi vòng là 1 chu kì ⇒ f = 50 Hz (T = 1/50 = 0,02 s).\nb) Số lần đổi chiều = 2·f = 2·50 = 100 lần mỗi giây.\nĐây đúng là dòng điện của lưới điện Việt Nam (50 Hz)."
+    },
+    "terms": [
+      [
+        "electromagnetic induction",
+        "cảm ứng điện từ"
+      ],
+      [
+        "induced current",
+        "dòng điện cảm ứng"
+      ],
+      [
+        "alternating current (AC)",
+        "dòng điện xoay chiều"
+      ],
+      [
+        "generator",
+        "máy phát điện"
+      ],
+      [
+        "magnetic field line",
+        "đường sức từ"
+      ]
+    ],
+    "quiz": [
+      {
+        "q": "Trường hợp nào KHÔNG xuất hiện dòng điện cảm ứng trong cuộn dây dẫn kín?",
+        "opts": [
+          "Đưa nam châm lại gần cuộn dây",
+          "Kéo nam châm ra xa cuộn dây",
+          "Nam châm nằm yên trong lòng cuộn dây",
+          "Quay nam châm trước cuộn dây"
+        ],
+        "a": 2,
+        "why": "Nam châm đứng yên ⇒ số đường sức từ qua cuộn dây không biến thiên ⇒ không có dòng cảm ứng."
+      },
+      {
+        "q": "Đưa cực N lại gần cuộn dây thì kim điện kế lệch sang phải. Kéo cực N ra xa cuộn dây thì kim điện kế",
+        "opts": [
+          "Lệch sang trái",
+          "Lệch sang phải mạnh hơn",
+          "Đứng yên ở vạch 0",
+          "Quay tròn liên tục"
+        ],
+        "a": 0,
+        "why": "Đưa vào thì số đường sức tăng, kéo ra thì giảm ⇒ dòng cảm ứng đổi chiều, kim lệch ngược lại."
+      },
+      {
+        "q": "Điện lưới ở Việt Nam có tần số 50 Hz. Trong 1 giây dòng điện đổi chiều",
+        "opts": [
+          "25 lần",
+          "100 lần",
+          "50 lần",
+          "220 lần"
+        ],
+        "a": 1,
+        "why": "Mỗi chu kì dòng điện đổi chiều 2 lần ⇒ 2·50 = 100 lần mỗi giây."
+      },
+      {
+        "q": "Bàn là, ấm siêu tốc dùng điện xoay chiều hoạt động chủ yếu dựa vào tác dụng nào của dòng điện?",
+        "opts": [
+          "Tác dụng sinh lí",
+          "Tác dụng từ",
+          "Tác dụng phát sáng",
+          "Tác dụng nhiệt"
+        ],
+        "a": 3,
+        "why": "Dòng điện qua dây đốt làm dây nóng lên, năng lượng điện chuyển hóa thành nhiệt năng."
+      }
+    ]
+  }
+]

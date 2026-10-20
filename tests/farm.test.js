@@ -150,7 +150,7 @@ test("play gate: window resets 5 hours after it started", () => {
 });
 
 const DAY = "2026-10-19", NEXT = "2026-10-20";
-const SCHOLAR = { words: 9999, best: 999, sents: 999, ipa: 44, mastered: 999 };
+const SCHOLAR = { words: 9999, best: 999, sents: 999, ipa: 44, mastered: 999, math: 99, phys: 99 };
 const richFarm = () => { const f = F.fresh(); f.coins = 100000; f.xp = 99999; f.cap = 9999; f.barn = Object.fromEntries(F.CROPS.concat(F.PRODUCTS).map((x) => [x.id, 200])); return f; };
 
 test("12 spirit beasts: one per zodiac sign, valid materials and effects", () => {

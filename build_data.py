@@ -11,6 +11,7 @@ LEVELS = {"kids": ["kids1.txt", "kids2.txt", "kids3.txt", "kids4.txt", "kids5.tx
                     "toeic9.txt", "toeic10.txt", "toeic11.txt"]}
 SENTENCE_FILES = ["sent_daily.txt", "sent_work.txt", "sent_toeic.txt"]
 IPA_FILE = "ipa.json"
+STEM_FILES = ["math7.json", "math8.json", "math9.json", "phys7.json", "phys8.json", "phys9.json"]  # data/stem: Toán & Vật lí lớp 7–9
 # Manual IPA for words CMU lacks or gets wrong for our part of speech
 OVERRIDES = {
     "wind|n": "wɪnd", "close|v": "kloʊz", "live|v": "lɪv", "use|n": "juːs", "use|v": "juːz",
@@ -192,6 +193,18 @@ def main():
     if (DATA / IPA_FILE).exists():
         out["ipa"] = json.loads((DATA / IPA_FILE).read_text(encoding="utf-8"))
         print(f"[ipa] {len(out['ipa']['sounds'])} sounds")
+    stem = []
+    for f in STEM_FILES:
+        lessons = json.loads((DATA / "stem" / f).read_text(encoding="utf-8"))
+        for L in lessons:
+            if not (L["quiz"] and all(0 <= q["a"] < len(q["opts"]) for q in L["quiz"])):
+                sys.exit(f"stem/{f}: bad quiz in {L['id']}")
+        stem += lessons
+    ids = [L["id"] for L in stem]
+    if len(set(ids)) != len(ids):
+        sys.exit("stem: duplicate lesson ids")
+    out["stem"] = stem
+    print(f"[stem] {sum(L['subj'] == 'math' for L in stem)} math + {sum(L['subj'] == 'phys' for L in stem)} physics lessons")
     OUT_JS.parent.mkdir(exist_ok=True)
     OUT_JS.write_text("window.APP_DATA=" + json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
     print(f"wrote {OUT_JS} ({OUT_JS.stat().st_size // 1024} KB)")

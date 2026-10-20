@@ -1,0 +1,627 @@
+[
+  {
+    "id": "m7-01",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Số hữu tỉ",
+    "title": "Số hữu tỉ, trục số và so sánh",
+    "sum": "Số hữu tỉ là số viết được dưới dạng phân số a/b. Mỗi số hữu tỉ là một điểm trên trục số; điểm càng bên trái thì số càng nhỏ.",
+    "points": [
+      "Số hữu tỉ là số viết được dưới dạng a/b với a, b ∈ ℤ, b ≠ 0; tập hợp số hữu tỉ kí hiệu là ℚ.",
+      "Các phân số bằng nhau cùng biểu diễn một số hữu tỉ: −0,5 = −1/2 = −2/4.",
+      "Mỗi số hữu tỉ được biểu diễn bởi đúng một điểm trên trục số.",
+      "Hai số đối nhau (a và −a) nằm cách đều gốc O, ở hai phía của O.",
+      "So sánh: đưa về cùng mẫu dương (hoặc cùng dạng số thập phân) rồi so sánh.",
+      "Số hữu tỉ âm < 0 < số hữu tỉ dương; số 0 không dương cũng không âm."
+    ],
+    "formulas": [
+      "x = a/b (a, b ∈ ℤ, b ≠ 0)",
+      "a < b ⇔ điểm a nằm bên trái điểm b",
+      "−(−x) = x"
+    ],
+    "viz": { "type": "numberline" },
+    "vizNote": "Kéo thanh trượt để di chuyển điểm x: xem x dưới dạng phân số và số thập phân, cùng số đối −x đối xứng với x qua gốc O.",
+    "memo": "“Trái nhỏ, phải lớn.” Với số âm: càng xa 0 về bên trái thì càng nhỏ, nên −3/4 < −1/2.",
+    "example": {
+      "q": "So sánh hai số hữu tỉ −3/4 và −5/7.",
+      "a": "Quy đồng mẫu dương 28: −3/4 = −21/28; −5/7 = −20/28.\nVì −21 < −20 nên −21/28 < −20/28.\nVậy −3/4 < −5/7 (kiểm tra: −0,75 < −0,714…)."
+    },
+    "terms": [
+      ["rational number", "số hữu tỉ"],
+      ["number line", "trục số"],
+      ["opposite (additive inverse)", "số đối"],
+      ["origin", "gốc O"]
+    ],
+    "quiz": [
+      {
+        "q": "Phân số nào biểu diễn cùng số hữu tỉ với −0,6?",
+        "opts": ["6/10", "−3/5", "−5/3", "−6/100"],
+        "a": 1,
+        "why": "−0,6 = −6/10 = −3/5 (rút gọn cho 2)."
+      },
+      {
+        "q": "Trên trục số, điểm biểu diễn số −2/3 nằm ở đâu?",
+        "opts": ["Giữa 0 và 1", "Giữa −2 và −1", "Giữa −1 và 0", "Bên phải điểm 1"],
+        "a": 2,
+        "why": "−2/3 ≈ −0,67: là số âm nhưng lớn hơn −1, nên nằm giữa −1 và 0."
+      },
+      {
+        "q": "Sắp xếp theo thứ tự tăng dần các số: 0,5; −1/2; −0,7; 1/3.",
+        "opts": [
+          "−1/2 < −0,7 < 1/3 < 0,5",
+          "−0,7 < −1/2 < 0,5 < 1/3",
+          "1/3 < 0,5 < −1/2 < −0,7",
+          "−0,7 < −1/2 < 1/3 < 0,5"
+        ],
+        "a": 3,
+        "why": "Đổi ra thập phân: −0,7 < −0,5 < 0,333… < 0,5."
+      },
+      {
+        "q": "Số đối của −(−5/8) là số nào?",
+        "opts": ["−5/8", "5/8", "8/5", "0"],
+        "a": 0,
+        "why": "−(−5/8) = 5/8, nên số đối của nó là −5/8."
+      }
+    ]
+  },
+  {
+    "id": "m7-02",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Số hữu tỉ",
+    "title": "Các phép tính và lũy thừa của số hữu tỉ",
+    "sum": "Cộng, trừ, nhân, chia số hữu tỉ như với phân số; lũy thừa là phép nhân lặp lại. Nắm thứ tự thực hiện phép tính và quy tắc chuyển vế.",
+    "points": [
+      "Cộng, trừ: viết các số về phân số cùng mẫu dương rồi cộng, trừ tử số.",
+      "Chia cho một số khác 0 là nhân với số nghịch đảo của nó.",
+      "xⁿ = x·x·…·x (n thừa số x); quy ước x⁰ = 1 (x ≠ 0).",
+      "Lũy thừa bậc chẵn của số âm là số dương; bậc lẻ là số âm: (−2)³ = −8.",
+      "Thứ tự: ngoặc → lũy thừa → nhân, chia → cộng, trừ.",
+      "Chuyển vế một số hạng thì phải đổi dấu số hạng đó: x + a = b ⇒ x = b − a."
+    ],
+    "formulas": [
+      "a/b · c/d = (a·c)/(b·d) ; a/b : c/d = a/b · d/c (c/d ≠ 0)",
+      "xᵐ · xⁿ = xᵐ⁺ⁿ",
+      "xᵐ : xⁿ = xᵐ⁻ⁿ (x ≠ 0, m ≥ n)",
+      "(xᵐ)ⁿ = xᵐ·ⁿ"
+    ],
+    "viz": { "type": "numberline" },
+    "vizNote": "Kéo điểm x trên trục số: cộng một số dương là dịch sang phải, cộng một số âm là dịch sang trái.",
+    "memo": "“Chia là nhân đảo ngược.” Nhân cùng cơ số thì CỘNG mũ, chia thì TRỪ mũ, lũy thừa của lũy thừa thì NHÂN mũ. Chuyển vế: qua cầu phải đổi dấu.",
+    "example": {
+      "q": "Tính (−2/3)² + 5/6 : (−5/4).",
+      "a": "Lũy thừa trước: (−2/3)² = 4/9.\nChia → nhân nghịch đảo: 5/6 : (−5/4) = 5/6 · (−4/5) = −4/6 = −2/3.\nCộng: 4/9 + (−2/3) = 4/9 − 6/9 = −2/9."
+    },
+    "terms": [
+      ["power", "lũy thừa"],
+      ["exponent", "số mũ"],
+      ["base", "cơ số"],
+      ["reciprocal", "số nghịch đảo"],
+      ["order of operations", "thứ tự thực hiện phép tính"]
+    ],
+    "quiz": [
+      {
+        "q": "(−1/2)³ bằng bao nhiêu?",
+        "opts": ["1/8", "−1/6", "−1/8", "−3/2"],
+        "a": 2,
+        "why": "(−1/2)³ = (−1)³/2³ = −1/8; mũ lẻ nên kết quả âm."
+      },
+      {
+        "q": "(2/5)⁷ : (2/5)⁴ bằng?",
+        "opts": ["(2/5)³", "(2/5)¹¹", "(2/5)²⁸", "1"],
+        "a": 0,
+        "why": "Chia hai lũy thừa cùng cơ số thì trừ số mũ: 7 − 4 = 3."
+      },
+      {
+        "q": "Tìm x, biết x − 3/4 = −1/2.",
+        "opts": ["−5/4", "1/4", "5/4", "−1/4"],
+        "a": 1,
+        "why": "Chuyển vế: x = −1/2 + 3/4 = −2/4 + 3/4 = 1/4."
+      },
+      {
+        "q": "Số nghịch đảo của −0,25 là?",
+        "opts": ["4", "0,25", "−1/4", "−4"],
+        "a": 3,
+        "why": "−0,25 = −1/4; nghịch đảo là −4 vì (−1/4)·(−4) = 1."
+      }
+    ]
+  },
+  {
+    "id": "m7-03",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Số thực",
+    "title": "Căn bậc hai số học, số vô tỉ, số thực",
+    "sum": "Số vô tỉ là số thập phân vô hạn không tuần hoàn như √2, π. Số hữu tỉ và số vô tỉ hợp thành tập số thực ℝ; |x| là khoảng cách từ x đến 0.",
+    "points": [
+      "Số thập phân vô hạn tuần hoàn biểu diễn số hữu tỉ: 1/3 = 0,(3).",
+      "Số vô tỉ là số viết được dưới dạng số thập phân vô hạn không tuần hoàn (kí hiệu tập hợp: I).",
+      "Căn bậc hai số học của a ≥ 0 là số x ≥ 0 sao cho x² = a, kí hiệu √a.",
+      "Số hữu tỉ và số vô tỉ gọi chung là số thực (ℝ); mỗi số thực ứng với đúng một điểm trên trục số.",
+      "|x| là khoảng cách từ điểm x đến gốc O, nên |x| ≥ 0 với mọi x.",
+      "Hai số đối nhau có cùng giá trị tuyệt đối: |−3| = |3| = 3."
+    ],
+    "formulas": [
+      "√a = x ⇔ x ≥ 0 và x² = a (a ≥ 0)",
+      "(√a)² = a (a ≥ 0)",
+      "|x| = x nếu x ≥ 0 ; |x| = −x nếu x < 0"
+    ],
+    "viz": { "type": "numberline" },
+    "vizNote": "Kéo điểm x sang hai phía của 0: x và −x luôn có cùng |x| vì cách gốc O như nhau.",
+    "memo": "Căn bậc hai số học không bao giờ âm: √9 = 3 (không viết ±3). Giá trị tuyệt đối là “khoảng cách”, nên luôn ≥ 0.",
+    "example": {
+      "q": "Tính √49 − |−2,5| + √0,16.",
+      "a": "√49 = 7 (vì 7 ≥ 0 và 7² = 49).\n|−2,5| = 2,5.\n√0,16 = 0,4 (vì 0,4² = 0,16).\nVậy 7 − 2,5 + 0,4 = 4,9."
+    },
+    "terms": [
+      ["square root", "căn bậc hai"],
+      ["irrational number", "số vô tỉ"],
+      ["real number", "số thực"],
+      ["absolute value", "giá trị tuyệt đối"],
+      ["repeating decimal", "số thập phân vô hạn tuần hoàn"]
+    ],
+    "quiz": [
+      {
+        "q": "√0,09 bằng?",
+        "opts": ["±0,3", "0,03", "0,0081", "0,3"],
+        "a": 3,
+        "why": "0,3 ≥ 0 và 0,3² = 0,09. Căn bậc hai số học chỉ lấy giá trị không âm."
+      },
+      {
+        "q": "Số nào sau đây là số vô tỉ?",
+        "opts": ["√16", "0,(6)", "√5", "−7/3"],
+        "a": 2,
+        "why": "5 không là bình phương của số hữu tỉ, √5 = 2,236… vô hạn không tuần hoàn. √16 = 4; 0,(6) = 2/3."
+      },
+      {
+        "q": "Tìm x, biết |x| = 2,5.",
+        "opts": ["x = 2,5 hoặc x = −2,5", "x = 2,5", "x = −2,5", "Không có giá trị nào của x"],
+        "a": 0,
+        "why": "Có hai điểm cách gốc O một khoảng 2,5: đó là 2,5 và −2,5."
+      },
+      {
+        "q": "Giá trị của |−7| − |3| + √25 là?",
+        "opts": ["−5", "9", "−1", "15"],
+        "a": 1,
+        "why": "|−7| = 7, |3| = 3, √25 = 5 ⇒ 7 − 3 + 5 = 9."
+      }
+    ]
+  },
+  {
+    "id": "m7-04",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Góc và đường thẳng song song",
+    "title": "Góc đối đỉnh, góc kề bù, tia phân giác",
+    "sum": "Hai đường thẳng cắt nhau tạo các cặp góc đối đỉnh (bằng nhau) và kề bù (tổng 180°). Tia phân giác chia một góc thành hai góc bằng nhau.",
+    "points": [
+      "Hai góc kề nhau: có chung một cạnh, hai cạnh còn lại nằm về hai phía của cạnh chung.",
+      "Hai góc bù nhau có tổng số đo 180°; hai góc kề bù là hai góc vừa kề nhau vừa bù nhau.",
+      "Hai góc đối đỉnh: mỗi cạnh của góc này là tia đối của một cạnh của góc kia.",
+      "Hai góc đối đỉnh thì bằng nhau (nhưng hai góc bằng nhau chưa chắc đối đỉnh).",
+      "Tia phân giác Ot của ∠xOy nằm giữa Ox, Oy và tạo với hai cạnh hai góc bằng nhau."
+    ],
+    "formulas": [
+      "Kề bù: ∠xOy + ∠yOx' = 180°",
+      "Đối đỉnh: ∠xOy = ∠x'Oy'",
+      "Ot là tia phân giác của ∠xOy ⇒ ∠xOt = ∠tOy = ∠xOy : 2"
+    ],
+    "viz": { "type": "angles", "mode": "vertical" },
+    "vizNote": "Kéo thanh trượt đổi số đo góc: hai góc đối đỉnh luôn cùng màu (bằng nhau), hai góc kề bù luôn cộng lại 180°.",
+    "memo": "“Đối đỉnh – bằng nhau; kề bù – đủ 180°.” Hai đường thẳng cắt nhau tạo 4 góc nhưng chỉ có 2 số đo: α và 180° − α.",
+    "example": {
+      "q": "Hai đường thẳng xx' và yy' cắt nhau tại O, ∠xOy = 50°. Tính ∠x'Oy, ∠x'Oy', ∠xOy'.",
+      "a": "∠x'Oy kề bù với ∠xOy ⇒ ∠x'Oy = 180° − 50° = 130°.\n∠x'Oy' đối đỉnh với ∠xOy ⇒ ∠x'Oy' = 50°.\n∠xOy' đối đỉnh với ∠x'Oy ⇒ ∠xOy' = 130°."
+    },
+    "terms": [
+      ["vertical angles", "hai góc đối đỉnh"],
+      ["adjacent angles", "hai góc kề nhau"],
+      ["supplementary angles", "hai góc bù nhau"],
+      ["linear pair", "hai góc kề bù"],
+      ["angle bisector", "tia phân giác của góc"]
+    ],
+    "quiz": [
+      {
+        "q": "Hai đường thẳng cắt nhau tạo thành một góc 65°. Số đo ba góc còn lại là?",
+        "opts": ["65°, 65°, 65°", "115°, 65°, 115°", "25°, 65°, 25°", "115°, 115°, 115°"],
+        "a": 1,
+        "why": "Góc kề bù với 65° là 115°; góc đối đỉnh với 65° là 65°; góc còn lại đối đỉnh với 115°."
+      },
+      {
+        "q": "Ot là tia phân giác của ∠xOy = 130°. Số đo ∠xOt là?",
+        "opts": ["50°", "130°", "260°", "65°"],
+        "a": 3,
+        "why": "Tia phân giác chia đôi góc: 130° : 2 = 65°."
+      },
+      {
+        "q": "Hai góc kề bù có số đo hơn kém nhau 40°. Góc lớn hơn bằng?",
+        "opts": ["110°", "70°", "140°", "90°"],
+        "a": 0,
+        "why": "Tổng 180°, hiệu 40° ⇒ góc lớn = (180° + 40°) : 2 = 110°, góc nhỏ = 70°."
+      },
+      {
+        "q": "Khẳng định nào sau đây đúng?",
+        "opts": [
+          "Hai góc bằng nhau thì đối đỉnh",
+          "Hai góc bù nhau thì kề nhau",
+          "Hai góc đối đỉnh thì bằng nhau",
+          "Hai góc kề nhau thì bù nhau"
+        ],
+        "a": 2,
+        "why": "Đối đỉnh ⇒ bằng nhau là định lí; chiều ngược lại sai (hai góc bằng nhau có thể ở xa nhau)."
+      }
+    ]
+  },
+  {
+    "id": "m7-05",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Góc và đường thẳng song song",
+    "title": "Hai đường thẳng song song. Tiên đề Euclid",
+    "sum": "Một đường thẳng cắt hai đường thẳng song song tạo các góc so le trong bằng nhau, đồng vị bằng nhau. Qua một điểm ngoài đường thẳng chỉ có một đường song song với nó.",
+    "points": [
+      "Đường thẳng c cắt a, b tạo các cặp góc so le trong, đồng vị, trong cùng phía.",
+      "Dấu hiệu: nếu có một cặp góc so le trong (hoặc đồng vị) bằng nhau thì a ∥ b.",
+      "Tiên đề Euclid: qua một điểm ở ngoài một đường thẳng chỉ có một đường thẳng song song với nó.",
+      "Nếu a ∥ b thì các góc so le trong bằng nhau, đồng vị bằng nhau, trong cùng phía bù nhau.",
+      "a ⊥ c và b ⊥ c ⇒ a ∥ b; a ∥ b và c ⊥ a ⇒ c ⊥ b.",
+      "Hai đường thẳng phân biệt cùng song song với đường thẳng thứ ba thì song song với nhau."
+    ],
+    "formulas": [
+      "a ∥ b ⇔ so le trong bằng nhau ⇔ đồng vị bằng nhau",
+      "a ∥ b ⇒ hai góc trong cùng phía: α + β = 180°",
+      "a ⊥ c, b ⊥ c ⇒ a ∥ b"
+    ],
+    "viz": { "type": "angles", "mode": "parallel" },
+    "vizNote": "Kéo thanh trượt đổi góc của cát tuyến: các góc đồng vị và so le trong luôn bằng nhau, hai góc trong cùng phía luôn có tổng 180°.",
+    "memo": "Nhìn hình chữ: F → đồng vị (bằng nhau), Z → so le trong (bằng nhau), U → trong cùng phía (bù nhau, tổng 180°).",
+    "example": {
+      "q": "Cho a ∥ b; đường thẳng c cắt a tại A, cắt b tại B. Biết ∠A₁ = 70°. Tính ∠B₁ (đồng vị với ∠A₁) và ∠B₂ (kề bù với ∠B₁).",
+      "a": "a ∥ b ⇒ hai góc đồng vị bằng nhau: ∠B₁ = ∠A₁ = 70°.\n∠B₂ kề bù với ∠B₁ ⇒ ∠B₂ = 180° − 70° = 110°.\nNhận xét: tại mỗi giao điểm chỉ có hai số đo là 70° và 110°."
+    },
+    "terms": [
+      ["parallel lines", "hai đường thẳng song song"],
+      ["transversal", "cát tuyến (đường thẳng cắt)"],
+      ["corresponding angles", "hai góc đồng vị"],
+      ["alternate interior angles", "hai góc so le trong"],
+      ["co-interior angles", "hai góc trong cùng phía"]
+    ],
+    "quiz": [
+      {
+        "q": "Cho a ∥ b, một cát tuyến tạo hai góc trong cùng phía, trong đó một góc bằng 125°. Góc còn lại bằng?",
+        "opts": ["125°", "35°", "55°", "65°"],
+        "a": 2,
+        "why": "Hai góc trong cùng phía bù nhau: 180° − 125° = 55°."
+      },
+      {
+        "q": "Qua điểm M nằm ngoài đường thẳng d, có bao nhiêu đường thẳng song song với d?",
+        "opts": ["Đúng một", "Không có", "Hai", "Vô số"],
+        "a": 0,
+        "why": "Theo tiên đề Euclid, qua M chỉ có duy nhất một đường thẳng song song với d."
+      },
+      {
+        "q": "Đường thẳng c cắt hai đường thẳng a, b tạo một cặp góc đồng vị có số đo 72° và 70°. Kết luận nào đúng?",
+        "opts": ["a ∥ b", "a ⊥ b", "Chưa đủ dữ kiện", "a và b cắt nhau"],
+        "a": 3,
+        "why": "Nếu a ∥ b thì hai góc đồng vị phải bằng nhau. 72° ≠ 70° nên a, b không song song, tức là cắt nhau."
+      },
+      {
+        "q": "Hai đường thẳng phân biệt a và b cùng vuông góc với đường thẳng c. Khi đó?",
+        "opts": ["a ⊥ b", "a ∥ b", "a trùng với c", "b ∥ c"],
+        "a": 1,
+        "why": "c tạo với a, b hai góc đồng vị cùng bằng 90° ⇒ a ∥ b."
+      }
+    ]
+  },
+  {
+    "id": "m7-06",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Tam giác bằng nhau",
+    "title": "Tổng các góc của tam giác. Tam giác bằng nhau",
+    "sum": "Ba góc của một tam giác có tổng 180°; góc ngoài bằng tổng hai góc trong không kề với nó. Hai tam giác bằng nhau khi có đủ yếu tố theo c.c.c, c.g.c hoặc g.c.g.",
+    "points": [
+      "Tổng ba góc của một tam giác bằng 180°.",
+      "Trong tam giác vuông, hai góc nhọn phụ nhau (tổng 90°).",
+      "Góc ngoài của tam giác bằng tổng hai góc trong không kề với nó.",
+      "Hai tam giác bằng nhau có các cạnh và các góc tương ứng bằng nhau; viết các đỉnh tương ứng theo đúng thứ tự.",
+      "Ba trường hợp bằng nhau: c.c.c; c.g.c (góc xen giữa hai cạnh); g.c.g (cạnh xen giữa hai góc).",
+      "Tam giác vuông còn có: cạnh huyền – góc nhọn; cạnh huyền – cạnh góc vuông."
+    ],
+    "formulas": [
+      "∠A + ∠B + ∠C = 180°",
+      "Góc ngoài tại đỉnh C: ∠ACx = ∠A + ∠B",
+      "ΔABC vuông tại A ⇒ ∠B + ∠C = 90°"
+    ],
+    "viz": { "type": "triangle" },
+    "vizNote": "Kéo hai thanh trượt đổi hai góc: góc thứ ba tự điều chỉnh để tổng luôn là 180°, góc ngoài luôn bằng tổng hai góc trong không kề.",
+    "memo": "Ba góc ghép lại thành một đường thẳng (180°). Góc ngoài “ôm” hai góc ở xa. c.g.c: góc phải KẸP GIỮA hai cạnh; g.c.g: cạnh phải NẰM GIỮA hai góc.",
+    "example": {
+      "q": "Tam giác ABC có ∠A = 60°, ∠B = 45°. Tính ∠C và góc ngoài tại đỉnh C.",
+      "a": "∠C = 180° − (60° + 45°) = 75°.\nGóc ngoài tại C kề bù với ∠C: 180° − 75° = 105°.\nKiểm tra: 105° = ∠A + ∠B = 60° + 45° ✓."
+    },
+    "terms": [
+      ["angle sum of a triangle", "tổng các góc của tam giác"],
+      ["exterior angle", "góc ngoài"],
+      ["congruent triangles", "hai tam giác bằng nhau"],
+      ["SSS, SAS, ASA", "c.c.c, c.g.c, g.c.g"],
+      ["hypotenuse", "cạnh huyền"]
+    ],
+    "quiz": [
+      {
+        "q": "Tam giác ABC vuông tại A có ∠B = 37°. Số đo ∠C là?",
+        "opts": ["143°", "53°", "63°", "37°"],
+        "a": 1,
+        "why": "Hai góc nhọn của tam giác vuông phụ nhau: 90° − 37° = 53°."
+      },
+      {
+        "q": "Góc ngoài tại đỉnh C của ΔABC bằng 120°, ∠A = 70°. Số đo ∠B là?",
+        "opts": ["60°", "110°", "70°", "50°"],
+        "a": 3,
+        "why": "Góc ngoài tại C = ∠A + ∠B ⇒ ∠B = 120° − 70° = 50°."
+      },
+      {
+        "q": "ΔABC và ΔDEF có AB = DE, ∠B = ∠E, BC = EF. Hai tam giác bằng nhau theo trường hợp nào?",
+        "opts": ["c.g.c", "c.c.c", "g.c.g", "Không đủ để kết luận"],
+        "a": 0,
+        "why": "∠B xen giữa hai cạnh AB, BC; ∠E xen giữa DE, EF ⇒ cạnh – góc – cạnh."
+      },
+      {
+        "q": "Biết ΔMNP = ΔHIK, MN = 5 cm, ∠P = 40°. Khẳng định nào đúng?",
+        "opts": ["IK = 5 cm", "∠H = 40°", "HI = 5 cm", "∠I = 40°"],
+        "a": 2,
+        "why": "Đỉnh tương ứng theo thứ tự: M↔H, N↔I, P↔K ⇒ HI = MN = 5 cm và ∠K = ∠P = 40°."
+      }
+    ]
+  },
+  {
+    "id": "m7-07",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Tỉ lệ thức và đại lượng tỉ lệ",
+    "title": "Tỉ lệ thức và đại lượng tỉ lệ thuận",
+    "sum": "Tỉ lệ thức là đẳng thức của hai tỉ số; dãy tỉ số bằng nhau giúp chia một tổng theo tỉ lệ. Hai đại lượng tỉ lệ thuận khi y = kx, tức thương y/x không đổi.",
+    "points": [
+      "Tỉ lệ thức là đẳng thức của hai tỉ số a/b = c/d; a, d là ngoại tỉ, b, c là trung tỉ.",
+      "Trong tỉ lệ thức, tích hai ngoại tỉ bằng tích hai trung tỉ: a·d = b·c.",
+      "Dãy tỉ số bằng nhau: cộng (hoặc trừ) các tử và các mẫu tương ứng được tỉ số bằng tỉ số đã cho.",
+      "y tỉ lệ thuận với x theo hệ số k (k ≠ 0) nếu y = kx; khi đó x tỉ lệ thuận với y theo hệ số 1/k.",
+      "Hai đại lượng tỉ lệ thuận: x tăng (giảm) bao nhiêu lần thì y tăng (giảm) bấy nhiêu lần."
+    ],
+    "formulas": [
+      "a/b = c/d ⇒ a·d = b·c",
+      "a/b = c/d = (a + c)/(b + d) = (a − c)/(b − d)",
+      "y = kx (k ≠ 0)",
+      "y₁/x₁ = y₂/x₂ = … = k ; x₁/x₂ = y₁/y₂"
+    ],
+    "viz": { "type": "proportion", "kind": "direct" },
+    "vizNote": "Kéo thanh trượt k: đường y = kx luôn đi qua gốc O; trong bảng giá trị, thương y/x luôn bằng k.",
+    "memo": "Tỉ lệ thuận: cùng tăng, cùng giảm, THƯƠNG không đổi. Tỉ lệ thức: “nhân chéo” — ngoài nhân ngoài bằng trong nhân trong.",
+    "example": {
+      "q": "Ba lớp 7A, 7B, 7C trồng được 120 cây. Số cây tỉ lệ thuận với số học sinh 32, 28, 36. Mỗi lớp trồng bao nhiêu cây?",
+      "a": "Gọi số cây là x, y, z: x/32 = y/28 = z/36 và x + y + z = 120.\nTheo dãy tỉ số bằng nhau: x/32 = y/28 = z/36 = 120/(32 + 28 + 36) = 120/96 = 1,25.\nx = 32·1,25 = 40; y = 28·1,25 = 35; z = 36·1,25 = 45 (cây).\nThử lại: 40 + 35 + 45 = 120 ✓"
+    },
+    "terms": [
+      ["ratio", "tỉ số"],
+      ["proportion", "tỉ lệ thức"],
+      ["directly proportional", "tỉ lệ thuận"],
+      ["constant of proportionality", "hệ số tỉ lệ"]
+    ],
+    "quiz": [
+      {
+        "q": "Tìm x, biết x/6 = 10/15.",
+        "opts": ["9", "2,5", "4", "25"],
+        "a": 2,
+        "why": "Nhân chéo: 15·x = 6·10 = 60 ⇒ x = 4."
+      },
+      {
+        "q": "y tỉ lệ thuận với x; khi x = 4 thì y = −12. Hệ số tỉ lệ của y đối với x là?",
+        "opts": ["−3", "3", "−1/3", "−48"],
+        "a": 0,
+        "why": "k = y/x = −12/4 = −3."
+      },
+      {
+        "q": "y tỉ lệ thuận với x theo hệ số 2/3. Khi đó x tỉ lệ thuận với y theo hệ số?",
+        "opts": ["2/3", "−2/3", "−3/2", "3/2"],
+        "a": 3,
+        "why": "y = (2/3)x ⇒ x = (3/2)y, hệ số là nghịch đảo 3/2."
+      },
+      {
+        "q": "Mua 5 quyển vở hết 40 000 đồng. Mua 8 quyển vở cùng loại hết bao nhiêu tiền?",
+        "opts": ["25 000 đồng", "64 000 đồng", "48 000 đồng", "320 000 đồng"],
+        "a": 1,
+        "why": "Số tiền tỉ lệ thuận với số vở: mỗi quyển 40 000 : 5 = 8 000 đồng ⇒ 8·8 000 = 64 000 đồng."
+      }
+    ]
+  },
+  {
+    "id": "m7-08",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Tỉ lệ thức và đại lượng tỉ lệ",
+    "title": "Đại lượng tỉ lệ nghịch",
+    "sum": "Hai đại lượng tỉ lệ nghịch khi y = a/x, tức tích x·y luôn không đổi: đại lượng này tăng bao nhiêu lần thì đại lượng kia giảm bấy nhiêu lần.",
+    "points": [
+      "y tỉ lệ nghịch với x theo hệ số a (a ≠ 0) nếu y = a/x, hay x·y = a.",
+      "Khi đó x cũng tỉ lệ nghịch với y theo cùng hệ số a.",
+      "Tích hai giá trị tương ứng luôn không đổi: x₁y₁ = x₂y₂ = … = a.",
+      "Tỉ số hai giá trị của x bằng nghịch đảo tỉ số hai giá trị tương ứng của y: x₁/x₂ = y₂/y₁.",
+      "Cùng quãng đường: vận tốc và thời gian tỉ lệ nghịch; cùng công việc: số người và số ngày tỉ lệ nghịch."
+    ],
+    "formulas": [
+      "y = a/x (a ≠ 0) ⇔ x·y = a",
+      "x₁y₁ = x₂y₂ = … = a",
+      "x₁/x₂ = y₂/y₁"
+    ],
+    "viz": { "type": "proportion", "kind": "inverse" },
+    "vizNote": "Kéo thanh trượt a: khi x tăng thì y = a/x giảm; trong bảng giá trị, tích x·y luôn bằng a.",
+    "memo": "Thuận ↔ THƯƠNG không đổi; Nghịch ↔ TÍCH không đổi. “Thêm người, bớt ngày.”",
+    "example": {
+      "q": "12 công nhân xây xong một bức tường trong 10 ngày. Nếu có 15 công nhân (năng suất như nhau) thì xây xong trong bao nhiêu ngày?",
+      "a": "Số công nhân và số ngày là hai đại lượng tỉ lệ nghịch.\nGọi số ngày cần tìm là x: 15·x = 12·10 = 120.\nx = 120 : 15 = 8 (ngày)."
+    },
+    "terms": [
+      ["inversely proportional", "tỉ lệ nghịch"],
+      ["constant of proportionality", "hệ số tỉ lệ"],
+      ["product", "tích"],
+      ["quotient", "thương"]
+    ],
+    "quiz": [
+      {
+        "q": "x và y tỉ lệ nghịch; khi x = 3 thì y = 8. Khi x = 6 thì y bằng?",
+        "opts": ["16", "24", "2", "4"],
+        "a": 3,
+        "why": "a = 3·8 = 24 ⇒ y = 24 : 6 = 4 (x gấp đôi thì y giảm một nửa)."
+      },
+      {
+        "q": "Bảng giá trị nào cho y tỉ lệ nghịch với x?",
+        "opts": [
+          "x = 1; 2; 4 → y = 2; 4; 8",
+          "x = 1; 2; 4 → y = 8; 4; 2",
+          "x = 1; 2; 4 → y = 8; 6; 4",
+          "x = 1; 2; 4 → y = 8; 4; 1"
+        ],
+        "a": 1,
+        "why": "Chỉ ở bảng này tích x·y luôn bằng 8: 1·8 = 2·4 = 4·2 = 8."
+      },
+      {
+        "q": "Ô tô đi từ A đến B với vận tốc 40 km/h hết 3 giờ. Nếu đi với vận tốc 60 km/h thì hết bao lâu?",
+        "opts": ["2 giờ", "4,5 giờ", "1,5 giờ", "2,5 giờ"],
+        "a": 0,
+        "why": "Quãng đường không đổi nên v·t không đổi: 40·3 = 60·t ⇒ t = 120 : 60 = 2 giờ."
+      },
+      {
+        "q": "Chia số 52 thành ba phần tỉ lệ nghịch với 2; 3; 4. Ba phần đó là?",
+        "opts": ["12; 16; 24", "26; 13; 13", "24; 16; 12", "8; 18; 26"],
+        "a": 2,
+        "why": "2x = 3y = 4z ⇒ x : y : z = 6 : 4 : 3; 52 : 13 = 4 ⇒ 24; 16; 12 (kiểm tra 2·24 = 3·16 = 4·12 = 48)."
+      }
+    ]
+  },
+  {
+    "id": "m7-09",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Một số hình khối trong thực tiễn",
+    "title": "Hình hộp chữ nhật, hình lập phương, lăng trụ đứng",
+    "sum": "Hình hộp chữ nhật, hình lập phương và hình lăng trụ đứng tam giác đều có thể tích bằng diện tích đáy nhân chiều cao, diện tích xung quanh bằng chu vi đáy nhân chiều cao.",
+    "points": [
+      "Hình hộp chữ nhật có 6 mặt là hình chữ nhật, 8 đỉnh, 12 cạnh, 4 đường chéo.",
+      "Hình lập phương là hình hộp chữ nhật có 6 mặt là hình vuông, 12 cạnh bằng nhau.",
+      "Lăng trụ đứng tam giác: hai đáy là hai tam giác bằng nhau, nằm trong hai mặt song song; ba mặt bên là hình chữ nhật.",
+      "Diện tích xung quanh lăng trụ đứng = chu vi đáy × chiều cao.",
+      "Thể tích lăng trụ đứng = diện tích đáy × chiều cao.",
+      "Diện tích toàn phần = diện tích xung quanh + 2 × diện tích đáy."
+    ],
+    "formulas": [
+      "Hình hộp chữ nhật: Sxq = 2(a + b)·c ; V = a·b·c",
+      "Hình lập phương: Sxq = 4a² ; V = a³",
+      "Lăng trụ đứng: Sxq = C(đáy)·h ; V = S(đáy)·h"
+    ],
+    "viz": { "type": "solid", "shape": "cuboid" },
+    "vizNote": "Kéo các thanh trượt chiều dài, chiều rộng, chiều cao: quan sát thể tích V = a·b·c và diện tích xung quanh 2(a + b)·c thay đổi.",
+    "memo": "Mọi lăng trụ đứng (kể cả hình hộp): thể tích = “ĐÁY nhân CAO”, xung quanh = “CHU VI ĐÁY nhân CAO”.",
+    "example": {
+      "q": "Một bể cá hình hộp chữ nhật không nắp dài 60 cm, rộng 40 cm, cao 50 cm. Tính thể tích bể và diện tích kính để làm bể.",
+      "a": "V = 60·40·50 = 120 000 cm³ (= 120 lít).\nSxq = 2·(60 + 40)·50 = 10 000 cm².\nĐáy: 60·40 = 2 400 cm² (không nắp nên chỉ 1 đáy).\nDiện tích kính: 10 000 + 2 400 = 12 400 cm²."
+    },
+    "terms": [
+      ["cuboid (rectangular box)", "hình hộp chữ nhật"],
+      ["cube", "hình lập phương"],
+      ["right triangular prism", "hình lăng trụ đứng tam giác"],
+      ["volume", "thể tích"],
+      ["lateral surface area", "diện tích xung quanh"]
+    ],
+    "quiz": [
+      {
+        "q": "Hình lập phương có cạnh 3 cm. Thể tích của nó là?",
+        "opts": ["27 cm³", "9 cm³", "36 cm³", "54 cm³"],
+        "a": 0,
+        "why": "V = a³ = 3·3·3 = 27 cm³ (36 cm² là Sxq, 54 cm² là diện tích toàn phần)."
+      },
+      {
+        "q": "Lăng trụ đứng có đáy là tam giác vuông với hai cạnh góc vuông 3 cm và 4 cm, chiều cao lăng trụ 10 cm. Thể tích là?",
+        "opts": ["120 cm³", "70 cm³", "60 cm³", "20 cm³"],
+        "a": 2,
+        "why": "S(đáy) = 3·4 : 2 = 6 cm² ⇒ V = 6·10 = 60 cm³."
+      },
+      {
+        "q": "Lăng trụ đứng có đáy là tam giác với ba cạnh 3 cm, 4 cm, 5 cm; chiều cao 10 cm. Diện tích xung quanh là?",
+        "opts": ["60 cm²", "120 cm²", "132 cm²", "600 cm²"],
+        "a": 1,
+        "why": "Chu vi đáy = 3 + 4 + 5 = 12 cm ⇒ Sxq = 12·10 = 120 cm²."
+      },
+      {
+        "q": "Nếu mỗi cạnh của một hình lập phương tăng gấp 2 lần thì thể tích tăng bao nhiêu lần?",
+        "opts": ["2 lần", "4 lần", "6 lần", "8 lần"],
+        "a": 3,
+        "why": "(2a)³ = 8a³, nên thể tích tăng 8 lần."
+      }
+    ]
+  },
+  {
+    "id": "m7-10",
+    "subj": "math",
+    "grade": 7,
+    "chap": "Dữ liệu và xác suất",
+    "title": "Biểu đồ và xác suất của biến cố",
+    "sum": "Biểu đồ hình quạt tròn cho thấy tỉ lệ các phần trong một tổng thể, biểu đồ đoạn thẳng cho thấy sự thay đổi theo thời gian. Xác suất là số từ 0 đến 1 đo khả năng xảy ra của một biến cố.",
+    "points": [
+      "Biểu đồ hình quạt tròn: cả hình tròn là 100%, mỗi hình quạt là tỉ lệ của một phần.",
+      "Biểu đồ đoạn thẳng biểu diễn sự thay đổi của một đại lượng theo thời gian.",
+      "Biến cố chắc chắn luôn xảy ra; biến cố không thể không bao giờ xảy ra; biến cố ngẫu nhiên có thể xảy ra hoặc không.",
+      "Xác suất của biến cố chắc chắn là 1, của biến cố không thể là 0.",
+      "Nếu có k biến cố đồng khả năng và luôn xảy ra đúng một trong chúng thì xác suất của mỗi biến cố là 1/k."
+    ],
+    "formulas": [
+      "Phần chiếm p% ứng với góc ở tâm p% · 360° = p · 3,6°",
+      "0 ≤ xác suất của một biến cố ≤ 1",
+      "k biến cố đồng khả năng ⇒ xác suất mỗi biến cố = 1/k"
+    ],
+    "viz": { "type": "dice" },
+    "vizNote": "Kéo thanh trượt n (số lần gieo): khi n càng lớn, tỉ lệ số lần xuất hiện của mỗi mặt càng gần 1/6 ≈ 0,167.",
+    "memo": "Xác suất luôn ở trong đoạn từ 0 đến 1: “Không thể = 0, Chắc chắn = 1”, đồng khả năng thì chia đều 1/k. Quạt tròn = “chia bánh”, đoạn thẳng = “theo thời gian”.",
+    "example": {
+      "q": "Gieo một con xúc xắc cân đối. Tìm xác suất của các biến cố A: “Số chấm xuất hiện là số chẵn”, B: “Số chấm nhỏ hơn 7”, C: “Số chấm bằng 7”.",
+      "a": "A và “Số chấm là số lẻ” là hai biến cố đồng khả năng, luôn xảy ra đúng một ⇒ xác suất của A là 1/2.\nB luôn xảy ra (mọi mặt từ 1 đến 6 chấm) ⇒ biến cố chắc chắn, xác suất 1.\nC không bao giờ xảy ra ⇒ biến cố không thể, xác suất 0."
+    },
+    "terms": [
+      ["pie chart", "biểu đồ hình quạt tròn"],
+      ["line graph", "biểu đồ đoạn thẳng"],
+      ["event", "biến cố"],
+      ["probability", "xác suất"],
+      ["equally likely", "đồng khả năng"]
+    ],
+    "quiz": [
+      {
+        "q": "Trong biểu đồ hình quạt tròn, phần chiếm 25% ứng với hình quạt có góc ở tâm bằng?",
+        "opts": ["25°", "45°", "90°", "100°"],
+        "a": 2,
+        "why": "25% của 360° là 0,25·360° = 90° (một phần tư hình tròn)."
+      },
+      {
+        "q": "Gieo một con xúc xắc cân đối. Xác suất để xuất hiện mặt 5 chấm là?",
+        "opts": ["1/6", "1/5", "5/6", "1/2"],
+        "a": 0,
+        "why": "6 mặt đồng khả năng và luôn xuất hiện đúng một mặt ⇒ mỗi mặt có xác suất 1/6."
+      },
+      {
+        "q": "Một hộp chỉ có 4 bút xanh. Lấy ngẫu nhiên 1 bút. Biến cố “Lấy được bút đỏ” là?",
+        "opts": [
+          "Biến cố chắc chắn, xác suất 1",
+          "Biến cố ngẫu nhiên, xác suất 1/4",
+          "Biến cố ngẫu nhiên, xác suất 1/2",
+          "Biến cố không thể, xác suất 0"
+        ],
+        "a": 3,
+        "why": "Hộp không có bút đỏ nên biến cố không bao giờ xảy ra: biến cố không thể, xác suất 0."
+      },
+      {
+        "q": "Để biểu diễn nhiệt độ trung bình của 12 tháng trong năm (thay đổi theo thời gian), nên dùng loại biểu đồ nào?",
+        "opts": ["Biểu đồ hình quạt tròn", "Biểu đồ đoạn thẳng", "Không dùng được biểu đồ nào"],
+        "a": 1,
+        "why": "Biểu đồ đoạn thẳng cho thấy xu hướng tăng, giảm theo thời gian; quạt tròn chỉ dùng cho các phần của một tổng thể."
+      }
+    ]
+  }
+]

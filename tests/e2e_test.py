@@ -65,7 +65,7 @@ def main():
         check("app renders Today", page.locator("h1").first.inner_text().startswith("Hôm nay"))
         check("two level buttons", page.locator("[data-level]").count() == 2)
         check("TOEIC is default level", page.get_attribute("#lv-toeic", "aria-pressed") == "true")
-        for tab in ["words", "sent", "ipa", "rank", "me", "today"]:
+        for tab in ["words", "sent", "ipa", "stem", "rank", "me", "today"]:
             page.click(f"[data-tab={tab}]")
             check(f"tab {tab} renders", page.locator("#view h1").count() >= 1)
 
@@ -78,6 +78,9 @@ def main():
         # 3. Level switch
         page.click("#lv-kids")
         check("switch to Lớp 7", page.get_attribute("#lv-kids", "aria-pressed") == "true" and "Lớp 7" in page.inner_text("main"))
+
+        page.click("[data-tab=stem]")
+        check("Toán & Vật lí is locked until 5 new words today", page.locator("[data-stemlock]").count() == 1 and page.locator("[data-stemopen]").count() == 0)
 
         # 4. Learn 5 kids words → quiz
         page.click("[data-tab=words]")
@@ -105,6 +108,28 @@ def main():
         check("5 kids words saved to progress", len(s.get("progress", {}).get("kids", {})) == 5)
         check("XP awarded", s.get("xp", 0) >= 50)
         check("streak started", s.get("streak", {}).get("count") == 1)
+
+        # 4b. Toán & Vật lí opens after 5 new words: lessons, an interactive visual, a quiz that completes the lesson
+        page.click("[data-tab=stem]")
+        check("5 new words unlock Toán & Vật lí", page.locator("[data-stemlock]").count() == 0 and page.locator("[data-stemopen]").count() >= 8)
+        page.click("[data-stemgrade='8']")
+        check("grade filter shows grade 8 lessons", page.locator("[data-stemopen^=m8]").count() >= 8 and page.locator("[data-stemopen^=m7]").count() == 0)
+        page.click("[data-stemsubj=phys]"); page.click("[data-stemgrade='9']")
+        page.click("[data-stemopen=p9-06]")
+        svg0 = page.inner_html("[data-vizbox=p9-06]")
+        page.locator("[data-vizk=U]").fill("12")
+        check("moving a slider redraws the physics visual", page.inner_html("[data-vizbox=p9-06]") != svg0 and "12" in page.inner_text("[data-vizinfo=p9-06]"))
+        check("lesson shows key points, memo, English terms and a worked example", page.locator(".stem-points li").count() >= 3 and page.locator(".memo").count() == 1
+              and page.locator(".item [data-say]").count() >= 2 and page.locator("details summary").count() >= 1)
+        answers = page.evaluate("window.APP_DATA.stem.find((l) => l.id === 'p9-06').quiz.map((q) => q.a)")
+        xp0 = state(page)["xp"]
+        for i, a in enumerate(answers):
+            page.click(f"[data-stemans='{i}:{a}']")
+        s = state(page)
+        check("4/4 right completes the lesson (+15 XP)", "p9-06" in s["stem"]["done"] and s["xp"] == xp0 + 15 and "hoàn thành" in page.inner_text("main"))
+        page.click("[data-stemback]")
+        check("completed lesson is ticked in the list", page.locator("[data-stemopen=p9-06].done").count() == 1)
+        page.click("[data-stemsubj=math]"); page.click("[data-stemgrade='7']")
 
         # 5. Persistence + review: make one word due yesterday, reload, review it
         other = ctx.new_page()  # a second tab edits the store; the first tab must not clobber it
@@ -287,7 +312,7 @@ def main():
             merr = []
             mp.on("pageerror", lambda e: merr.append(str(e)))
             mp.goto(url, wait_until="networkidle")
-            for tab in ["today", "words", "sent", "ipa", "rank", "me"]:
+            for tab in ["today", "words", "sent", "ipa", "stem", "rank", "me"]:
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
             mp.click("#farm-btn")

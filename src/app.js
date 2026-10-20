@@ -1,4 +1,4 @@
-/* UI: five views (Hôm nay, Từ vựng, Câu, IPA, Tiến độ), local storage, speech, and custom word pictures. */
+/* UI: views (Hôm nay, Từ vựng, Câu, IPA, Toán & Vật lí, Xếp hạng, Tiến độ, Nông trại), local storage, speech, and custom word pictures. */
 (function () {
   "use strict";
   const C = window.Core, D = window.APP_DATA, F = window.Farm, Online = window.Online;
@@ -10,7 +10,7 @@
   const TRACKS = { daily: "Hằng ngày", work: "Công sở", toeic: "TOEIC LR & SW" };
   const STAGES = { Basic: "Cơ bản", Intermediate: "Trung cấp", Advanced: "Nâng cao" };
   const POS = { n: "danh từ", v: "động từ", adj: "tính từ", adv: "trạng từ", phr: "cụm từ", prep: "giới từ", conj: "liên từ" };
-  const XP = { learn: 10, quiz: 5, review: 3, sent: 8, scramble: 2, ipa: 5, pair: 1 };
+  const XP = { learn: 10, quiz: 5, review: 3, sent: 8, scramble: 2, ipa: 5, pair: 1, stem: 15 };
   const PERDAY = [3, 30], SENTPER = [1, 10];
   const EMOJIS = ("🎯 🎨 📚 ✏️ 📝 💡 🧠 ⭐ ❤️ 🔥 🌱 🌳 🌸 🍎 🍜 ☕ 🏠 🏫 🏢 🚗 🚌 ✈️ 🚲 ⚽ 🏀 🎵 🎬 📷 💻 📱 ⏰ 📅 💰 💼 " +
     "🤝 👍 👀 🗣️ 👂 ✋ 🙂 😀 😢 😮 😴 🐶 🐱 🐟 🐦 ☀️ 🌧️ ❄️ 🌈 🌍 🗺️ 🎁 🎉 🏆 🔑 🔒 🔍 🧩 🛠️ 📦 🛒 🧾 📈 📉 ⚖️ 🧪 🩺 💊 " +
@@ -41,7 +41,7 @@
 
   // ---------- State ----------
   const fresh = () => ({ v: 1, level: "toeic", perday: 8, sentPerDay: 3, track: "daily", progress: { kids: {}, toeic: {} },
-    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null, online: null });
+    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null, online: null, stem: { done: {} } });
   function merge(o) {
     const d = fresh(), s = { ...d, ...(o || {}) };
     s.progress = { ...d.progress, ...(s.progress || {}) };
@@ -51,6 +51,7 @@
     s.farm = { ...F.fresh(), ...(s.farm || {}) };
     if (!s.farm.beasts || typeof s.farm.beasts !== "object") s.farm.beasts = {};
     if (!s.online || typeof s.online.token !== "string") s.online = null;
+    if (!s.stem || typeof s.stem.done !== "object" || !s.stem.done) s.stem = { done: {} };
     return s;
   }
   // A daily backup copy lets the app recover if the main record is ever damaged.
@@ -105,7 +106,7 @@
   }
 
   // Screen state that is not persisted
-  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false, joinMode: "new", showPin: false, farmFull: false };
+  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false, joinMode: "new", showPin: false, farmFull: false, stemSubj: "math", stemGrade: 7, stemOpen: null, stemQuiz: {}, viz: {} };
   const inSession = () => U.tab === "words" && ["learn", "quiz", "review"].includes(U.vocab.mode);
 
   // ---------- Helpers ----------
@@ -120,6 +121,7 @@
     words: svg('<rect x="3" y="6" width="14" height="15" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v13"/>'),
     sent: svg('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'),
     ipa: svg('<path d="M3 19 8 5l5 14"/><path d="M5 14h6"/><path d="M17 10v9"/><path d="M17 6.5v.01"/>'),
+    stem: svg('<path d="M4 20h16"/><path d="M6 20 12 4l6 16"/><path d="M8.5 14h7"/><circle cx="12" cy="4" r="1.5"/>'),
     rank: svg('<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/>'),
     me: svg('<path d="M4 20V11"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M3 20h18"/>'),
     speak: svg('<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>'),
@@ -239,7 +241,7 @@
   const pic = (w, cls) => picHTML(PICS[w.key] || {}, w.emo, cls);
 
   // ---------- Shell ----------
-  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
+  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["stem", "Toán·Lí"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
   function renderTabs() {
     $("#tabs").innerHTML = TABS.map(([id, label]) =>
       `<button type="button" data-tab="${id}"${U.tab === id ? ' aria-current="page"' : ""}>${I[id]}<span>${label}</span></button>`).join("");
@@ -250,7 +252,7 @@
     farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
   }
-  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, rank: vRank, me: vMe, farm: vFarm };
+  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, stem: vStem, rank: vRank, me: vMe, farm: vFarm };
   // A broken screen must never take the whole app down: show a recovery panel instead, data stays safe.
   function render() {
     try { $("#view").innerHTML = VIEWS[U.tab](); }
@@ -733,6 +735,102 @@
   function pickSound(sym) {
     U.sound = sym; U.pair = null; renderDetail();
     if (matchMedia("(max-width: 900px)").matches) $("#snd-detail").scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
+  // ---------- Toán & Vật lí ----------
+  // Opens each day after STEM_GATE new English words; lessons have an interactive visual, key points, a worked example,
+  // English terms and a 4-question check (3/4 right = lesson done, +XP).
+  const STEM = D.stem || [], STEM_BY = Object.fromEntries(STEM.map((l) => [l.id, l])), STEM_GATE = 5, STEM_PASS = 3;
+  const SUBJ = { math: "📐 Toán", phys: "🔭 Vật lí" };
+  const newWordsToday = () => { const t = today(); return Object.values(S.progress).reduce((n, pl) => n + Object.values(pl).filter((c) => c.added === t).length, 0); };
+  const stemDone = (subj) => STEM.filter((l) => (!subj || l.subj === subj) && S.stem.done[l.id]).length;
+  function vStem() {
+    const have = newWordsToday();
+    if (have < STEM_GATE) {
+      return `<section class="hello"><div><p class="label">Toán & Vật lí · lớp 7–9</p><h1>Toán & Vật lí</h1></div></section>
+        <section class="panel stack lockcard" data-stemlock><h2>🔒 Học ${STEM_GATE} từ mới hôm nay để mở Toán & Vật lí</h2>
+          <p class="big num">${have}<small style="font-size:1.1rem"> / ${STEM_GATE} từ mới</small></p>${bar(have / STEM_GATE)}
+          <p class="muted">Mỗi ngày, học xong ${STEM_GATE} từ tiếng Anh mới là mở được ${STEM.filter((l) => l.subj === "math").length} bài Toán và ${STEM.filter((l) => l.subj === "phys").length} bài Vật lí lớp 7–9, có hình minh hoạ kéo thả trực quan.</p>
+          <div><button type="button" class="btn primary" data-go="learn">Học từ mới</button></div></section>`;
+    }
+    if (U.stemOpen && STEM_BY[U.stemOpen]) return stemLesson(STEM_BY[U.stemOpen]);
+    const subj = U.stemSubj, list = STEM.filter((l) => l.subj === subj && l.grade === U.stemGrade);
+    const chaps = [...new Set(list.map((l) => l.chap))];
+    return `<section class="hello"><div><p class="label">Toán ${stemDone("math")}/${STEM.filter((l) => l.subj === "math").length} · Vật lí ${stemDone("phys")}/${STEM.filter((l) => l.subj === "phys").length} bài đã xong</p><h1>Toán & Vật lí</h1></div>
+        <div class="row"><div class="seg" role="group" aria-label="Môn">${Object.entries(SUBJ).map(([id, l]) => `<button type="button" data-stemsubj="${id}" aria-pressed="${subj === id}">${l}</button>`).join("")}</div>
+          <div class="seg" role="group" aria-label="Lớp">${[7, 8, 9].map((g) => `<button type="button" data-stemgrade="${g}" aria-pressed="${U.stemGrade === g}">Lớp ${g}</button>`).join("")}</div></div></section>
+      ${chaps.map((c) => `<section class="panel stack"><h2>${esc(c)}</h2><div class="stem-list">${list.filter((l) => l.chap === c).map((l) => {
+        const done = S.stem.done[l.id];
+        return `<button type="button" class="stem-item${done ? " done" : ""}" data-stemopen="${l.id}"><span class="si-ic" aria-hidden="true">${done ? "✓" : l.subj === "math" ? "📐" : "🔭"}</span>
+          <span><b>${esc(l.title)}</b><br><span class="small muted">${esc(l.sum)}</span></span></button>`;
+      }).join("")}</div></section>`).join("")}`;
+  }
+  function vizBlock(l) {
+    const st = (U.viz[l.id] = U.viz[l.id] || Stem.init(l.viz)), r = Stem.draw(l.viz, st);
+    const ctrls = Stem.ctrls(l.viz).map((c) => `<label class="viz-ctl"><span>${esc(c.label)}: <b class="num" data-vizval="${c.k}">${Stem.fmt(st[c.k], 2)}${esc(c.unit)}</b></span>
+      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${st[c.k]}" data-vizk="${c.k}" data-vizid="${l.id}" aria-label="${esc(c.label)}"></label>`).join("");
+    return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2><div class="viz-box" data-vizbox="${l.id}">${r.svg}</div>
+      <p class="viz-info" data-vizinfo="${l.id}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}<p class="small muted">👉 ${esc(l.vizNote)}</p></section>`;
+  }
+  function stemQuiz(l) {
+    const picks = U.stemQuiz[l.id] || [], answered = picks.filter((x) => x != null).length, right = l.quiz.filter((q, i) => picks[i] === q.a).length;
+    const qs = l.quiz.map((q, i) => {
+      const p = picks[i], done = p != null;
+      return `<div class="stem-q"><p><b>Câu ${i + 1}.</b> ${esc(q.q)}</p><div class="choices">${q.opts.map((o, j) => {
+        const cls = done ? (j === q.a ? " right" : j === p ? " wrong" : "") : "";
+        return `<button type="button" class="choice${cls}" data-stemans="${i}:${j}"${done ? " disabled" : ""}>${esc(o)}</button>`;
+      }).join("")}</div>${done ? `<p class="feedback ${p === q.a ? "ok" : "no"}">${p === q.a ? "✓ Đúng!" : "✗ Chưa đúng."} ${esc(q.why)}</p>` : ""}</div>`;
+    }).join("");
+    const end = answered === l.quiz.length
+      ? `<div class="row" style="justify-content:space-between"><p class="feedback ${right >= STEM_PASS ? "ok" : "no"}"><b>${right}/${l.quiz.length} câu đúng.</b> ${right >= STEM_PASS ? "Bài học đã hoàn thành 🎉" : `Cần đúng ít nhất ${STEM_PASS} câu — xem lại phần trên rồi làm lại nhé.`}</p>
+          <button type="button" class="btn" data-stemretry="${l.id}">Làm lại</button></div>` : "";
+    return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🧠 Kiểm tra nhanh</h2><span class="chip num">${answered}/${l.quiz.length}</span></div>${qs}${end}</section>`;
+  }
+  function stemLesson(l) {
+    const done = S.stem.done[l.id];
+    return `<section class="hello"><div><p class="label">${l.subj === "math" ? "Toán" : "Vật lí"} ${l.grade} · ${esc(l.chap)}</p><h1>${esc(l.title)}</h1></div>
+        <div class="row">${done ? `<span class="chip good">✓ Đã hoàn thành</span>` : `<span class="chip">+${XP.stem} XP khi xong</span>`}${back("data-stemback", "Danh sách bài")}</div></section>
+      <section class="panel"><p>${esc(l.sum)}</p></section>
+      ${vizBlock(l)}
+      <div class="grid g2" style="align-items:start">
+        <section class="panel stack"><h2>📌 Ghi nhớ</h2><ul class="stem-points">${l.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          ${l.formulas.length ? `<div class="formulas">${l.formulas.map((x) => `<div>${esc(x)}</div>`).join("")}</div>` : ""}</section>
+        <section class="panel stack"><h2>💡 Mẹo nhớ</h2><p class="memo">${esc(l.memo)}</p>
+          <h2>🇬🇧 Thuật ngữ tiếng Anh</h2><div class="list">${l.terms.map(([en, vi]) => `<div class="item"><span class="t"><b>${esc(en)}</b> · ${esc(vi)}</span>${sayEn(en)}</div>`).join("")}</div></section>
+      </div>
+      <section class="panel stack"><h2>✏️ Ví dụ</h2><p><b>${esc(l.example.q)}</b></p>
+        <details><summary>Xem lời giải</summary><p class="stem-sol">${esc(l.example.a)}</p></details></section>
+      ${stemQuiz(l)}`;
+  }
+  /** Slider moved: redraw only the visual and its readout, so dragging stays smooth. */
+  function vizInput(el) {
+    const id = el.dataset.vizid, l = STEM_BY[id], k = el.dataset.vizk, st = U.viz[id];
+    if (!l || !st) return;
+    const v = +el.value, mk = Stem.motionKey(l.viz);
+    if (mk === k) { st._dx = v - st[k]; clearTimeout(vizInput.t); vizInput.t = setTimeout(() => { st._dx = 0; drawViz(l); }, 450); }
+    st[k] = v;
+    const c = Stem.ctrls(l.viz).find((x) => x.k === k), lab = $(`[data-vizval="${k}"]`);
+    if (lab && c) lab.textContent = Stem.fmt(v, 2) + c.unit;
+    drawViz(l);
+  }
+  function drawViz(l) {
+    const box = $(`[data-vizbox="${l.id}"]`), info = $(`[data-vizinfo="${l.id}"]`);
+    if (!box) return;
+    const r = Stem.draw(l.viz, U.viz[l.id]);
+    box.innerHTML = r.svg; if (info) info.innerHTML = r.info;
+  }
+  function stemAnswer(v) {
+    const l = STEM_BY[U.stemOpen];
+    if (!l) return;
+    const [qi, oi] = v.split(":").map(Number), picks = (U.stemQuiz[l.id] = U.stemQuiz[l.id] || []);
+    if (picks[qi] != null) return;
+    picks[qi] = oi;
+    const right = l.quiz.filter((q, i) => picks[i] === q.a).length, all = picks.filter((x) => x != null).length === l.quiz.length;
+    if (all && right >= STEM_PASS && !S.stem.done[l.id]) {
+      S.stem.done[l.id] = today(); addXP(XP.stem);
+      toast(`🎉 Xong bài “${l.title}” · +${XP.stem} XP`, 3000);
+    }
+    const y = scrollY; render(); scrollTo(0, y);
   }
 
   // ---------- Nông trại ----------
@@ -1406,7 +1504,7 @@
     else growSheet(i);
   }
   // One clock for everything time-based: study/play minutes for the farm gate, farm countdowns.
-  const STUDY_TABS = new Set(["words", "sent", "ipa"]);
+  const STUDY_TABS = new Set(["words", "sent", "ipa", "stem"]);
   let lastAct = Date.now(), ticks = 0;
   for (const ev of ["pointerdown", "keydown", "input", "wheel", "touchstart"]) addEventListener(ev, () => { lastAct = Date.now(); }, { passive: true, capture: true });
   const gateNow = () => F.gate(S.gate, Date.now());
@@ -1448,11 +1546,11 @@
   const stars = (lv) => `<span class="stars" aria-label="Cấp ${lv}/${F.BEAST_MAX_LV}">${"★".repeat(lv)}${"☆".repeat(F.BEAST_MAX_LV - lv)}</span>`;
   // Study challenge of a spirit beast: icon, unit, and where to go to work on it.
   const LEARN_UI = { words: ["📘", "từ đã học", "learn"], best: ["🔥", "ngày học liên tiếp", "learn"], sents: ["💬", "câu đã thuộc", "sent"],
-    ipa: ["🔤", "âm IPA đã học", "ipa"], mastered: ["🏅", "từ đã thuộc lòng", "review"] };
+    ipa: ["🔤", "âm IPA đã học", "ipa"], mastered: ["🏅", "từ đã thuộc lòng", "review"], math: ["📐", "bài Toán", "stem-math"], phys: ["🔭", "bài Vật lí", "stem-phys"] };
   function learnStats() {
     const mastered = Object.values(S.progress).reduce((n, pl) => n + Object.values(pl).filter((c) => c.box >= C.MASTER_BOX).length, 0);
     return { words: Object.keys(S.progress.kids).length + Object.keys(S.progress.toeic).length, best: S.streak.best || 0,
-      sents: Object.keys(S.sent).length, ipa: S.ipa.length, mastered };
+      sents: Object.keys(S.sent).length, ipa: S.ipa.length, mastered, math: stemDone("math"), phys: stemDone("phys") };
   }
   function learnChips(b, st) {
     return `<div class="need learn">${Object.entries(b.learn).map(([k, q]) => {
@@ -1481,7 +1579,7 @@
   function beastsSection(f, now) {
     const owned = Object.keys(f.beasts).length;
     return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🐉 Linh Thú 12 con giáp</h2><span class="chip num">${owned}/12</span></div>
-      <p class="small muted">Mỗi Linh Thú có một <b>thử thách học tập</b> (số từ đã học, chuỗi ngày học, số câu, âm IPA hoặc từ đã thuộc lòng); hoàn thành thử thách rồi thu phục bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
+      <p class="small muted">Mỗi Linh Thú có một <b>thử thách học tập</b> (số từ đã học, chuỗi ngày học, số câu, âm IPA, từ đã thuộc lòng, bài Toán hoặc Vật lí); hoàn thành thử thách rồi thu phục bằng xu và nông sản. Linh Thú ban phúc cho cây đang trồng: rút ngắn thời gian chín hoặc tăng giá bán.
         Mỗi ngày mỗi Linh Thú có ${F.STAMINA} ⚡ thể lực — ban phúc càng nhiều cây càng tốn, cấp càng cao càng ít tốn. Nâng cấp (tối đa ${F.BEAST_MAX_LV}) bằng nông sản thu hoạch.</p>
       <div class="beasts">${F.BEASTS.map((b) => beastCard(f, b, now)).join("")}</div></section>`;
   }
@@ -1709,7 +1807,7 @@
       <div class="grid g3">
         <section class="panel goal"><p class="label">Tổng XP</p><p class="big">${S.xp}</p><p class="small muted">Chuỗi hiện tại ${C.liveStreak(S.streak, today())} ngày · kỷ lục ${stats.best} ngày</p></section>
         <section class="panel goal"><p class="label">Từ đã học</p><p class="big">${stats.words}</p><p class="small muted">Lớp 7: ${learned("kids")}/${WORDS.kids.length} · TOEIC: ${learned("toeic")}/${WORDS.toeic.length} · đã thuộc ${mastered}</p></section>
-        <section class="panel goal"><p class="label">Câu & âm</p><p class="big">${stats.sentences}<small> câu</small></p><p class="small muted">IPA: ${stats.ipa}/44 âm đã học</p></section>
+        <section class="panel goal"><p class="label">Câu & âm</p><p class="big">${stats.sentences}<small> câu</small></p><p class="small muted">IPA: ${stats.ipa}/44 âm đã học · Toán ${stemDone("math")} bài · Vật lí ${stemDone("phys")} bài</p></section>
       </div>
       <div class="grid g2">
         <section class="panel stack"><h2>Hộp ôn tập · ${LEVELS[S.level]}</h2>
@@ -1754,7 +1852,17 @@
   const H = {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
     level: (v) => { if (S.level === v) return; S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); render(); },
-    go: (v) => { if (!$("#modal").hidden) closeModal(); v === "learn" ? startLearn() : v === "review" ? startReview() : go(v); },
+    go: (v) => {
+      if (!$("#modal").hidden) closeModal();
+      if (v.startsWith("stem-")) { U.stemSubj = v.slice(5); U.stemOpen = null; v = "stem"; }
+      v === "learn" ? startLearn() : v === "review" ? startReview() : go(v);
+    },
+    stemsubj: (v) => { U.stemSubj = v; render(); },
+    stemgrade: (v) => { U.stemGrade = +v; render(); },
+    stemopen: (v) => { U.stemOpen = v; render(); scrollTo(0, 0); },
+    stemback: () => { U.stemOpen = null; render(); },
+    stemans: (v) => stemAnswer(v),
+    stemretry: (v) => { U.stemQuiz[v] = []; const y = scrollY; render(); scrollTo(0, y); },
     step: (v, t) => {
       const d = +t.dataset.d;
       if (v === "perday") S.perday = clamp(S.perday + d, PERDAY);
@@ -1946,6 +2054,7 @@
     if (e.target.id === "j-pin" || e.target.id === "j-pin2") { const v = e.target.value.replace(/\D/g, ""); if (v !== e.target.value) e.target.value = v; }
     if (e.target.id === "bq") { U.bq = e.target.value; clearTimeout(bqT); bqT = setTimeout(() => { const l = $("#blist"); if (l) l.innerHTML = browseList(); }, 200); }
     if (e.target.id === "rate") { S.rate = +e.target.value; $("#rate-v").textContent = S.rate.toFixed(1) + "×"; save(); }
+    if (e.target.dataset && e.target.dataset.vizk) vizInput(e.target);
   });
   document.addEventListener("change", (e) => {
     if (e.target.id === "j-show") {

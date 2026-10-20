@@ -1,0 +1,546 @@
+[
+  {
+    "id": "m8-01",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Hằng đẳng thức đáng nhớ",
+    "title": "Bảy hằng đẳng thức đáng nhớ",
+    "sum": "Hằng đẳng thức là đẳng thức đúng với mọi giá trị của biến. Bảy hằng đẳng thức đáng nhớ giúp khai triển, rút gọn và tính nhanh.",
+    "points": [
+      "Hằng đẳng thức là đẳng thức đúng với mọi giá trị của các biến.",
+      "Bảy hằng đẳng thức: bình phương tổng/hiệu, hiệu hai bình phương, lập phương tổng/hiệu, tổng/hiệu hai lập phương.",
+      "Bình phương một tổng (hiệu): bình phương số đầu, cộng (trừ) hai lần tích, cộng bình phương số sau.",
+      "(a − b)² = (b − a)², nhưng (a − b)³ = −(b − a)³.",
+      "Dùng để tính nhanh: 99² = (100 − 1)², 101·99 = 100² − 1²."
+    ],
+    "formulas": [
+      "(a ± b)² = a² ± 2ab + b²",
+      "a² − b² = (a − b)(a + b)",
+      "(a ± b)³ = a³ ± 3a²b + 3ab² ± b³",
+      "a³ ± b³ = (a ± b)(a² ∓ ab + b²)"
+    ],
+    "viz": { "type": "identity" },
+    "vizNote": "Kéo thanh trượt a, b: hình vuông cạnh a + b chia thành a², hai hình chữ nhật ab và b², nên (a + b)² = a² + 2ab + b².",
+    "memo": "Bình phương: “đầu bình – hai tích – cuối bình”. Tổng/hiệu hai lập phương: dấu thứ nhất CÙNG, dấu thứ hai NGƯỢC, dấu cuối luôn DƯƠNG.",
+    "example": {
+      "q": "Tính nhanh: a) 102²; b) 98·102.",
+      "a": "a) 102² = (100 + 2)² = 100² + 2·100·2 + 2² = 10 000 + 400 + 4 = 10 404.\nb) 98·102 = (100 − 2)(100 + 2) = 100² − 2² = 10 000 − 4 = 9 996."
+    },
+    "terms": [
+      ["algebraic identity", "hằng đẳng thức"],
+      ["square of a sum", "bình phương của một tổng"],
+      ["difference of two squares", "hiệu hai bình phương"],
+      ["cube of a difference", "lập phương của một hiệu"],
+      ["sum of two cubes", "tổng hai lập phương"]
+    ],
+    "quiz": [
+      {
+        "q": "Khai triển (2x − 3)² được kết quả nào?",
+        "opts": ["4x² − 9", "4x² − 6x + 9", "4x² − 12x + 9", "2x² − 12x + 9"],
+        "a": 2,
+        "why": "(2x)² − 2·2x·3 + 3² = 4x² − 12x + 9."
+      },
+      {
+        "q": "Tính nhanh 51² − 49².",
+        "opts": ["200", "4", "100", "2 500"],
+        "a": 0,
+        "why": "51² − 49² = (51 − 49)(51 + 49) = 2·100 = 200."
+      },
+      {
+        "q": "x³ + 8 bằng biểu thức nào?",
+        "opts": ["(x + 2)(x² + 2x + 4)", "(x + 2)³", "(x − 2)(x² + 2x + 4)", "(x + 2)(x² − 2x + 4)"],
+        "a": 3,
+        "why": "a³ + b³ = (a + b)(a² − ab + b²) với a = x, b = 2."
+      },
+      {
+        "q": "Giá trị của biểu thức x² − 10x + 25 tại x = 105 là bao nhiêu?",
+        "opts": ["1 000", "10 000", "10 025", "11 025"],
+        "a": 1,
+        "why": "x² − 10x + 25 = (x − 5)² = (105 − 5)² = 100² = 10 000."
+      }
+    ]
+  },
+  {
+    "id": "m8-02",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Hằng đẳng thức đáng nhớ",
+    "title": "Phân tích đa thức thành nhân tử",
+    "sum": "Phân tích đa thức thành nhân tử là viết đa thức thành tích của những đa thức. Ba cách cơ bản: đặt nhân tử chung, dùng hằng đẳng thức, nhóm hạng tử.",
+    "points": [
+      "Phân tích thành nhân tử là biến đổi đa thức thành một tích của những đa thức.",
+      "Đặt nhân tử chung: AB + AC = A(B + C); lấy ƯCLN của hệ số và lũy thừa nhỏ nhất của biến.",
+      "Dùng hằng đẳng thức: nhận ra dạng a² − b², a² ± 2ab + b², a³ ± b³ rồi viết thành tích.",
+      "Nhóm hạng tử: gom các hạng tử thành nhóm có nhân tử chung, rồi đặt nhân tử chung lần nữa.",
+      "Tìm x: phân tích về dạng A·B = 0 thì A = 0 hoặc B = 0.",
+      "Kiểm tra lại bằng cách nhân các nhân tử, phải ra đúng đa thức ban đầu."
+    ],
+    "formulas": [
+      "AB + AC = A(B + C)",
+      "a² − b² = (a − b)(a + b)",
+      "a² ± 2ab + b² = (a ± b)²",
+      "A·B = 0 ⇔ A = 0 hoặc B = 0"
+    ],
+    "viz": { "type": "identity" },
+    "vizNote": "Kéo a, b: bốn mảnh a², ab, ab, b² ghép lại thành đúng một hình vuông cạnh a + b, tức là a² + 2ab + b² = (a + b)².",
+    "memo": "Thứ tự thử “CHUNG – HẰNG – NHÓM”: đặt nhân tử Chung trước, rồi soi Hằng đẳng thức, bí quá thì Nhóm hạng tử.",
+    "example": {
+      "q": "Phân tích thành nhân tử: a) 2x³ − 8x; b) x² − 2xy + y² − 9.",
+      "a": "a) Đặt nhân tử chung 2x: 2x³ − 8x = 2x(x² − 4).\nDùng hiệu hai bình phương: = 2x(x − 2)(x + 2).\nb) Nhóm ba hạng tử đầu: (x² − 2xy + y²) − 9 = (x − y)² − 3².\nHiệu hai bình phương: = (x − y − 3)(x − y + 3)."
+    },
+    "terms": [
+      ["factorization (factoring)", "phân tích thành nhân tử"],
+      ["common factor", "nhân tử chung"],
+      ["grouping terms", "nhóm hạng tử"],
+      ["polynomial", "đa thức"]
+    ],
+    "quiz": [
+      {
+        "q": "Phân tích 3x² − 6x thành nhân tử được kết quả nào?",
+        "opts": ["3x(x − 6)", "3x(x − 2)", "3x²(1 − 2x)", "x(3x − 2)"],
+        "a": 1,
+        "why": "Nhân tử chung là 3x: 3x² − 6x = 3x·x − 3x·2 = 3x(x − 2)."
+      },
+      {
+        "q": "x² − 4x + 4 bằng biểu thức nào?",
+        "opts": ["(x − 4)²", "(x + 2)²", "(x − 2)(x + 2)", "(x − 2)²"],
+        "a": 3,
+        "why": "x² − 2·x·2 + 2² = (x − 2)² (bình phương một hiệu)."
+      },
+      {
+        "q": "Phân tích xy + x + y + 1 thành nhân tử.",
+        "opts": ["(x + 1)(y + 1)", "(x + y)(y + 1)", "(x − 1)(y − 1)", "(xy + 1)(x + y)"],
+        "a": 0,
+        "why": "Nhóm: (xy + x) + (y + 1) = x(y + 1) + (y + 1) = (y + 1)(x + 1)."
+      },
+      {
+        "q": "Tìm x biết x² − 5x = 0.",
+        "opts": ["x = 5", "x = −5", "x = 0 hoặc x = 5", "x = 0 hoặc x = −5"],
+        "a": 2,
+        "why": "x² − 5x = x(x − 5) = 0 nên x = 0 hoặc x − 5 = 0, tức x = 5."
+      }
+    ]
+  },
+  {
+    "id": "m8-03",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Tứ giác",
+    "title": "Tứ giác và các tứ giác đặc biệt",
+    "sum": "Tổng các góc của một tứ giác bằng 360°. Hình thang cân, hình bình hành, hình chữ nhật, hình thoi, hình vuông có những tính chất riêng về cạnh, góc và đường chéo.",
+    "points": [
+      "Tổng bốn góc của một tứ giác bằng 360°.",
+      "Hình thang cân: hai góc kề một đáy bằng nhau, hai đường chéo bằng nhau.",
+      "Hình bình hành: cạnh đối song song và bằng nhau, góc đối bằng nhau, đường chéo cắt nhau tại trung điểm mỗi đường.",
+      "Hình chữ nhật: bốn góc vuông; hai đường chéo bằng nhau và cắt nhau tại trung điểm mỗi đường.",
+      "Hình thoi: bốn cạnh bằng nhau; hai đường chéo vuông góc và là phân giác các góc.",
+      "Hình vuông vừa là hình chữ nhật vừa là hình thoi."
+    ],
+    "formulas": [
+      "∠A + ∠B + ∠C + ∠D = 360°",
+      "Tổng các góc của đa giác n cạnh = (n − 2)·180°",
+      "Mỗi góc của đa giác đều n cạnh = (n − 2)·180°/n"
+    ],
+    "viz": { "type": "polygon" },
+    "vizNote": "Đặt n = 4: tổng các góc là (4 − 2)·180° = 360°, mỗi góc của hình vuông bằng 90°; tăng n để so sánh với đa giác khác.",
+    "memo": "“Cây gia phả”: hình bình hành + một góc vuông = hình chữ nhật; hình bình hành + hai cạnh kề bằng nhau = hình thoi; chữ nhật + thoi = hình vuông.",
+    "example": {
+      "q": "Tứ giác ABCD có ∠A = 75°, ∠B = 105°, ∠C = 75°. Tính ∠D. ABCD có phải hình bình hành không?",
+      "a": "∠D = 360° − (75° + 105° + 75°) = 360° − 255° = 105°.\nTa có ∠A = ∠C = 75° và ∠B = ∠D = 105°: các góc đối bằng nhau.\nVậy ABCD là hình bình hành."
+    },
+    "terms": [
+      ["quadrilateral", "tứ giác"],
+      ["isosceles trapezoid", "hình thang cân"],
+      ["parallelogram", "hình bình hành"],
+      ["rhombus", "hình thoi"],
+      ["diagonal", "đường chéo"]
+    ],
+    "quiz": [
+      {
+        "q": "Một tứ giác có ba góc là 90°, 100°, 70°. Góc còn lại bằng bao nhiêu?",
+        "opts": ["80°", "90°", "100°", "110°"],
+        "a": 2,
+        "why": "360° − (90° + 100° + 70°) = 360° − 260° = 100°."
+      },
+      {
+        "q": "Hình bình hành có thêm điều kiện nào thì là hình thoi?",
+        "opts": ["Hai đường chéo vuông góc", "Có một góc vuông", "Hai đường chéo bằng nhau", "Hai cạnh đối song song"],
+        "a": 0,
+        "why": "Hình bình hành có hai đường chéo vuông góc là hình thoi. Góc vuông hay đường chéo bằng nhau cho hình chữ nhật."
+      },
+      {
+        "q": "Hình chữ nhật ABCD có AC = 10 cm, O là giao điểm hai đường chéo. Độ dài OB là?",
+        "opts": ["10 cm", "5 cm", "20 cm", "Không tính được"],
+        "a": 1,
+        "why": "Hai đường chéo bằng nhau (BD = AC = 10 cm) và cắt nhau tại trung điểm, nên OB = 10 : 2 = 5 cm."
+      },
+      {
+        "q": "Hình thang cân ABCD (AB ∥ CD) có ∠D = 70°. Số đo ∠A là?",
+        "opts": ["70°", "90°", "140°", "110°"],
+        "a": 3,
+        "why": "AB ∥ CD nên ∠A + ∠D = 180° (hai góc trong cùng phía), suy ra ∠A = 180° − 70° = 110°."
+      }
+    ]
+  },
+  {
+    "id": "m8-04",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Định lí Thalès",
+    "title": "Định lí Thalès và đường trung bình của tam giác",
+    "sum": "Một đường thẳng song song với một cạnh của tam giác thì định ra trên hai cạnh kia những đoạn thẳng tương ứng tỉ lệ. Đường trung bình song song và bằng nửa cạnh thứ ba.",
+    "points": [
+      "Định lí Thalès: đường thẳng song song với một cạnh tam giác, cắt hai cạnh kia, tạo ra các đoạn tương ứng tỉ lệ.",
+      "Định lí Thalès đảo: M ∈ AB, N ∈ AC và AM/AB = AN/AC thì MN ∥ BC.",
+      "Hệ quả: MN ∥ BC thì tam giác AMN có ba cạnh tỉ lệ với ba cạnh tam giác ABC.",
+      "Đường trung bình nối trung điểm hai cạnh; nó song song với cạnh thứ ba và bằng nửa cạnh đó.",
+      "Phân giác AD của tam giác ABC chia cạnh BC theo tỉ lệ hai cạnh kề: DB/DC = AB/AC."
+    ],
+    "formulas": [
+      "MN ∥ BC ⇔ AM/AB = AN/AC (⇔ AM/MB = AN/NC)",
+      "MN ∥ BC ⇒ AM/AB = AN/AC = MN/BC",
+      "Đường trung bình: MN ∥ BC, MN = BC/2",
+      "AD là phân giác ⇒ DB/DC = AB/AC"
+    ],
+    "viz": { "type": "thales" },
+    "vizNote": "Kéo MN (luôn song song với BC): ba tỉ số AM/AB, AN/AC, MN/BC luôn bằng nhau; khi M là trung điểm AB, tỉ số bằng 1/2 – đó là đường trung bình.",
+    "memo": "“Song song sinh tỉ lệ – tỉ lệ sinh song song”. Đường trung bình: “song song và một nửa”.",
+    "example": {
+      "q": "Tam giác ABC có MN ∥ BC (M ∈ AB, N ∈ AC), AM = 3 cm, MB = 2 cm, AN = 4,5 cm, BC = 10 cm. Tính NC và MN.",
+      "a": "Theo định lí Thalès: AM/MB = AN/NC ⇒ 3/2 = 4,5/NC ⇒ NC = 4,5·2 : 3 = 3 cm.\nAB = 3 + 2 = 5 cm. Theo hệ quả: MN/BC = AM/AB = 3/5.\n⇒ MN = 10·3/5 = 6 cm."
+    },
+    "terms": [
+      ["Thales's theorem (intercept theorem)", "định lí Thalès"],
+      ["midsegment of a triangle", "đường trung bình của tam giác"],
+      ["ratio", "tỉ số"],
+      ["parallel", "song song"],
+      ["angle bisector", "đường phân giác"]
+    ],
+    "quiz": [
+      {
+        "q": "Tam giác ABC có MN ∥ BC (M ∈ AB, N ∈ AC), AM = 2 cm, AB = 6 cm, AC = 9 cm. Độ dài AN là?",
+        "opts": ["4,5 cm", "6 cm", "3 cm", "2 cm"],
+        "a": 2,
+        "why": "AN/AC = AM/AB = 2/6 = 1/3 ⇒ AN = 9 : 3 = 3 cm."
+      },
+      {
+        "q": "M, N là trung điểm của AB, AC; BC = 14 cm. Độ dài MN là?",
+        "opts": ["3,5 cm", "7 cm", "14 cm", "28 cm"],
+        "a": 1,
+        "why": "MN là đường trung bình nên MN = BC/2 = 14 : 2 = 7 cm."
+      },
+      {
+        "q": "M ∈ AB, N ∈ AC với AM = 4 cm, MB = 6 cm, AN = 6 cm, NC = 9 cm. Kết luận nào đúng?",
+        "opts": ["MN ⊥ BC", "MN = BC", "Không đủ dữ kiện", "MN ∥ BC"],
+        "a": 3,
+        "why": "AM/MB = 4/6 = 2/3 và AN/NC = 6/9 = 2/3 bằng nhau, theo định lí Thalès đảo thì MN ∥ BC."
+      },
+      {
+        "q": "Tam giác ABC có AB = 6 cm, AC = 9 cm, BC = 10 cm, AD là phân giác (D ∈ BC). Độ dài DB là?",
+        "opts": ["4 cm", "5 cm", "6 cm", "3 cm"],
+        "a": 0,
+        "why": "DB/DC = AB/AC = 6/9 = 2/3 nên DB = 10·2/(2 + 3) = 4 cm."
+      }
+    ]
+  },
+  {
+    "id": "m8-05",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Phương trình và hàm số bậc nhất",
+    "title": "Phương trình bậc nhất một ẩn",
+    "sum": "Phương trình bậc nhất một ẩn có dạng ax + b = 0 (a ≠ 0) và có nghiệm duy nhất x = −b/a. Dùng quy tắc chuyển vế và quy tắc nhân để giải, rồi áp dụng vào bài toán thực tế.",
+    "points": [
+      "Phương trình bậc nhất một ẩn có dạng ax + b = 0, với a, b là số đã biết và a ≠ 0.",
+      "Phương trình ax + b = 0 (a ≠ 0) luôn có đúng một nghiệm x = −b/a.",
+      "Quy tắc chuyển vế: chuyển một hạng tử sang vế kia thì phải đổi dấu hạng tử đó.",
+      "Quy tắc nhân: nhân (hoặc chia) cả hai vế với cùng một số khác 0.",
+      "Giải toán bằng lập phương trình: chọn ẩn và điều kiện → lập phương trình → giải → đối chiếu, trả lời."
+    ],
+    "formulas": [
+      "ax + b = 0 (a ≠ 0) ⇔ ax = −b ⇔ x = −b/a"
+    ],
+    "viz": { "type": "linear" },
+    "vizNote": "Nghiệm của ax + b = 0 là hoành độ giao điểm của đường thẳng y = ax + b với trục Ox; kéo a, b để thấy điểm đó luôn ở x = −b/a.",
+    "memo": "“Qua cầu đổi áo”: hạng tử sang vế bên kia thì đổi dấu. Nhân hay chia hai vế: cùng một số, và số đó khác 0.",
+    "example": {
+      "q": "a) Giải phương trình 3(x − 2) + 5 = x + 7.\nb) Một hình chữ nhật có chu vi 50 m, chiều dài hơn chiều rộng 5 m. Tính các kích thước.",
+      "a": "a) 3x − 6 + 5 = x + 7 ⇔ 3x − 1 = x + 7 ⇔ 3x − x = 7 + 1 ⇔ 2x = 8 ⇔ x = 4.\nThử lại: 3·2 + 5 = 11 và 4 + 7 = 11 ✓.\nb) Gọi chiều rộng là x (m), x > 0; chiều dài là x + 5.\n2(x + x + 5) = 50 ⇔ 4x + 10 = 50 ⇔ x = 10.\nVậy chiều rộng 10 m, chiều dài 15 m."
+    },
+    "terms": [
+      ["linear equation in one variable", "phương trình bậc nhất một ẩn"],
+      ["solution (root)", "nghiệm"],
+      ["unknown", "ẩn"],
+      ["side of an equation", "vế của phương trình"]
+    ],
+    "quiz": [
+      {
+        "q": "Phương trình nào là phương trình bậc nhất một ẩn?",
+        "opts": ["0x + 3 = 0", "x² − 1 = 0", "2x − 5 = 0", "1/x + 2 = 0"],
+        "a": 2,
+        "why": "2x − 5 = 0 có dạng ax + b = 0 với a = 2 ≠ 0. Phương trình 0x + 3 = 0 có a = 0 nên không phải."
+      },
+      {
+        "q": "Nghiệm của phương trình 5x + 15 = 0 là?",
+        "opts": ["x = −3", "x = 3", "x = 1/3", "x = −15"],
+        "a": 0,
+        "why": "5x = −15 ⇒ x = −15 : 5 = −3."
+      },
+      {
+        "q": "Giải phương trình 2(x + 3) = x − 4.",
+        "opts": ["x = 10", "x = −2", "x = 2", "x = −10"],
+        "a": 3,
+        "why": "2x + 6 = x − 4 ⇔ 2x − x = −4 − 6 ⇔ x = −10."
+      },
+      {
+        "q": "Tổng hai số là 48, số lớn gấp 3 lần số bé. Số bé là bao nhiêu?",
+        "opts": ["16", "12", "36", "24"],
+        "a": 1,
+        "why": "Gọi số bé là x thì số lớn là 3x: x + 3x = 48 ⇔ 4x = 48 ⇔ x = 12."
+      }
+    ]
+  },
+  {
+    "id": "m8-06",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Phương trình và hàm số bậc nhất",
+    "title": "Hàm số bậc nhất y = ax + b và đồ thị",
+    "sum": "Hàm số bậc nhất y = ax + b (a ≠ 0) có đồ thị là một đường thẳng. Hệ số góc a cho biết độ nghiêng, còn b cho biết điểm cắt trục tung.",
+    "points": [
+      "Hàm số bậc nhất có dạng y = ax + b, trong đó a ≠ 0.",
+      "Đồ thị là một đường thẳng, cắt trục tung tại điểm (0; b).",
+      "Vẽ đồ thị: lấy hai điểm, thường là (0; b) và (−b/a; 0), rồi kẻ đường thẳng qua chúng.",
+      "a là hệ số góc: a > 0 thì góc tạo với Ox là góc nhọn; a < 0 thì là góc tù.",
+      "Hai đường y = ax + b và y = a'x + b': song song khi a = a', b ≠ b'; cắt nhau khi a ≠ a'."
+    ],
+    "formulas": [
+      "y = ax + b (a ≠ 0)",
+      "Cắt Oy tại (0; b), cắt Ox tại (−b/a; 0)",
+      "d ∥ d' ⇔ a = a' và b ≠ b'; d ≡ d' ⇔ a = a' và b = b'",
+      "d cắt d' ⇔ a ≠ a'"
+    ],
+    "viz": { "type": "linear" },
+    "vizNote": "Kéo a: đường thẳng xoay (a > 0 đi lên, a < 0 đi xuống từ trái sang phải); kéo b: đường thẳng dịch lên xuống, luôn cắt Oy tại (0; b).",
+    "memo": "“a là độ dốc, b là chỗ xuất phát”: a quyết định nghiêng thế nào, b quyết định cắt trục tung ở đâu. Cùng a, khác b ⇒ song song.",
+    "example": {
+      "q": "a) Vẽ đồ thị hàm số y = 2x − 4.\nb) Tìm đường thẳng song song với nó và đi qua điểm A(1; 5).",
+      "a": "a) x = 0 ⇒ y = −4: điểm (0; −4). y = 0 ⇒ 2x = 4 ⇒ x = 2: điểm (2; 0).\nKẻ đường thẳng qua hai điểm. Hệ số góc 2 > 0 nên tạo với Ox góc nhọn.\nb) Song song ⇒ cùng a = 2: y = 2x + b (b ≠ −4).\nQua A(1; 5): 5 = 2·1 + b ⇒ b = 3. Vậy y = 2x + 3."
+    },
+    "terms": [
+      ["linear function", "hàm số bậc nhất"],
+      ["graph", "đồ thị"],
+      ["slope", "hệ số góc"],
+      ["y-intercept", "giao điểm với trục tung"],
+      ["coordinate plane", "mặt phẳng tọa độ"]
+    ],
+    "quiz": [
+      {
+        "q": "Hệ số góc của đường thẳng y = 3 − 2x là?",
+        "opts": ["3", "2", "−3", "−2"],
+        "a": 3,
+        "why": "Viết lại y = −2x + 3, hệ số của x là a = −2."
+      },
+      {
+        "q": "y = (m − 1)x + 3 là hàm số bậc nhất khi nào?",
+        "opts": ["m ≠ 1", "m = 1", "m > 1", "m ≠ 0"],
+        "a": 0,
+        "why": "Cần hệ số a = m − 1 ≠ 0, tức là m ≠ 1."
+      },
+      {
+        "q": "Đường thẳng nào song song với đường thẳng y = 3x − 1?",
+        "opts": ["y = −3x − 1", "y = 3x + 2", "y = 3x − 1", "y = x + 3"],
+        "a": 1,
+        "why": "Song song khi cùng a = 3 và khác b: y = 3x + 2. Còn y = 3x − 1 thì trùng nhau."
+      },
+      {
+        "q": "Đồ thị hàm số y = −x + 4 cắt trục hoành tại điểm nào?",
+        "opts": ["(0; 4)", "(−4; 0)", "(4; 0)", "(0; −4)"],
+        "a": 2,
+        "why": "Cho y = 0: −x + 4 = 0 ⇒ x = 4, nên giao điểm là (4; 0)."
+      }
+    ]
+  },
+  {
+    "id": "m8-07",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Xác suất của biến cố",
+    "title": "Xác suất của biến cố và xác suất thực nghiệm",
+    "sum": "Khi các kết quả đồng khả năng, xác suất của biến cố bằng tỉ số giữa số kết quả thuận lợi và số kết quả có thể. Thử càng nhiều lần, xác suất thực nghiệm càng gần xác suất đó.",
+    "points": [
+      "Kết quả thuận lợi cho biến cố A là kết quả làm cho A xảy ra.",
+      "Nếu các kết quả đồng khả năng: P(A) = số kết quả thuận lợi cho A : số kết quả có thể.",
+      "0 ≤ P(A) ≤ 1; biến cố chắc chắn có xác suất 1, biến cố không thể có xác suất 0.",
+      "Xác suất thực nghiệm của A = số lần A xảy ra : tổng số lần thực hiện.",
+      "Số lần thử càng lớn, xác suất thực nghiệm càng gần P(A), nên dùng nó để ước lượng xác suất."
+    ],
+    "formulas": [
+      "P(A) = số kết quả thuận lợi cho A / số kết quả có thể",
+      "Xác suất thực nghiệm = k/n (A xảy ra k lần trong n lần thử)",
+      "0 ≤ P(A) ≤ 1"
+    ],
+    "viz": { "type": "dice" },
+    "vizNote": "Tăng số lần gieo n: tỉ lệ xuất hiện của mỗi mặt dao động mạnh khi n nhỏ, rồi tiến dần về 1/6 ≈ 0,167 khi n lớn.",
+    "memo": "Xác suất = “phần được chia cho phần có thể”. Thử càng nhiều, thực nghiệm càng gần lí thuyết.",
+    "example": {
+      "q": "Hộp có 3 bi đỏ, 5 bi xanh, 2 bi vàng cùng kích cỡ. Lấy ngẫu nhiên 1 bi.\na) Tính xác suất lấy được bi đỏ.\nb) Lấy 200 lần (mỗi lần trả bi lại), dự đoán khoảng bao nhiêu lần ra bi đỏ?",
+      "a": "a) Có 3 + 5 + 2 = 10 kết quả đồng khả năng, 3 kết quả thuận lợi.\nP(đỏ) = 3/10 = 0,3.\nb) Xác suất thực nghiệm sẽ gần 0,3 nên số lần ra bi đỏ khoảng 200·0,3 = 60 lần."
+    },
+    "terms": [
+      ["probability", "xác suất"],
+      ["event", "biến cố"],
+      ["favourable outcome", "kết quả thuận lợi"],
+      ["equally likely", "đồng khả năng"],
+      ["experimental probability", "xác suất thực nghiệm"]
+    ],
+    "quiz": [
+      {
+        "q": "Gieo một con xúc xắc cân đối. Xác suất xuất hiện mặt có số chấm chẵn là?",
+        "opts": ["1/6", "1/3", "1/2", "2/3"],
+        "a": 2,
+        "why": "Có 6 kết quả, 3 kết quả thuận lợi (2, 4, 6): P = 3/6 = 1/2."
+      },
+      {
+        "q": "Rút ngẫu nhiên 1 thẻ từ 20 thẻ ghi số 1 đến 20. Xác suất rút được số chia hết cho 3 là?",
+        "opts": ["1/3", "3/10", "1/4", "7/20"],
+        "a": 1,
+        "why": "Các số 3, 6, 9, 12, 15, 18 (6 số): P = 6/20 = 3/10."
+      },
+      {
+        "q": "Tung đồng xu 50 lần thấy mặt sấp 22 lần. Xác suất thực nghiệm của mặt ngửa là?",
+        "opts": ["0,44", "0,5", "0,28", "0,56"],
+        "a": 3,
+        "why": "Mặt ngửa xuất hiện 50 − 22 = 28 lần: 28/50 = 0,56."
+      },
+      {
+        "q": "Kiểm tra 500 sản phẩm thấy 10 sản phẩm lỗi. Ước lượng số sản phẩm lỗi trong lô 2 000 sản phẩm.",
+        "opts": ["40", "20", "100", "200"],
+        "a": 0,
+        "why": "Xác suất thực nghiệm 10/500 = 0,02, nên ước lượng 2 000·0,02 = 40 sản phẩm lỗi."
+      }
+    ]
+  },
+  {
+    "id": "m8-08",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Tam giác đồng dạng",
+    "title": "Tam giác đồng dạng và các trường hợp đồng dạng",
+    "sum": "Hai tam giác đồng dạng có các góc tương ứng bằng nhau và các cạnh tương ứng tỉ lệ. Ba trường hợp nhận biết: cạnh – cạnh – cạnh, cạnh – góc – cạnh, góc – góc.",
+    "points": [
+      "ΔA'B'C' ∽ ΔABC khi các góc tương ứng bằng nhau và các cạnh tương ứng tỉ lệ, với tỉ số đồng dạng k.",
+      "Nếu MN ∥ BC (M ∈ AB, N ∈ AC) thì ΔAMN ∽ ΔABC.",
+      "Trường hợp cạnh – cạnh – cạnh (c.c.c): ba cạnh tương ứng tỉ lệ.",
+      "Trường hợp cạnh – góc – cạnh (c.g.c): hai cạnh tương ứng tỉ lệ và góc xen giữa bằng nhau.",
+      "Trường hợp góc – góc (g.g): có hai góc tương ứng bằng nhau.",
+      "Hai tam giác vuông đồng dạng nếu có một góc nhọn bằng nhau, hoặc hai cạnh góc vuông tương ứng tỉ lệ."
+    ],
+    "formulas": [
+      "A'B'/AB = B'C'/BC = C'A'/CA = k",
+      "∠A' = ∠A, ∠B' = ∠B, ∠C' = ∠C",
+      "Chu vi ΔA'B'C' : chu vi ΔABC = k"
+    ],
+    "viz": { "type": "thales" },
+    "vizNote": "Kéo MN (song song với BC): tam giác AMN luôn đồng dạng với ABC, tỉ số đồng dạng k = AM/AB thay đổi theo vị trí MN.",
+    "memo": "Đồng dạng nghĩa là “cùng hình, khác cỡ”. Viết đúng thứ tự đỉnh: ΔABC ∽ ΔDEF ⇒ A↔D, B↔E, C↔F. Cách nhanh nhất: tìm hai góc bằng nhau (g.g).",
+    "example": {
+      "q": "ΔABC có AB = 4 cm, AC = 6 cm, BC = 8 cm; ΔDEF có DE = 6 cm, DF = 9 cm, EF = 12 cm. Hai tam giác có đồng dạng không? Tính tỉ số chu vi.",
+      "a": "DE/AB = 6/4 = 1,5; DF/AC = 9/6 = 1,5; EF/BC = 12/8 = 1,5.\nBa cạnh tương ứng tỉ lệ ⇒ ΔDEF ∽ ΔABC (c.c.c), k = 1,5.\nChu vi: ΔABC = 18 cm, ΔDEF = 27 cm; 27 : 18 = 1,5 = k."
+    },
+    "terms": [
+      ["similar triangles", "tam giác đồng dạng"],
+      ["scale factor (ratio of similarity)", "tỉ số đồng dạng"],
+      ["corresponding sides", "cạnh tương ứng"],
+      ["included angle", "góc xen giữa"]
+    ],
+    "quiz": [
+      {
+        "q": "ΔABC ∽ ΔMNP có AB = 4 cm, BC = 6 cm, MN = 6 cm. Độ dài NP là?",
+        "opts": ["4 cm", "8 cm", "9 cm", "12 cm"],
+        "a": 2,
+        "why": "NP/BC = MN/AB = 6/4 = 1,5 ⇒ NP = 6·1,5 = 9 cm."
+      },
+      {
+        "q": "ΔABC có ∠A = 50°, ∠B = 60°; ΔDEF có ∠D = 50°, ∠F = 70°. Khẳng định nào đúng?",
+        "opts": ["ΔABC ∽ ΔDEF", "ΔABC ∽ ΔDFE", "ΔABC ∽ ΔEDF", "Không đồng dạng"],
+        "a": 0,
+        "why": "∠C = 180° − 110° = 70° = ∠F và ∠A = ∠D, nên ΔABC ∽ ΔDEF (g.g), đỉnh B ứng với E."
+      },
+      {
+        "q": "ΔABC và ΔDEF có AB/DE = AC/DF. Cần thêm điều kiện nào để chúng đồng dạng theo trường hợp c.g.c?",
+        "opts": ["∠B = ∠E", "∠C = ∠F", "BC = EF", "∠A = ∠D"],
+        "a": 3,
+        "why": "Góc bằng nhau phải là góc xen giữa hai cạnh tỉ lệ: ∠A (giữa AB, AC) và ∠D (giữa DE, DF)."
+      },
+      {
+        "q": "Cọc cao 1,5 m có bóng dài 2 m. Cùng lúc đó, bóng của một cây dài 12 m. Cây cao bao nhiêu?",
+        "opts": ["8 m", "9 m", "16 m", "10,5 m"],
+        "a": 1,
+        "why": "Hai tam giác vuông đồng dạng (cùng góc nắng): h/12 = 1,5/2 ⇒ h = 12·0,75 = 9 m."
+      }
+    ]
+  },
+  {
+    "id": "m8-09",
+    "subj": "math",
+    "grade": 8,
+    "chap": "Tam giác đồng dạng",
+    "title": "Định lí Pythagore và ứng dụng",
+    "sum": "Trong tam giác vuông, bình phương cạnh huyền bằng tổng bình phương hai cạnh góc vuông. Định lí đảo dùng để nhận biết tam giác vuông.",
+    "points": [
+      "Trong tam giác vuông, bình phương cạnh huyền bằng tổng bình phương hai cạnh góc vuông.",
+      "Định lí Pythagore đảo: nếu BC² = AB² + AC² thì tam giác ABC vuông tại A.",
+      "Cạnh huyền đối diện góc vuông và là cạnh dài nhất.",
+      "Biết hai cạnh thì tính được cạnh thứ ba: c = √(a² + b²), a = √(c² − b²).",
+      "Bộ ba quen thuộc: (3; 4; 5), (5; 12; 13), (8; 15; 17) và các bội như (6; 8; 10).",
+      "Ứng dụng: tính đường chéo hình chữ nhật, chiều cao thang dựa tường, khoảng cách hai điểm."
+    ],
+    "formulas": [
+      "ΔABC vuông tại A ⇒ BC² = AB² + AC²",
+      "BC² = AB² + AC² ⇒ ΔABC vuông tại A",
+      "Đường chéo hình chữ nhật: d = √(a² + b²)",
+      "Đường chéo hình vuông cạnh a: d = a√2"
+    ],
+    "viz": { "type": "pythagoras" },
+    "vizNote": "Kéo a, b: diện tích hình vuông dựng trên cạnh huyền luôn bằng tổng diện tích hai hình vuông dựng trên hai cạnh góc vuông.",
+    "memo": "“Huyền bình bằng tổng hai bình”. Thuộc bộ 3 – 4 – 5 (và các bội 6 – 8 – 10, 9 – 12 – 15) để nhẩm nhanh.",
+    "example": {
+      "q": "Một cái thang dài 5 m dựa vào tường, chân thang cách chân tường 1,4 m. Đầu thang chạm tường ở độ cao bao nhiêu?",
+      "a": "Thang, tường và mặt đất tạo thành tam giác vuông với cạnh huyền là thang (5 m).\nh² = 5² − 1,4² = 25 − 1,96 = 23,04.\nh = √23,04 = 4,8 m."
+    },
+    "terms": [
+      ["Pythagorean theorem", "định lí Pythagore"],
+      ["hypotenuse", "cạnh huyền"],
+      ["leg (of a right triangle)", "cạnh góc vuông"],
+      ["right triangle", "tam giác vuông"],
+      ["converse", "định lí đảo"]
+    ],
+    "quiz": [
+      {
+        "q": "Tam giác vuông có hai cạnh góc vuông 9 cm và 12 cm. Cạnh huyền dài bao nhiêu?",
+        "opts": ["13 cm", "15 cm", "21 cm", "17 cm"],
+        "a": 1,
+        "why": "9² + 12² = 81 + 144 = 225 = 15², nên cạnh huyền là 15 cm."
+      },
+      {
+        "q": "Bộ ba độ dài nào là ba cạnh của một tam giác vuông?",
+        "opts": ["4 cm, 5 cm, 6 cm", "6 cm, 7 cm, 9 cm", "5 cm, 11 cm, 12 cm", "7 cm, 24 cm, 25 cm"],
+        "a": 3,
+        "why": "7² + 24² = 49 + 576 = 625 = 25². Các bộ khác: 41 ≠ 36, 85 ≠ 81, 146 ≠ 144."
+      },
+      {
+        "q": "Tam giác vuông có cạnh huyền 13 cm, một cạnh góc vuông 5 cm. Cạnh góc vuông còn lại là?",
+        "opts": ["12 cm", "8 cm", "18 cm", "√194 cm"],
+        "a": 0,
+        "why": "13² − 5² = 169 − 25 = 144 = 12². Lưu ý: lấy hiệu, không lấy tổng các bình phương."
+      },
+      {
+        "q": "Hình chữ nhật có hai cạnh 20 cm và 21 cm. Đường chéo dài bao nhiêu?",
+        "opts": ["25 cm", "41 cm", "29 cm", "31 cm"],
+        "a": 2,
+        "why": "d² = 20² + 21² = 400 + 441 = 841 = 29², nên d = 29 cm."
+      }
+    ]
+  }
+]

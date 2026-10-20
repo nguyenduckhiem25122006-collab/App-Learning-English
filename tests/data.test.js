@@ -62,3 +62,26 @@ test("IPA: 44 unique sounds with examples, pairs and path coverage", () => {
   assert.deepEqual(new Set(inPath), syms);
   assert.equal(inPath.length, 44);
 });
+
+test("Toán & Vật lí: lessons for grades 7–9, every visual draws, quizzes are well formed", () => {
+  const Stem = require("../src/stem.js");
+  const L = D.stem;
+  for (const subj of ["math", "phys"]) for (const g of [7, 8, 9]) assert.ok(L.filter((l) => l.subj === subj && l.grade === g).length >= 8, `${subj} ${g}`);
+  assert.equal(new Set(L.map((l) => l.id)).size, L.length);
+  for (const l of L) {
+    assert.ok(Stem.TYPES.includes(l.viz.type), `${l.id}: ${l.viz.type}`);
+    for (const c of Stem.ctrls(l.viz)) for (const v of [c.min, c.max]) {
+      const r = Stem.draw(l.viz, { ...Stem.init(l.viz), [c.k]: v });
+      assert.ok(r.svg.startsWith("<svg") && !/NaN|undefined/.test(r.svg + r.info), `${l.id} ${c.k}=${v}`);
+    }
+    assert.equal(l.quiz.length, 4, l.id);
+    for (const q of l.quiz) assert.ok(q.a >= 0 && q.a < q.opts.length && new Set(q.opts).size === q.opts.length, `${l.id}: ${q.q}`);
+    assert.ok(l.points.length >= 3 && l.terms.length >= 2 && l.example.q && l.example.a && l.memo, l.id);
+  }
+  // Spirit beasts ask for at most as many lessons as there are.
+  const F = require("../src/farm.js");
+  for (const b of F.BEASTS) {
+    assert.ok((b.learn.math || 0) <= L.filter((l) => l.subj === "math").length, b.id);
+    assert.ok((b.learn.phys || 0) <= L.filter((l) => l.subj === "phys").length, b.id);
+  }
+});
