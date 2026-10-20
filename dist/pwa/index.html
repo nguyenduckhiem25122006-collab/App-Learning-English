@@ -129,7 +129,8 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .55 }
 .qopt span { font-weight: 700; color: var(--muted); width: 1.1em }
 .qblock input[type=text] { width: 100% }
 .list .emo { font-size: 1.5rem; width: 1.6em; text-align: center }
-.pk-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)) }
+.pk-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)) }
+@media (max-width: 640px) { .pk-grid { grid-template-columns: minmax(0, 1fr) } }
 .pk-card h3 { margin: 0 }
 input[type=range] { accent-color: var(--action); width: 100% }
 
