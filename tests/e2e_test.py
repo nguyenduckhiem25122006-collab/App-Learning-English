@@ -64,8 +64,11 @@ def main():
         # 1. Shell
         check("app renders Today", page.locator("h1").first.inner_text().startswith("Hôm nay"))
         check("two level buttons", page.locator("[data-level]").count() == 2)
-        check("TOEIC is default level", page.get_attribute("#lv-toeic", "aria-pressed") == "true")
-        for tab in ["words", "sent", "ipa", "stem", "rank", "me", "today"]:
+        check("TOEIC is default level", page.get_attribute("#lv-toeic", "aria-pressed") == "true" and "TOEIC" in page.inner_text("#subj-en"))
+        ys = [page.locator(f"#subj-{k}").bounding_box()["y"] for k in ("en", "math", "phys")]
+        check("Tiếng Anh, Toán and Vật lí buttons sit side by side; level choices live inside Tiếng Anh",
+              max(ys) - min(ys) < 2 and page.get_attribute("#subj-en", "aria-pressed") == "true" and not page.locator("#lv-kids").is_visible())
+        for tab in ["words", "sent", "ipa", "rank", "me", "today"]:
             page.click(f"[data-tab={tab}]")
             check(f"tab {tab} renders", page.locator("#view h1").count() >= 1)
 
@@ -76,10 +79,14 @@ def main():
         page.click("[data-step=perday][data-d='-1']")
 
         # 3. Level switch
+        page.click("#subj-en")
+        check("Tiếng Anh opens its level menu", page.locator("#lv-kids").is_visible() and page.locator("#lv-toeic").is_visible())
         page.click("#lv-kids")
+        check("menu closes after choosing", not page.locator("#lv-kids").is_visible() and "Lớp 7" in page.inner_text("#subj-en"))
         check("switch to Lớp 7", page.get_attribute("#lv-kids", "aria-pressed") == "true" and "Lớp 7" in page.inner_text("main"))
 
-        page.click("[data-tab=stem]")
+        page.click("#subj-math")
+        check("Toán button opens the maths screen", page.get_attribute("#subj-math", "aria-pressed") == "true" and page.get_attribute("#subj-en", "aria-pressed") == "false")
         check("Toán & Vật lí is locked until 5 new words today", page.locator("[data-stemlock]").count() == 1 and page.locator("[data-stemopen]").count() == 0)
 
         # 4. Learn 5 kids words → quiz
@@ -110,11 +117,12 @@ def main():
         check("streak started", s.get("streak", {}).get("count") == 1)
 
         # 4b. Toán & Vật lí opens after 5 new words: lessons, an interactive visual, a quiz that completes the lesson
-        page.click("[data-tab=stem]")
+        page.click("#subj-math")
         check("5 new words unlock Toán & Vật lí", page.locator("[data-stemlock]").count() == 0 and page.locator("[data-stemopen]").count() >= 8)
         page.click("[data-stemgrade='8']")
         check("grade filter shows grade 8 lessons", page.locator("[data-stemopen^=m8]").count() >= 8 and page.locator("[data-stemopen^=m7]").count() == 0)
-        page.click("[data-stemsubj=phys]"); page.click("[data-stemgrade='9']")
+        page.click("#subj-phys"); page.click("[data-stemgrade='9']")
+        check("Vật lí button shows physics lessons", page.get_attribute("#subj-phys", "aria-pressed") == "true" and page.locator("[data-stemopen^=p9]").count() >= 8)
         page.click("[data-stemopen=p9-06]")
         svg0 = page.inner_html("[data-vizbox=p9-06]")
         page.locator("[data-vizk=U]").fill("12")
@@ -129,7 +137,9 @@ def main():
         check("4/4 right completes the lesson (+15 XP)", "p9-06" in s["stem"]["done"] and s["xp"] == xp0 + 15 and "hoàn thành" in page.inner_text("main"))
         page.click("[data-stemback]")
         check("completed lesson is ticked in the list", page.locator("[data-stemopen=p9-06].done").count() == 1)
-        page.click("[data-stemsubj=math]"); page.click("[data-stemgrade='7']")
+        page.click("#subj-math"); page.click("[data-stemgrade='7']")
+        page.click("#subj-en")
+        check("Tiếng Anh brings you back to English", page.get_attribute("#subj-en", "aria-pressed") == "true" and page.locator("[data-stemgrade]").count() == 0)
 
         # 5. Persistence + review: make one word due yesterday, reload, review it
         other = ctx.new_page()  # a second tab edits the store; the first tab must not clobber it
@@ -312,9 +322,14 @@ def main():
             merr = []
             mp.on("pageerror", lambda e: merr.append(str(e)))
             mp.goto(url, wait_until="networkidle")
-            for tab in ["today", "words", "sent", "ipa", "stem", "rank", "me"]:
+            for tab in ["today", "words", "sent", "ipa", "rank", "me"]:
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
+            ys = [mp.locator(f"#subj-{k}").bounding_box()["y"] for k in ("en", "math", "phys")]
+            mp.click("#subj-phys")
+            check(f"{scheme} 390px: subject buttons on one row, Vật lí screen fits", max(ys) - min(ys) < 2 and no_hscroll(mp))
+            if scheme == "light": mp.screenshot(path=str(SHOTS / "mobile-subjects.png"))
+            mp.click("#subj-en")
             mp.click("#farm-btn")
             check(f"{scheme} 390px no h-scroll: farm locked", no_hscroll(mp) and mp.locator("[data-lock]").count() == 1)
             mp.screenshot(path=str(SHOTS / f"mobile-{scheme}-farm-locked.png"))

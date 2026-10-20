@@ -50,9 +50,20 @@ p { margin: 0 }
 .brand { display: flex; align-items: baseline; gap: 8px; margin-right: auto }
 .brand b { font: 700 1.25rem var(--f-display); letter-spacing: -.01em }
 .brand b span { background: linear-gradient(transparent 58%, var(--hl-swipe) 58%, var(--hl-swipe) 92%, transparent 92%); padding: 0 .06em }
-.levels { display: inline-flex; background: var(--chip); border-radius: 999px; padding: 3px }
-.levels button { border: 0; background: transparent; padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--muted) }
-.levels button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow) }
+/* Subject switch: Tiếng Anh (with its level menu), Toán, Vật lí side by side */
+.subjects { display: inline-flex; align-items: center; background: var(--chip); border-radius: 999px; padding: 3px; gap: 2px }
+.subjects button[data-subject] { border: 0; background: transparent; padding: 6px 13px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--muted); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px }
+.subjects button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow) }
+.subjects small { font-size: .72rem; font-weight: 700; color: var(--action); background: color-mix(in srgb, var(--action) 12%, transparent); border-radius: 999px; padding: 1px 7px }
+.subjects .caret { font-size: .7rem; opacity: .7 }
+.subj-en { position: relative }
+.lvmenu { position: absolute; top: calc(100% + 8px); left: 0; z-index: 40; display: grid; gap: 4px; min-width: 170px; padding: 6px; border-radius: 14px; background: var(--card); border: 1px solid var(--rule); box-shadow: var(--shadow) }
+.lvmenu[hidden] { display: none }
+.lvmenu button { border: 0; background: transparent; text-align: left; padding: 9px 12px; border-radius: 10px; font-weight: 600; color: var(--ink) }
+.lvmenu button:hover { background: var(--chip) }
+.lvmenu button[aria-pressed="true"] { background: color-mix(in srgb, var(--action) 14%, transparent); color: var(--action) }
+.lvmenu button[aria-pressed="true"]::after { content: " ✓" }
+@media (max-width: 420px) { .subjects button[data-subject] { padding: 6px 9px; font-size: .84rem } .subjects small { display: none } }
 .streak { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .9rem }
 .tabs { max-width: 980px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
   padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
@@ -570,10 +581,17 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 
 <header class="top">
   <div class="top-in">
-    <div class="brand"><b><span>Nhịp</span></b><span class="muted small">Học tiếng Anh mỗi ngày</span></div>
-    <div class="levels" role="group" aria-label="Chọn level">
-      <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
-      <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
+    <div class="brand"><b><span>Nhịp</span></b><span class="muted small">Học mỗi ngày</span></div>
+    <div class="subjects" role="group" aria-label="Chọn môn học">
+      <div class="subj-en">
+        <button type="button" id="subj-en" data-subject="en" aria-pressed="true" aria-haspopup="true" aria-expanded="false"><span aria-hidden="true">🔤</span> Tiếng Anh <small id="lv-label"></small><span class="caret" aria-hidden="true">▾</span></button>
+        <div class="lvmenu" id="lvmenu" role="group" aria-label="Chọn trình độ tiếng Anh" hidden>
+          <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
+          <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
+        </div>
+      </div>
+      <button type="button" id="subj-math" data-subject="math" aria-pressed="false"><span aria-hidden="true">📐</span> Toán</button>
+      <button type="button" id="subj-phys" data-subject="phys" aria-pressed="false"><span aria-hidden="true">🔭</span> Vật lí</button>
     </div>
     <button type="button" class="farm-btn" id="farm-btn" data-farm aria-pressed="false"><span aria-hidden="true">🌾</span> Nông trại <b class="num" id="coins"></b></button>
     <div class="streak" id="streak" aria-live="polite"></div>
@@ -2049,13 +2067,18 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const pic = (w, cls) => picHTML(PICS[w.key] || {}, w.emo, cls);
 
   // ---------- Shell ----------
-  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["stem", "Toán·Lí"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
+  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
+  const EN_TABS = new Set(["today", "words", "sent", "ipa"]);
+  /** Which subject button is lit: English unless the Toán / Vật lí screen is open. */
+  const subjectNow = () => (U.tab === "stem" ? U.stemSubj : U.tab === "farm" ? "" : "en");
   function renderTabs() {
     $("#tabs").innerHTML = TABS.map(([id, label]) =>
       `<button type="button" data-tab="${id}"${U.tab === id ? ' aria-current="page"' : ""}>${I[id]}<span>${label}</span></button>`).join("");
   }
   function renderHeader() {
     document.querySelectorAll("[data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === S.level)));
+    document.querySelectorAll("[data-subject]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.subject === subjectNow())));
+    $("#lv-label").textContent = LEVELS[S.level];
     const st = C.liveStreak(S.streak, today());
     farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
@@ -2074,7 +2097,8 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (U.tab === "farm") { startFarmer(); startMapTraffic(); }
     const sp = $("#spell-in"); if (sp) sp.focus({ preventScroll: true });
   }
-  function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
+  function lvMenu(open) { const m = $("#lvmenu"); m.hidden = !open; $("#subj-en").setAttribute("aria-expanded", String(open)); }
+  function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); if (EN_TABS.has(tab)) U.enTab = tab; U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
   /** Farm full screen: hide the app header/tabs, and use the browser's full screen where it is allowed. */
   function setFarmFull(on, quiet) {
     U.farmFull = on;
@@ -2554,8 +2578,9 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const stemDone = (subj) => STEM.filter((l) => (!subj || l.subj === subj) && S.stem.done[l.id]).length;
   function vStem() {
     const have = newWordsToday();
+    const name = U.stemSubj === "phys" ? "Vật lí" : "Toán";
     if (have < STEM_GATE) {
-      return `<section class="hello"><div><p class="label">Toán & Vật lí · lớp 7–9</p><h1>Toán & Vật lí</h1></div></section>
+      return `<section class="hello"><div><p class="label">${name} · lớp 7–9</p><h1>${SUBJ[U.stemSubj]}</h1></div></section>
         <section class="panel stack lockcard" data-stemlock><h2>🔒 Học ${STEM_GATE} từ mới hôm nay để mở Toán & Vật lí</h2>
           <p class="big num">${have}<small style="font-size:1.1rem"> / ${STEM_GATE} từ mới</small></p>${bar(have / STEM_GATE)}
           <p class="muted">Mỗi ngày, học xong ${STEM_GATE} từ tiếng Anh mới là mở được ${STEM.filter((l) => l.subj === "math").length} bài Toán và ${STEM.filter((l) => l.subj === "phys").length} bài Vật lí lớp 7–9, có hình minh hoạ kéo thả trực quan.</p>
@@ -2564,9 +2589,8 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (U.stemOpen && STEM_BY[U.stemOpen]) return stemLesson(STEM_BY[U.stemOpen]);
     const subj = U.stemSubj, list = STEM.filter((l) => l.subj === subj && l.grade === U.stemGrade);
     const chaps = [...new Set(list.map((l) => l.chap))];
-    return `<section class="hello"><div><p class="label">Toán ${stemDone("math")}/${STEM.filter((l) => l.subj === "math").length} · Vật lí ${stemDone("phys")}/${STEM.filter((l) => l.subj === "phys").length} bài đã xong</p><h1>Toán & Vật lí</h1></div>
-        <div class="row"><div class="seg" role="group" aria-label="Môn">${Object.entries(SUBJ).map(([id, l]) => `<button type="button" data-stemsubj="${id}" aria-pressed="${subj === id}">${l}</button>`).join("")}</div>
-          <div class="seg" role="group" aria-label="Lớp">${[7, 8, 9].map((g) => `<button type="button" data-stemgrade="${g}" aria-pressed="${U.stemGrade === g}">Lớp ${g}</button>`).join("")}</div></div></section>
+    return `<section class="hello"><div><p class="label">${name} lớp 7–9 · ${stemDone(subj)}/${STEM.filter((l) => l.subj === subj).length} bài đã xong</p><h1>${SUBJ[subj]}</h1></div>
+        <div class="row"><div class="seg" role="group" aria-label="Lớp">${[7, 8, 9].map((g) => `<button type="button" data-stemgrade="${g}" aria-pressed="${U.stemGrade === g}">Lớp ${g}</button>`).join("")}</div></div></section>
       ${chaps.map((c) => `<section class="panel stack"><h2>${esc(c)}</h2><div class="stem-list">${list.filter((l) => l.chap === c).map((l) => {
         const done = S.stem.done[l.id];
         return `<button type="button" class="stem-item${done ? " done" : ""}" data-stemopen="${l.id}"><span class="si-ic" aria-hidden="true">${done ? "✓" : l.subj === "math" ? "📐" : "🔭"}</span>
@@ -3659,7 +3683,23 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   // ---------- Events ----------
   const H = {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
-    level: (v) => { if (S.level === v) return; S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); render(); },
+    level: (v) => {
+      lvMenu(false);
+      const toEnglish = !EN_TABS.has(U.tab) && U.tab !== "rank" && U.tab !== "me";
+      if (S.level === v && !toEnglish) return;
+      S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save();
+      if (toEnglish) go(U.enTab || "today"); else render();
+    },
+    subject: (v) => {
+      if (v === "en") {
+        if (subjectNow() === "en") lvMenu($("#lvmenu").hidden); // already in English: open / close the level menu
+        else { lvMenu(false); go(U.enTab || "today"); }
+        return;
+      }
+      lvMenu(false);
+      if (U.stemSubj !== v) U.stemOpen = null;
+      U.stemSubj = v; go("stem");
+    },
     go: (v) => {
       if (!$("#modal").hidden) closeModal();
       if (v.startsWith("stem-")) { U.stemSubj = v.slice(5); U.stemOpen = null; v = "stem"; }
@@ -3841,6 +3881,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
     if (e.target.id === "modal") { closeModal(); return; }
+    if (!$("#lvmenu").hidden && !e.target.closest(".subj-en")) lvMenu(false);
     const t = e.target.closest("button"); if (!t || t.disabled) return;
     for (const k in H) if (k in t.dataset) {
       if (FARM_ACTIONS.has(k) && !gateNow().open) { if (!$("#modal").hidden) closeModal(); toast("🔒 Nông trại đang khoá — học thêm để chơi nhé"); render(); return; }

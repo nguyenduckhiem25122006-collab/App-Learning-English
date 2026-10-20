@@ -241,13 +241,18 @@
   const pic = (w, cls) => picHTML(PICS[w.key] || {}, w.emo, cls);
 
   // ---------- Shell ----------
-  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["stem", "Toán·Lí"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
+  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
+  const EN_TABS = new Set(["today", "words", "sent", "ipa"]);
+  /** Which subject button is lit: English unless the Toán / Vật lí screen is open. */
+  const subjectNow = () => (U.tab === "stem" ? U.stemSubj : U.tab === "farm" ? "" : "en");
   function renderTabs() {
     $("#tabs").innerHTML = TABS.map(([id, label]) =>
       `<button type="button" data-tab="${id}"${U.tab === id ? ' aria-current="page"' : ""}>${I[id]}<span>${label}</span></button>`).join("");
   }
   function renderHeader() {
     document.querySelectorAll("[data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === S.level)));
+    document.querySelectorAll("[data-subject]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.subject === subjectNow())));
+    $("#lv-label").textContent = LEVELS[S.level];
     const st = C.liveStreak(S.streak, today());
     farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
@@ -266,7 +271,8 @@
     if (U.tab === "farm") { startFarmer(); startMapTraffic(); }
     const sp = $("#spell-in"); if (sp) sp.focus({ preventScroll: true });
   }
-  function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
+  function lvMenu(open) { const m = $("#lvmenu"); m.hidden = !open; $("#subj-en").setAttribute("aria-expanded", String(open)); }
+  function go(tab) { if (tab !== "farm" && U.farmFull) setFarmFull(false, true); if (EN_TABS.has(tab)) U.enTab = tab; U.tab = tab; U.reset = false; render(); scrollTo(0, 0); }
   /** Farm full screen: hide the app header/tabs, and use the browser's full screen where it is allowed. */
   function setFarmFull(on, quiet) {
     U.farmFull = on;
@@ -746,8 +752,9 @@
   const stemDone = (subj) => STEM.filter((l) => (!subj || l.subj === subj) && S.stem.done[l.id]).length;
   function vStem() {
     const have = newWordsToday();
+    const name = U.stemSubj === "phys" ? "Vật lí" : "Toán";
     if (have < STEM_GATE) {
-      return `<section class="hello"><div><p class="label">Toán & Vật lí · lớp 7–9</p><h1>Toán & Vật lí</h1></div></section>
+      return `<section class="hello"><div><p class="label">${name} · lớp 7–9</p><h1>${SUBJ[U.stemSubj]}</h1></div></section>
         <section class="panel stack lockcard" data-stemlock><h2>🔒 Học ${STEM_GATE} từ mới hôm nay để mở Toán & Vật lí</h2>
           <p class="big num">${have}<small style="font-size:1.1rem"> / ${STEM_GATE} từ mới</small></p>${bar(have / STEM_GATE)}
           <p class="muted">Mỗi ngày, học xong ${STEM_GATE} từ tiếng Anh mới là mở được ${STEM.filter((l) => l.subj === "math").length} bài Toán và ${STEM.filter((l) => l.subj === "phys").length} bài Vật lí lớp 7–9, có hình minh hoạ kéo thả trực quan.</p>
@@ -756,9 +763,8 @@
     if (U.stemOpen && STEM_BY[U.stemOpen]) return stemLesson(STEM_BY[U.stemOpen]);
     const subj = U.stemSubj, list = STEM.filter((l) => l.subj === subj && l.grade === U.stemGrade);
     const chaps = [...new Set(list.map((l) => l.chap))];
-    return `<section class="hello"><div><p class="label">Toán ${stemDone("math")}/${STEM.filter((l) => l.subj === "math").length} · Vật lí ${stemDone("phys")}/${STEM.filter((l) => l.subj === "phys").length} bài đã xong</p><h1>Toán & Vật lí</h1></div>
-        <div class="row"><div class="seg" role="group" aria-label="Môn">${Object.entries(SUBJ).map(([id, l]) => `<button type="button" data-stemsubj="${id}" aria-pressed="${subj === id}">${l}</button>`).join("")}</div>
-          <div class="seg" role="group" aria-label="Lớp">${[7, 8, 9].map((g) => `<button type="button" data-stemgrade="${g}" aria-pressed="${U.stemGrade === g}">Lớp ${g}</button>`).join("")}</div></div></section>
+    return `<section class="hello"><div><p class="label">${name} lớp 7–9 · ${stemDone(subj)}/${STEM.filter((l) => l.subj === subj).length} bài đã xong</p><h1>${SUBJ[subj]}</h1></div>
+        <div class="row"><div class="seg" role="group" aria-label="Lớp">${[7, 8, 9].map((g) => `<button type="button" data-stemgrade="${g}" aria-pressed="${U.stemGrade === g}">Lớp ${g}</button>`).join("")}</div></div></section>
       ${chaps.map((c) => `<section class="panel stack"><h2>${esc(c)}</h2><div class="stem-list">${list.filter((l) => l.chap === c).map((l) => {
         const done = S.stem.done[l.id];
         return `<button type="button" class="stem-item${done ? " done" : ""}" data-stemopen="${l.id}"><span class="si-ic" aria-hidden="true">${done ? "✓" : l.subj === "math" ? "📐" : "🔭"}</span>
@@ -1851,7 +1857,23 @@
   // ---------- Events ----------
   const H = {
     tab: (v) => { if (v === "words" && U.tab === "words") U.vocab = { mode: "home" }; go(v); },
-    level: (v) => { if (S.level === v) return; S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save(); render(); },
+    level: (v) => {
+      lvMenu(false);
+      const toEnglish = !EN_TABS.has(U.tab) && U.tab !== "rank" && U.tab !== "me";
+      if (S.level === v && !toEnglish) return;
+      S.level = v; U.vocab = { mode: "home" }; U.btopic = ""; save();
+      if (toEnglish) go(U.enTab || "today"); else render();
+    },
+    subject: (v) => {
+      if (v === "en") {
+        if (subjectNow() === "en") lvMenu($("#lvmenu").hidden); // already in English: open / close the level menu
+        else { lvMenu(false); go(U.enTab || "today"); }
+        return;
+      }
+      lvMenu(false);
+      if (U.stemSubj !== v) U.stemOpen = null;
+      U.stemSubj = v; go("stem");
+    },
     go: (v) => {
       if (!$("#modal").hidden) closeModal();
       if (v.startsWith("stem-")) { U.stemSubj = v.slice(5); U.stemOpen = null; v = "stem"; }
@@ -2033,6 +2055,7 @@
     "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
     if (e.target.id === "modal") { closeModal(); return; }
+    if (!$("#lvmenu").hidden && !e.target.closest(".subj-en")) lvMenu(false);
     const t = e.target.closest("button"); if (!t || t.disabled) return;
     for (const k in H) if (k in t.dataset) {
       if (FARM_ACTIONS.has(k) && !gateNow().open) { if (!$("#modal").hidden) closeModal(); toast("🔒 Nông trại đang khoá — học thêm để chơi nhé"); render(); return; }

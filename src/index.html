@@ -50,9 +50,20 @@ p { margin: 0 }
 .brand { display: flex; align-items: baseline; gap: 8px; margin-right: auto }
 .brand b { font: 700 1.25rem var(--f-display); letter-spacing: -.01em }
 .brand b span { background: linear-gradient(transparent 58%, var(--hl-swipe) 58%, var(--hl-swipe) 92%, transparent 92%); padding: 0 .06em }
-.levels { display: inline-flex; background: var(--chip); border-radius: 999px; padding: 3px }
-.levels button { border: 0; background: transparent; padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--muted) }
-.levels button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow) }
+/* Subject switch: Tiếng Anh (with its level menu), Toán, Vật lí side by side */
+.subjects { display: inline-flex; align-items: center; background: var(--chip); border-radius: 999px; padding: 3px; gap: 2px }
+.subjects button[data-subject] { border: 0; background: transparent; padding: 6px 13px; border-radius: 999px; font-weight: 600; font-size: .9rem; color: var(--muted); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px }
+.subjects button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow) }
+.subjects small { font-size: .72rem; font-weight: 700; color: var(--action); background: color-mix(in srgb, var(--action) 12%, transparent); border-radius: 999px; padding: 1px 7px }
+.subjects .caret { font-size: .7rem; opacity: .7 }
+.subj-en { position: relative }
+.lvmenu { position: absolute; top: calc(100% + 8px); left: 0; z-index: 40; display: grid; gap: 4px; min-width: 170px; padding: 6px; border-radius: 14px; background: var(--card); border: 1px solid var(--rule); box-shadow: var(--shadow) }
+.lvmenu[hidden] { display: none }
+.lvmenu button { border: 0; background: transparent; text-align: left; padding: 9px 12px; border-radius: 10px; font-weight: 600; color: var(--ink) }
+.lvmenu button:hover { background: var(--chip) }
+.lvmenu button[aria-pressed="true"] { background: color-mix(in srgb, var(--action) 14%, transparent); color: var(--action) }
+.lvmenu button[aria-pressed="true"]::after { content: " ✓" }
+@media (max-width: 420px) { .subjects button[data-subject] { padding: 6px 9px; font-size: .84rem } .subjects small { display: none } }
 .streak { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .9rem }
 .tabs { max-width: 980px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
   padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
@@ -570,10 +581,17 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 
 <header class="top">
   <div class="top-in">
-    <div class="brand"><b><span>Nhịp</span></b><span class="muted small">Học tiếng Anh mỗi ngày</span></div>
-    <div class="levels" role="group" aria-label="Chọn level">
-      <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
-      <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
+    <div class="brand"><b><span>Nhịp</span></b><span class="muted small">Học mỗi ngày</span></div>
+    <div class="subjects" role="group" aria-label="Chọn môn học">
+      <div class="subj-en">
+        <button type="button" id="subj-en" data-subject="en" aria-pressed="true" aria-haspopup="true" aria-expanded="false"><span aria-hidden="true">🔤</span> Tiếng Anh <small id="lv-label"></small><span class="caret" aria-hidden="true">▾</span></button>
+        <div class="lvmenu" id="lvmenu" role="group" aria-label="Chọn trình độ tiếng Anh" hidden>
+          <button type="button" id="lv-kids" data-level="kids">Lớp 7</button>
+          <button type="button" id="lv-toeic" data-level="toeic">TOEIC 750</button>
+        </div>
+      </div>
+      <button type="button" id="subj-math" data-subject="math" aria-pressed="false"><span aria-hidden="true">📐</span> Toán</button>
+      <button type="button" id="subj-phys" data-subject="phys" aria-pressed="false"><span aria-hidden="true">🔭</span> Vật lí</button>
     </div>
     <button type="button" class="farm-btn" id="farm-btn" data-farm aria-pressed="false"><span aria-hidden="true">🌾</span> Nông trại <b class="num" id="coins"></b></button>
     <div class="streak" id="streak" aria-live="polite"></div>
