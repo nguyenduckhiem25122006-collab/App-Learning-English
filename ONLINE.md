@@ -49,8 +49,26 @@ Mỗi người chọn **tên hiển thị** và **mã PIN 4–6 số**. Đổi m
 | Người lạ vào phá | Phải có mã lớp mới vào được; mỗi lớp tối đa 15 người; chỉ thành viên mới xem được bảng của lớp. |
 | Đoán PIN | PIN được mã hoá (bcrypt); sai 5 lần thì tên đó bị khoá 15 phút. |
 | Sửa điểm để gian lận | Máy chủ chỉ nhận 1 lần cập nhật / 20 giây mỗi người, XP chỉ được tăng theo tốc độ học thật, mọi số liệu bị giới hạn trong khoảng hợp lý. |
-| Đọc/ghi thẳng vào database | Bảng bị khoá hoàn toàn với bên ngoài; app chỉ gọi được 4 hàm đã kiểm tra dữ liệu. |
+| Đọc/ghi thẳng vào database | Bảng bị khoá hoàn toàn với bên ngoài; app chỉ gọi được 7 hàm đã kiểm tra dữ liệu. |
+| Học sinh sửa học liệu của lớp | Chỉ ai có mật khẩu giáo viên mới đăng được; sai 5 lần khoá 15 phút; mỗi lần đăng cách nhau ít nhất 5 giây. |
 | Màn hình bị lỗi | App hiện nút "Về trang Hôm nay" thay vì trắng trang; dữ liệu có bản sao lưu mỗi ngày trên máy. |
+
+## 5. Học liệu lớp (giống Quizlet): đặt mật khẩu giáo viên
+
+Trong app, tab **Lớp học → Học liệu**, thầy cô soạn bộ từ, câu, bài ngữ pháp, bài Toán & Vật lí rồi bấm **Đăng lên lớp**; học sinh đã vào lớp tự nhận bản mới khi mở app.
+
+1. **Cập nhật máy chủ** (chỉ cần một lần, khi app có tính năng này): Supabase → **SQL Editor** → **New query** → dán lại toàn bộ file [`supabase/schema.sql`](supabase/schema.sql) → **Run**. Lớp, học sinh và điểm cũ được giữ nguyên.
+2. **Đặt mật khẩu giáo viên** cho lớp (đổi `LOP7A` và mật khẩu, 6–72 ký tự):
+
+   ```sql
+   update public.nhip_rooms set admin_hash = crypt('mat-khau-giao-vien', gen_salt('bf', 8)), admin_fails = 0, admin_locked_until = null where code = 'LOP7A';
+   ```
+
+3. Trong app: **Lớp học → Học liệu → Chia sẻ cho cả lớp** → nhập mã lớp + mật khẩu giáo viên → **Vào chế độ giáo viên**. Soạn xong bấm **📤 Đăng lên lớp**.
+
+- Mật khẩu lưu dạng mã hoá (bcrypt); sai 5 lần thì khoá 15 phút. Chỉ thành viên lớp mới đọc được học liệu; mỗi lớp tối đa 512 KB (khoảng vài nghìn từ).
+- Không dùng máy chủ cũng được: **Xuất file học liệu** rồi gửi file `.json` cho học sinh, học sinh bấm **Nhập file học liệu**.
+- Đổi mật khẩu: chạy lại lệnh ở bước 2 với mật khẩu mới.
 
 ## Việc quản lý thường dùng (chạy trong SQL Editor)
 

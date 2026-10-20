@@ -1,7 +1,7 @@
-/* UI: views (Hôm nay, Từ vựng, Câu, IPA, Toán & Vật lí, Xếp hạng, Tiến độ, Nông trại), local storage, speech, and custom word pictures. */
+/* UI: views (Hôm nay, Từ vựng, Câu, Ngữ pháp, IPA, Toán & Vật lí, Lớp học: xếp hạng + học liệu, Tiến độ, Nông trại), local storage, speech, and custom word pictures. */
 (function () {
   "use strict";
-  const C = window.Core, D = window.APP_DATA, F = window.Farm, Online = window.Online;
+  const C = window.Core, D = window.APP_DATA, F = window.Farm, Online = window.Online, Content = window.Content;
 
   // ===== CONFIG =====
   const KEY = "nhip.v1";
@@ -10,7 +10,7 @@
   const TRACKS = { daily: "Hằng ngày", work: "Công sở", toeic: "TOEIC LR & SW" };
   const STAGES = { Basic: "Cơ bản", Intermediate: "Trung cấp", Advanced: "Nâng cao" };
   const POS = { n: "danh từ", v: "động từ", adj: "tính từ", adv: "trạng từ", phr: "cụm từ", prep: "giới từ", conj: "liên từ" };
-  const XP = { learn: 10, quiz: 5, review: 3, sent: 8, scramble: 2, ipa: 5, pair: 1, stem: 15 };
+  const XP = { learn: 10, quiz: 5, review: 3, sent: 8, scramble: 2, ipa: 5, pair: 1, stem: 15, gram: 12 };
   const PERDAY = [3, 30], SENTPER = [1, 10];
   const EMOJIS = ("🎯 🎨 📚 ✏️ 📝 💡 🧠 ⭐ ❤️ 🔥 🌱 🌳 🌸 🍎 🍜 ☕ 🏠 🏫 🏢 🚗 🚌 ✈️ 🚲 ⚽ 🏀 🎵 🎬 📷 💻 📱 ⏰ 📅 💰 💼 " +
     "🤝 👍 👀 🗣️ 👂 ✋ 🙂 😀 😢 😮 😴 🐶 🐱 🐟 🐦 ☀️ 🌧️ ❄️ 🌈 🌍 🗺️ 🎁 🎉 🏆 🔑 🔒 🔍 🧩 🛠️ 📦 🛒 🧾 📈 📉 ⚖️ 🧪 🩺 💊 " +
@@ -21,27 +21,41 @@
   const WD_SHORT = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
   // ==================
 
-  // ---------- Data ----------
-  const WORDS = {}, BYKEY = {};
-  for (const [lvl, topics] of Object.entries(D.levels)) {
-    WORDS[lvl] = [];
-    topics.forEach((t, ti) => t.words.forEach(([w, pos, ipa, vi, ex, emo]) => {
-      const o = { w, pos, ipa, vi, ex, emo, key: `${w}|${pos}`, topic: ti, lvl };
-      WORDS[lvl].push(o);
-      BYKEY[o.key] = BYKEY[o.key] || o;
-    }));
+  // ---------- Data: built-in + class material (Content packs) ----------
+  // Class material from the teacher (server or file) and my own changes lie over the built-in data; rebuild() redoes the lookups.
+  const PACK_KEY = "nhip.pack", CLASS_KEY = "nhip.class", TEACH_KEY = "nhip.teach";
+  const readJSON = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+  const writeJSON = (k, v) => { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
+  const BASE = { levels: D.levels, sentences: D.sentences, grammar: D.grammar || [], stem: D.stem || [] };
+  let MINE = Content.clean(readJSON(PACK_KEY)) || Content.fresh();
+  const cleanCls = (o) => { const p = o && Content.clean(o.pack); return p ? { room: String(o.room || "").slice(0, 40), ver: +o.ver || 0, at: +o.at || 0, pack: p } : null; };
+  let CLS = cleanCls(readJSON(CLASS_KEY));
+  let LV, SG, GRAM, GRAM_BY, STEM, STEM_BY, WORDS, BYKEY, SENTS;
+  function rebuild() {
+    const X = Content.apply(BASE, [CLS && CLS.pack, MINE]);
+    LV = X.levels; SG = X.sentences; GRAM = X.grammar; STEM = X.stem;
+    GRAM_BY = Object.fromEntries(GRAM.map((l) => [l.id, l])); STEM_BY = Object.fromEntries(STEM.map((l) => [l.id, l]));
+    WORDS = {}; BYKEY = {}; SENTS = {};
+    for (const [lvl, topics] of Object.entries(LV)) {
+      WORDS[lvl] = [];
+      topics.forEach((t, ti) => t.words.forEach(([w, pos, ipa, vi, ex, emo, id, src]) => {
+        const o = { w, pos, ipa, vi, ex, emo, id, src, key: `${w}|${pos}`, topic: ti, lvl };
+        WORDS[lvl].push(o);
+        BYKEY[o.key] = BYKEY[o.key] || o;
+      }));
+    }
+    for (const [track, groups] of Object.entries(SG)) {
+      SENTS[track] = [];
+      groups.forEach((g, gi) => g.items.forEach(([en, vi, note, id, src]) =>
+        SENTS[track].push({ en, vi, note, id, src, stage: g.stage, group: g.vi, gen: g.en, gi, track, key: `${track}:${en}` })));
+    }
   }
-  const SENTS = {};
-  for (const [track, groups] of Object.entries(D.sentences)) {
-    SENTS[track] = [];
-    groups.forEach((g, gi) => g.items.forEach(([en, vi, note]) =>
-      SENTS[track].push({ en, vi, note, stage: g.stage, group: g.vi, gen: g.en, gi, track, key: `${track}:${en}` })));
-  }
+  rebuild();
   const SOUNDS = D.ipa.sounds, SOUND = Object.fromEntries(SOUNDS.map((s) => [s.s, s]));
 
   // ---------- State ----------
   const fresh = () => ({ v: 1, level: "toeic", perday: 8, sentPerDay: 3, track: "daily", progress: { kids: {}, toeic: {} },
-    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null, online: null, stem: { done: {} } });
+    sent: {}, sentDay: null, ipa: [], xp: 0, streak: { count: 0, last: null, best: 0 }, days: {}, rate: 0.9, accent: "en-US", theme: "auto", farm: F.fresh(), gate: null, online: null, stem: { done: {} }, gram: { done: {} } });
   function merge(o) {
     const d = fresh(), s = { ...d, ...(o || {}) };
     s.progress = { ...d.progress, ...(s.progress || {}) };
@@ -51,7 +65,7 @@
     s.farm = { ...F.fresh(), ...(s.farm || {}) };
     if (!s.farm.beasts || typeof s.farm.beasts !== "object") s.farm.beasts = {};
     if (!s.online || typeof s.online.token !== "string") s.online = null;
-    if (!s.stem || typeof s.stem.done !== "object" || !s.stem.done) s.stem = { done: {} };
+    for (const k of ["stem", "gram"]) if (!s[k] || typeof s[k].done !== "object" || !s[k].done) s[k] = { done: {} };
     return s;
   }
   // A daily backup copy lets the app recover if the main record is ever damaged.
@@ -106,7 +120,7 @@
   }
 
   // Screen state that is not persisted
-  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false, joinMode: "new", showPin: false, farmFull: false, stemSubj: "math", stemGrade: 7, stemOpen: null, stemQuiz: {}, viz: {} };
+  const U = { tab: "today", vocab: { mode: "home" }, sentView: "today", stage: "Basic", scr: {}, sound: null, pair: null, bq: "", btopic: "", reset: false, rankBy: "week", boardErr: "", joinErr: "", joining: false, leaveAsk: false, joinMode: "new", showPin: false, farmFull: false, stemSubj: "math", stemGrade: 7, stemOpen: null, stemQuiz: {}, viz: {}, gramOpen: null, classView: "rank", cm: { kind: "" }, qn: 0 };
   const inSession = () => U.tab === "words" && ["learn", "quiz", "review"].includes(U.vocab.mode);
 
   // ---------- Helpers ----------
@@ -120,6 +134,7 @@
     today: svg('<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/>'),
     words: svg('<rect x="3" y="6" width="14" height="15" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v13"/>'),
     sent: svg('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'),
+    gram: svg('<path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M8 9h6M8 13h4"/><path d="M4 17a3 3 0 0 1 3-3h11"/>'),
     ipa: svg('<path d="M3 19 8 5l5 14"/><path d="M5 14h6"/><path d="M17 10v9"/><path d="M17 6.5v.01"/>'),
     stem: svg('<path d="M4 20h16"/><path d="M6 20 12 4l6 16"/><path d="M8.5 14h7"/><circle cx="12" cy="4" r="1.5"/>'),
     rank: svg('<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/>'),
@@ -241,8 +256,8 @@
   const pic = (w, cls) => picHTML(PICS[w.key] || {}, w.emo, cls);
 
   // ---------- Shell ----------
-  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["ipa", "IPA"], ["rank", "Xếp hạng"], ["me", "Tiến độ"]];
-  const EN_TABS = new Set(["today", "words", "sent", "ipa"]);
+  const TABS = [["today", "Hôm nay"], ["words", "Từ vựng"], ["sent", "Câu"], ["gram", "Ngữ pháp"], ["ipa", "IPA"], ["rank", "Lớp học"], ["me", "Tiến độ"]];
+  const EN_TABS = new Set(["today", "words", "sent", "gram", "ipa"]);
   /** Which subject button is lit: English unless the Toán / Vật lí screen is open. */
   const subjectNow = () => (U.tab === "stem" ? U.stemSubj : U.tab === "farm" ? "" : "en");
   function renderTabs() {
@@ -257,7 +272,7 @@
     farmBtn(gateNow());
     $("#streak").innerHTML = `<span title="Chuỗi ngày học liên tiếp">🔥 <span class="num">${st}</span> ngày</span><span class="xp muted num">· ${S.xp} XP</span>`;
   }
-  const VIEWS = { today: vToday, words: vWords, sent: vSent, ipa: vIpa, stem: vStem, rank: vRank, me: vMe, farm: vFarm };
+  const VIEWS = { today: vToday, words: vWords, sent: vSent, gram: vGram, ipa: vIpa, stem: vStem, rank: () => (U.classView === "pack" ? vPack() : vRank()), me: vMe, farm: vFarm };
   // A broken screen must never take the whole app down: show a recovery panel instead, data stays safe.
   function render() {
     try { $("#view").innerHTML = VIEWS[U.tab](); }
@@ -336,7 +351,7 @@
       const r = myRank("week");
       return `<section class="panel row" style="justify-content:space-between"><div><p class="label">Xếp hạng lớp</p>
         <p>${!S.online ? "Tham gia lớp để thi đua cùng bạn bè 🏆" : r ? `🏆 Bạn đứng thứ <b>${r.me.rank}/${r.list.length}</b> tuần này (${r.me.value} XP)` : "Mở bảng xếp hạng để xem thứ hạng của bạn"}</p></div>
-        <button class="btn" data-tab="rank">Xem bảng xếp hạng</button></section>`;
+        <button class="btn" data-classview="rank">Xem bảng xếp hạng</button></section>`;
     })() : ""}`;
   }
   const stepper = (id, v) => `<div class="stepper"><button type="button" data-step="${id}" data-d="-1" aria-label="Giảm">−</button><output id="${id}">${v}</output><button type="button" data-step="${id}" data-d="1" aria-label="Tăng">+</button></div>`;
@@ -356,7 +371,7 @@
     return m === "learn" ? vLearn() : m === "quiz" ? vQuiz() : m === "result" ? vResult() : m === "review" ? vReview() : m === "browse" ? vBrowse() : vWordsHome();
   }
   function vWordsHome() {
-    const p = prog(), due = C.dueKeys(p, today()).length, topics = D.levels[S.level];
+    const p = prog(), due = C.dueKeys(p, today()).length, topics = LV[S.level];
     const learned = Object.keys(p).length, total = WORDS[S.level].length;
     return `
     <section class="hello"><div><p class="label">${LEVELS[S.level]} · ${learned}/${total} từ</p><h1>Từ vựng</h1></div></section>
@@ -370,8 +385,8 @@
     </div>
     <section class="panel stack"><h2>Chủ đề</h2><div class="grid g2">${topics.map((t, i) => {
       const n = t.words.filter((w) => p[`${w[0]}|${w[1]}`]).length;
-      return `<div class="topic"><div class="topic-head"><b>${esc(t.en)}</b><span class="small muted num">${n}/${t.words.length}</span></div>
-        <span class="small muted">${esc(t.vi)}</span>${bar(n / t.words.length)}
+      return `<div class="topic${t.cls ? " cls" : ""}"><div class="topic-head"><b>${esc(t.en)}</b><span class="small muted num">${t.cls ? `<span class="chip cls">📚 Của lớp</span> ` : ""}${n}/${t.words.length}</span></div>
+        ${t.en !== t.vi ? `<span class="small muted">${esc(t.vi)}</span>` : ""}${bar(n / t.words.length)}
         ${n < t.words.length ? `<div><button class="btn sm" data-learntopic="${i}">Học chủ đề này</button></div>` : `<span class="chip good">✓ Đã học hết</span>`}</div>`;
     }).join("")}</div></section>`;
   }
@@ -499,7 +514,7 @@
     if (v.i >= v.queue.length && !v.rewarded) { v.rewarded = true; farmReward("review", "Ôn tập xong"); }
   }
   function vBrowse() {
-    const topics = D.levels[S.level];
+    const topics = LV[S.level];
     return `<div class="row">${back('data-vocab="home"', "Từ vựng")}</div><h1>Tra cứu từ</h1>
       <section class="panel stack">
         <div class="row"><input type="search" id="bq" placeholder="Tìm từ hoặc nghĩa…" value="${esc(U.bq)}" style="flex:1 1 200px" aria-label="Tìm từ">
@@ -524,12 +539,12 @@
 
   // ---------- Modal: word detail + picture editor ----------
   let lastFocus = null;
-  function sheet(html, label) {
+  function sheet(html, label, wide) {
     const m = $("#modal"), s = $("#sheet");
     if (m.hidden) lastFocus = document.activeElement;
-    s.innerHTML = html; s.setAttribute("aria-label", label || "");
+    s.innerHTML = html; s.setAttribute("aria-label", label || ""); s.classList.toggle("wide", !!wide);
     m.hidden = false;
-    const f = s.querySelector("button"); if (f) f.focus({ preventScroll: true });
+    const f = s.querySelector(wide ? "input, textarea, button" : "button"); if (f) f.focus({ preventScroll: true });
   }
   function closeModal() {
     $("#modal").hidden = true; $("#sheet").innerHTML = ""; draft = null;
@@ -543,7 +558,7 @@
       <div class="row" style="align-items:flex-start;gap:16px">${pic(w, "md")}
         <div class="stack" style="flex:1;min-width:0"><div class="row"><span class="ipa muted">/${esc(w.ipa)}/</span>${sayBtns(w.w)}</div>
           <p class="meaning">${esc(w.vi)}</p>
-          <div class="row"><span class="chip">${esc(D.levels[w.lvl][w.topic].vi)}</span>${c ? `<span class="chip warn">Hộp ${c.box} · ôn ${ddmm(c.due)}</span>` : `<span class="chip new">Chưa học</span>`}</div></div></div>
+          <div class="row"><span class="chip">${esc(LV[w.lvl][w.topic].vi)}</span>${c ? `<span class="chip warn">Hộp ${c.box} · ôn ${ddmm(c.due)}</span>` : `<span class="chip new">Chưa học</span>`}</div></div></div>
       <p class="example">${hlEx(w)} <button class="btn sm ghost" data-say="${esc(w.ex)}" aria-label="Nghe câu ví dụ">${I.speak}</button></p>
       <div class="row">${speechBtns(w.w)}</div>
       <div class="row"><button class="btn primary" data-editpic="${esc(w.key)}">${I.edit} Đổi hình</button><button class="btn ghost" data-close>Đóng</button></div>`, w.w);
@@ -657,12 +672,12 @@
   }
   const sentByKey = (k) => { const track = k.slice(0, k.indexOf(":")); return (SENTS[track] || []).find((s) => s.key === k); };
   function library(track) {
-    const groups = D.sentences[track].map((g, gi) => ({ g, gi })).filter(({ g }) => g.stage === U.stage);
+    const groups = SG[track].map((g, gi) => ({ g, gi })).filter(({ g }) => g.stage === U.stage);
     return `<section class="panel stack"><div class="seg" role="group" aria-label="Trình độ">${Object.entries(STAGES).map(([id, l]) =>
       `<button type="button" data-stage="${id}" aria-pressed="${U.stage === id}">${l}</button>`).join("")}</div>
       <div>${groups.map(({ g, gi }) => {
         const items = SENTS[track].filter((s) => s.gi === gi), n = items.filter((s) => S.sent[s.key]).length;
-        return `<details><summary>${esc(g.vi)} <span class="small muted">· ${esc(g.en)} · ${n}/${items.length}</span></summary><div class="list">${items.map((s) =>
+        return `<details${g.cls ? " open" : ""}><summary>${esc(g.vi)} <span class="small muted">${g.en ? `· ${esc(g.en)} ` : ""}· ${n}/${items.length}</span>${g.cls ? ` <span class="chip cls">📚 Của lớp</span>` : ""}</summary><div class="list">${items.map((s) =>
           `<div class="item"><span class="chip${S.sent[s.key] ? " good" : ""}">${S.sent[s.key] ? "✓" : "·"}</span><span class="t"><b>${esc(s.en)}</b><br><span class="small muted">${esc(s.vi)}</span></span>
             <button class="btn icon-btn ghost" data-say="${esc(s.en)}" aria-label="Nghe">${I.speak}</button></div>`).join("")}</div></details>`;
       }).join("")}</div></section>`;
@@ -746,7 +761,7 @@
   // ---------- Toán & Vật lí ----------
   // Opens each day after STEM_GATE new English words; lessons have an interactive visual, key points, a worked example,
   // English terms and a 4-question check (3/4 right = lesson done, +XP).
-  const STEM = D.stem || [], STEM_BY = Object.fromEntries(STEM.map((l) => [l.id, l])), STEM_GATE = 5, STEM_PASS = 3;
+  const STEM_GATE = 5;
   const SUBJ = { math: "📐 Toán", phys: "🔭 Vật lí" };
   const newWordsToday = () => { const t = today(); return Object.values(S.progress).reduce((n, pl) => n + Object.values(pl).filter((c) => c.added === t).length, 0); };
   const stemDone = (subj) => STEM.filter((l) => (!subj || l.subj === subj) && S.stem.done[l.id]).length;
@@ -778,35 +793,44 @@
     return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2><div class="viz-box" data-vizbox="${l.id}">${r.svg}</div>
       <p class="viz-info" data-vizinfo="${l.id}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}<p class="small muted">👉 ${esc(l.vizNote)}</p></section>`;
   }
-  function stemQuiz(l) {
-    const picks = U.stemQuiz[l.id] || [], answered = picks.filter((x) => x != null).length, right = l.quiz.filter((q, i) => picks[i] === q.a).length;
+  // A lesson is done with about 3/4 of its check right (all of it when there are only 1–3 questions).
+  const passOf = (l) => Math.ceil(l.quiz.length * 0.75);
+  /** Lesson check shared by Toán/Lí and Ngữ pháp: kind "stem" | "gram" picks the handlers and the progress record. */
+  function lessonQuiz(l, kind) {
+    const rec = kind === "gram" ? S.gram : S.stem;
+    if (!l.quiz.length) {
+      return `<section class="panel row" style="justify-content:space-between"><p class="muted">Bài này chưa có câu hỏi kiểm tra.</p>
+        ${rec.done[l.id] ? `<span class="chip good">✓ Đã học</span>` : `<button type="button" class="btn primary" data-lessondone="${kind}:${esc(l.id)}">Đã học xong bài này</button>`}</section>`;
+    }
+    const picks = U.stemQuiz[l.id] || [], answered = picks.filter((x) => x != null).length, right = l.quiz.filter((q, i) => picks[i] === q.a).length, pass = passOf(l);
     const qs = l.quiz.map((q, i) => {
       const p = picks[i], done = p != null;
       return `<div class="stem-q"><p><b>Câu ${i + 1}.</b> ${esc(q.q)}</p><div class="choices">${q.opts.map((o, j) => {
         const cls = done ? (j === q.a ? " right" : j === p ? " wrong" : "") : "";
-        return `<button type="button" class="choice${cls}" data-stemans="${i}:${j}"${done ? " disabled" : ""}>${esc(o)}</button>`;
+        return `<button type="button" class="choice${cls}" data-${kind}ans="${i}:${j}"${done ? " disabled" : ""}>${esc(o)}</button>`;
       }).join("")}</div>${done ? `<p class="feedback ${p === q.a ? "ok" : "no"}">${p === q.a ? "✓ Đúng!" : "✗ Chưa đúng."} ${esc(q.why)}</p>` : ""}</div>`;
     }).join("");
     const end = answered === l.quiz.length
-      ? `<div class="row" style="justify-content:space-between"><p class="feedback ${right >= STEM_PASS ? "ok" : "no"}"><b>${right}/${l.quiz.length} câu đúng.</b> ${right >= STEM_PASS ? "Bài học đã hoàn thành 🎉" : `Cần đúng ít nhất ${STEM_PASS} câu — xem lại phần trên rồi làm lại nhé.`}</p>
-          <button type="button" class="btn" data-stemretry="${l.id}">Làm lại</button></div>` : "";
+      ? `<div class="row" style="justify-content:space-between"><p class="feedback ${right >= pass ? "ok" : "no"}"><b>${right}/${l.quiz.length} câu đúng.</b> ${right >= pass ? "Bài học đã hoàn thành 🎉" : `Cần đúng ít nhất ${pass} câu — xem lại phần trên rồi làm lại nhé.`}</p>
+          <button type="button" class="btn" data-quizretry="${esc(l.id)}">Làm lại</button></div>` : "";
     return `<section class="panel stack"><div class="row" style="justify-content:space-between"><h2>🧠 Kiểm tra nhanh</h2><span class="chip num">${answered}/${l.quiz.length}</span></div>${qs}${end}</section>`;
   }
+  const srcChip = (x) => (x.src === 2 ? `<span class="chip cls">📚 Của lớp</span>` : x.src === 1 ? `<span class="chip cls">✏️ Đã chỉnh</span>` : "");
   function stemLesson(l) {
     const done = S.stem.done[l.id];
     return `<section class="hello"><div><p class="label">${l.subj === "math" ? "Toán" : "Vật lí"} ${l.grade} · ${esc(l.chap)}</p><h1>${esc(l.title)}</h1></div>
-        <div class="row">${done ? `<span class="chip good">✓ Đã hoàn thành</span>` : `<span class="chip">+${XP.stem} XP khi xong</span>`}${back("data-stemback", "Danh sách bài")}</div></section>
-      <section class="panel"><p>${esc(l.sum)}</p></section>
-      ${vizBlock(l)}
+        <div class="row">${srcChip(l)}${done ? `<span class="chip good">✓ Đã hoàn thành</span>` : `<span class="chip">+${XP.stem} XP khi xong</span>`}${back("data-stemback", "Danh sách bài")}</div></section>
+      ${l.sum ? `<section class="panel"><p>${esc(l.sum)}</p></section>` : ""}
+      ${l.viz ? vizBlock(l) : ""}
       <div class="grid g2" style="align-items:start">
-        <section class="panel stack"><h2>📌 Ghi nhớ</h2><ul class="stem-points">${l.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-          ${l.formulas.length ? `<div class="formulas">${l.formulas.map((x) => `<div>${esc(x)}</div>`).join("")}</div>` : ""}</section>
-        <section class="panel stack"><h2>💡 Mẹo nhớ</h2><p class="memo">${esc(l.memo)}</p>
-          <h2>🇬🇧 Thuật ngữ tiếng Anh</h2><div class="list">${l.terms.map(([en, vi]) => `<div class="item"><span class="t"><b>${esc(en)}</b> · ${esc(vi)}</span>${sayEn(en)}</div>`).join("")}</div></section>
+        ${l.points.length || l.formulas.length ? `<section class="panel stack"><h2>📌 Ghi nhớ</h2>${l.points.length ? `<ul class="stem-points">${l.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+          ${l.formulas.length ? `<div class="formulas">${l.formulas.map((x) => `<div>${esc(x)}</div>`).join("")}</div>` : ""}</section>` : ""}
+        ${l.memo || l.terms.length ? `<section class="panel stack">${l.memo ? `<h2>💡 Mẹo nhớ</h2><p class="memo">${esc(l.memo)}</p>` : ""}
+          ${l.terms.length ? `<h2>🇬🇧 Thuật ngữ tiếng Anh</h2><div class="list">${l.terms.map(([en, vi]) => `<div class="item"><span class="t"><b>${esc(en)}</b> · ${esc(vi)}</span>${sayEn(en)}</div>`).join("")}</div>` : ""}</section>` : ""}
       </div>
-      <section class="panel stack"><h2>✏️ Ví dụ</h2><p><b>${esc(l.example.q)}</b></p>
-        <details><summary>Xem lời giải</summary><p class="stem-sol">${esc(l.example.a)}</p></details></section>
-      ${stemQuiz(l)}`;
+      ${l.example.q ? `<section class="panel stack"><h2>✏️ Ví dụ</h2><p><b>${esc(l.example.q)}</b></p>
+        ${l.example.a ? `<details><summary>Xem lời giải</summary><p class="stem-sol">${esc(l.example.a)}</p></details>` : ""}</section>` : ""}
+      ${lessonQuiz(l, "stem")}`;
   }
   /** Slider moved: redraw only the visual and its readout, so dragging stays smooth. */
   function vizInput(el) {
@@ -825,18 +849,50 @@
     const r = Stem.draw(l.viz, U.viz[l.id]);
     box.innerHTML = r.svg; if (info) info.innerHTML = r.info;
   }
-  function stemAnswer(v) {
-    const l = STEM_BY[U.stemOpen];
+  /** Answer one question of the open lesson; finishing with enough right marks it done once (+XP). */
+  function lessonAnswer(kind, v) {
+    const l = kind === "gram" ? GRAM_BY[U.gramOpen] : STEM_BY[U.stemOpen];
     if (!l) return;
     const [qi, oi] = v.split(":").map(Number), picks = (U.stemQuiz[l.id] = U.stemQuiz[l.id] || []);
-    if (picks[qi] != null) return;
+    if (picks[qi] != null || !l.quiz[qi]) return;
     picks[qi] = oi;
     const right = l.quiz.filter((q, i) => picks[i] === q.a).length, all = picks.filter((x) => x != null).length === l.quiz.length;
-    if (all && right >= STEM_PASS && !S.stem.done[l.id]) {
-      S.stem.done[l.id] = today(); addXP(XP.stem);
-      toast(`🎉 Xong bài “${l.title}” · +${XP.stem} XP`, 3000);
-    }
+    if (all && right >= passOf(l)) lessonFinish(kind, l);
     const y = scrollY; render(); scrollTo(0, y);
+  }
+  function lessonFinish(kind, l) {
+    const rec = kind === "gram" ? S.gram : S.stem;
+    if (rec.done[l.id]) return;
+    rec.done[l.id] = today(); addXP(XP[kind]);
+    toast(`🎉 Xong bài “${l.title}” · +${XP[kind]} XP`, 3000);
+  }
+
+  // ---------- Ngữ pháp ----------
+  const gramDone = (lvl) => GRAM.filter((l) => l.lvl === lvl && S.gram.done[l.id]).length;
+  function vGram() {
+    if (U.gramOpen && GRAM_BY[U.gramOpen] && GRAM_BY[U.gramOpen].lvl === S.level) return gramLesson(GRAM_BY[U.gramOpen]);
+    const list = GRAM.filter((l) => l.lvl === S.level), chaps = [...new Set(list.map((l) => l.chap))];
+    return `<section class="hello"><div><p class="label">${LEVELS[S.level]} · ${gramDone(S.level)}/${list.length} bài đã xong</p><h1>Ngữ pháp</h1></div></section>
+      ${list.length ? "" : `<section class="panel"><p class="muted">Chưa có bài ngữ pháp nào. Thầy cô có thể thêm ở Lớp học → Học liệu.</p></section>`}
+      ${chaps.map((c) => `<section class="panel stack"><h2>${esc(c)}</h2><div class="stem-list">${list.filter((l) => l.chap === c).map((l) => {
+        const done = S.gram.done[l.id];
+        return `<button type="button" class="stem-item${done ? " done" : ""}" data-gramopen="${esc(l.id)}"><span class="si-ic" aria-hidden="true">${done ? "✓" : "📖"}</span>
+          <span><b>${esc(l.title)}</b> ${l.src ? `<span class="small cls-tag">${l.src === 2 ? "Của lớp" : "Đã chỉnh"}</span>` : ""}<br><span class="small muted">${esc(l.sum)}</span></span></button>`;
+      }).join("")}</div></section>`).join("")}`;
+  }
+  function gramLesson(l) {
+    const done = S.gram.done[l.id];
+    return `<section class="hello"><div><p class="label">${LEVELS[l.lvl]} · ${esc(l.chap)}</p><h1>${esc(l.title)}</h1></div>
+        <div class="row">${srcChip(l)}${done ? `<span class="chip good">✓ Đã hoàn thành</span>` : `<span class="chip">+${XP.gram} XP khi xong</span>`}${back("data-gramback", "Danh sách bài")}</div></section>
+      ${l.sum ? `<section class="panel"><p>${esc(l.sum)}</p></section>` : ""}
+      ${l.forms.length ? `<section class="panel stack"><h2>🧩 Cấu trúc</h2><div class="formulas">${l.forms.map((x) => `<div>${esc(x)}</div>`).join("")}</div></section>` : ""}
+      <div class="grid g2" style="align-items:start">
+        ${l.points.length ? `<section class="panel stack"><h2>📌 Cách dùng</h2><ul class="stem-points">${l.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>` : ""}
+        ${l.examples.length || l.memo ? `<section class="panel stack">${l.examples.length ? `<h2>🗣️ Ví dụ</h2><div class="list">${l.examples.map(([en, vi]) =>
+          `<div class="item"><span class="t"><b>${esc(en)}</b><br><span class="small muted">${esc(vi)}</span></span>${sayEn(en)}</div>`).join("")}</div>` : ""}
+          ${l.memo ? `<h2>💡 Mẹo nhớ</h2><p class="memo">${esc(l.memo)}</p>` : ""}</section>` : ""}
+      </div>
+      ${lessonQuiz(l, "gram")}`;
   }
 
   // ---------- Nông trại ----------
@@ -1510,7 +1566,7 @@
     else growSheet(i);
   }
   // One clock for everything time-based: study/play minutes for the farm gate, farm countdowns.
-  const STUDY_TABS = new Set(["words", "sent", "ipa", "stem"]);
+  const STUDY_TABS = new Set(["words", "sent", "gram", "ipa", "stem"]);
   let lastAct = Date.now(), ticks = 0;
   for (const ev of ["pointerdown", "keydown", "input", "wheel", "touchstart"]) addEventListener(ev, () => { lastAct = Date.now(); }, { passive: true, capture: true });
   const gateNow = () => F.gate(S.gate, Date.now());
@@ -1719,7 +1775,7 @@
       const r = await NET.join(room, name, pin);
       if (r.ok) {
         S.online = { room: r.room, name: r.name, token: r.token, avatar: "" };
-        board = null; lastPushAt = 0; lastPushed = ""; flush();
+        board = null; lastPushAt = 0; lastPushed = ""; flush(); setTimeout(() => fetchPack(true), 500);
         toast(r.new ? `🎉 Đã tạo tài khoản cho ${r.name} trong lớp ${r.room}. Nhớ mã PIN của bạn nhé!`
           : isNew ? `Tên ${r.name} đã có sẵn và PIN khớp — bạn đã đăng nhập lại.` : `👋 Chào mừng ${r.name} quay lại lớp ${r.room}!`, 4500);
       } else if (isNew && r.error === "wrong_pin") {
@@ -1738,7 +1794,7 @@
     return me ? { me, list } : null;
   }
   function vRank() {
-    const head = (extra = "") => `<section class="hello"><div><p class="label">${S.online ? `Lớp ${esc(S.online.room)} · ${esc(S.online.name)}` : "Cùng học, cùng đua"}</p><h1>Bảng xếp hạng</h1></div>${extra}</section>`;
+    const head = (extra = "") => `<section class="hello"><div><p class="label">${S.online ? `Lớp ${esc(S.online.room)} · ${esc(S.online.name)}` : "Cùng học, cùng đua"}</p><h1>Lớp học</h1></div>${extra}</section>${classSeg()}<h2>Bảng xếp hạng</h2>`;
     if (!NET.configured) {
       return head() + `<section class="panel stack"><h2>Chưa bật chế độ trực tuyến</h2>
         <p>Bảng xếp hạng lớp cần một máy chủ nhỏ (miễn phí). Người quản lý lớp làm theo hướng dẫn trong file <b>ONLINE.md</b> của dự án (khoảng 10 phút), sau đó mọi người mở lại app là thấy.</p>
@@ -1802,6 +1858,393 @@
       </section>`;
   }
 
+  // ---------- Lớp học → Học liệu (like Quizlet: the teacher builds sets, the class studies them) ----------
+  // My changes (MINE) stay on this device; a teacher signed in with the class's teacher password publishes them for the class.
+  let TEACH = (() => { const t = readJSON(TEACH_KEY); return t && typeof t.room === "string" && typeof t.secret === "string" ? t : null; })();
+  let packBusy = false, packTriedAt = 0, BASE_IDS = null;
+  function saveMine() { MINE.at = Date.now(); if (!writeJSON(PACK_KEY, MINE)) toast("Bộ nhớ trình duyệt đầy — chưa lưu được thay đổi", 4000); }
+  const saveCls = () => writeJSON(CLASS_KEY, CLS);
+  const classSeg = () => `<div class="seg" role="group" aria-label="Lớp học">${[["rank", "🏆 Xếp hạng"], ["pack", "📚 Học liệu"]].map(([id, l]) =>
+    `<button type="button" data-classview="${id}" aria-pressed="${U.classView === id}">${l}</button>`).join("")}</div>`;
+  /** Ids of every item in the given layers (built-in data, plus the class pack when asked). */
+  function idsIn(packs) {
+    const X = Content.apply(BASE, packs), ids = new Set();
+    for (const t of Object.values(X.levels).flat()) for (const r of t.words) ids.add(r[6]);
+    for (const g of Object.values(X.sentences).flat()) for (const r of g.items) ids.add(r[3]);
+    for (const l of [...X.grammar, ...X.stem]) ids.add(l.id);
+    return ids;
+  }
+  const baseIds = () => (BASE_IDS = BASE_IDS || idsIn([]));
+  const fullPack = () => Content.combine(CLS && CLS.pack, MINE, baseIds());
+  function setClassPack(room, ver, at, raw) {
+    const p = raw == null ? null : Content.clean(raw);
+    CLS = p ? { room, ver, at, pack: p } : null;
+    saveCls(); rebuild();
+  }
+  /** Get the class material: as the teacher (password) or as a member (token). Quiet unless something new arrives. */
+  async function fetchPack(force) {
+    if (packBusy || !NET.configured) return;
+    const asTeacher = !!TEACH && (!S.online || S.online.room === TEACH.room);
+    if (!asTeacher && !S.online) return;
+    if (!force && Date.now() - packTriedAt < 5 * 60 * 1000) return;
+    packBusy = true; packTriedAt = Date.now(); U.packErr = "";
+    const room = asTeacher ? TEACH.room : S.online.room, have = CLS && CLS.room === room ? CLS.ver : -1;
+    let news = false;
+    try {
+      const r = asTeacher ? await NET.admin(TEACH.room, TEACH.secret) : await NET.packGet(S.online.token, have);
+      if (!r.ok) {
+        U.packErr = Online.message(r.error);
+        if (r.error === "no_player") lostSeat();
+        if (asTeacher && ["wrong_secret", "no_teacher", "no_room"].includes(r.error)) teacherOut();
+      } else if (!r.same && (+r.ver || 0) !== have) {
+        setClassPack(String(r.room || room), +r.ver || 0, Date.parse(r.at) || Date.now(), r.pack);
+        news = true;
+        if (r.pack && have >= 0) toast(`📚 Học liệu lớp ${r.room || room} vừa được cập nhật`, 3500);
+      }
+    } catch (e) { U.packErr = Online.message(e.code); }
+    packBusy = false;
+    if (U.tab === "rank" || (news && !inSession() && $("#modal").hidden)) render();
+  }
+  function teacherOut() { TEACH = null; writeJSON(TEACH_KEY, null); }
+  async function teacherLogin() {
+    const room = ($("#t-room").value || "").trim().toUpperCase(), secret = $("#t-secret").value;
+    U.teachRoom = room;
+    U.teachErr = !/^[A-Z0-9]{4,12}$/.test(room) ? "Mã lớp gồm 4–12 chữ cái hoặc số" : !secret ? "Nhập mật khẩu giáo viên" : "";
+    if (U.teachErr) { render(); return; }
+    U.teachBusy = true; render();
+    try {
+      const r = await NET.admin(room, secret);
+      if (r.ok) {
+        TEACH = { room: String(r.room), secret }; writeJSON(TEACH_KEY, TEACH);
+        setClassPack(TEACH.room, +r.ver || 0, Date.parse(r.at) || Date.now(), r.pack);
+        toast(`👩‍🏫 Đã vào chế độ giáo viên lớp ${TEACH.room}`, 3000);
+      } else U.teachErr = Online.message(r.error);
+    } catch (e) { U.teachErr = Online.message(e.code); }
+    U.teachBusy = false; render();
+  }
+  async function publish() {
+    if (!TEACH || U.teachBusy) return;
+    const pack = fullPack();
+    pack.name = `Lớp ${TEACH.room}`; pack.at = Date.now();
+    if (new TextEncoder().encode(JSON.stringify(pack)).length > Content.MAX_BYTES) { toast(Online.message("too_big"), 4500); return; }
+    U.teachBusy = true; render();
+    try {
+      const r = await NET.packPut(TEACH.room, TEACH.secret, pack);
+      if (r.ok) {
+        CLS = { room: TEACH.room, ver: +r.ver || 1, at: Date.now(), pack }; saveCls();
+        MINE = Content.fresh(); saveMine(); rebuild();
+        toast(`✅ Đã đăng ${Content.count(pack)} mục học liệu cho lớp ${TEACH.room}`, 3500);
+      } else {
+        toast(Online.message(r.error), 4500);
+        if (["wrong_secret", "no_teacher", "no_room"].includes(r.error)) teacherOut();
+      }
+    } catch (e) { toast(Online.message(e.code), 4500); }
+    U.teachBusy = false; render();
+  }
+  function exportPack() {
+    const pack = fullPack();
+    if (!Content.count(pack)) { toast("Chưa có học liệu nào để xuất — hãy thêm hoặc sửa nội dung trước"); return; }
+    pack.name = CLS ? `Lớp ${CLS.room}` : "Học liệu Nhịp"; pack.at = Date.now();
+    download(`nhip-hoc-lieu-${today()}.json`, pack);
+  }
+  /** A material file (from a teacher or another class) joins my changes, so it can be edited and published too. */
+  async function importPack(file) {
+    try {
+      const p = Content.clean(JSON.parse(await file.text()));
+      if (!p || !Content.count(p)) throw new Error("empty");
+      MINE = Content.combine(MINE, p); saveMine(); rebuild(); render();
+      toast(`📥 Đã nhập ${Content.count(p)} mục học liệu${TEACH ? " — bấm “Đăng lên lớp” để chia sẻ" : ""}`, 3500);
+    } catch (e) { toast("File học liệu không hợp lệ"); }
+  }
+
+  // Which layer an item sits in, for the list chips: 2 = added by the class/me, 1 = edited built-in item.
+  const tag = (src) => (src === 2 ? `<span class="chip cls">Mới</span>` : src === 1 ? `<span class="chip cls">Đã sửa</span>` : "");
+  const PK = { words: ["🔤", "Từ vựng", "Tạo bộ từ, thêm hoặc sửa từ, nghĩa, ví dụ, emoji. Dán cả danh sách như Quizlet."],
+    sents: ["💬", "Câu", "Thêm câu giao tiếp, cấu trúc TOEIC kèm nghĩa và ghi chú; học sinh luyện nghe, nói, xếp câu."],
+    grammar: ["📖", "Ngữ pháp", "Soạn bài ngữ pháp: cấu trúc, cách dùng, ví dụ và câu hỏi trắc nghiệm."],
+    stem: ["📐", "Toán & Vật lí", "Thêm hoặc chỉnh bài Toán, Vật lí lớp 7–9: ý chính, công thức, hình minh hoạ, câu hỏi."] };
+  function packStats() {
+    const n = (arr) => arr.filter((x) => x.src).length;
+    return { words: n(Object.values(WORDS).flat()), sents: n(Object.values(SENTS).flat()), grammar: n(GRAM), stem: n(STEM) };
+  }
+  function vPack() {
+    if (U.cm.kind) return vPackEdit();
+    if (NET.configured && (TEACH || S.online) && !packBusy && Date.now() - packTriedAt > 5 * 60 * 1000) setTimeout(fetchPack, 0);
+    const nMine = Content.count(MINE), st = packStats(), when = (ms) => `${ddmm(new Date(ms).toISOString().slice(0, 10))} ${hhmm(ms)}`;
+    const teach = !NET.configured
+      ? `<p class="muted">Máy chủ lớp chưa bật, nên chia sẻ bằng file: thầy cô bấm <b>Xuất file học liệu</b>, gửi file cho học sinh; học sinh bấm <b>Nhập file học liệu</b>.</p>`
+      : TEACH
+        ? `<p>Đang là <b>giáo viên lớp ${esc(TEACH.room)}</b>. ${nMine ? `Có <b>${nMine}</b> thay đổi chưa đăng.` : "Mọi thay đổi đã được đăng cho lớp."}</p>
+          <div class="row"><button type="button" class="btn primary" data-publish${nMine && !U.teachBusy ? "" : " disabled"}>${U.teachBusy ? "Đang đăng…" : "📤 Đăng lên lớp"}</button>
+            <button type="button" class="btn ghost sm" data-teachout>Thoát chế độ giáo viên</button></div>`
+        : `<p class="muted">Thầy cô đăng nhập bằng <b>mã lớp</b> và <b>mật khẩu giáo viên</b> để đăng học liệu cho cả lớp. Học sinh trong lớp sẽ tự nhận bản mới.</p>
+          <form data-teachform class="stack" style="max-width:420px" novalidate>
+            <label class="stack" style="gap:4px"><span class="label">Mã lớp</span><input type="text" id="t-room" maxlength="12" autocapitalize="characters" autocomplete="off" value="${esc(U.teachRoom || (S.online ? S.online.room : urlRoom))}"></label>
+            <label class="stack" style="gap:4px"><span class="label">Mật khẩu giáo viên</span><input type="password" id="t-secret" maxlength="72" autocomplete="current-password"></label>
+            ${U.teachErr ? `<p class="feedback no" role="alert">${esc(U.teachErr)}</p>` : ""}
+            <div><button class="btn"${U.teachBusy ? " disabled" : ""}>${U.teachBusy ? "Đang kiểm tra…" : "👩‍🏫 Vào chế độ giáo viên"}</button></div></form>
+          <p class="small muted">Mật khẩu giáo viên do người quản lý đặt trên máy chủ (xem ONLINE.md). Không có mật khẩu vẫn tự soạn và dùng học liệu trên máy này được.</p>`;
+    return `<section class="hello"><div><p class="label">${S.online ? `Lớp ${esc(S.online.room)} · ${esc(S.online.name)}` : "Soạn và chia sẻ học liệu"}</p><h1>Lớp học</h1></div></section>${classSeg()}
+      <h2>Học liệu của lớp</h2>
+      <div class="pk-grid">${Object.entries(PK).map(([k, [ic, name, about]]) => `<section class="panel stack pk-card"><div class="row" style="justify-content:space-between"><h3>${ic} ${name}</h3>
+          ${st[k] ? `<span class="chip cls">${st[k]} mục của lớp</span>` : ""}</div>
+        <p class="small muted">${about}</p><div><button type="button" class="btn" data-cm="${k}">Quản lý ${name.toLowerCase()}</button></div></section>`).join("")}</div>
+      <section class="panel stack"><h2>👩‍🏫 Chia sẻ cho cả lớp</h2>${teach}
+        <div class="row"><button type="button" class="btn sm" data-exportpack>⬇️ Xuất file học liệu</button>
+          <label class="btn sm">⬆️ Nhập file học liệu<input type="file" accept="application/json,.json" id="pack-in" hidden></label></div></section>
+      <section class="panel stack"><h2>📥 Đang dùng trên máy này</h2>
+        <p>${CLS ? `Học liệu lớp <b>${esc(CLS.room)}</b>: ${Content.count(CLS.pack)} mục · bản ${CLS.ver} · ${when(CLS.at)}` : "Chưa nhận học liệu từ lớp."}
+          ${U.packErr ? `<br><span class="small" style="color:var(--bad)">${esc(U.packErr)}</span>` : ""}</p>
+        <p>${nMine ? `Thay đổi trên máy này: <b>${nMine}</b> mục${TEACH ? " (chưa đăng)" : " (chỉ mình bạn thấy)"}.` : "Chưa có thay đổi riêng trên máy này."}</p>
+        <div class="row">${NET.configured && (S.online || TEACH) ? `<button type="button" class="btn sm" data-packrefresh${packBusy ? " disabled" : ""}>${packBusy ? "Đang tải…" : "Tải bản mới nhất"}</button>` : ""}
+          ${nMine ? (U.dropAsk ? `<span class="small">Bỏ hết ${nMine} thay đổi trên máy này?</span><button type="button" class="btn sm" data-dropmine="yes" style="color:var(--bad)">Bỏ thay đổi</button><button type="button" class="btn sm primary" data-dropmine="no">Giữ lại</button>`
+            : `<button type="button" class="btn sm ghost" data-dropmine="ask">Bỏ thay đổi…</button>`) : ""}</div></section>`;
+  }
+
+  // ---- Editors: one list per kind; add / edit opens a form sheet, delete asks once more on the same button ----
+  const findWord = (lvl, id) => { for (const t of LV[lvl]) { const r = t.words.find((x) => x[6] === id); if (r) return { t, r }; } return null; };
+  const findSent = (track, id) => { for (const g of SG[track]) { const r = g.items.find((x) => x[3] === id); if (r) return { g, r }; } return null; };
+  const rowBtns = (kind, id) => `<span class="row" style="gap:6px;flex-wrap:nowrap"><button type="button" class="btn sm" data-edit="${kind}:${esc(id)}">Sửa</button>
+    <button type="button" class="btn sm ghost${U.delAsk === id ? " danger" : ""}" data-delitem="${kind}:${esc(id)}">${U.delAsk === id ? "Xoá thật?" : "Xoá"}</button></span>`;
+  const seg = (attr, cur, opts, label) => `<div class="seg" role="group" aria-label="${label}">${opts.map(([id, l]) => `<button type="button" data-${attr}="${id}" aria-pressed="${String(cur) === String(id)}">${l}</button>`).join("")}</div>`;
+  function vPackEdit() {
+    const k = U.cm.kind, [ic, name] = PK[k];
+    const top = `<div class="row">${back('data-cm=""', "Học liệu")}</div><section class="hello"><div><p class="label">Lớp học · Học liệu</p><h1>${ic} ${name}</h1></div></section>`;
+    return top + (k === "words" ? edWords() : k === "sents" ? edSents() : k === "grammar" ? edGram() : edStem());
+  }
+  function setList(groups, attr, kindLabel) {
+    return `<section class="panel stack"><form class="row" data-newset novalidate><input type="text" id="new-set" maxlength="60" placeholder="Tên ${kindLabel} mới, ví dụ: Unit 1 – Tuần 1" style="flex:1 1 220px" aria-label="Tên ${kindLabel} mới">
+        <button class="btn primary">+ Tạo ${kindLabel}</button></form></section>
+      <section class="panel"><div class="list">${groups.map((g) => `<div class="item"><span class="chip num">${g.n}</span>
+        <span class="t"><b>${esc(g.name)}</b>${g.sub ? `<br><span class="small muted">${esc(g.sub)}</span>` : ""}</span>
+        <span class="row" style="gap:6px;flex-wrap:nowrap">${g.cls ? `<span class="chip cls">Của lớp</span>` : ""}<button type="button" class="btn sm" data-${attr}="${esc(g.name)}">Mở</button></span></div>`).join("")}</div></section>`;
+  }
+  function edWords() {
+    const lvl = U.cm.lvl, topics = LV[lvl];
+    const head = seg("cmlvl", lvl, Object.entries(LEVELS), "Trình độ");
+    if (U.cm.set == null) {
+      return head + setList(topics.map((t) => ({ name: t.vi, sub: t.en !== t.vi ? t.en : "", n: t.words.length, cls: t.cls })), "cmset", "bộ từ");
+    }
+    const t = topics.find((x) => x.vi === U.cm.set), rows = t ? t.words : [];
+    return head + `<section class="panel stack"><div class="row" style="justify-content:space-between"><div>${back('data-cmset=""', "Các bộ từ")}<h2>${esc(U.cm.set)}</h2>
+        <span class="small muted">${rows.length} từ${t && t.en !== t.vi ? ` · ${esc(t.en)}` : ""}</span></div>
+        <div class="row"><button type="button" class="btn primary" data-edit="words:">+ Thêm từ</button><button type="button" class="btn" data-bulk="words">+ Thêm nhiều từ</button></div></div>
+      ${rows.length ? `<div class="list">${rows.map((r) => `<div class="item"><span class="emo" aria-hidden="true">${esc(r[5])}</span>
+        <span class="t"><b>${esc(r[0])}</b> <span class="small muted">${POS[r[1]] || esc(r[1])}${r[2] ? ` · /${esc(r[2])}/` : ""}</span> ${tag(r[7])}<br><span class="small">${esc(r[3])}</span></span>
+        ${rowBtns("words", r[6])}</div>`).join("")}</div>` : `<p class="muted">Bộ từ còn trống — bấm “Thêm từ” hoặc dán cả danh sách bằng “Thêm nhiều từ”.</p>`}</section>`;
+  }
+  function edSents() {
+    const track = U.cm.track, groups = SG[track];
+    const head = seg("cmtrack", track, Object.entries(TRACKS), "Chủ đề câu");
+    if (U.cm.set == null) {
+      return head + setList(groups.map((g) => ({ name: g.vi, sub: `${STAGES[g.stage]}${g.en ? ` · ${g.en}` : ""}`, n: g.items.length, cls: g.cls })), "cmset", "nhóm câu");
+    }
+    const g = groups.find((x) => x.vi === U.cm.set), rows = g ? g.items : [];
+    return head + `<section class="panel stack"><div class="row" style="justify-content:space-between"><div>${back('data-cmset=""', "Các nhóm câu")}<h2>${esc(U.cm.set)}</h2>
+        <span class="small muted">${rows.length} câu · ${STAGES[g ? g.stage : "Basic"]}</span></div>
+        <div class="row"><button type="button" class="btn primary" data-edit="sents:">+ Thêm câu</button><button type="button" class="btn" data-bulk="sents">+ Thêm nhiều câu</button></div></div>
+      ${rows.length ? `<div class="list">${rows.map((r) => `<div class="item"><span class="chip">💬</span>
+        <span class="t"><b>${esc(r[0])}</b> ${tag(r[4])}<br><span class="small muted">${esc(r[1])}</span></span>${rowBtns("sents", r[3])}</div>`).join("")}</div>`
+        : `<p class="muted">Nhóm câu còn trống — bấm “Thêm câu”.</p>`}</section>`;
+  }
+  function lessonRows(list, kind) {
+    const chaps = [...new Set(list.map((l) => l.chap))];
+    return chaps.map((c) => `<section class="panel stack"><h3>${esc(c)}</h3><div class="list">${list.filter((l) => l.chap === c).map((l) =>
+      `<div class="item"><span class="chip">${kind === "grammar" ? "📖" : l.subj === "math" ? "📐" : "🔭"}</span><span class="t"><b>${esc(l.title)}</b> ${tag(l.src)}<br>
+        <span class="small muted">${l.quiz.length} câu hỏi${l.viz ? " · có hình minh hoạ" : ""}</span></span>${rowBtns(kind, l.id)}</div>`).join("")}</div></section>`).join("")
+      || `<section class="panel"><p class="muted">Chưa có bài nào.</p></section>`;
+  }
+  function edGram() {
+    const lvl = U.cm.lvl;
+    return `<div class="row" style="justify-content:space-between">${seg("cmlvl", lvl, Object.entries(LEVELS), "Trình độ")}
+      <button type="button" class="btn primary" data-edit="grammar:">+ Thêm bài ngữ pháp</button></div>` + lessonRows(GRAM.filter((l) => l.lvl === lvl), "grammar");
+  }
+  function edStem() {
+    const { subj, grade } = U.cm;
+    return `<div class="row" style="justify-content:space-between"><div class="row">${seg("cmsubj", subj, [["math", "📐 Toán"], ["phys", "🔭 Vật lí"]], "Môn")}
+      ${seg("cmgrade", grade, [[7, "Lớp 7"], [8, "Lớp 8"], [9, "Lớp 9"]], "Lớp")}</div>
+      <button type="button" class="btn primary" data-edit="stem:">+ Thêm bài học</button></div>` + lessonRows(STEM.filter((l) => l.subj === subj && l.grade === grade), "stem");
+  }
+
+  // ---- Forms ----
+  const fld = (label, input, hint = "") => `<label class="stack fld"><span class="label">${label}</span>${input}${hint ? `<span class="small muted">${hint}</span>` : ""}</label>`;
+  const inp = (name, v, o = {}) => `<input type="text" name="${name}" value="${esc(v)}" maxlength="${o.max || 200}"${o.list ? ` list="${o.list}"` : ""}${o.ph ? ` placeholder="${esc(o.ph)}"` : ""}${o.req ? " required" : ""}>`;
+  const area = (name, v, rows = 3, ph = "") => `<textarea name="${name}" rows="${rows}"${ph ? ` placeholder="${esc(ph)}"` : ""}>${esc(v)}</textarea>`;
+  const sel = (name, v, opts) => `<select name="${name}">${opts.map(([id, l]) => `<option value="${esc(id)}"${String(id) === String(v) ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>`;
+  const datalist = (id, names) => `<datalist id="${id}">${[...new Set(names)].map((n) => `<option value="${esc(n)}"></option>`).join("")}</datalist>`;
+  const formHead = (title) => `<div class="row" style="justify-content:space-between"><h2>${title}</h2><button type="button" class="btn icon-btn ghost" data-close aria-label="Đóng">${I.x}</button></div>`;
+  const formFoot = () => `${U.formErr ? `<p class="feedback no" role="alert">${esc(U.formErr)}</p>` : ""}<div class="row"><button class="btn primary">Lưu</button><button type="button" class="btn ghost" data-close>Huỷ</button></div>`;
+  const lines = (s) => String(s || "").split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+  const pairLines = (s) => lines(s).map((x) => { const i = x.indexOf("|"); return i < 0 ? [x, ""] : [x.slice(0, i).trim(), x.slice(i + 1).trim()]; });
+  const OPT = ["A", "B", "C", "D"];
+  /** Quiz builder: a block per question with four answer boxes and a radio for the right one. */
+  function quizFields(quiz) {
+    const qs = quiz.length ? quiz : [{ q: "", opts: ["", "", "", ""], a: 0, why: "" }];
+    return `<fieldset class="stack qb"><legend class="label">Câu hỏi trắc nghiệm (học sinh cần đúng khoảng 3/4 để xong bài)</legend>${qs.map((q, i) => `<div class="qblock stack">
+        <div class="row" style="justify-content:space-between"><b>Câu ${i + 1}</b>${qs.length > 1 ? `<button type="button" class="btn sm ghost" data-delq="${i}">Bỏ câu này</button>` : ""}</div>
+        ${area(`q${i}`, q.q, 2, "Nội dung câu hỏi")}
+        <div class="qopts">${OPT.map((L, j) => `<label class="qopt"><input type="radio" name="q${i}a" value="${j}"${q.a === j ? " checked" : ""} aria-label="Đáp án đúng ${L}"><span>${L}</span>
+          <input type="text" name="q${i}o${j}" value="${esc(q.opts[j] || "")}" maxlength="200" placeholder="Phương án ${L}${j > 1 ? " (không bắt buộc)" : ""}"></label>`).join("")}</div>
+        ${inp(`q${i}why`, q.why, { max: 300, ph: "Giải thích vì sao đúng (hiện sau khi trả lời)" })}</div>`).join("")}
+      ${qs.length < 10 ? `<div><button type="button" class="btn sm" data-addq>+ Thêm câu hỏi</button></div>` : ""}</fieldset>`;
+  }
+  /** Read the quiz blocks as typed (empty answers kept), so the form can be redrawn without losing anything. */
+  function readQuiz(fd) {
+    const out = [];
+    for (let i = 0; fd.has(`q${i}`); i++) {
+      out.push({ q: fd.get(`q${i}`).trim(), opts: OPT.map((L, j) => (fd.get(`q${i}o${j}`) || "").trim()), a: +(fd.get(`q${i}a`) || 0), why: (fd.get(`q${i}why`) || "").trim() });
+    }
+    return out;
+  }
+  /** Typed questions → stored ones: drop empty answers and blank questions; explain what is missing. */
+  function finalQuiz(raw) {
+    const out = [];
+    for (const [i, x] of raw.entries()) {
+      if (!x.q && x.opts.every((o) => !o)) continue;
+      const keep = x.opts.map((o, j) => [o, j]).filter(([o]) => o);
+      if (!x.q) return `Câu ${i + 1}: chưa có nội dung câu hỏi`;
+      if (keep.length < 2) return `Câu ${i + 1}: cần ít nhất 2 phương án`;
+      if (!x.opts[x.a]) return `Câu ${i + 1}: hãy chọn đáp án đúng ở một phương án đã điền`;
+      if (new Set(keep.map(([o]) => o)).size !== keep.length) return `Câu ${i + 1}: có hai phương án giống nhau`;
+      out.push({ q: x.q, opts: keep.map(([o]) => o), a: keep.findIndex(([, j]) => j === x.a), why: x.why });
+    }
+    return out;
+  }
+  // The draft being edited: { kind, id, item }. Re-drawing the form (add/remove a question) keeps what was typed.
+  let FD = null;
+  function openForm(kind, id, item) {
+    const lvl = U.cm.lvl, track = U.cm.track;
+    if (!item) {
+      if (kind === "words") {
+        const f = id && findWord(lvl, id);
+        item = f ? { lvl, topic: f.t.vi, w: f.r[0], pos: f.r[1], ipa: f.r[2], vi: f.r[3], ex: f.r[4], emo: f.r[5] } : { lvl, topic: U.cm.set || Content.NEW_TOPIC, w: "", pos: "n", ipa: "", vi: "", ex: "", emo: "" };
+      } else if (kind === "sents") {
+        const f = id && findSent(track, id);
+        item = f ? { track, group: f.g.vi, stage: f.g.stage, en: f.r[0], vi: f.r[1], note: f.r[2] } : { track, group: U.cm.set || Content.NEW_GROUP, stage: "Basic", en: "", vi: "", note: "" };
+      } else if (kind === "grammar") {
+        item = id && GRAM_BY[id] ? JSON.parse(JSON.stringify(GRAM_BY[id])) : { lvl, chap: "", title: "", sum: "", forms: [], points: [], examples: [], memo: "", quiz: [] };
+      } else {
+        item = id && STEM_BY[id] ? JSON.parse(JSON.stringify(STEM_BY[id]))
+          : { subj: U.cm.subj, grade: U.cm.grade, chap: "", title: "", sum: "", points: [], formulas: [], viz: null, vizNote: "", memo: "", example: { q: "", a: "" }, terms: [], quiz: [] };
+      }
+      U.formErr = "";
+    }
+    FD = { kind, id: id || "", item };
+    const x = item, edit = !!id;
+    let body = "";
+    if (kind === "words") {
+      body = `${formHead(edit ? "Sửa từ" : "Thêm từ mới")}
+        <div class="grid g2">${fld("Từ tiếng Anh *", inp("w", x.w, { max: 60, req: true, ph: "ví dụ: apple" }))}${fld("Nghĩa tiếng Việt *", inp("vi", x.vi, { max: 160, req: true, ph: "quả táo" }))}
+        ${fld("Loại từ", sel("pos", x.pos, Object.entries(POS)))}${fld("Phiên âm IPA", inp("ipa", x.ipa, { max: 60, ph: "ˈæp.əl" }), "Có thể để trống")}</div>
+        ${fld("Câu ví dụ", inp("ex", x.ex, { max: 240, ph: "I eat an apple every day." }))}
+        <div class="grid g2">${fld("Emoji / hình", inp("emo", x.emo, { max: 16, ph: "🍎" }))}${fld("Bộ từ", inp("topic", x.topic, { max: 60, list: "dl-sets" }))}</div>
+        ${datalist("dl-sets", LV[x.lvl].map((t) => t.vi))}`;
+    } else if (kind === "sents") {
+      body = `${formHead(edit ? "Sửa câu" : "Thêm câu mới")}
+        ${fld("Câu tiếng Anh *", area("en", x.en, 2, "Could you send me the report by Friday?"))}${fld("Nghĩa tiếng Việt *", area("vi", x.vi, 2))}
+        ${fld("Ghi chú (cách dùng, cấu trúc)", inp("note", x.note, { max: 200 }))}
+        <div class="grid g2">${fld("Nhóm câu", inp("group", x.group, { max: 60, list: "dl-groups" }))}${fld("Trình độ (nhóm mới)", sel("stage", x.stage, Object.entries(STAGES)))}</div>
+        ${datalist("dl-groups", SG[x.track].map((g) => g.vi))}`;
+    } else if (kind === "grammar") {
+      body = `${formHead(edit ? "Sửa bài ngữ pháp" : "Thêm bài ngữ pháp")}
+        <div class="grid g2">${fld("Tên bài *", inp("title", x.title, { max: 120, req: true, ph: "Thì hiện tại hoàn thành" }))}${fld("Chủ điểm / Unit", inp("chap", x.chap, { max: 80, list: "dl-chaps", ph: "Unit 3 · Community service" }))}</div>
+        ${datalist("dl-chaps", GRAM.filter((l) => l.lvl === x.lvl).map((l) => l.chap))}
+        ${fld("Tóm tắt", area("sum", x.sum, 2, "Dùng khi nào?"))}
+        ${fld("Cấu trúc (mỗi dòng một công thức)", area("forms", x.forms.join("\n"), 3, "(+) S + have/has + V3\n(−) S + have/has not + V3"))}
+        ${fld("Cách dùng, dấu hiệu (mỗi dòng một ý)", area("points", x.points.join("\n"), 4))}
+        ${fld("Ví dụ (mỗi dòng: câu tiếng Anh | nghĩa)", area("examples", x.examples.map((p) => p.join(" | ")).join("\n"), 3, "I have lived here for 5 years. | Tôi đã sống ở đây 5 năm."))}
+        ${fld("Mẹo nhớ", inp("memo", x.memo, { max: 300 }))}
+        ${quizFields(x.quiz)}`;
+    } else {
+      const vk = Content.vizKey(x.viz), chart = x.viz && x.viz.type === "chart" ? x.viz : { title: "", data: [] };
+      body = `${formHead(edit ? "Sửa bài học" : "Thêm bài Toán / Vật lí")}
+        <div class="grid g2">${fld("Tên bài *", inp("title", x.title, { max: 120, req: true }))}${fld("Chương", inp("chap", x.chap, { max: 80, list: "dl-chaps" }))}
+        ${fld("Môn", sel("subj", x.subj, [["math", "Toán"], ["phys", "Vật lí"]]))}${fld("Lớp", sel("grade", x.grade, [[7, "Lớp 7"], [8, "Lớp 8"], [9, "Lớp 9"]]))}</div>
+        ${datalist("dl-chaps", STEM.filter((l) => l.subj === x.subj && l.grade === x.grade).map((l) => l.chap))}
+        ${fld("Tóm tắt", area("sum", x.sum, 2))}
+        ${fld("Ý chính cần nhớ (mỗi dòng một ý)", area("points", x.points.join("\n"), 4))}
+        ${fld("Công thức (mỗi dòng một công thức)", area("formulas", x.formulas.join("\n"), 2, "v = s / t"))}
+        ${fld("Hình minh hoạ kéo thả", sel("viz", vk, [["", "Không dùng hình"], ...Content.VIZ_PRESETS]))}
+        <div class="grid g2">${fld("Tiêu đề biểu đồ (nếu chọn biểu đồ)", inp("charttitle", chart.title, { max: 60 }))}
+          ${fld("Số liệu biểu đồ (mỗi dòng: nhãn | số)", area("chartdata", chart.data.map((d) => d.join(" | ")).join("\n"), 3, "Lớp 7A | 32\\nLớp 7B | 28"))}</div>
+        ${fld("Hướng dẫn xem hình", inp("vizNote", x.vizNote, { max: 300, ph: "Kéo thanh trượt …, quan sát …" }))}
+        ${fld("Mẹo nhớ", inp("memo", x.memo, { max: 300 }))}
+        ${fld("Ví dụ – đề bài", area("exq", x.example.q, 2))}${fld("Ví dụ – lời giải", area("exa", x.example.a, 3))}
+        ${fld("Thuật ngữ tiếng Anh (mỗi dòng: English | tiếng Việt)", area("terms", x.terms.map((p) => p.join(" | ")).join("\n"), 2, "speed | tốc độ"))}
+        ${quizFields(x.quiz)}`;
+    }
+    sheet(`<form class="stack edform" data-edform="${kind}" novalidate>${body}${formFoot()}</form>`, edit ? "Sửa" : "Thêm mới", true);
+  }
+  /** Form → item (as typed). Lesson quizzes stay raw here; saveForm() checks them. */
+  function readForm(form) {
+    const fd = new FormData(form), g = (k) => String(fd.get(k) || "").trim(), x = FD.item;
+    if (FD.kind === "words") return { ...x, w: g("w"), vi: g("vi"), pos: g("pos"), ipa: g("ipa"), ex: g("ex"), emo: g("emo"), topic: g("topic") || Content.NEW_TOPIC };
+    if (FD.kind === "sents") return { ...x, en: g("en"), vi: g("vi"), note: g("note"), group: g("group") || Content.NEW_GROUP, stage: g("stage") };
+    if (FD.kind === "grammar") {
+      return { ...x, title: g("title"), chap: g("chap"), sum: g("sum"), forms: lines(g("forms")), points: lines(g("points")), examples: pairLines(g("examples")), memo: g("memo"), quiz: readQuiz(fd) };
+    }
+    const key = g("viz"), [type, mode] = key.split(":"), vp = Content.VIZ_PRESETS.find(([k]) => k === key);
+    let viz = null;
+    if (vp) {
+      viz = { type };
+      if (mode) viz[{ angles: "mode", proportion: "kind", parabola: "mode", circle: "mode", solid: "shape", chart: "kind", lens: "kind", pressure: "mode", circuit: "mode" }[type]] = mode;
+      if (type === "chart") { viz.title = g("charttitle"); viz.data = pairLines(g("chartdata")).map(([l, n]) => [l, Number(n.replace(",", "."))]); }
+    }
+    return { ...x, subj: g("subj"), grade: +g("grade"), title: g("title"), chap: g("chap"), sum: g("sum"), points: lines(g("points")), formulas: lines(g("formulas")), viz,
+      vizNote: g("vizNote"), memo: g("memo"), example: { q: g("exq"), a: g("exa") }, terms: pairLines(g("terms")).filter(([a, b]) => a && b), quiz: readQuiz(fd) };
+  }
+  function saveForm(form) {
+    const kind = FD.kind, x = readForm(form);
+    const need = kind === "words" ? (!x.w ? "Hãy nhập từ tiếng Anh" : !x.vi ? "Hãy nhập nghĩa tiếng Việt" : "")
+      : kind === "sents" ? (!x.en ? "Hãy nhập câu tiếng Anh" : !x.vi ? "Hãy nhập nghĩa tiếng Việt" : "")
+      : !x.title ? "Hãy đặt tên bài" : "";
+    let quiz = null;
+    if (!need && (kind === "grammar" || kind === "stem")) quiz = finalQuiz(x.quiz);
+    const err = need || (typeof quiz === "string" ? quiz : "") || (kind === "stem" && x.viz && x.viz.type === "chart" && !Content.cleanViz(x.viz) ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số” (số không âm)" : "");
+    if (err) { U.formErr = err; openForm(kind, FD.id, x); return; }
+    if (quiz) x.quiz = quiz;
+    const id = FD.id || Content.newId(kind === "words" ? "w" : kind === "sents" ? "s" : kind === "grammar" ? "g" : "l");
+    if (!Content.put(MINE, kind, { ...x, id })) { U.formErr = "Chưa đủ thông tin để lưu"; openForm(kind, FD.id, x); return; }
+    if (kind === "words" || kind === "sents") U.cm.set = kind === "words" ? x.topic : x.group;
+    if (kind === "stem") Object.assign(U.cm, { subj: x.subj, grade: x.grade });
+    saveMine(); rebuild(); closeModal(); render();
+    toast(FD && FD.id ? "Đã lưu thay đổi" : "Đã thêm");
+    FD = null;
+  }
+  function bulkForm(kind) {
+    FD = null; U.formErr = "";
+    const words = kind === "words";
+    sheet(`<form class="stack edform" data-bulkform="${kind}" novalidate>${formHead(words ? "Thêm nhiều từ" : "Thêm nhiều câu")}
+      <p class="small muted">Dán danh sách, mỗi dòng một ${words ? "từ" : "câu"} — giống “Nhập” của Quizlet. Ngăn cách bằng dấu <b>|</b>, phím Tab (copy từ Excel/Word) hoặc “ - ”.</p>
+      ${fld(words ? "Mỗi dòng: từ | nghĩa | câu ví dụ (không bắt buộc)" : "Mỗi dòng: câu tiếng Anh | nghĩa | ghi chú (không bắt buộc)",
+        area("lines", "", 8, words ? "apple | quả táo | I eat an apple every day.\nbanana | quả chuối" : "How are you? | Bạn khoẻ không?\nSee you later! | Hẹn gặp lại!"))}
+      ${words ? fld("Loại từ cho cả danh sách", sel("pos", "n", Object.entries(POS))) : ""}
+      ${fld(words ? "Vào bộ từ" : "Vào nhóm câu", inp("set", U.cm.set || (words ? Content.NEW_TOPIC : Content.NEW_GROUP), { max: 60 }))}
+      ${formFoot()}</form>`, "Thêm nhiều", true);
+  }
+  function saveBulk(form) {
+    const kind = form.dataset.bulkform, fd = new FormData(form), set = String(fd.get("set") || "").trim();
+    const rows = Content.parseLines(fd.get("lines"), kind === "words" ? ["w", "vi", "ex"] : ["en", "vi", "note"]);
+    let n = 0;
+    for (const r of rows) {
+      const item = kind === "words" ? { id: Content.newId("w"), lvl: U.cm.lvl, topic: set || Content.NEW_TOPIC, pos: String(fd.get("pos") || "n"), ...r }
+        : { id: Content.newId("s"), track: U.cm.track, group: set || Content.NEW_GROUP, stage: "Basic", ...r };
+      if (Content.put(MINE, kind, item)) n++;
+    }
+    if (!n) { toast("Chưa đọc được dòng nào — mỗi dòng cần có cả tiếng Anh và nghĩa"); return; }
+    U.cm.set = set || (kind === "words" ? Content.NEW_TOPIC : Content.NEW_GROUP);
+    saveMine(); rebuild(); closeModal(); render();
+    toast(`Đã thêm ${n}/${rows.length} ${kind === "words" ? "từ" : "câu"}`);
+  }
+  function deleteItem(v) {
+    const i = v.indexOf(":"), kind = v.slice(0, i), id = v.slice(i + 1);
+    if (U.delAsk !== id) { U.delAsk = id; render(); return; }
+    U.delAsk = null;
+    const where = kind === "words" ? { lvl: U.cm.lvl } : kind === "sents" ? { track: U.cm.track } : kind === "grammar" ? { lvl: GRAM_BY[id] && GRAM_BY[id].lvl } : { subj: STEM_BY[id] && STEM_BY[id].subj };
+    Content.remove(MINE, kind, { id, ...where }, idsIn([CLS && CLS.pack]).has(id));
+    saveMine(); rebuild(); render(); toast("Đã xoá");
+  }
+
   // ---------- Tiến độ ----------
   function vMe() {
     const learned = (l) => Object.keys(S.progress[l]).length;
@@ -1836,19 +2279,24 @@
             : `<button type="button" class="btn sm" data-reset="ask">Xoá tiến độ…</button>`}</div>
       </section>`;
   }
-  function exportData() {
-    flush();
-    const blob = new Blob([JSON.stringify({ app: "nhip", v: 1, state: S, pics: PICS })], { type: "application/json" });
+  function download(name, obj) {
+    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = `nhip-sao-luu-${today()}.json`;
+    a.href = URL.createObjectURL(blob); a.download = name;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  function exportData() {
+    flush();
+    download(`nhip-sao-luu-${today()}.json`, { app: "nhip", v: 1, state: S, pics: PICS, pack: MINE });
   }
   async function importData(file) {
     try {
       const o = JSON.parse(await file.text());
       if (!o || o.app !== "nhip" || !o.state || !o.state.progress) throw new Error("bad file");
       S = merge(o.state); flush(); applyTheme();
+      const mine = o.pack && Content.clean(o.pack);
+      if (mine) { MINE = mine; saveMine(); rebuild(); }
       for (const [k, v] of Object.entries(o.pics || {})) { const p = cleanPic(v); if (p && BYKEY[k]) { PICS[k] = p; await DB.put(k, p); } }
       render(); toast("Đã nhập dữ liệu sao lưu");
     } catch (e) { toast("File sao lưu không hợp lệ"); }
@@ -1878,8 +2326,12 @@
     stemgrade: (v) => { U.stemGrade = +v; render(); },
     stemopen: (v) => { U.stemOpen = v; render(); scrollTo(0, 0); },
     stemback: () => { U.stemOpen = null; render(); },
-    stemans: (v) => stemAnswer(v),
-    stemretry: (v) => { U.stemQuiz[v] = []; const y = scrollY; render(); scrollTo(0, y); },
+    stemans: (v) => lessonAnswer("stem", v),
+    gramans: (v) => lessonAnswer("gram", v),
+    quizretry: (v) => { U.stemQuiz[v] = []; const y = scrollY; render(); scrollTo(0, y); },
+    lessondone: (v) => { const i = v.indexOf(":"), kind = v.slice(0, i), l = (kind === "gram" ? GRAM_BY : STEM_BY)[v.slice(i + 1)]; if (l) { lessonFinish(kind, l); render(); } },
+    gramopen: (v) => { U.gramOpen = v; render(); scrollTo(0, 0); },
+    gramback: () => { U.gramOpen = null; render(); },
     step: (v, t) => {
       const d = +t.dataset.d;
       if (v === "perday") S.perday = clamp(S.perday + d, PERDAY);
@@ -1983,6 +2435,27 @@
       farmDone(r, r.ok && `✨ ${b.zo} đã ban phúc ${r.n} cây (−${r.cost} ⚡)`, null, () => blessFx(v, idx));
     },
     rankby: (v) => { U.rankBy = v; render(); },
+    classview: (v) => { U.classView = v; U.cm = { kind: "" }; go("rank"); },
+    cm: (v) => { U.cm = { kind: v, lvl: S.level, track: S.track, subj: U.stemSubj, grade: U.stemGrade, set: null }; U.delAsk = null; render(); scrollTo(0, 0); },
+    cmlvl: (v) => { U.cm.lvl = v; U.cm.set = null; render(); },
+    cmtrack: (v) => { U.cm.track = v; U.cm.set = null; render(); },
+    cmsubj: (v) => { U.cm.subj = v; render(); },
+    cmgrade: (v) => { U.cm.grade = +v; render(); },
+    cmset: (v) => { U.cm.set = v || null; U.delAsk = null; render(); scrollTo(0, 0); },
+    edit: (v) => { const i = v.indexOf(":"); U.delAsk = null; openForm(v.slice(0, i), v.slice(i + 1)); },
+    bulk: (v) => bulkForm(v),
+    delitem: (v) => deleteItem(v),
+    addq: () => { const x = readForm($("#sheet [data-edform]")); x.quiz.push({ q: "", opts: ["", "", "", ""], a: 0, why: "" }); openForm(FD.kind, FD.id, x); const b = $("#sheet .qblock:last-of-type textarea"); if (b) b.focus(); },
+    delq: (v) => { const x = readForm($("#sheet [data-edform]")); x.quiz.splice(+v, 1); openForm(FD.kind, FD.id, x); },
+    publish: () => publish(),
+    teachout: () => { teacherOut(); render(); toast("Đã thoát chế độ giáo viên"); },
+    exportpack: () => exportPack(),
+    packrefresh: () => fetchPack(true),
+    dropmine: (v) => {
+      if (v === "ask") U.dropAsk = true;
+      else { U.dropAsk = false; if (v === "yes") { MINE = Content.fresh(); saveMine(); rebuild(); toast("Đã bỏ các thay đổi trên máy này"); } }
+      render();
+    },
     joinmode: (v) => { keepJoinFields(); U.joinMode = v; U.joinErr = ""; render(); },
     rankrefresh: () => { if (board && Date.now() - board.at < 10000) toast("Bảng vừa được cập nhật"); else fetchBoard(true); },
     avatar: (v) => { S.online.avatar = v; save(); lastPushed = ""; pushStats(true); render(); },
@@ -2049,7 +2522,7 @@
     "beastbuy", "beastup", "beastcast", "castgo",
     "sell", "upbarn", "deliver", "skiporder", "buydeco"]);
   document.addEventListener("click", (e) => {
-    if (e.target.id === "modal") { closeModal(); return; }
+    if (e.target.id === "modal") { if (!$("#sheet .edform")) closeModal(); return; }
     if (!$("#lvmenu").hidden && !e.target.closest(".subj-en")) lvMenu(false);
     const t = e.target.closest("button"); if (!t || t.disabled) return;
     for (const k in H) if (k in t.dataset) {
@@ -2060,6 +2533,16 @@
   });
   document.addEventListener("submit", (e) => {
     if (e.target.matches("[data-joinform]")) { e.preventDefault(); if (!U.joining) joinClass(); return; }
+    if (e.target.matches("[data-teachform]")) { e.preventDefault(); if (!U.teachBusy) teacherLogin(); return; }
+    if (e.target.matches("[data-edform]")) { e.preventDefault(); saveForm(e.target); return; }
+    if (e.target.matches("[data-bulkform]")) { e.preventDefault(); saveBulk(e.target); return; }
+    if (e.target.matches("[data-newset]")) {
+      e.preventDefault();
+      const name = $("#new-set").value.trim().replace(/\s+/g, " ").slice(0, 60);
+      if (!name) { toast("Hãy đặt tên trước"); return; }
+      U.cm.set = name; render(); scrollTo(0, 0);
+      return;
+    }
     if (!e.target.matches("[data-spellform]")) return;
     e.preventDefault();
     const q = U.vocab.qs[U.vocab.i];
@@ -2082,6 +2565,7 @@
     if (e.target.matches("[data-castpick]")) { const go = $("#sheet [data-castgo]"); if (go) castCost(go.dataset.castgo); }
     if (e.target.id === "btopic") { U.btopic = e.target.value; $("#blist").innerHTML = browseList(); }
     if (e.target.id === "import-in" && e.target.files[0]) importData(e.target.files[0]);
+    if (e.target.id === "pack-in" && e.target.files[0]) { importPack(e.target.files[0]); e.target.value = ""; }
     if (e.target.id === "rate") say("This is the reading speed.");
   });
   document.addEventListener("keydown", (e) => {
@@ -2106,6 +2590,7 @@
   if (urlRoom && !S.online && NET.configured) U.tab = "rank";
   applyTheme();
   render();
+  setTimeout(() => fetchPack(), 2500);
   DB.loadAll().then((pics) => { PICS = pics; if (Object.keys(pics).length && $("#modal").hidden) render(); });
   if ("serviceWorker" in navigator && document.querySelector('link[rel="manifest"]')) {
     addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));

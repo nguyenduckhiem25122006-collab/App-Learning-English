@@ -55,8 +55,27 @@ test("failures back off exponentially, success resets", async () => {
 });
 
 test("non-JSON or 4xx answers are errors, not crashes", async () => {
-  const h = harness(() => Promise.resolve({ ok: false, status: 404, json: () => Promise.reject(new Error("html")) }));
+  const h = harness(() => Promise.resolve({ ok: false, status: 400, json: () => Promise.reject(new Error("html")) }));
   await assert.rejects(h.net.leave("t"), { code: "bad_response" });
+});
+
+test("a function missing on an old server is reported without backing off", async () => {
+  const h = harness(() => Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({ code: "PGRST202" }) }));
+  await assert.rejects(h.net.packGet("t", 0), { code: "server_old" });
+  assert.equal(h.net.offline(), false);
+  assert.match(O.message("server_old"), /schema\.sql/);
+});
+
+test("class material calls send the right named arguments", async () => {
+  const h = harness(() => ok({ ok: true }));
+  await h.net.packGet("tok", 3);
+  await h.net.admin("LOP7A", "pw");
+  await h.net.packPut("LOP7A", "pw", { app: "nhip-pack" });
+  assert.deepEqual(h.calls.map((c) => [c.url.split("/").pop(), JSON.parse(c.opts.body)]), [
+    ["nhip_pack_get", { p_token: "tok", p_ver: 3 }],
+    ["nhip_admin", { p_room: "LOP7A", p_secret: "pw" }],
+    ["nhip_pack_put", { p_room: "LOP7A", p_secret: "pw", p_pack: { app: "nhip-pack" } }],
+  ]);
 });
 
 test("ranking by metric with shared ranks for ties", () => {

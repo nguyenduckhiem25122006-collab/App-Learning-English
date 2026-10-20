@@ -1,0 +1,1221 @@
+[
+ {
+  "id": "gt-01",
+  "lvl": "toeic",
+  "chap": "Từ loại",
+  "title": "Từ loại & vị trí trong câu (Parts of speech)",
+  "sum": "Nhận diện danh từ, tính từ, trạng từ, động từ qua vị trí và hậu tố — dạng câu chiếm nhiều nhất ở Part 5.",
+  "forms": [
+   "Tính từ + danh từ: a significant increase",
+   "Trạng từ + động từ / tính từ: carefully reviewed, highly qualified",
+   "Mạo từ / tính từ sở hữu + (adj) + N: the final decision, our new policy",
+   "be / become / remain / seem + tính từ: remain competitive",
+   "have/be + adv + V3: has been successfully completed"
+  ],
+  "points": [
+   "Danh từ đứng sau mạo từ, tính từ sở hữu, giới từ; làm chủ ngữ/tân ngữ: the approval of, for your cooperation.",
+   "Tính từ đứng trước danh từ hoặc sau linking verb (be, become, remain, seem, stay).",
+   "Trạng từ bổ nghĩa cho động từ, tính từ, cả câu; hay nằm giữa trợ động từ và V3.",
+   "Hậu tố danh từ: -tion, -ment, -ance, -ity, -ness, -er/-or; tính từ: -ive, -able, -ful, -ous, -al, -ic.",
+   "Một số từ đuôi -ly là tính từ: costly, timely, friendly, likely; daily, weekly vừa là adj vừa là adv.",
+   "Mẹo Part 5: xác định vị trí chỗ trống trước khi dịch nghĩa — nhiều câu giải được trong vài giây."
+  ],
+  "examples": [
+   [
+    "The proposal received strong support from management.",
+    "Đề xuất nhận được sự ủng hộ mạnh mẽ từ ban quản lý."
+   ],
+   [
+    "Please read the instructions carefully.",
+    "Vui lòng đọc kỹ hướng dẫn."
+   ],
+   [
+    "Sales remained stable during the third quarter.",
+    "Doanh số vẫn ổn định trong quý ba."
+   ],
+   [
+    "The new software is extremely reliable.",
+    "Phần mềm mới cực kỳ đáng tin cậy."
+   ]
+  ],
+  "memo": "Trước N là adj, trước adj là adv, sau the là N — nhìn vị trí trước khi dịch.",
+  "quiz": [
+   {
+    "q": "Ms. Tanaka gave a very ____ presentation on the new marketing strategy.",
+    "opts": [
+     "inform",
+     "information",
+     "informative",
+     "informatively"
+    ],
+    "a": 2,
+    "why": "Sau trạng từ very và trước danh từ presentation cần tính từ → informative."
+   },
+   {
+    "q": "All employees must complete the safety training ____ before using the equipment.",
+    "opts": [
+     "success",
+     "successful",
+     "succeed",
+     "successfully"
+    ],
+    "a": 3,
+    "why": "Câu đã đủ thành phần (complete + tân ngữ), chỗ trống bổ nghĩa cho động từ → trạng từ successfully."
+   },
+   {
+    "q": "The ____ of the new branch office is scheduled for next spring.",
+    "opts": [
+     "open",
+     "opening",
+     "opened",
+     "opens"
+    ],
+    "a": 1,
+    "why": "Sau the và trước of cần danh từ → opening (lễ khai trương)."
+   },
+   {
+    "q": "Our customer service team responds ____ to all inquiries.",
+    "opts": [
+     "promptly",
+     "prompt",
+     "promptness",
+     "prompted"
+    ],
+    "a": 0,
+    "why": "Bổ nghĩa cho động từ responds → trạng từ promptly."
+   }
+  ]
+ },
+ {
+  "id": "gt-02",
+  "lvl": "toeic",
+  "chap": "Thì & thể",
+  "title": "Thì động từ & dấu hiệu thời gian (Tenses)",
+  "sum": "Chọn thì đúng dựa vào trạng từ, mốc thời gian và mệnh đề đi kèm trong câu.",
+  "forms": [
+   "Hiện tại hoàn thành: has/have + V3 (since, for, so far, recently, over the past …)",
+   "Quá khứ đơn: V2 (yesterday, last …, … ago, in 2023)",
+   "Tương lai đơn: will + V (next …, tomorrow, soon)",
+   "Quá khứ hoàn thành: had + V3 (by the time + quá khứ đơn)",
+   "Tương lai hoàn thành: will have + V3 (by + mốc tương lai)"
+  ],
+  "points": [
+   "Câu hỏi thì trong TOEIC thường có trạng từ thời gian: tìm dấu hiệu trước khi chọn đáp án.",
+   "since + mốc, for + khoảng thời gian, so far, over the past … → hiện tại hoàn thành.",
+   "last …, … ago, yesterday, in + năm đã qua → quá khứ đơn; không dùng hiện tại hoàn thành.",
+   "By the time + quá khứ đơn → mệnh đề chính dùng quá khứ hoàn thành; by + mốc tương lai → will have V3.",
+   "Mệnh đề thời gian/điều kiện (when, after, before, as soon as, once, if) dùng hiện tại thay cho will.",
+   "Hiện tại đơn diễn tả lịch trình cố định: The train departs at 9 A.M."
+  ],
+  "examples": [
+   [
+    "Revenue has increased steadily since January.",
+    "Doanh thu đã tăng đều kể từ tháng Một."
+   ],
+   [
+    "The board approved the budget last week.",
+    "Hội đồng quản trị đã duyệt ngân sách vào tuần trước."
+   ],
+   [
+    "By next June, we will have opened three stores.",
+    "Đến tháng Sáu năm sau, chúng tôi sẽ mở xong ba cửa hàng."
+   ],
+   [
+    "Please call me as soon as the shipment arrives.",
+    "Vui lòng gọi cho tôi ngay khi lô hàng đến."
+   ]
+  ],
+  "memo": "Since/for → have V3; ago/last → V2; sau when/if/as soon as → không dùng will.",
+  "quiz": [
+   {
+    "q": "Mr. Lee ____ for the company for over ten years.",
+    "opts": [
+     "works",
+     "has worked",
+     "will work",
+     "is working"
+    ],
+    "a": 1,
+    "why": "For over ten years (kéo dài từ quá khứ đến nay) → hiện tại hoàn thành has worked."
+   },
+   {
+    "q": "The quarterly report ____ to all shareholders two days ago.",
+    "opts": [
+     "sends",
+     "has been sent",
+     "was sent",
+     "will be sent"
+    ],
+    "a": 2,
+    "why": "Two days ago → quá khứ đơn; báo cáo được gửi → bị động was sent."
+   },
+   {
+    "q": "Once the contract ____ signed, the project will begin.",
+    "opts": [
+     "is",
+     "will be",
+     "was",
+     "has"
+    ],
+    "a": 0,
+    "why": "Mệnh đề thời gian với once nói về tương lai dùng hiện tại, không dùng will → is signed."
+   },
+   {
+    "q": "By the time the manager arrived, the meeting ____.",
+    "opts": [
+     "already ends",
+     "will end",
+     "is ending",
+     "had already ended"
+    ],
+    "a": 3,
+    "why": "By the time + quá khứ đơn (arrived) → hành động xảy ra trước dùng quá khứ hoàn thành."
+   }
+  ]
+ },
+ {
+  "id": "gt-03",
+  "lvl": "toeic",
+  "chap": "Động từ",
+  "title": "Hòa hợp chủ ngữ – động từ (Subject–verb agreement)",
+  "sum": "Động từ phải chia theo chủ ngữ chính về số ít/số nhiều, bỏ qua các cụm từ chen giữa.",
+  "forms": [
+   "N số ít / N không đếm được + V(s/es) / is / was / has",
+   "N số nhiều + V nguyên mẫu / are / were / have",
+   "The number of + N số nhiều + V số ít",
+   "A number of + N số nhiều + V số nhiều",
+   "Each / Every + N số ít + V số ít"
+  ],
+  "points": [
+   "Xác định chủ ngữ thật, bỏ qua cụm giới từ chen giữa: The list of applicants is …",
+   "Each, every, either, neither, everyone, someone + động từ số ít.",
+   "The number of + N → V số ít; a number of + N (= nhiều) → V số nhiều.",
+   "Danh từ không đếm được (information, equipment, furniture, luggage) dùng V số ít.",
+   "Trong mệnh đề quan hệ, động từ chia theo danh từ được bổ nghĩa: employees who are …",
+   "Đề TOEIC hay đặt danh từ gây nhiễu sát chỗ trống; luôn tìm chủ ngữ chính."
+  ],
+  "examples": [
+   [
+    "The cost of the repairs is higher than expected.",
+    "Chi phí sửa chữa cao hơn dự kiến."
+   ],
+   [
+    "Each employee receives a parking permit.",
+    "Mỗi nhân viên nhận một thẻ đỗ xe."
+   ],
+   [
+    "A number of clients have requested refunds.",
+    "Một số khách hàng đã yêu cầu hoàn tiền."
+   ],
+   [
+    "The office equipment needs to be replaced.",
+    "Thiết bị văn phòng cần được thay thế."
+   ]
+  ],
+  "memo": "Gạch bỏ cụm 'of …' và phần chen giữa — chủ ngữ thật quyết định động từ.",
+  "quiz": [
+   {
+    "q": "The results of the customer survey ____ posted on the company website.",
+    "opts": [
+     "has been",
+     "was",
+     "is",
+     "have been"
+    ],
+    "a": 3,
+    "why": "Chủ ngữ chính là The results (số nhiều), không phải survey → have been posted."
+   },
+   {
+    "q": "Every applicant ____ required to submit two letters of reference.",
+    "opts": [
+     "are",
+     "is",
+     "were",
+     "have"
+    ],
+    "a": 1,
+    "why": "Every + danh từ số ít → động từ số ít is."
+   },
+   {
+    "q": "The number of online orders ____ grown significantly this year.",
+    "opts": [
+     "has",
+     "have",
+     "are",
+     "were"
+    ],
+    "a": 0,
+    "why": "The number of + N → chủ ngữ số ít; this year + grown → has grown."
+   },
+   {
+    "q": "The new office furniture ____ expected to arrive on Monday.",
+    "opts": [
+     "are",
+     "have",
+     "is",
+     "being"
+    ],
+    "a": 2,
+    "why": "Furniture là danh từ không đếm được → động từ số ít is."
+   }
+  ]
+ },
+ {
+  "id": "gt-04",
+  "lvl": "toeic",
+  "chap": "Thì & thể",
+  "title": "Câu bị động (Passive voice)",
+  "sum": "Dùng khi muốn nhấn mạnh đối tượng chịu tác động của hành động hơn là người thực hiện.",
+  "forms": [
+   "S + be (chia thì) + V3/V-ed (+ by O)",
+   "Hiện tại hoàn thành: has/have been + V3",
+   "Động từ khuyết thiếu: can/must/should/will + be + V3",
+   "Tiếp diễn: am/is/are/was/were being + V3"
+  ],
+  "points": [
+   "Dùng bị động khi đối tượng chịu tác động quan trọng hơn người làm: The order was shipped.",
+   "Dấu hiệu: sau chỗ trống không có tân ngữ, hoặc có by + tác nhân → thường là bị động.",
+   "Nội động từ (arrive, occur, rise, happen, remain) không có dạng bị động.",
+   "Cụm hay gặp: be required to, be expected to, be scheduled for, be located in, be pleased to.",
+   "Động từ có hai tân ngữ có thể bị động mà vẫn còn tân ngữ: Staff were given new badges.",
+   "Bẫy: be + V-ing (chủ động tiếp diễn) và be + V3 (bị động) — xét xem ai làm hành động."
+  ],
+  "examples": [
+   [
+    "The conference will be held in Singapore.",
+    "Hội nghị sẽ được tổ chức tại Singapore."
+   ],
+   [
+    "All invoices must be approved by the manager.",
+    "Mọi hóa đơn phải được quản lý phê duyệt."
+   ],
+   [
+    "The building is being renovated this month.",
+    "Tòa nhà đang được cải tạo trong tháng này."
+   ],
+   [
+    "Our products have been sold in 30 countries.",
+    "Sản phẩm của chúng tôi đã được bán ở 30 quốc gia."
+   ]
+  ],
+  "memo": "Sau chỗ trống là giới từ hoặc dấu chấm, không có tân ngữ → nghĩ ngay đến be + V3.",
+  "quiz": [
+   {
+    "q": "The new employee handbook ____ to all staff next week.",
+    "opts": [
+     "distributes",
+     "will distribute",
+     "is distributing",
+     "will be distributed"
+    ],
+    "a": 3,
+    "why": "Sổ tay được phát (không tự phát), không có tân ngữ, next week → bị động tương lai will be distributed."
+   },
+   {
+    "q": "The annual sales meeting has ____ until further notice.",
+    "opts": [
+     "been postponed",
+     "postponed",
+     "been postponing",
+     "postpone"
+    ],
+    "a": 0,
+    "why": "Cuộc họp bị hoãn, sau chỗ trống không có tân ngữ → has been postponed."
+   },
+   {
+    "q": "The shipment ____ by the supplier yesterday afternoon.",
+    "opts": [
+     "delivered",
+     "was delivered",
+     "was delivering",
+     "has been delivered"
+    ],
+    "a": 1,
+    "why": "Có by the supplier → bị động; yesterday → quá khứ đơn was delivered."
+   },
+   {
+    "q": "Visitors are ____ to sign in at the front desk.",
+    "opts": [
+     "requiring",
+     "require",
+     "required",
+     "requirement"
+    ],
+    "a": 2,
+    "why": "Cấu trúc bị động be required to V (được yêu cầu làm gì)."
+   }
+  ]
+ },
+ {
+  "id": "gt-05",
+  "lvl": "toeic",
+  "chap": "Động từ",
+  "title": "Danh động từ & động từ nguyên mẫu (Gerund vs to-infinitive)",
+  "sum": "Chọn V-ing hay to V tùy vào động từ, giới từ hoặc danh từ đứng trước chỗ trống.",
+  "forms": [
+   "V + V-ing: avoid, consider, delay, finish, mind, postpone, recommend, suggest",
+   "V + to V: agree, decide, plan, hope, offer, refuse, expect, fail",
+   "V + O + to V: ask, allow, encourage, require, advise, remind",
+   "Giới từ + V-ing: interested in applying, before signing",
+   "'to' là giới từ: look forward to, be committed to, be dedicated to + V-ing"
+  ],
+  "points": [
+   "Sau giới từ (in, on, for, by, without, before, after) luôn dùng V-ing: before signing the contract.",
+   "Một số cụm có 'to' là giới từ nên theo sau là V-ing: look forward to hearing from you.",
+   "To V chỉ mục đích (để): We hired a consultant to improve efficiency; in order to = so as to.",
+   "Danh từ + to V: the decision to expand, an opportunity to work, the ability to manage.",
+   "stop/remember/forget + V-ing (việc đã làm) khác + to V (việc cần/sẽ làm).",
+   "Bẫy: allow/permit + O + to V, nhưng allow + V-ing khi không có tân ngữ."
+  ],
+  "examples": [
+   [
+    "We are considering opening a branch in Osaka.",
+    "Chúng tôi đang cân nhắc mở chi nhánh ở Osaka."
+   ],
+   [
+    "The company plans to hire 50 new staff.",
+    "Công ty dự định tuyển 50 nhân viên mới."
+   ],
+   [
+    "I look forward to working with you.",
+    "Tôi mong được làm việc cùng anh/chị."
+   ],
+   [
+    "Managers encourage employees to share ideas.",
+    "Các quản lý khuyến khích nhân viên chia sẻ ý tưởng."
+   ]
+  ],
+  "memo": "Sau giới từ → V-ing; nhớ: look forward to / be committed to cũng là giới từ.",
+  "quiz": [
+   {
+    "q": "The marketing director suggested ____ the product launch until May.",
+    "opts": [
+     "delay",
+     "to delay",
+     "delaying",
+     "delayed"
+    ],
+    "a": 2,
+    "why": "Suggest + V-ing → suggested delaying."
+   },
+   {
+    "q": "Ms. Kim has agreed ____ the training session on Friday.",
+    "opts": [
+     "lead",
+     "to lead",
+     "leading",
+     "led"
+    ],
+    "a": 1,
+    "why": "Agree + to V → agreed to lead."
+   },
+   {
+    "q": "We look forward to ____ your order.",
+    "opts": [
+     "receive",
+     "received",
+     "receipt",
+     "receiving"
+    ],
+    "a": 3,
+    "why": "Look forward to: to là giới từ → theo sau là V-ing receiving (có tân ngữ your order)."
+   },
+   {
+    "q": "Employees are encouraged ____ public transportation to reduce costs.",
+    "opts": [
+     "to use",
+     "using",
+     "use",
+     "used"
+    ],
+    "a": 0,
+    "why": "Encourage sb to V → bị động: be encouraged to V → to use."
+   }
+  ]
+ },
+ {
+  "id": "gt-06",
+  "lvl": "toeic",
+  "chap": "Mệnh đề",
+  "title": "Phân từ: tính từ V-ing / V-ed & mệnh đề rút gọn (Participles)",
+  "sum": "Dùng V-ing (chủ động) và V3/V-ed (bị động) làm tính từ hoặc để rút gọn mệnh đề quan hệ, mệnh đề trạng ngữ.",
+  "forms": [
+   "V-ing (tính từ): mang nghĩa chủ động / gây cảm xúc — an exciting offer",
+   "V-ed (tính từ): mang nghĩa bị động / chịu cảm xúc — a revised schedule, satisfied clients",
+   "N + V-ing … (= N + who/which + V chủ động)",
+   "N + V3 … (= N + who/which + be + V3)",
+   "Before / After / When / While + V-ing; as requested, once approved, unless otherwise stated"
+  ],
+  "points": [
+   "V-ing mang nghĩa chủ động/gây cảm xúc; V-ed mang nghĩa bị động/cảm nhận: a confusing memo, confused clients.",
+   "Rút gọn mệnh đề quan hệ chủ động bằng V-ing: Employees wishing to attend should register.",
+   "Rút gọn mệnh đề quan hệ bị động bằng V3: The documents attached to this e-mail are confidential.",
+   "Cụm hay gặp: as requested, as discussed, as mentioned, unless otherwise noted, when completed.",
+   "Xét danh từ có tự thực hiện hành động không: có → V-ing; bị tác động → V3.",
+   "Cụm cố định: existing customers, remaining items, experienced staff, detailed report, limited budget."
+  ],
+  "examples": [
+   [
+    "Customers placing orders online receive a discount.",
+    "Khách hàng đặt hàng trực tuyến được giảm giá."
+   ],
+   [
+    "The report submitted yesterday contained errors.",
+    "Bản báo cáo nộp hôm qua có lỗi."
+   ],
+   [
+    "As requested, I have attached the invoice.",
+    "Theo yêu cầu, tôi đã đính kèm hóa đơn."
+   ],
+   [
+    "The sales results were disappointing.",
+    "Kết quả bán hàng thật đáng thất vọng."
+   ],
+   [
+    "Before leaving, please turn off the lights.",
+    "Trước khi rời đi, vui lòng tắt đèn."
+   ]
+  ],
+  "memo": "Danh từ tự làm → V-ing; danh từ bị làm → V3. Người cảm thấy → -ed, vật gây cảm xúc → -ing.",
+  "quiz": [
+   {
+    "q": "Passengers ____ to Tokyo should proceed to Gate 12.",
+    "opts": [
+     "travel",
+     "traveling",
+     "traveled",
+     "travels"
+    ],
+    "a": 1,
+    "why": "Câu đã có động từ chính should proceed; hành khách tự đi → rút gọn chủ động traveling."
+   },
+   {
+    "q": "Please review the ____ contract and sign it by Friday.",
+    "opts": [
+     "revise",
+     "revising",
+     "revised",
+     "revision"
+    ],
+    "a": 2,
+    "why": "Hợp đồng được chỉnh sửa (bị động) → tính từ phân từ revised."
+   },
+   {
+    "q": "The board members were ____ with the quarterly results.",
+    "opts": [
+     "satisfied",
+     "satisfying",
+     "satisfaction",
+     "satisfy"
+    ],
+    "a": 0,
+    "why": "Người cảm thấy hài lòng → be satisfied with."
+   },
+   {
+    "q": "Unless otherwise ____, all prices include tax.",
+    "opts": [
+     "stating",
+     "state",
+     "states",
+     "stated"
+    ],
+    "a": 3,
+    "why": "Cụm cố định unless otherwise stated (trừ khi có ghi chú khác) — giá bị nêu → V3."
+   }
+  ]
+ },
+ {
+  "id": "gt-07",
+  "lvl": "toeic",
+  "chap": "Mệnh đề",
+  "title": "Mệnh đề quan hệ (Relative clauses: who, which, that, whose, whom)",
+  "sum": "Dùng đại từ quan hệ để bổ sung thông tin cho danh từ đứng trước, nối hai câu thành một.",
+  "forms": [
+   "N (người) + who + V / whom + S + V",
+   "N (vật) + which + V / which + S + V",
+   "N + that + … (không dùng sau dấu phẩy và sau giới từ)",
+   "N + whose + N + V (sở hữu)",
+   "Giới từ + whom / which: to whom, in which"
+  ],
+  "points": [
+   "who thay cho người làm chủ ngữ; whom làm tân ngữ (thường sau giới từ: to whom, with whom).",
+   "which thay cho vật; that thay cho cả người và vật trong mệnh đề xác định.",
+   "whose + danh từ chỉ sở hữu (của người/vật đó): a client whose contract expired.",
+   "Sau dấu phẩy và sau giới từ không dùng that: , which … / in which … ✓; , that … ✗.",
+   "Nếu sau chỗ trống là danh từ không có mạo từ rồi đến động từ → thường chọn whose.",
+   "Phân biệt với what (= the thing that): trước what không có danh từ."
+  ],
+  "examples": [
+   [
+    "The candidate who was interviewed today has strong skills.",
+    "Ứng viên được phỏng vấn hôm nay có kỹ năng tốt."
+   ],
+   [
+    "The printer which we bought last year is broken.",
+    "Chiếc máy in chúng tôi mua năm ngoái đã hỏng."
+   ],
+   [
+    "We met a supplier whose prices are very competitive.",
+    "Chúng tôi đã gặp một nhà cung cấp có giá rất cạnh tranh."
+   ],
+   [
+    "The person to whom you sent the file is on leave.",
+    "Người mà bạn gửi tập tin đang nghỉ phép."
+   ]
+  ],
+  "memo": "Người → who/whom, vật → which, sở hữu → whose; sau dấu phẩy hoặc giới từ không dùng that.",
+  "quiz": [
+   {
+    "q": "Employees ____ want to join the fitness program should contact Ms. Ruiz.",
+    "opts": [
+     "which",
+     "who",
+     "whose",
+     "whom"
+    ],
+    "a": 1,
+    "why": "Thay cho người (Employees), làm chủ ngữ của want → who."
+   },
+   {
+    "q": "Galaxy Corp., ____ headquarters are in Seoul, has opened an office in Hanoi.",
+    "opts": [
+     "which",
+     "who",
+     "whose",
+     "that"
+    ],
+    "a": 2,
+    "why": "Sau chỗ trống là danh từ headquarters (trụ sở của công ty) → sở hữu whose."
+   },
+   {
+    "q": "The new software, ____ was installed last week, has improved productivity.",
+    "opts": [
+     "which",
+     "that",
+     "what",
+     "who"
+    ],
+    "a": 0,
+    "why": "Thay cho vật, đứng sau dấu phẩy (không dùng that) → which."
+   },
+   {
+    "q": "Mr. Patel is the consultant with ____ we worked on the merger.",
+    "opts": [
+     "who",
+     "that",
+     "which",
+     "whom"
+    ],
+    "a": 3,
+    "why": "Sau giới từ with, thay cho người → whom."
+   }
+  ]
+ },
+ {
+  "id": "gt-08",
+  "lvl": "toeic",
+  "chap": "Mệnh đề",
+  "title": "Câu điều kiện (Conditionals; unless, provided that)",
+  "sum": "Diễn tả điều kiện và kết quả: có thật, có thể xảy ra, hoặc không có thật ở hiện tại/quá khứ.",
+  "forms": [
+   "Loại 0: If + hiện tại đơn, hiện tại đơn",
+   "Loại 1: If + hiện tại đơn, will/can/may + V",
+   "Loại 2: If + quá khứ đơn (were), would/could + V",
+   "Loại 3: If + had + V3, would/could have + V3",
+   "Đảo ngữ: Should + S + V, … / Were + S + to V, … / Had + S + V3, …"
+  ],
+  "points": [
+   "Loại 0: sự thật, quy định chung; loại 1: điều có thể xảy ra ở hiện tại/tương lai.",
+   "Loại 2: điều không có thật ở hiện tại; loại 3: điều không có thật trong quá khứ.",
+   "unless = if … not: Unless you register, you cannot attend (không thêm not sau unless).",
+   "provided (that), providing, as long as, on condition that = miễn là, với điều kiện là.",
+   "Đảo ngữ trang trọng hay gặp trong thư: Should you have any questions, please contact us.",
+   "Mệnh đề if loại 1 không dùng will: If the price rises, … (không nói If the price will rise)."
+  ],
+  "examples": [
+   [
+    "If you order today, you will receive free shipping.",
+    "Nếu đặt hàng hôm nay, bạn sẽ được miễn phí vận chuyển."
+   ],
+   [
+    "If we had more staff, we would finish sooner.",
+    "Nếu có thêm nhân viên, chúng tôi sẽ xong sớm hơn."
+   ],
+   [
+    "Should you need assistance, please call extension 205.",
+    "Nếu cần hỗ trợ, vui lòng gọi số máy lẻ 205."
+   ],
+   [
+    "You can work from home provided that you meet deadlines.",
+    "Bạn có thể làm việc tại nhà miễn là đúng hạn."
+   ]
+  ],
+  "memo": "Should đầu câu = If; unless = if not; had V3 → would have V3.",
+  "quiz": [
+   {
+    "q": "If the shipment ____ late, we will notify you immediately.",
+    "opts": [
+     "arrives",
+     "will arrive",
+     "arrived",
+     "arriving"
+    ],
+    "a": 0,
+    "why": "Câu điều kiện loại 1: mệnh đề if dùng hiện tại đơn → arrives."
+   },
+   {
+    "q": "____ you have any questions about your bill, please contact our support team.",
+    "opts": [
+     "Unless",
+     "Should",
+     "Had",
+     "Would"
+    ],
+    "a": 1,
+    "why": "Đảo ngữ điều kiện loại 1: Should + S + V = If + S + V."
+   },
+   {
+    "q": "If Ms. Ito had checked the figures, she ____ the error.",
+    "opts": [
+     "would notice",
+     "will notice",
+     "would have noticed",
+     "had noticed"
+    ],
+    "a": 2,
+    "why": "Loại 3 (If + had V3) → mệnh đề chính would have + V3."
+   },
+   {
+    "q": "Visitors may use the lounge ____ they show a valid pass.",
+    "opts": [
+     "unless",
+     "despite",
+     "otherwise",
+     "provided that"
+    ],
+    "a": 3,
+    "why": "Nghĩa: miễn là xuất trình thẻ hợp lệ → provided that + mệnh đề."
+   }
+  ]
+ },
+ {
+  "id": "gt-09",
+  "lvl": "toeic",
+  "chap": "So sánh",
+  "title": "So sánh hơn & so sánh nhất (Comparatives & superlatives)",
+  "sum": "So sánh hai đối tượng (hơn, bằng) hoặc từ ba đối tượng trở lên (nhất) bằng tính từ và trạng từ.",
+  "forms": [
+   "So sánh hơn: adj-er / more + adj/adv + than",
+   "So sánh nhất: the + adj-est / the most + adj (+ in/of …)",
+   "So sánh bằng: as + adj/adv + as",
+   "Nhấn mạnh: much / far / even / significantly + so sánh hơn",
+   "The + so sánh hơn …, the + so sánh hơn …"
+  ],
+  "points": [
+   "Dấu hiệu than → so sánh hơn; the … in/of/ever, one of the → so sánh nhất.",
+   "Nhấn mạnh so sánh hơn dùng much, far, even, a lot, considerably (không dùng very).",
+   "Bất quy tắc: good/well → better → best; bad → worse → worst; little → less → least.",
+   "Trạng từ cũng có so sánh: more efficiently than, the most carefully.",
+   "one of the + so sánh nhất + danh từ số nhiều: one of the largest firms.",
+   "Bẫy: more + -er (more cheaper ✗); giữa as … as dùng dạng nguyên."
+  ],
+  "examples": [
+   [
+    "This model is lighter than the previous one.",
+    "Mẫu này nhẹ hơn mẫu trước."
+   ],
+   [
+    "Our new plan is far more affordable.",
+    "Gói dịch vụ mới của chúng tôi có giá phải chăng hơn nhiều."
+   ],
+   [
+    "It was the most successful campaign in our history.",
+    "Đó là chiến dịch thành công nhất trong lịch sử công ty."
+   ],
+   [
+    "The sooner we finish, the better.",
+    "Càng xong sớm càng tốt."
+   ]
+  ],
+  "memo": "Có than → hơn; có the … of/in → nhất; trước so sánh hơn dùng much/far, không dùng very.",
+  "quiz": [
+   {
+    "q": "The new assembly line is ____ more efficient than the old one.",
+    "opts": [
+     "very",
+     "much",
+     "most",
+     "so"
+    ],
+    "a": 1,
+    "why": "Nhấn mạnh so sánh hơn (more efficient than) dùng much, không dùng very."
+   },
+   {
+    "q": "Westfield Hotel offers the ____ rates in the downtown area.",
+    "opts": [
+     "lower",
+     "low",
+     "lowest",
+     "more low"
+    ],
+    "a": 2,
+    "why": "The … in the downtown area → so sánh nhất the lowest."
+   },
+   {
+    "q": "This quarter's profits were ____ than we had expected.",
+    "opts": [
+     "higher",
+     "highest",
+     "high",
+     "the highest"
+    ],
+    "a": 0,
+    "why": "Có than → so sánh hơn higher."
+   },
+   {
+    "q": "Ms. Chen is one of the most ____ managers in the company.",
+    "opts": [
+     "experience",
+     "experiencing",
+     "experiences",
+     "experienced"
+    ],
+    "a": 3,
+    "why": "The most + tính từ trước danh từ managers → experienced (có kinh nghiệm)."
+   }
+  ]
+ },
+ {
+  "id": "gt-10",
+  "lvl": "toeic",
+  "chap": "Liên từ & giới từ",
+  "title": "Liên từ vs giới từ (although/despite, because/because of, while/during)",
+  "sum": "Liên từ đi với mệnh đề (S + V), giới từ đi với danh từ hoặc V-ing — dạng bẫy kinh điển của Part 5.",
+  "forms": [
+   "Liên từ + S + V: although, even though, because, since, while, when",
+   "Giới từ + N / V-ing: despite, in spite of, because of, due to, during",
+   "Trạng từ liên kết: however, therefore, moreover + dấu phẩy (đầu câu)"
+  ],
+  "points": [
+   "although/even though/though + mệnh đề; despite/in spite of + danh từ/V-ing (nhượng bộ).",
+   "because/since/as + mệnh đề; because of/due to/owing to + danh từ (nguyên nhân).",
+   "while + mệnh đề (hoặc V-ing); during + danh từ chỉ khoảng thời gian: during the meeting.",
+   "however, therefore, moreover là trạng từ liên kết, không dùng để nối hai mệnh đề bằng dấu phẩy.",
+   "Mẹo: sau chỗ trống có động từ chia → liên từ; chỉ có cụm danh từ → giới từ.",
+   "despite the fact that + mệnh đề = although + mệnh đề."
+  ],
+  "examples": [
+   [
+    "Although sales fell, profits increased.",
+    "Mặc dù doanh số giảm, lợi nhuận vẫn tăng."
+   ],
+   [
+    "Despite the rain, the event was a success.",
+    "Bất chấp trời mưa, sự kiện vẫn thành công."
+   ],
+   [
+    "The flight was delayed due to bad weather.",
+    "Chuyến bay bị hoãn do thời tiết xấu."
+   ],
+   [
+    "Please silence your phone during the presentation.",
+    "Vui lòng tắt chuông điện thoại trong lúc thuyết trình."
+   ]
+  ],
+  "memo": "Sau chỗ trống có S + V → liên từ; chỉ có danh từ → giới từ.",
+  "quiz": [
+   {
+    "q": "____ the high cost, the board approved the renovation plan.",
+    "opts": [
+     "Although",
+     "Despite",
+     "Because",
+     "However"
+    ],
+    "a": 1,
+    "why": "Sau chỗ trống là cụm danh từ (the high cost), nghĩa nhượng bộ → giới từ Despite."
+   },
+   {
+    "q": "The store will be closed on Monday ____ the public holiday.",
+    "opts": [
+     "because",
+     "although",
+     "because of",
+     "while"
+    ],
+    "a": 2,
+    "why": "Sau chỗ trống là cụm danh từ, nghĩa nguyên nhân → because of."
+   },
+   {
+    "q": "Please do not use your mobile phone ____ the flight.",
+    "opts": [
+     "during",
+     "while",
+     "when",
+     "since"
+    ],
+    "a": 0,
+    "why": "Trước danh từ chỉ khoảng thời gian (the flight) → giới từ during."
+   },
+   {
+    "q": "____ the project was finished on time, it went over budget.",
+    "opts": [
+     "Despite",
+     "In spite of",
+     "Due to",
+     "Although"
+    ],
+    "a": 3,
+    "why": "Sau chỗ trống là mệnh đề (the project was finished), nghĩa trái ngược → liên từ Although."
+   }
+  ]
+ },
+ {
+  "id": "gt-11",
+  "lvl": "toeic",
+  "chap": "Liên từ & giới từ",
+  "title": "Liên từ tương quan (Correlative conjunctions)",
+  "sum": "Các cặp liên từ đi đôi để nối hai thành phần cùng loại: both … and, either … or, neither … nor, not only … but also.",
+  "forms": [
+   "both A and B (+ V số nhiều)",
+   "either A or B / neither A nor B (V chia theo B)",
+   "not only A but (also) B (V chia theo B)",
+   "whether A or B",
+   "A as well as B (V chia theo A)"
+  ],
+  "points": [
+   "Cặp liên từ phải đi đúng đôi: both–and, either–or, neither–nor, not only–but also, whether–or.",
+   "both A and B làm chủ ngữ → động từ số nhiều.",
+   "either … or, neither … nor, not only … but also: động từ chia theo chủ ngữ gần nhất (B).",
+   "A và B phải cùng loại từ/cấu trúc (song song): both fast and reliable.",
+   "neither … nor đã mang nghĩa phủ định, không thêm not vào câu.",
+   "Mẹo: thấy and → both; thấy or → either; thấy nor → neither; thấy but also → not only."
+  ],
+  "examples": [
+   [
+    "Both the manager and her assistant attended the fair.",
+    "Cả quản lý và trợ lý của cô ấy đều dự hội chợ."
+   ],
+   [
+    "You can pay either by card or in cash.",
+    "Bạn có thể thanh toán bằng thẻ hoặc tiền mặt."
+   ],
+   [
+    "Neither the price nor the design was acceptable.",
+    "Cả giá lẫn thiết kế đều không chấp nhận được."
+   ],
+   [
+    "The app is not only fast but also secure.",
+    "Ứng dụng không chỉ nhanh mà còn an toàn."
+   ]
+  ],
+  "memo": "Nhìn vế thứ hai để chọn vế thứ nhất: and ↔ both, or ↔ either, nor ↔ neither, but also ↔ not only.",
+  "quiz": [
+   {
+    "q": "Applicants must have ____ a degree in finance and three years of experience.",
+    "opts": [
+     "either",
+     "both",
+     "neither",
+     "not only"
+    ],
+    "a": 1,
+    "why": "Có and ở vế sau → both … and."
+   },
+   {
+    "q": "Payment can be made ____ online or at any of our branches.",
+    "opts": [
+     "both",
+     "neither",
+     "either",
+     "nor"
+    ],
+    "a": 2,
+    "why": "Có or ở vế sau → either … or."
+   },
+   {
+    "q": "Neither the CEO nor the directors ____ available for comment.",
+    "opts": [
+     "was",
+     "is",
+     "has",
+     "were"
+    ],
+    "a": 3,
+    "why": "Neither A nor B: động từ chia theo B (the directors, số nhiều) → were."
+   },
+   {
+    "q": "The seminar was not only informative ____ entertaining.",
+    "opts": [
+     "but also",
+     "and also",
+     "or",
+     "nor"
+    ],
+    "a": 0,
+    "why": "Not only … but also: cặp liên từ cố định."
+   }
+  ]
+ },
+ {
+  "id": "gt-12",
+  "lvl": "toeic",
+  "chap": "Đại từ",
+  "title": "Đại từ: phản thân, sở hữu, each other (Pronouns)",
+  "sum": "Chọn đúng dạng đại từ theo vị trí: chủ ngữ, tân ngữ, trước danh từ, đứng một mình hay phản thân.",
+  "forms": [
+   "Chủ ngữ: I, you, he, she, it, we, they",
+   "Tân ngữ: me, you, him, her, it, us, them",
+   "Tính từ sở hữu + N: my, your, his, her, its, our, their",
+   "Đại từ sở hữu: mine, yours, his, hers, ours, theirs",
+   "Phản thân: myself, yourself, himself, herself, itself, ourselves, themselves"
+  ],
+  "points": [
+   "Dùng đại từ phản thân khi chủ ngữ và tân ngữ là một: She introduced herself.",
+   "by + đại từ phản thân = tự mình, không ai giúp: He completed the report by himself.",
+   "Phản thân để nhấn mạnh, đứng sau chủ ngữ hoặc cuối câu: The CEO herself greeted us.",
+   "each other / one another = lẫn nhau: The teams communicate with each other.",
+   "its (của nó) khác it's (= it is); their (của họ) khác they're (= they are).",
+   "Trước danh từ dùng tính từ sở hữu; không có danh từ theo sau dùng đại từ sở hữu."
+  ],
+  "examples": [
+   [
+    "Mr. Brown prepared the slides himself.",
+    "Ông Brown tự chuẩn bị các trang chiếu."
+   ],
+   [
+    "The two departments help each other.",
+    "Hai phòng ban giúp đỡ lẫn nhau."
+   ],
+   [
+    "Our proposal was accepted, but theirs was not.",
+    "Đề xuất của chúng tôi được chấp nhận, còn của họ thì không."
+   ],
+   [
+    "The company updated its privacy policy.",
+    "Công ty đã cập nhật chính sách bảo mật của mình."
+   ]
+  ],
+  "memo": "Trước N → tính từ sở hữu; tự làm → -self; hai bên qua lại → each other.",
+  "quiz": [
+   {
+    "q": "Ms. Rivera reviewed all the applications by ____.",
+    "opts": [
+     "her",
+     "hers",
+     "herself",
+     "she"
+    ],
+    "a": 2,
+    "why": "By + đại từ phản thân = tự mình → by herself."
+   },
+   {
+    "q": "Please submit ____ expense reports to the accounting department by Friday.",
+    "opts": [
+     "your",
+     "yours",
+     "yourself",
+     "you"
+    ],
+    "a": 0,
+    "why": "Trước danh từ expense reports → tính từ sở hữu your."
+   },
+   {
+    "q": "Dalton Inc. announced that ____ will expand into the Asian market.",
+    "opts": [
+     "its",
+     "it",
+     "itself",
+     "it's"
+    ],
+    "a": 1,
+    "why": "Chỗ trống là chủ ngữ của mệnh đề that (trước will) → đại từ chủ ngữ it."
+   },
+   {
+    "q": "The two firms have worked closely with ____ for many years.",
+    "opts": [
+     "their",
+     "they",
+     "itself",
+     "each other"
+    ],
+    "a": 3,
+    "why": "Hai công ty hợp tác qua lại với nhau → each other."
+   }
+  ]
+ },
+ {
+  "id": "gt-13",
+  "lvl": "toeic",
+  "chap": "Động từ",
+  "title": "Động từ khuyết thiếu & thể giả định (Modals & subjunctive)",
+  "sum": "Modal + V nguyên mẫu diễn tả khả năng, bắt buộc, lời khuyên; sau recommend/request that … dùng V nguyên mẫu.",
+  "forms": [
+   "Modal (can, could, may, might, must, should, will, would) + V nguyên mẫu",
+   "Bị động: modal + be + V3",
+   "S + recommend / suggest / request / require / insist + that + S + V (nguyên mẫu)",
+   "It is essential / important / necessary / imperative + that + S + V (nguyên mẫu)",
+   "should have + V3: lẽ ra nên làm (nhưng đã không làm)"
+  ],
+  "points": [
+   "Sau modal luôn là động từ nguyên mẫu không 'to', không chia: The fee must be paid.",
+   "must/have to: bắt buộc; should: nên; may/might: có thể (khả năng); can/could: có thể, xin phép.",
+   "Thể giả định: recommend, request, suggest, require, insist + that → V nguyên mẫu cho mọi chủ ngữ.",
+   "Phủ định giả định: that + S + not + V: We request that guests not smoke indoors.",
+   "Tương tự với tính từ: It is essential/vital/important that he attend the meeting.",
+   "Bẫy TOEIC: chủ ngữ số ít vẫn dùng V nguyên mẫu (that she submit, không phải submits)."
+  ],
+  "examples": [
+   [
+    "Employees must wear ID badges at all times.",
+    "Nhân viên phải đeo thẻ tên mọi lúc."
+   ],
+   [
+    "The manager requested that Tom revise the budget.",
+    "Quản lý yêu cầu Tom chỉnh sửa ngân sách."
+   ],
+   [
+    "It is important that every guest register in advance.",
+    "Điều quan trọng là mọi khách mời phải đăng ký trước."
+   ],
+   [
+    "You should have booked the room earlier.",
+    "Lẽ ra bạn nên đặt phòng sớm hơn."
+   ]
+  ],
+  "memo": "recommend/request/suggest that + S + V nguyên mẫu — bỏ s, bỏ to, không chia thì.",
+  "quiz": [
+   {
+    "q": "The consultant recommended that the company ____ its delivery process.",
+    "opts": [
+     "simplify",
+     "simplifies",
+     "simplified",
+     "simplifying"
+    ],
+    "a": 0,
+    "why": "Recommend that + S + V nguyên mẫu (thể giả định) → simplify."
+   },
+   {
+    "q": "All visitors ____ sign in at the reception desk.",
+    "opts": [
+     "must to",
+     "must",
+     "musts",
+     "must be"
+    ],
+    "a": 1,
+    "why": "Modal must + V nguyên mẫu không to, không thêm s → must sign."
+   },
+   {
+    "q": "It is essential that each participant ____ the form before the workshop.",
+    "opts": [
+     "completes",
+     "completed",
+     "complete",
+     "completing"
+    ],
+    "a": 2,
+    "why": "It is essential that + S + V nguyên mẫu → complete (dù chủ ngữ số ít)."
+   },
+   {
+    "q": "Damaged items ____ returned within 30 days of purchase.",
+    "opts": [
+     "can return",
+     "can returning",
+     "can returned",
+     "can be returned"
+    ],
+    "a": 3,
+    "why": "Hàng bị trả lại (bị động) → modal + be + V3: can be returned."
+   }
+  ]
+ },
+ {
+  "id": "gt-14",
+  "lvl": "toeic",
+  "chap": "Liên từ & giới từ",
+  "title": "Giới từ thời gian & nơi chốn trong kinh doanh (by, until, within, in/on/at)",
+  "sum": "Phân biệt by/until, within, in/on/at và các giới từ hay gặp trong thư từ, thông báo công việc.",
+  "forms": [
+   "by + mốc thời gian: hạn chót, không muộn hơn",
+   "until / till + mốc: kéo dài liên tục đến",
+   "within + khoảng thời gian / phạm vi: trong vòng, không vượt quá",
+   "in + tháng/năm/khoảng thời gian; on + ngày/thứ; at + giờ/địa điểm cụ thể",
+   "for + khoảng thời gian; since + mốc; from … to/through …"
+  ],
+  "points": [
+   "by = trước hoặc đúng hạn (hoàn tất): submit by Friday; until = kéo dài đến: open until 9 P.M.",
+   "within + khoảng thời gian/phạm vi: trong vòng, không vượt quá: within 24 hours, within budget.",
+   "in + khoảng thời gian ở tương lai = sau bao lâu nữa: The CEO will arrive in ten minutes.",
+   "on + ngày/thứ/ngày lễ cụ thể; at + giờ, at the conference, at the front desk.",
+   "Nơi chốn hay gặp: in the lobby, on the third floor, at the reception desk, throughout the building.",
+   "Cụm khác: prior to (trước), following (sau), throughout (suốt), as of (kể từ ngày)."
+  ],
+  "examples": [
+   [
+    "Please return the signed contract by May 5.",
+    "Vui lòng gửi lại hợp đồng đã ký trước ngày 5/5."
+   ],
+   [
+    "The sale will continue until Sunday.",
+    "Đợt giảm giá sẽ kéo dài đến Chủ nhật."
+   ],
+   [
+    "Refunds are issued within ten business days.",
+    "Tiền hoàn trả được chuyển trong vòng mười ngày làm việc."
+   ],
+   [
+    "The meeting room is on the fifth floor.",
+    "Phòng họp ở tầng năm."
+   ]
+  ],
+  "memo": "by = hạn chót (xong trước), until = kéo dài tới, within = không quá.",
+  "quiz": [
+   {
+    "q": "All expense reports must be submitted ____ Friday at 5 P.M.",
+    "opts": [
+     "until",
+     "by",
+     "within",
+     "during"
+    ],
+    "a": 1,
+    "why": "Nộp là hành động hoàn tất trước hạn chót → by."
+   },
+   {
+    "q": "The library will remain open ____ 10 P.M. during exam week.",
+    "opts": [
+     "until",
+     "by",
+     "within",
+     "since"
+    ],
+    "a": 0,
+    "why": "Remain open là trạng thái kéo dài liên tục đến 10 giờ tối → until."
+   },
+   {
+    "q": "Customers will receive a confirmation e-mail ____ 24 hours of placing an order.",
+    "opts": [
+     "by",
+     "until",
+     "within",
+     "on"
+    ],
+    "a": 2,
+    "why": "Trong vòng 24 giờ kể từ khi đặt hàng → within + khoảng thời gian + of."
+   },
+   {
+    "q": "The annual shareholders' meeting will be held ____ March 15.",
+    "opts": [
+     "in",
+     "at",
+     "for",
+     "on"
+    ],
+    "a": 3,
+    "why": "Trước ngày tháng cụ thể dùng on → on March 15."
+   }
+  ]
+ }
+]

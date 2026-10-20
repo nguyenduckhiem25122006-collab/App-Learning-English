@@ -11,6 +11,7 @@ LEVELS = {"kids": ["kids1.txt", "kids2.txt", "kids3.txt", "kids4.txt", "kids5.tx
                     "toeic9.txt", "toeic10.txt", "toeic11.txt"]}
 SENTENCE_FILES = ["sent_daily.txt", "sent_work.txt", "sent_toeic.txt"]
 IPA_FILE = "ipa.json"
+GRAMMAR_FILES = ["kids.json", "toeic.json"]  # data/grammar: Ngữ pháp Tiếng Anh 7 (Global Success) và TOEIC
 STEM_FILES = ["math7.json", "math8.json", "math9.json", "phys7.json", "phys8.json", "phys9.json"]  # data/stem: Toán & Vật lí lớp 7–9
 # Manual IPA for words CMU lacks or gets wrong for our part of speech
 OVERRIDES = {
@@ -204,6 +205,17 @@ def main():
     if len(set(ids)) != len(ids):
         sys.exit("stem: duplicate lesson ids")
     out["stem"] = stem
+    grammar = []
+    for f in GRAMMAR_FILES:
+        lessons = json.loads((DATA / "grammar" / f).read_text(encoding="utf-8"))
+        for L in lessons:
+            if not all(0 <= q["a"] < len(q["opts"]) for q in L["quiz"]):
+                sys.exit(f"grammar/{f}: bad quiz in {L['id']}")
+        grammar += lessons
+    if len({L["id"] for L in grammar}) != len(grammar):
+        sys.exit("grammar: duplicate lesson ids")
+    out["grammar"] = grammar
+    print(f"[grammar] {sum(L['lvl'] == 'kids' for L in grammar)} Tiếng Anh 7 + {sum(L['lvl'] == 'toeic' for L in grammar)} TOEIC lessons")
     print(f"[stem] {sum(L['subj'] == 'math' for L in stem)} math + {sum(L['subj'] == 'phys' for L in stem)} physics lessons")
     OUT_JS.parent.mkdir(exist_ok=True)
     OUT_JS.write_text("window.APP_DATA=" + json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

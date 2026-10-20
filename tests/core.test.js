@@ -95,6 +95,23 @@ test("scramble changes the order but keeps the tokens", () => {
   assert.deepEqual(C.scramble(["Hi!"]), ["Hi!"]);
 });
 
+test("scramble shuffles tile objects randomly, never just backwards", () => {
+  const words = C.tokens("I would like to book a table for two people tonight.");
+  const tiles = words.map((t, i) => ({ t, i }));
+  const seen = new Set();
+  for (let seed = 1; seed <= 30; seed++) {
+    const s = C.scramble(tiles, C.rng(seed)), order = s.map((x) => x.i);
+    assert.notDeepEqual(order, words.map((w, i) => i));
+    assert.notDeepEqual(order, words.map((w, i) => i).reverse());
+    assert.ok(s.filter((x, i) => x.i === i).length <= Math.floor(words.length / 3), "most tiles move");
+    assert.deepEqual([...order].sort((a, b) => a - b), words.map((w, i) => i));
+    seen.add(order.join());
+  }
+  assert.ok(seen.size >= 25, "a different order almost every time");
+  const two = C.scramble([{ t: "Thank" }, { t: "you." }], C.rng(3)).map((x) => x.t);
+  assert.deepEqual(two, ["you.", "Thank"]);
+});
+
 test("pickSentences returns unlearned first, then falls back", () => {
   assert.deepEqual(C.pickSentences(["a", "b", "c", "d"], { a: 1, c: 1 }, 3), ["b", "d"]);
   assert.deepEqual(C.pickSentences(["a", "b"], { a: 1, b: 1 }, 1), ["a"]);

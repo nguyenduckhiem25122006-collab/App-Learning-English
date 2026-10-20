@@ -2,11 +2,13 @@
 -- Safe to run again: it only (re)creates the leaderboard objects.
 --
 -- Protection built in:
---   * Tables are closed to the public API (RLS on, no policies, privileges revoked); the app can only call the 4 functions below.
+--   * Tables are closed to the public API (RLS on, no policies, privileges revoked); the app can only call the 7 functions below.
 --   * Each class (room) has a seat limit (default 15); joining needs the class code.
 --   * PINs are stored as bcrypt hashes; 5 wrong PINs lock that name for 15 minutes.
 --   * Score updates are rate-limited (one per 20 s per player), every number is clamped to a sane range,
 --     and XP can only grow as fast as a person can really study.
+--   * Class study material (học liệu lớp, like Quizlet sets) can only be changed with the class's teacher password
+--     (bcrypt, 5 wrong tries lock it for 15 minutes), at most 512 KB and one upload per 5 s; only class members can read it.
 
 create extension if not exists pgcrypto;
 
@@ -46,12 +48,24 @@ create table if not exists public.nhip_players (
 );
 create unique index if not exists nhip_players_room_name on public.nhip_players (room, lower(name));
 
+-- Teacher password per class (set it with the SQL at the end of this file) and the class's study material.
+alter table public.nhip_rooms add column if not exists admin_hash text;
+alter table public.nhip_rooms add column if not exists admin_fails int not null default 0;
+alter table public.nhip_rooms add column if not exists admin_locked_until timestamptz;
+create table if not exists public.nhip_packs (
+  room       text primary key references public.nhip_rooms(code) on delete cascade on update cascade,
+  ver        int  not null default 1,
+  pack       jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
 alter table public.nhip_rooms   enable row level security;
 alter table public.nhip_players enable row level security;
-revoke all on public.nhip_rooms, public.nhip_players from public;
+alter table public.nhip_packs   enable row level security;
+revoke all on public.nhip_rooms, public.nhip_players, public.nhip_packs from public;
 do $$ begin
   if exists (select 1 from pg_roles where rolname = 'anon') then
-    execute 'revoke all on public.nhip_rooms, public.nhip_players from anon, authenticated';
+    execute 'revoke all on public.nhip_rooms, public.nhip_players, public.nhip_packs from anon, authenticated';
   end if;
 end $$;
 
@@ -170,6 +184,82 @@ begin
   return jsonb_build_object('ok', found);
 end $$;
 
+-- Check the teacher password of a class. Returns null when it is right, else an error code. Counts wrong tries.
+create or replace function public.nhip_admin_check(p_room text, p_secret text) returns text
+language plpgsql security definer set search_path = public, extensions as $$
+declare
+  r public.nhip_rooms;
+begin
+  select * into r from public.nhip_rooms where code = upper(btrim(coalesce(p_room, ''))) for update;
+  if not found then return 'no_room'; end if;
+  if r.admin_hash is null then return 'no_teacher'; end if;
+  if r.admin_locked_until is not null and r.admin_locked_until > now() then return 'admin_locked'; end if;
+  if char_length(coalesce(p_secret, '')) between 1 and 72 and r.admin_hash = crypt(p_secret, r.admin_hash) then
+    update public.nhip_rooms set admin_fails = 0, admin_locked_until = null where code = r.code;
+    return null;
+  end if;
+  update public.nhip_rooms
+     set admin_fails = case when r.admin_fails + 1 >= 5 then 0 else r.admin_fails + 1 end,
+         admin_locked_until = case when r.admin_fails + 1 >= 5 then now() + interval '15 minutes' else null end
+   where code = r.code;
+  return case when r.admin_fails + 1 >= 5 then 'admin_locked' else 'wrong_secret' end;
+end $$;
+
+-- Teacher sign-in: checks the password and returns the class's current material so it can be edited on any device.
+create or replace function public.nhip_admin(p_room text, p_secret text) returns jsonb
+language plpgsql security definer set search_path = public, extensions as $$
+declare
+  err text := public.nhip_admin_check(p_room, p_secret);
+  pk  public.nhip_packs;
+begin
+  if err is not null then return jsonb_build_object('ok', false, 'error', err); end if;
+  select * into pk from public.nhip_packs where room = upper(btrim(p_room));
+  return jsonb_build_object('ok', true, 'room', upper(btrim(p_room)), 'ver', coalesce(pk.ver, 0), 'pack', pk.pack, 'at', pk.updated_at);
+end $$;
+
+-- Teacher publishes the class material (the whole pack, replacing the old one). Returns { ok, ver }.
+create or replace function public.nhip_pack_put(p_room text, p_secret text, p_pack jsonb) returns jsonb
+language plpgsql security definer set search_path = public, extensions as $$
+declare
+  err  text;
+  pk   public.nhip_packs;
+  v_room text := upper(btrim(coalesce(p_room, '')));
+begin
+  if p_pack is null or jsonb_typeof(p_pack) <> 'object' or coalesce(p_pack ->> 'app', '') <> 'nhip-pack' then
+    return jsonb_build_object('ok', false, 'error', 'bad_pack');
+  end if;
+  if octet_length(p_pack::text) > 524288 then return jsonb_build_object('ok', false, 'error', 'too_big'); end if;
+  err := public.nhip_admin_check(v_room, p_secret);
+  if err is not null then return jsonb_build_object('ok', false, 'error', err); end if;
+  select * into pk from public.nhip_packs where room = v_room for update;
+  if found and now() - pk.updated_at < interval '5 seconds' then
+    return jsonb_build_object('ok', false, 'error', 'too_fast');
+  end if;
+  insert into public.nhip_packs (room, ver, pack) values (v_room, 1, p_pack)
+  on conflict (room) do update set ver = public.nhip_packs.ver + 1, pack = excluded.pack, updated_at = now()
+  returning * into pk;
+  return jsonb_build_object('ok', true, 'ver', pk.ver, 'at', pk.updated_at);
+end $$;
+
+-- A class member reads the class material. With p_ver equal to the current version it answers { same: true } only.
+create or replace function public.nhip_pack_get(p_token uuid, p_ver int) returns jsonb
+language plpgsql security definer set search_path = public, extensions as $$
+declare
+  me public.nhip_players;
+  pk public.nhip_packs;
+begin
+  select * into me from public.nhip_players where token = p_token;
+  if not found then return jsonb_build_object('ok', false, 'error', 'no_player'); end if;
+  select * into pk from public.nhip_packs where room = me.room;
+  if not found then return jsonb_build_object('ok', true, 'room', me.room, 'ver', 0, 'pack', null); end if;
+  if pk.ver = p_ver then return jsonb_build_object('ok', true, 'room', me.room, 'ver', pk.ver, 'same', true); end if;
+  return jsonb_build_object('ok', true, 'room', me.room, 'ver', pk.ver, 'pack', pk.pack, 'at', pk.updated_at);
+end $$;
+
+revoke all on function public.nhip_admin_check(text, text) from public;
+revoke all on function public.nhip_admin(text, text) from public;
+revoke all on function public.nhip_pack_put(text, text, jsonb) from public;
+revoke all on function public.nhip_pack_get(uuid, int) from public;
 revoke all on function public.nhip_int(jsonb, text, int, int) from public;
 revoke all on function public.nhip_join(text, text, text) from public;
 revoke all on function public.nhip_sync(uuid, jsonb) from public;
@@ -178,9 +268,12 @@ revoke all on function public.nhip_leave(uuid) from public;
 do $$ begin
   if exists (select 1 from pg_roles where rolname = 'anon') then
     execute 'grant execute on function public.nhip_join(text, text, text), public.nhip_sync(uuid, jsonb),
-             public.nhip_board(uuid, text), public.nhip_leave(uuid) to anon, authenticated';
+             public.nhip_board(uuid, text), public.nhip_leave(uuid), public.nhip_admin(text, text),
+             public.nhip_pack_put(text, text, jsonb), public.nhip_pack_get(uuid, int) to anon, authenticated';
   end if;
 end $$;
 
 -- Create your class (change the code; 4–12 letters or digits, no spaces or accents):
 --   insert into public.nhip_rooms (code, max_players) values ('LOP7A', 15);
+-- Set (or change) the teacher password of that class, used in the app under Lớp học → Học liệu (6–72 characters):
+--   update public.nhip_rooms set admin_hash = crypt('mat-khau-giao-vien', gen_salt('bf', 8)), admin_fails = 0, admin_locked_until = null where code = 'LOP7A';

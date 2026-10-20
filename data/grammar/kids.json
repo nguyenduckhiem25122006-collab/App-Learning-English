@@ -1,0 +1,1202 @@
+[
+ {
+  "id": "gk-01",
+  "lvl": "kids",
+  "chap": "Unit 1 · Hobbies",
+  "title": "Thì hiện tại đơn (Present simple)",
+  "sum": "Dùng để nói về thói quen, sở thích, hoạt động lặp đi lặp lại và những sự thật hiển nhiên.",
+  "forms": [
+   "(+) S + V(s/es) + O",
+   "(−) S + do/does not + V + O",
+   "(?) Do/Does + S + V + O?",
+   "Với be: S + am/is/are + …"
+  ],
+  "points": [
+   "Diễn tả thói quen, sở thích, hoạt động lặp lại hằng ngày: I collect stamps.",
+   "Diễn tả sự thật hiển nhiên, chân lý: The sun rises in the east.",
+   "Dấu hiệu: always, usually, often, sometimes, rarely, never, every day, once a week.",
+   "Chủ ngữ ngôi thứ ba số ít (he, she, it, danh từ số ít): động từ thêm -s/-es.",
+   "Thêm -es sau o, s, sh, ch, x: goes, watches; phụ âm + y → -ies: study → studies.",
+   "Lỗi hay gặp: She doesn't likes ✗ — sau do/does/don't/doesn't, động từ luôn ở dạng nguyên mẫu."
+  ],
+  "examples": [
+   [
+    "My brother collects stamps.",
+    "Anh trai tôi sưu tầm tem."
+   ],
+   [
+    "I usually go swimming on Sundays.",
+    "Tôi thường đi bơi vào Chủ nhật."
+   ],
+   [
+    "Does Mai like gardening?",
+    "Mai có thích làm vườn không?"
+   ],
+   [
+    "They don't play the guitar.",
+    "Họ không chơi đàn ghi-ta."
+   ]
+  ],
+  "memo": "He, she, it — nhớ thêm 's'; đã có does/doesn't thì động từ trở về nguyên mẫu.",
+  "quiz": [
+   {
+    "q": "She ____ to school by bike every day.",
+    "opts": [
+     "go",
+     "goes",
+     "going",
+     "is go"
+    ],
+    "a": 1,
+    "why": "Chủ ngữ she là ngôi thứ ba số ít, có every day → hiện tại đơn, go thêm -es thành goes."
+   },
+   {
+    "q": "My parents ____ jogging in the park every morning.",
+    "opts": [
+     "go",
+     "goes",
+     "going",
+     "is going"
+    ],
+    "a": 0,
+    "why": "My parents là chủ ngữ số nhiều + every morning (thói quen) → dùng động từ nguyên mẫu go."
+   },
+   {
+    "q": "____ your brother like making models?",
+    "opts": [
+     "Do",
+     "Is",
+     "Does",
+     "Are"
+    ],
+    "a": 2,
+    "why": "Câu hỏi với động từ thường like, chủ ngữ your brother số ít → dùng Does."
+   },
+   {
+    "q": "Lan ____ horse riding. She thinks it's dangerous.",
+    "opts": [
+     "don't like",
+     "isn't like",
+     "not likes",
+     "doesn't like"
+    ],
+    "a": 3,
+    "why": "Chủ ngữ Lan số ít, phủ định với động từ thường → doesn't + V nguyên mẫu: doesn't like."
+   }
+  ]
+ },
+ {
+  "id": "gk-02",
+  "lvl": "kids",
+  "chap": "Unit 1 · Hobbies",
+  "title": "Động từ chỉ sự yêu thích + V-ing (Verbs of liking)",
+  "sum": "Dùng like, love, enjoy, hate… + V-ing để nói mình thích hay không thích làm việc gì.",
+  "forms": [
+   "S + like / love / enjoy + V-ing",
+   "S + hate / dislike / don't like + V-ing",
+   "S + don't mind + V-ing"
+  ],
+  "points": [
+   "Dùng like, love, enjoy, hate, dislike, don't mind… để nói về sở thích hoặc điều không thích.",
+   "Sau các động từ này thường dùng V-ing (danh động từ): I enjoy reading comics.",
+   "enjoy, dislike, don't mind chỉ đi với V-ing; like, love, hate có thể đi với V-ing hoặc to V.",
+   "Mức độ: love > like/enjoy > don't mind > don't like/dislike > hate.",
+   "Thêm -ing: bỏ e câm (make → making), gấp đôi phụ âm cuối (swim → swimming).",
+   "Nhớ chia động từ chính theo chủ ngữ: She loves dancing (không viết She love dance)."
+  ],
+  "examples": [
+   [
+    "I love painting in my free time.",
+    "Tôi rất thích vẽ tranh vào thời gian rảnh."
+   ],
+   [
+    "My sister enjoys making cakes.",
+    "Chị gái tôi thích làm bánh."
+   ],
+   [
+    "Tom hates getting up early.",
+    "Tom ghét dậy sớm."
+   ],
+   [
+    "Do you like collecting coins?",
+    "Bạn có thích sưu tầm tiền xu không?"
+   ]
+  ],
+  "memo": "Thích hay ghét đều đi với V-ing — riêng enjoy thì chỉ đi với V-ing.",
+  "quiz": [
+   {
+    "q": "My father enjoys ____ in his garden.",
+    "opts": [
+     "work",
+     "to work",
+     "working",
+     "works"
+    ],
+    "a": 2,
+    "why": "Sau enjoy luôn dùng V-ing → enjoys working."
+   },
+   {
+    "q": "My friends don't mind ____ the dishes after dinner.",
+    "opts": [
+     "washing",
+     "wash",
+     "to wash",
+     "washed"
+    ],
+    "a": 0,
+    "why": "Sau don't mind (không ngại) dùng V-ing → washing."
+   },
+   {
+    "q": "She ____ playing badminton with her friends.",
+    "opts": [
+     "love",
+     "loves",
+     "loving",
+     "to love"
+    ],
+    "a": 1,
+    "why": "Chủ ngữ she ngôi thứ ba số ít → động từ chính thêm -s: loves (+ V-ing)."
+   },
+   {
+    "q": "Nam dislikes ____ horror films.",
+    "opts": [
+     "watch",
+     "watches",
+     "to watching",
+     "watching"
+    ],
+    "a": 3,
+    "why": "Sau dislike dùng V-ing → dislikes watching."
+   }
+  ]
+ },
+ {
+  "id": "gk-03",
+  "lvl": "kids",
+  "chap": "Unit 2 · Healthy living",
+  "title": "Câu đơn (Simple sentences)",
+  "sum": "Câu đơn chỉ có một mệnh đề độc lập (một cụm chủ ngữ – vị ngữ) và diễn đạt một ý trọn vẹn.",
+  "forms": [
+   "S + V",
+   "S + V + O",
+   "S + V + O + trạng ngữ (nơi chốn, thời gian…)",
+   "S1 and S2 + V (chủ ngữ ghép)",
+   "S + V1 and V2 (vị ngữ ghép)"
+  ],
+  "points": [
+   "Câu đơn chỉ có một mệnh đề độc lập gồm chủ ngữ và vị ngữ, diễn đạt một ý trọn vẹn.",
+   "Câu đơn có thể có chủ ngữ ghép: My mum and I cook dinner together.",
+   "Câu đơn có thể có vị ngữ ghép (hai động từ): She eats well and sleeps early.",
+   "Có thể thêm tân ngữ, tính từ, trạng ngữ: We exercise in the park every morning.",
+   "Câu có hai mệnh đề nối bằng and, but, so, because… không còn là câu đơn.",
+   "Lỗi hay gặp: thiếu động từ (He very healthy ✗) → He is very healthy."
+  ],
+  "examples": [
+   [
+    "I drink a lot of water.",
+    "Tôi uống nhiều nước."
+   ],
+   [
+    "My grandparents walk every morning.",
+    "Ông bà tôi đi bộ mỗi sáng."
+   ],
+   [
+    "Lan and Mai do yoga.",
+    "Lan và Mai tập yoga."
+   ],
+   [
+    "He eats vegetables and avoids junk food.",
+    "Anh ấy ăn rau và tránh đồ ăn vặt."
+   ]
+  ],
+  "memo": "Câu đơn = 1 chủ ngữ (có thể ghép) + 1 vị ngữ (có thể ghép) → chỉ 1 mệnh đề.",
+  "quiz": [
+   {
+    "q": "Which is a simple sentence?",
+    "opts": [
+     "I eat fruit, and my sister drinks milk.",
+     "My brother plays sports every day.",
+     "I was tired, so I went to bed.",
+     "She feels sick because she ate too much."
+    ],
+    "a": 1,
+    "why": "Chỉ câu My brother plays sports every day. có một mệnh đề; các câu còn lại có hai mệnh đề nối bằng and, so, because."
+   },
+   {
+    "q": "Choose the correct sentence.",
+    "opts": [
+     "My mum and dad goes to bed early.",
+     "My mum and dad going to bed early.",
+     "My mum and dad to bed early.",
+     "My mum and dad go to bed early."
+    ],
+    "a": 3,
+    "why": "Chủ ngữ ghép mum and dad là số nhiều → go; câu đơn phải có động từ được chia đúng."
+   },
+   {
+    "q": "Junk food ____ bad for your health.",
+    "opts": [
+     "are",
+     "is",
+     "be",
+     "being"
+    ],
+    "a": 1,
+    "why": "Junk food là danh từ không đếm được → động từ số ít is."
+   },
+   {
+    "q": "Which sentence has a compound verb (vị ngữ ghép)?",
+    "opts": [
+     "Minh and Nam play football.",
+     "Minh plays football.",
+     "Minh eats breakfast and goes to school.",
+     "Minh is healthy."
+    ],
+    "a": 2,
+    "why": "Câu Minh eats breakfast and goes to school. có một chủ ngữ với hai động từ eats và goes → vị ngữ ghép."
+   }
+  ]
+ },
+ {
+  "id": "gk-04",
+  "lvl": "kids",
+  "chap": "Unit 3 · Community service",
+  "title": "Thì quá khứ đơn (Past simple)",
+  "sum": "Dùng để kể về hành động đã xảy ra và kết thúc tại một thời điểm xác định trong quá khứ.",
+  "forms": [
+   "(+) S + V2/V-ed + O",
+   "(−) S + did not (didn't) + V + O",
+   "(?) Did + S + V + O?",
+   "Với be: S + was/were + …"
+  ],
+  "points": [
+   "Diễn tả hành động đã xảy ra và kết thúc tại thời điểm xác định trong quá khứ.",
+   "Dấu hiệu: yesterday, last week/month/year, … ago, in 2020, when I was young.",
+   "Động từ có quy tắc thêm -ed: help → helped, donate → donated, plan → planned, carry → carried.",
+   "Động từ bất quy tắc dùng cột 2: go → went, give → gave, make → made, teach → taught.",
+   "Câu phủ định và nghi vấn dùng did/didn't + động từ nguyên mẫu (không chia quá khứ lần nữa).",
+   "was dùng với I/he/she/it và danh từ số ít; were dùng với you/we/they và danh từ số nhiều."
+  ],
+  "examples": [
+   [
+    "We collected rubbish in the park last Sunday.",
+    "Chúng tôi đã nhặt rác ở công viên vào Chủ nhật tuần trước."
+   ],
+   [
+    "They donated books to the village school.",
+    "Họ đã quyên góp sách cho trường làng."
+   ],
+   [
+    "Did you plant trees last month?",
+    "Tháng trước bạn có trồng cây không?"
+   ],
+   [
+    "I didn't go to the event yesterday.",
+    "Hôm qua tôi đã không đi sự kiện đó."
+   ]
+  ],
+  "memo": "Đã có did/didn't thì động từ về nguyên mẫu: did go, không phải did went.",
+  "quiz": [
+   {
+    "q": "Last summer, we ____ English to children in the village.",
+    "opts": [
+     "teach",
+     "taught",
+     "teached",
+     "teaching"
+    ],
+    "a": 1,
+    "why": "Last summer → quá khứ đơn; teach là động từ bất quy tắc, cột 2 là taught."
+   },
+   {
+    "q": "____ they recycle the bottles yesterday?",
+    "opts": [
+     "Do",
+     "Were",
+     "Did",
+     "Does"
+    ],
+    "a": 2,
+    "why": "Có yesterday và động từ thường recycle → câu hỏi quá khứ đơn dùng Did."
+   },
+   {
+    "q": "My class ____ a lot of old clothes two weeks ago.",
+    "opts": [
+     "donated",
+     "donates",
+     "donate",
+     "donating"
+    ],
+    "a": 0,
+    "why": "Two weeks ago → quá khứ đơn, động từ có quy tắc thêm -d: donated."
+   },
+   {
+    "q": "I ____ at home yesterday. I was at the community centre.",
+    "opts": [
+     "weren't",
+     "didn't",
+     "don't",
+     "wasn't"
+    ],
+    "a": 3,
+    "why": "Chủ ngữ I, câu với be ở quá khứ → was not (wasn't)."
+   }
+  ]
+ },
+ {
+  "id": "gk-05",
+  "lvl": "kids",
+  "chap": "Unit 4 · Music and arts",
+  "title": "So sánh với like, different from, (not) as … as",
+  "sum": "Dùng like, different from, (not) as … as để so sánh hai người hoặc hai sự vật giống, khác hay bằng nhau.",
+  "forms": [
+   "A + be/V + like + B (giống như)",
+   "A + be + different from + B (khác với)",
+   "A + be + (not) as + adj + as + B",
+   "A + V + (not) as + adv + as + B"
+  ],
+  "points": [
+   "like (giống như) dùng khi hai người/vật giống nhau: Her voice is like her mother's.",
+   "different from (khác với) dùng khi hai người/vật khác nhau: Pop is different from folk music.",
+   "as + tính từ/trạng từ + as: bằng, như nhau: This song is as popular as that one.",
+   "not as + tính từ/trạng từ + as: không … bằng: My drawing isn't as good as yours.",
+   "Giữa as … as dùng tính từ/trạng từ dạng nguyên, không dùng so sánh hơn (as better as ✗).",
+   "Lỗi hay gặp: different with ✗ → different from ✓."
+  ],
+  "examples": [
+   [
+    "Mai sings like a professional singer.",
+    "Mai hát như một ca sĩ chuyên nghiệp."
+   ],
+   [
+    "Water puppetry is different from other puppet shows.",
+    "Múa rối nước khác với các loại hình múa rối khác."
+   ],
+   [
+    "This painting is as beautiful as that one.",
+    "Bức tranh này đẹp như bức tranh kia."
+   ],
+   [
+    "Rock music isn't as relaxing as classical music.",
+    "Nhạc rock không thư giãn bằng nhạc cổ điển."
+   ]
+  ],
+  "memo": "Giống = like, khác = different from, bằng = as … as, không bằng = not as … as.",
+  "quiz": [
+   {
+    "q": "Her painting is different ____ mine.",
+    "opts": [
+     "from",
+     "as",
+     "like",
+     "with"
+    ],
+    "a": 0,
+    "why": "Cấu trúc khác với: be different from."
+   },
+   {
+    "q": "This concert is not as ____ as the last one.",
+    "opts": [
+     "more exciting",
+     "exciting",
+     "most exciting",
+     "excitinger"
+    ],
+    "a": 1,
+    "why": "Giữa not as … as dùng tính từ dạng nguyên: exciting."
+   },
+   {
+    "q": "My brother plays the piano ____ a real musician.",
+    "opts": [
+     "as",
+     "from",
+     "like",
+     "than"
+    ],
+    "a": 2,
+    "why": "Nói giống như ai đó (chơi đàn như một nhạc sĩ thật) → dùng like + danh từ."
+   },
+   {
+    "q": "The art club is as ____ as the music club.",
+    "opts": [
+     "more popular",
+     "the most popular",
+     "popularly",
+     "popular"
+    ],
+    "a": 3,
+    "why": "Sau be, giữa as … as dùng tính từ dạng nguyên: as popular as."
+   }
+  ]
+ },
+ {
+  "id": "gk-06",
+  "lvl": "kids",
+  "chap": "Unit 5 · Food and drink",
+  "title": "Some, a lot of, lots of; How much / How many",
+  "sum": "Dùng some, a lot of, lots of với danh từ đếm được và không đếm được; hỏi số lượng bằng How many / How much.",
+  "forms": [
+   "some / a lot of / lots of + N đếm được số nhiều hoặc N không đếm được",
+   "How many + N đếm được số nhiều + are there / do you …?",
+   "How much + N không đếm được + is there / do you …?",
+   "How much + is/are + N? (hỏi giá)"
+  ],
+  "points": [
+   "Danh từ đếm được có số ít/số nhiều (an egg, two eggs); không đếm được không có số nhiều (rice, milk).",
+   "some dùng trong câu khẳng định và lời mời, đề nghị: Would you like some tea?",
+   "Trong câu phủ định và câu hỏi thường dùng any: There isn't any bread.",
+   "a lot of = lots of (nhiều), dùng được với cả danh từ đếm được số nhiều và không đếm được.",
+   "How many + danh từ đếm được số nhiều; How much + danh từ không đếm được.",
+   "How much còn dùng để hỏi giá: How much is this pizza?"
+  ],
+  "examples": [
+   [
+    "We need some eggs and some flour.",
+    "Chúng ta cần một ít trứng và một ít bột mì."
+   ],
+   [
+    "She drinks a lot of water every day.",
+    "Cô ấy uống nhiều nước mỗi ngày."
+   ],
+   [
+    "How many bananas do you want?",
+    "Bạn muốn bao nhiêu quả chuối?"
+   ],
+   [
+    "How much milk is there in the fridge?",
+    "Trong tủ lạnh có bao nhiêu sữa?"
+   ]
+  ],
+  "memo": "Many đi với thứ đếm được (many apples), much đi với thứ không đếm được (much rice).",
+  "quiz": [
+   {
+    "q": "How ____ sugar do you need for the cake?",
+    "opts": [
+     "many",
+     "much",
+     "lot",
+     "some"
+    ],
+    "a": 1,
+    "why": "Sugar là danh từ không đếm được → How much."
+   },
+   {
+    "q": "How ____ apples are there in the basket?",
+    "opts": [
+     "much",
+     "lots",
+     "many",
+     "any"
+    ],
+    "a": 2,
+    "why": "Apples là danh từ đếm được số nhiều → How many."
+   },
+   {
+    "q": "Would you like ____ orange juice?",
+    "opts": [
+     "some",
+     "many",
+     "a",
+     "an"
+    ],
+    "a": 0,
+    "why": "Lời mời dùng some; orange juice không đếm được nên không dùng a/an hay many."
+   },
+   {
+    "q": "My mum buys ____ vegetables at the market every week.",
+    "opts": [
+     "much",
+     "a lot",
+     "many of",
+     "lots of"
+    ],
+    "a": 3,
+    "why": "Lots of + danh từ số nhiều (vegetables). A lot phải có of; much không đi với danh từ đếm được."
+   }
+  ]
+ },
+ {
+  "id": "gk-07",
+  "lvl": "kids",
+  "chap": "Unit 6 · A visit to a school",
+  "title": "Giới từ chỉ thời gian và nơi chốn (Prepositions of time and place)",
+  "sum": "Dùng at, on, in để chỉ thời gian và địa điểm; dùng next to, behind, opposite… để chỉ vị trí.",
+  "forms": [
+   "at + giờ / thời điểm: at 7 o'clock, at noon",
+   "on + thứ / ngày: on Monday, on 2nd September",
+   "in + tháng / năm / mùa / buổi: in May, in 2024, in the morning",
+   "in / on / at + nơi chốn: in the classroom, on the wall, at school",
+   "next to / behind / in front of / opposite / between … and …"
+  ],
+  "points": [
+   "at: giờ, thời điểm cụ thể (at 6:30, at night, at the weekend).",
+   "on: thứ, ngày, ngày tháng cụ thể (on Friday, on Monday morning, on 20th November).",
+   "in: tháng, năm, mùa, buổi trong ngày (in July, in 2025, in summer, in the afternoon).",
+   "Nơi chốn: in (bên trong: in the library), on (trên bề mặt: on the wall), at (tại: at school).",
+   "Vị trí: next to (bên cạnh), behind (phía sau), in front of (phía trước), opposite (đối diện).",
+   "Lỗi hay gặp: in Monday ✗ → on Monday; on the morning ✗ → in the morning (nhưng on Monday morning ✓)."
+  ],
+  "examples": [
+   [
+    "Our school year starts in September.",
+    "Năm học của chúng tôi bắt đầu vào tháng Chín."
+   ],
+   [
+    "The library is next to the computer room.",
+    "Thư viện ở cạnh phòng máy tính."
+   ],
+   [
+    "We have English on Tuesday and Thursday.",
+    "Chúng tôi học tiếng Anh vào thứ Ba và thứ Năm."
+   ],
+   [
+    "Classes begin at 7 a.m.",
+    "Các tiết học bắt đầu lúc 7 giờ sáng."
+   ]
+  ],
+  "memo": "Thời gian: AT giờ – ON ngày – IN tháng/năm (từ nhỏ đến lớn).",
+  "quiz": [
+   {
+    "q": "My school was founded ____ 1998.",
+    "opts": [
+     "on",
+     "at",
+     "in",
+     "for"
+    ],
+    "a": 2,
+    "why": "Trước năm dùng in → in 1998."
+   },
+   {
+    "q": "We have a school festival ____ 20th November.",
+    "opts": [
+     "in",
+     "on",
+     "at",
+     "to"
+    ],
+    "a": 1,
+    "why": "Trước ngày tháng cụ thể dùng on → on 20th November."
+   },
+   {
+    "q": "The canteen is ____ the gym and the library.",
+    "opts": [
+     "between",
+     "next",
+     "opposite of",
+     "among of"
+    ],
+    "a": 0,
+    "why": "Cấu trúc between A and B (ở giữa A và B)."
+   },
+   {
+    "q": "The first lesson starts ____ 7:15.",
+    "opts": [
+     "in",
+     "on",
+     "from",
+     "at"
+    ],
+    "a": 3,
+    "why": "Trước giờ cụ thể dùng at → at 7:15."
+   }
+  ]
+ },
+ {
+  "id": "gk-08",
+  "lvl": "kids",
+  "chap": "Unit 7 · Traffic",
+  "title": "It chỉ khoảng cách; should / shouldn't",
+  "sum": "Dùng It để nói về khoảng cách giữa hai nơi; dùng should / shouldn't để khuyên nên hoặc không nên làm gì.",
+  "forms": [
+   "It is (about) + khoảng cách + from A to B.",
+   "How far is it from A to B?",
+   "S + should / shouldn't + V (nguyên mẫu)",
+   "Should + S + V …?"
+  ],
+  "points": [
+   "Dùng It làm chủ ngữ để nói về khoảng cách: It's about 2 km from my house to school.",
+   "Hỏi khoảng cách: How far is it from … to …?",
+   "should (nên) dùng để đưa ra lời khuyên; shouldn't (không nên) để khuyên không làm gì.",
+   "Sau should/shouldn't luôn là động từ nguyên mẫu không 'to', không thêm s: He should wear a helmet.",
+   "Hỏi xin lời khuyên: Should I …? / What should we do?",
+   "Lỗi hay gặp: He shoulds go ✗; You should to stop ✗ → You should stop."
+  ],
+  "examples": [
+   [
+    "It's about 500 metres from my house to the bus stop.",
+    "Từ nhà tôi đến bến xe buýt khoảng 500 mét."
+   ],
+   [
+    "How far is it from Hanoi to Hai Phong?",
+    "Từ Hà Nội đến Hải Phòng bao xa?"
+   ],
+   [
+    "You should wear a helmet on a motorbike.",
+    "Bạn nên đội mũ bảo hiểm khi đi xe máy."
+   ],
+   [
+    "Children shouldn't play on the street.",
+    "Trẻ em không nên chơi trên đường phố."
+   ]
+  ],
+  "memo": "Hỏi bao xa: How far is IT…; khuyên nhủ: should + V nguyên mẫu.",
+  "quiz": [
+   {
+    "q": "____ is about 3 kilometres from my house to the market.",
+    "opts": [
+     "There",
+     "This",
+     "It",
+     "That"
+    ],
+    "a": 2,
+    "why": "Nói về khoảng cách dùng It làm chủ ngữ: It is about 3 kilometres from … to …"
+   },
+   {
+    "q": "You ____ cross the street when the traffic light is red. It's dangerous.",
+    "opts": [
+     "should",
+     "should to",
+     "shouldn't",
+     "don't should"
+    ],
+    "a": 2,
+    "why": "Khuyên không nên làm điều nguy hiểm → shouldn't + V nguyên mẫu."
+   },
+   {
+    "q": "How ____ is it from your school to the park?",
+    "opts": [
+     "often",
+     "far",
+     "many",
+     "much"
+    ],
+    "a": 1,
+    "why": "Hỏi khoảng cách dùng How far is it from … to …?"
+   },
+   {
+    "q": "Cyclists should ____ in the bicycle lane.",
+    "opts": [
+     "ride",
+     "rides",
+     "to ride",
+     "riding"
+    ],
+    "a": 0,
+    "why": "Sau should dùng động từ nguyên mẫu không to → should ride."
+   }
+  ]
+ },
+ {
+  "id": "gk-09",
+  "lvl": "kids",
+  "chap": "Unit 8 · Films",
+  "title": "Although / though; however",
+  "sum": "Dùng although / though (mặc dù) và however (tuy nhiên) để nối hai ý trái ngược nhau.",
+  "forms": [
+   "Although / Though + S + V, S + V.",
+   "S + V + although / though + S + V.",
+   "S + V. However, S + V.",
+   "S + V; however, S + V."
+  ],
+  "points": [
+   "although / though (mặc dù) nối hai mệnh đề có ý trái ngược trong cùng một câu.",
+   "Mệnh đề although/though đứng đầu câu thì dùng dấu phẩy ngăn cách với mệnh đề chính.",
+   "however (tuy nhiên) thường đứng đầu câu thứ hai, sau dấu chấm hoặc chấm phẩy, theo sau là dấu phẩy.",
+   "Không dùng but cùng although trong một câu: Although it was long, but … ✗.",
+   "Sau although/though là một mệnh đề (S + V), không phải chỉ một cụm danh từ."
+  ],
+  "examples": [
+   [
+    "Although the film was long, we enjoyed it.",
+    "Mặc dù bộ phim dài, chúng tôi vẫn thích nó."
+   ],
+   [
+    "I watched the film though I was tired.",
+    "Tôi đã xem bộ phim dù tôi mệt."
+   ],
+   [
+    "The plot is boring. However, the actors are great.",
+    "Cốt truyện nhàm chán. Tuy nhiên, các diễn viên rất tuyệt."
+   ],
+   [
+    "Though it's a horror film, my sister likes it.",
+    "Dù là phim kinh dị, em gái tôi vẫn thích nó."
+   ]
+  ],
+  "memo": "Although/though nối ngay trong câu và không đi cùng but; However mở đầu câu sau + dấu phẩy.",
+  "quiz": [
+   {
+    "q": "____ the film had good reviews, I didn't like it.",
+    "opts": [
+     "However",
+     "Although",
+     "Because",
+     "But"
+    ],
+    "a": 1,
+    "why": "Hai ý trái ngược trong cùng một câu, mệnh đề đứng đầu → Although (mặc dù)."
+   },
+   {
+    "q": "The film was scary. ____, I watched it till the end.",
+    "opts": [
+     "Although",
+     "Because",
+     "However",
+     "So that"
+    ],
+    "a": 2,
+    "why": "Đứng đầu câu thứ hai, có dấu phẩy theo sau, nối ý trái ngược → However."
+   },
+   {
+    "q": "Which sentence is correct?",
+    "opts": [
+     "Although he was tired, but he watched the film.",
+     "He was tired, although, he watched the film.",
+     "However he was tired, he watched the film.",
+     "Although he was tired, he watched the film."
+    ],
+    "a": 3,
+    "why": "Although + mệnh đề, mệnh đề chính — không thêm but; however không dùng như liên từ nối mệnh đề."
+   },
+   {
+    "q": "We went to see the film ____ it rained heavily.",
+    "opts": [
+     "however",
+     "although",
+     "despite",
+     "so"
+    ],
+    "a": 1,
+    "why": "Nối hai mệnh đề trái ngược trong một câu → although. Despite không đi với mệnh đề."
+   }
+  ]
+ },
+ {
+  "id": "gk-10",
+  "lvl": "kids",
+  "chap": "Unit 9 · Festivals around the world",
+  "title": "Câu hỏi Yes/No và câu hỏi có từ để hỏi (Wh-questions)",
+  "sum": "Câu hỏi Yes/No dùng để xác nhận đúng/sai; câu hỏi Wh- dùng để hỏi thông tin cụ thể (cái gì, ở đâu, khi nào…).",
+  "forms": [
+   "Yes/No: Be / Do / Does / Did / Can … + S + …?",
+   "→ Yes, S + trợ động từ. / No, S + trợ động từ + not.",
+   "Wh-: Wh-word + trợ động từ + S + V …?",
+   "Who / What làm chủ ngữ: Who / What + V …?"
+  ],
+  "points": [
+   "Câu hỏi Yes/No bắt đầu bằng trợ động từ hoặc be; trả lời bằng Yes/No + trợ động từ.",
+   "Từ để hỏi: What (cái gì), Where (ở đâu), When (khi nào), Who (ai), Why (tại sao), How (thế nào).",
+   "How còn kết hợp: How often, How long, How many, How much, How far.",
+   "Trật tự câu hỏi Wh-: từ để hỏi + trợ động từ (do/does/did, be, can…) + chủ ngữ + động từ.",
+   "Khi Who/What làm chủ ngữ thì không dùng do/does/did: Who organises the festival?",
+   "Lỗi hay gặp: Where you went? ✗ → Where did you go?"
+  ],
+  "examples": [
+   [
+    "Do people celebrate Diwali in India?",
+    "Người ta có tổ chức lễ hội Diwali ở Ấn Độ không?"
+   ],
+   [
+    "When is the Mid-Autumn Festival?",
+    "Tết Trung thu là khi nào?"
+   ],
+   [
+    "Where did you watch the fireworks?",
+    "Bạn đã xem pháo hoa ở đâu?"
+   ],
+   [
+    "Why do people decorate their houses?",
+    "Tại sao mọi người trang trí nhà cửa?"
+   ]
+  ],
+  "memo": "Yes/No: đưa trợ động từ lên đầu; Wh-: từ để hỏi + trợ động từ + S + V.",
+  "quiz": [
+   {
+    "q": "____ do people celebrate Christmas? – On 25th December.",
+    "opts": [
+     "Where",
+     "When",
+     "Why",
+     "Who"
+    ],
+    "a": 1,
+    "why": "Câu trả lời là một ngày (On 25th December) → hỏi thời gian bằng When."
+   },
+   {
+    "q": "____ you go to the flower festival last year? – Yes, I did.",
+    "opts": [
+     "Do",
+     "Were",
+     "Did",
+     "Are"
+    ],
+    "a": 2,
+    "why": "Có last year và câu trả lời Yes, I did → câu hỏi quá khứ đơn bắt đầu bằng Did."
+   },
+   {
+    "q": "____ did they hold the festival? – In Da Lat.",
+    "opts": [
+     "Where",
+     "What",
+     "How",
+     "When"
+    ],
+    "a": 0,
+    "why": "Câu trả lời là địa điểm (In Da Lat) → hỏi bằng Where."
+   },
+   {
+    "q": "____ often do you have a festival? – Once a year.",
+    "opts": [
+     "What",
+     "When",
+     "Who",
+     "How"
+    ],
+    "a": 3,
+    "why": "Hỏi mức độ thường xuyên dùng How often; trả lời Once a year."
+   }
+  ]
+ },
+ {
+  "id": "gk-11",
+  "lvl": "kids",
+  "chap": "Unit 10 · Energy sources",
+  "title": "Thì hiện tại tiếp diễn (Present continuous)",
+  "sum": "Dùng để diễn tả hành động đang xảy ra lúc nói hoặc đang diễn ra trong khoảng thời gian hiện tại.",
+  "forms": [
+   "(+) S + am/is/are + V-ing",
+   "(−) S + am/is/are + not + V-ing",
+   "(?) Am/Is/Are + S + V-ing?"
+  ],
+  "points": [
+   "Diễn tả hành động đang xảy ra tại thời điểm nói: We are saving energy now.",
+   "Diễn tả việc đang diễn ra trong giai đoạn hiện tại: They're building a solar farm this year.",
+   "Dấu hiệu: now, right now, at the moment, at present, Look!, Listen!, this week.",
+   "Thêm -ing: use → using, run → running, lie → lying.",
+   "Không dùng tiếp diễn với động từ chỉ trạng thái: like, love, know, want, need, understand.",
+   "Lỗi hay gặp: thiếu am/is/are (She using solar energy ✗ → She is using solar energy)."
+  ],
+  "examples": [
+   [
+    "We are using more solar energy now.",
+    "Hiện nay chúng tôi đang dùng nhiều năng lượng mặt trời hơn."
+   ],
+   [
+    "Look! The wind turbines are turning.",
+    "Nhìn kìa! Các tua-bin gió đang quay."
+   ],
+   [
+    "My dad isn't driving to work this week.",
+    "Tuần này bố tôi không lái xe đi làm."
+   ],
+   [
+    "Are they building a new power plant?",
+    "Họ có đang xây nhà máy điện mới không?"
+   ]
+  ],
+  "memo": "Đang làm = am/is/are + V-ing; thiếu be là sai ngay.",
+  "quiz": [
+   {
+    "q": "Be quiet! The teacher ____ about renewable energy.",
+    "opts": [
+     "talks",
+     "is talking",
+     "talk",
+     "are talking"
+    ],
+    "a": 1,
+    "why": "Be quiet! cho thấy hành động đang xảy ra; chủ ngữ the teacher số ít → is talking."
+   },
+   {
+    "q": "At the moment, we ____ off the lights to save electricity.",
+    "opts": [
+     "turn",
+     "turning",
+     "are turning",
+     "is turning"
+    ],
+    "a": 2,
+    "why": "At the moment → hiện tại tiếp diễn; chủ ngữ we → are turning."
+   },
+   {
+    "q": "____ your brother using the computer now?",
+    "opts": [
+     "Is",
+     "Does",
+     "Are",
+     "Do"
+    ],
+    "a": 0,
+    "why": "Câu hỏi hiện tại tiếp diễn, chủ ngữ your brother số ít → Is + S + V-ing."
+   },
+   {
+    "q": "I ____ how solar panels work.",
+    "opts": [
+     "am knowing",
+     "knowing",
+     "am know",
+     "know"
+    ],
+    "a": 3,
+    "why": "Know là động từ chỉ trạng thái, không dùng ở thì tiếp diễn → I know."
+   }
+  ]
+ },
+ {
+  "id": "gk-12",
+  "lvl": "kids",
+  "chap": "Unit 11 · Travelling in the future",
+  "title": "Thì tương lai đơn (Future simple: will)",
+  "sum": "Dùng will để dự đoán về tương lai, nói quyết định ngay lúc nói, lời hứa hoặc lời đề nghị.",
+  "forms": [
+   "(+) S + will + V",
+   "(−) S + will not (won't) + V",
+   "(?) Will + S + V …?"
+  ],
+  "points": [
+   "Dùng will để dự đoán về tương lai: People will travel by flying car.",
+   "Dùng will cho quyết định ngay lúc nói, lời hứa, lời đề nghị: I'll help you.",
+   "Dấu hiệu: tomorrow, next week/year, in the future, in 2050, soon, I think, probably.",
+   "will dùng cho mọi chủ ngữ; sau will là động từ nguyên mẫu không 'to'.",
+   "Viết tắt: I'll, you'll, he'll, we'll; will not = won't.",
+   "Lỗi hay gặp: will goes ✗, will to go ✗ → will go."
+  ],
+  "examples": [
+   [
+    "In the future, we will travel by hyperloop.",
+    "Trong tương lai, chúng ta sẽ đi lại bằng tàu siêu tốc hyperloop."
+   ],
+   [
+    "Driverless cars will be popular soon.",
+    "Xe tự lái sẽ sớm trở nên phổ biến."
+   ],
+   [
+    "Bikes won't disappear in the future.",
+    "Xe đạp sẽ không biến mất trong tương lai."
+   ],
+   [
+    "Will people travel to Mars?",
+    "Liệu con người có du lịch lên sao Hỏa không?"
+   ]
+  ],
+  "memo": "Will + V nguyên mẫu cho mọi ngôi — không thêm s, không có to.",
+  "quiz": [
+   {
+    "q": "I think people ____ flying cars in 2050.",
+    "opts": [
+     "use",
+     "will use",
+     "used",
+     "are use"
+    ],
+    "a": 1,
+    "why": "I think và in 2050 → dự đoán tương lai: will + V nguyên mẫu."
+   },
+   {
+    "q": "Don't worry. I ____ you to the station tomorrow.",
+    "opts": [
+     "will to drive",
+     "drove",
+     "will drive",
+     "drives"
+    ],
+    "a": 2,
+    "why": "Lời hứa, có tomorrow → will drive; sau will không có to."
+   },
+   {
+    "q": "Solar-powered buses ____ pollute the air, so they are eco-friendly.",
+    "opts": [
+     "won't",
+     "will",
+     "don't will",
+     "aren't"
+    ],
+    "a": 0,
+    "why": "Xe buýt chạy năng lượng mặt trời thân thiện môi trường → sẽ không gây ô nhiễm: won't + V."
+   },
+   {
+    "q": "____ we travel by bamboo-copter in the future?",
+    "opts": [
+     "Are",
+     "Did",
+     "Was",
+     "Will"
+    ],
+    "a": 3,
+    "why": "In the future → câu hỏi tương lai đơn: Will + S + V?"
+   }
+  ]
+ },
+ {
+  "id": "gk-13",
+  "lvl": "kids",
+  "chap": "Unit 11 · Travelling in the future",
+  "title": "Đại từ sở hữu (Possessive pronouns)",
+  "sum": "Dùng mine, yours, his, hers, ours, theirs để chỉ vật thuộc về ai mà không cần nhắc lại danh từ.",
+  "forms": [
+   "my → mine, your → yours, his → his, her → hers, our → ours, their → theirs",
+   "Đại từ sở hữu = tính từ sở hữu + danh từ: my bike → mine",
+   "This / That + N + is + mine / yours / hers …"
+  ],
+  "points": [
+   "Đại từ sở hữu thay cho tính từ sở hữu + danh từ để tránh lặp: Your car is red; mine is white.",
+   "my → mine, your → yours, his → his, her → hers, our → ours, their → theirs.",
+   "Sau đại từ sở hữu KHÔNG có danh từ: This is mine (không nói mine bike).",
+   "Tính từ sở hữu luôn đi kèm danh từ: my bike, her skateboard, their car.",
+   "Đại từ sở hữu không có dấu ': yours, hers, ours ✓ — your's, her's ✗."
+  ],
+  "examples": [
+   [
+    "This helmet is mine.",
+    "Chiếc mũ bảo hiểm này là của tôi."
+   ],
+   [
+    "Is that electric bike yours?",
+    "Chiếc xe đạp điện kia là của bạn à?"
+   ],
+   [
+    "Their car is old, but ours is new.",
+    "Xe của họ cũ, nhưng xe của chúng tôi thì mới."
+   ],
+   [
+    "My ticket is here. Where's hers?",
+    "Vé của tôi ở đây. Vé của cô ấy đâu?"
+   ]
+  ],
+  "memo": "Có danh từ theo sau → my/your/her; đứng một mình → mine/yours/hers.",
+  "quiz": [
+   {
+    "q": "This is not my bag. ____ is blue.",
+    "opts": [
+     "Me",
+     "My",
+     "Mine",
+     "I"
+    ],
+    "a": 2,
+    "why": "Đứng một mình thay cho my bag → đại từ sở hữu Mine."
+   },
+   {
+    "q": "Is this skateboard ____, Tom?",
+    "opts": [
+     "your",
+     "yours",
+     "you",
+     "your's"
+    ],
+    "a": 1,
+    "why": "Không có danh từ theo sau → yours; đại từ sở hữu không có dấu '."
+   },
+   {
+    "q": "We have our car, and they have ____.",
+    "opts": [
+     "theirs",
+     "their",
+     "them",
+     "they"
+    ],
+    "a": 0,
+    "why": "Thay cho their car → theirs."
+   },
+   {
+    "q": "Lan has a pink bike. ____ bike is new, too.",
+    "opts": [
+     "Hers",
+     "She",
+     "Herself",
+     "Her"
+    ],
+    "a": 3,
+    "why": "Đứng trước danh từ bike → dùng tính từ sở hữu Her, không dùng Hers."
+   }
+  ]
+ },
+ {
+  "id": "gk-14",
+  "lvl": "kids",
+  "chap": "Unit 12 · English-speaking countries",
+  "title": "Mạo từ a / an / the (Articles)",
+  "sum": "Dùng a/an với danh từ đếm được số ít chưa xác định; dùng the với người, vật đã xác định hoặc duy nhất.",
+  "forms": [
+   "a + danh từ số ít bắt đầu bằng âm phụ âm: a castle, a university",
+   "an + danh từ số ít bắt đầu bằng âm nguyên âm: an island, an hour",
+   "the + danh từ đã xác định / duy nhất: the sun, the Thames, the USA",
+   "Không dùng mạo từ: hầu hết tên nước, thành phố, châu lục (Canada, London)"
+  ],
+  "points": [
+   "a/an dùng với danh từ đếm được số ít, nhắc đến lần đầu hoặc chưa xác định.",
+   "an đứng trước âm nguyên âm (không phải chữ cái): an hour, an umbrella; nhưng a university, a uniform.",
+   "the dùng khi người nghe đã biết đối tượng hoặc đối tượng đã được nhắc đến trước đó.",
+   "the dùng với vật duy nhất (the sun), sông, biển (the Thames), tên nước có States, Kingdom (the USA, the UK).",
+   "Không dùng the với tên hầu hết quốc gia, thành phố, châu lục: Canada, Sydney, Australia.",
+   "Lỗi hay gặp: a apple ✗ → an apple; the Australia ✗ → Australia."
+  ],
+  "examples": [
+   [
+    "Sydney has an amazing opera house.",
+    "Sydney có một nhà hát opera tuyệt đẹp."
+   ],
+   [
+    "We visited a castle. The castle was very old.",
+    "Chúng tôi đã thăm một lâu đài. Lâu đài ấy rất cổ."
+   ],
+   [
+    "The Thames flows through London.",
+    "Sông Thames chảy qua Luân Đôn."
+   ],
+   [
+    "He lives in the USA, not in Canada.",
+    "Anh ấy sống ở Mỹ, không phải ở Canada."
+   ]
+  ],
+  "memo": "Nghe âm đầu: nguyên âm → an, phụ âm → a; người nghe đã biết rõ → the.",
+  "quiz": [
+   {
+    "q": "New Zealand is ____ island country.",
+    "opts": [
+     "an",
+     "a",
+     "some",
+     "many"
+    ],
+    "a": 0,
+    "why": "Island bắt đầu bằng âm nguyên âm /aɪ/, danh từ số ít → an."
+   },
+   {
+    "q": "My uncle is ____ university teacher in Canada.",
+    "opts": [
+     "an",
+     "a",
+     "some",
+     "any"
+    ],
+    "a": 1,
+    "why": "University bắt đầu bằng âm /j/ (phụ âm) dù chữ đầu là u → a."
+   },
+   {
+    "q": "____ River Thames is famous for its bridges.",
+    "opts": [
+     "A",
+     "An",
+     "The",
+     "(không dùng mạo từ)"
+    ],
+    "a": 2,
+    "why": "Tên sông dùng the: The River Thames."
+   },
+   {
+    "q": "She has visited ____ Australia twice.",
+    "opts": [
+     "a",
+     "an",
+     "the",
+     "(không dùng mạo từ)"
+    ],
+    "a": 3,
+    "why": "Tên hầu hết quốc gia (Australia) không dùng mạo từ."
+   }
+  ]
+ }
+]

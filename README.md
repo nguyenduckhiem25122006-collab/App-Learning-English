@@ -3,6 +3,8 @@
 Cấu trúc:
 - `data/` – nguồn dữ liệu dạng văn bản: `kids*.txt`, `toeic*.txt` (từ|loại từ|nghĩa|ví dụ|hình), `sent_*.txt` (câu giao tiếp hằng ngày, công sở và cấu trúc câu TOEIC LR & SW), `ipa.json` (44 âm).
 - `data/stem/*.json` – bài Toán & Vật lí lớp 7–9 (tóm tắt, ý chính, công thức, mô phỏng, mẹo nhớ, ví dụ, thuật ngữ tiếng Anh, 4 câu kiểm tra).
+- `data/grammar/*.json` – bài Ngữ pháp: Tiếng Anh 7 (Global Success, Unit 1–12) và TOEIC (Part 5/6): cấu trúc, cách dùng, ví dụ, mẹo nhớ, 4 câu kiểm tra.
+- `src/content.js` – học liệu lớp (giống Quizlet): giáo viên thêm/sửa/xoá từ, câu, bài ngữ pháp, bài Toán & Vật lí; gói thay đổi được đặt chồng lên dữ liệu gốc, chia sẻ qua máy chủ lớp hoặc file `.json`. Xem "Lớp học → Học liệu" trong app và ONLINE.md.
 - `src/stem.js` – các mô phỏng trực quan có thanh trượt cho bài Toán & Vật lí (vẽ SVG, không phụ thuộc DOM nên test được bằng Node).
 - `build_data.py` – gắn IPA (từ điển CMU), kiểm tra trùng lặp, xuất `build/data.js`.
 - `src/core.js` – logic thuần (lịch ôn tập Leitner, chuỗi ngày, quiz) dùng chung cho app và test.

@@ -319,8 +319,10 @@
     chart: {
       ctrls: () => [],
       draw: (p) => {
-        const d = p.data || [], cols = [BLUE, ORANGE, GREEN, PURPLE, RED, "#14B8A6", "#F59E0B"];
-        let g = T(180, 16, p.title || "", { anchor: "middle", bold: true, size: 13 });
+        // Titles and labels can come from a teacher's class material: escape them.
+        const e = (x) => String(x).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+        const d = (p.data || []).map(([l, v]) => [e(l), v]), cols = [BLUE, ORANGE, GREEN, PURPLE, RED, "#14B8A6", "#F59E0B"];
+        let g = T(180, 16, e(p.title || ""), { anchor: "middle", bold: true, size: 13 });
         if (p.kind === "pie") {
           const tot = d.reduce((t, x) => t + x[1], 0) || 1;
           let a = 90;

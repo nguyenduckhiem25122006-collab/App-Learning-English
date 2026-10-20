@@ -14,6 +14,10 @@
     room_full: "Lớp đã đủ chỗ", name_taken: "Tên này vừa có người dùng, hãy chọn tên khác", no_player: "Tài khoản lớp không còn — hãy tham gia lại",
     offline: "Chưa kết nối được máy chủ, thử lại sau nhé", server: "Máy chủ đang bận, thử lại sau nhé", bad_response: "Máy chủ trả lời lạ — báo người quản lý lớp",
     not_configured: "Chế độ trực tuyến chưa được thiết lập",
+    no_teacher: "Lớp này chưa có mật khẩu giáo viên — người quản lý đặt trong Supabase (xem ONLINE.md)",
+    wrong_secret: "Sai mật khẩu giáo viên", admin_locked: "Nhập sai mật khẩu giáo viên quá nhiều lần, thử lại sau 15 phút",
+    too_big: "Học liệu quá lớn (tối đa 512 KB) — bớt bớt bài hoặc chia sang lớp khác", too_fast: "Vừa đăng xong, đợi vài giây rồi thử lại",
+    bad_pack: "Học liệu không hợp lệ", server_old: "Máy chủ lớp chưa được cập nhật — người quản lý chạy lại file supabase/schema.sql (xem ONLINE.md)",
   };
   // ==================
 
@@ -44,11 +48,13 @@
             });
           } catch (e) { throw fail("offline"); }
           if (res.status === 429 || res.status >= 500) throw fail("server");
+          if (res.status === 404) throw fail("server_old"); // a function this app version needs is not on the server yet
           const data = await res.json().catch(() => null);
           if (!res.ok || !data || typeof data !== "object") throw fail("bad_response");
           st.fails = 0; st.until = 0;
           return data;
         } catch (e) {
+          if (e.code === "server_old") throw e; // the server answers fine: no need to back off
           st.fails++;
           st.until = now() + Math.min(BACKOFF_MAX, BACKOFF_MIN * 2 ** (st.fails - 1)) * (0.8 + 0.4 * random());
           throw e;
@@ -68,6 +74,9 @@
       sync: (token, stats) => call("nhip_sync", { p_token: token, p_stats: stats }),
       board: (token, week) => call("nhip_board", { p_token: token, p_week: week }),
       leave: (token) => call("nhip_leave", { p_token: token }),
+      packGet: (token, ver) => call("nhip_pack_get", { p_token: token, p_ver: ver }),
+      admin: (room, secret) => call("nhip_admin", { p_room: room, p_secret: secret }),
+      packPut: (room, secret, pack) => call("nhip_pack_put", { p_room: room, p_secret: secret, p_pack: pack }),
     };
   }
 

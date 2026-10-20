@@ -195,6 +195,9 @@ def main():
         check("3 sentences today", n_cards == 3, str(n_cards))
         first = page.locator(".sent .en").first.inner_text()
         page.click(".sent [data-scr] >> nth=0")
+        pool = page.locator(".sent").first.locator(".tiles").nth(1).locator("button.tile").all_inner_texts()
+        toks = first.split(" ")
+        check("scramble: random order, not the sentence and not just reversed", sorted(pool) == sorted(toks) and pool != toks and pool != toks[::-1], f"{pool} / {toks}")
         for wtok in first.split(" "):
             page.locator(".sent").first.locator(".tiles").nth(1).locator("button.tile").get_by_text(wtok, exact=True).first.click()
         check("scramble solved", "Đúng rồi" in page.locator(".sent").first.inner_text())
@@ -220,6 +223,59 @@ def main():
         page.click("[data-pairquiz='θ']")
         page.click("[data-pairpick] >> nth=0")
         check("minimal-pair quiz gives feedback", page.locator("#snd-detail .feedback").count() == 1)
+
+        # 9b. Ngữ pháp tab: built-in lessons with structures, examples and a quiz
+        page.click("[data-tab=gram]")
+        check("grammar lessons for Tiếng Anh 7", page.locator(".stem-item").count() >= 12 and "Unit 1" in page.inner_text("#view"))
+        page.click(".stem-item >> nth=0")
+        check("grammar lesson shows structures and examples", page.locator(".formulas div").count() >= 1 and "Ví dụ" in page.inner_text("#view"))
+        xp0 = state(page)["xp"]
+        for i in range(4):
+            right = page.evaluate(f"""() => {{ const b = [...document.querySelectorAll('[data-gramans^="{i}:"]')]; return b.length; }}""")
+            page.click(f"[data-gramans^='{i}:'] >> nth=0")
+        check("grammar quiz answered → feedback", page.locator(".stem-q .feedback").count() == 4)
+
+        # 9c. Lớp học → Học liệu without a server: edit a built-in word, delete one, add a sentence and a Toán lesson
+        page.click("[data-tab=rank]"); page.click("[data-classview=pack]")
+        check("class material home lists the 4 kinds", page.locator("[data-cm]").count() == 4 and "Chia sẻ cho cả lớp" in page.inner_text("#view"))
+        page.click("[data-cm=words]"); page.click("[data-cmlvl=kids]")
+        page.locator("[data-cmset]").first.click()
+        w0 = page.locator("#view .list .item b").first.inner_text()
+        page.locator("#view .list [data-edit]").nth(1).click()
+        page.fill("#sheet [name=vi]", "nghĩa do cô sửa")
+        page.click("#sheet [data-edform] button.primary")
+        check("edited built-in word is marked", "nghĩa do cô sửa" in page.inner_text("#view") and "Đã sửa" in page.inner_text("#view"))
+        n0 = page.locator("#view .list .item").count()
+        page.locator("[data-delitem]").first.click()
+        check("delete asks once more", "Xoá thật?" in page.locator("[data-delitem]").first.inner_text())
+        page.locator("[data-delitem]").first.click()
+        check("word deleted from the set", page.locator("#view .list .item").count() == n0 - 1 and w0 not in [t for t in page.locator("#view .list .item b").all_inner_texts()])
+        pk = page.evaluate("JSON.parse(localStorage.getItem('nhip.pack'))")
+        check("changes saved on the device", len(pk["words"]) == 2 and any(x.get("del") for x in pk["words"]), pk["words"])
+        page.click("[data-cm='']"); page.click("[data-cm=sents]"); page.click("[data-cmtrack=daily]")
+        page.fill("#new-set", "Câu của tuần"); page.click("[data-newset] button")
+        page.click("[data-edit='sents:']"); page.fill("#sheet [name=en]", "Could you open the window, please?"); page.fill("#sheet [name=vi]", "Bạn mở giúp cửa sổ nhé?")
+        page.click("#sheet [data-edform] button.primary")
+        check("sentence added to a new group", page.locator("#view .list .item").count() == 1)
+        page.click("[data-cm='']"); page.click("[data-cm=stem]"); page.click("[data-cmsubj=math]"); page.click("[data-cmgrade='7']")
+        page.click("[data-edit='stem:']")
+        page.fill("#sheet [name=title]", "Bài của lớp: Pytago"); page.fill("#sheet [name=chap]", "Ôn tập của lớp")
+        page.select_option("#sheet [name=viz]", "pythagoras")
+        page.fill("#sheet [name=q0]", "3² + 4² = ?"); page.fill("#sheet [name=q0o0]", "25"); page.fill("#sheet [name=q0o1]", "49")
+        page.click("#sheet [data-addq]")
+        page.fill("#sheet [name=q1]", "Thiếu phương án")
+        page.click("#sheet [data-edform] button.primary")
+        check("form explains what is missing", "cần ít nhất 2 phương án" in page.inner_text("#sheet [role=alert]") and page.input_value("#sheet [name=q0o0]") == "25")
+        page.click("#sheet [data-delq='1']"); page.click("#sheet [data-edform] button.primary")
+        check("Toán lesson saved", page.locator("#sheet .edform").count() == 0 and "Bài của lớp: Pytago" in page.inner_text("#view"))
+        page.click("#subj-math"); page.click("[data-stemgrade='7']")
+        page.click("text=Bài của lớp: Pytago")
+        check("class lesson opens with its visual", page.locator(".viz-box svg").count() == 1 and "Của lớp" in page.inner_text("#view"))
+        page.click("[data-stemans='0:0']")
+        check("one-question lesson completes", "Bài học đã hoàn thành" in page.inner_text("#view"))
+        page.click("#subj-en"); page.click("#lv-kids"); page.click("[data-tab=sent]"); page.click("[data-sentview=all]")
+        check("learners see the class sentences", "Could you open the window, please?" in page.inner_text("#view"))
+        page.click("[data-sentview=today]")
 
         # 10. Reset needs in-page confirmation
         page.click("[data-tab=me]")
@@ -325,7 +381,7 @@ def main():
             merr = []
             mp.on("pageerror", lambda e: merr.append(str(e)))
             mp.goto(url, wait_until="networkidle")
-            for tab in ["today", "words", "sent", "ipa", "rank", "me"]:
+            for tab in ["today", "words", "sent", "gram", "ipa", "rank", "me"]:
                 mp.click(f"[data-tab={tab}]")
                 check(f"{scheme} 390px no h-scroll: {tab}", no_hscroll(mp))
             ys = [mp.locator(f"#subj-{k}").bounding_box()["y"] for k in ("en", "math", "phys")]

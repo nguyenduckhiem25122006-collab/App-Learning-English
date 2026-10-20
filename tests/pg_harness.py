@@ -9,7 +9,7 @@ from psycopg.types.json import Jsonb
 # ===== CONFIG =====
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SCHEMA = ROOT / "supabase" / "schema.sql"
-RPCS = {"nhip_join", "nhip_sync", "nhip_board", "nhip_leave"}
+RPCS = {"nhip_join", "nhip_sync", "nhip_board", "nhip_leave", "nhip_admin", "nhip_pack_put", "nhip_pack_get"}
 # ==================
 
 

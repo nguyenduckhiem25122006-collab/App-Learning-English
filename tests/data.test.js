@@ -85,3 +85,21 @@ test("Toán & Vật lí: lessons for grades 7–9, every visual draws, quizzes a
     assert.ok((b.learn.phys || 0) <= L.filter((l) => l.subj === "phys").length, b.id);
   }
 });
+
+test("grammar lessons: Tiếng Anh 7 and TOEIC, each with structures, examples and a valid quiz", () => {
+  const G = D.grammar;
+  assert.ok(G.filter((l) => l.lvl === "kids").length >= 12 && G.filter((l) => l.lvl === "toeic").length >= 12);
+  assert.equal(new Set(G.map((l) => l.id)).size, G.length);
+  for (const l of G) {
+    assert.ok(l.forms.length && l.examples.length >= 3 && l.points.length >= 3, l.id);
+    assert.equal(l.quiz.length, 4, l.id);
+    for (const q of l.quiz) assert.ok(q.a >= 0 && q.a < q.opts.length && new Set(q.opts).size === q.opts.length, l.id);
+  }
+});
+
+test("every built-in lesson survives the class-material editor unchanged (so editing never loses a field)", () => {
+  const K = require("../src/content.js");
+  const plain = (x) => JSON.parse(JSON.stringify(x)); // APP_DATA lives in another vm context
+  for (const l of D.stem) assert.deepEqual(plain(K.cleanItem("stem", l)), plain(l), l.id);
+  for (const l of D.grammar) assert.deepEqual(plain(K.cleanItem("grammar", l)), plain(l), l.id);
+});

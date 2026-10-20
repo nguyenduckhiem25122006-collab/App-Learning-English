@@ -108,7 +108,29 @@ main { max-width: 980px; margin: 0 auto; padding-block: 20px 40px; padding-left:
 .stepper { display: inline-flex; align-items: center; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden }
 .stepper button { border: 0; background: var(--chip); width: 38px; height: 38px; font-size: 1.1rem; font-weight: 700 }
 .stepper output { min-width: 46px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums }
-input[type=search], input[type=text], input[type=password], select { border: 1px solid var(--rule); background: var(--card); border-radius: 10px; padding: 9px 12px; min-height: 40px; min-width: 0 }
+input[type=search], input[type=text], input[type=password], select, textarea { border: 1px solid var(--rule); background: var(--card); border-radius: 10px; padding: 9px 12px; min-height: 40px; min-width: 0 }
+textarea { font: inherit; color: inherit; resize: vertical; width: 100%; line-height: 1.45 }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: .55 }
+.chip.cls { color: #7A3FC4; background: color-mix(in srgb, #7A3FC4 12%, var(--chip)) }
+.cls-tag { color: #7A3FC4; font-weight: 700 }
+.btn.danger { color: var(--bad); border-color: var(--bad) }
+
+/* Lớp học → Học liệu */
+.sheet.wide { width: min(780px, 100%) }
+.edform .fld { gap: 4px; min-width: 0 }
+.edform .fld input, .edform .fld select { width: 100% }
+.edform .grid { gap: 12px }
+.qb { border: 1px dashed var(--rule); border-radius: 14px; padding: 12px; margin: 0; min-width: 0 }
+.qb legend { padding: 0 6px }
+.qblock { padding: 10px; border-radius: 12px; background: var(--chip); gap: 8px }
+.qopts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 6px }
+.qopt { display: grid; grid-template-columns: auto auto 1fr; gap: 6px; align-items: center }
+.qopt input[type=radio] { accent-color: var(--good); width: 18px; height: 18px; margin: 0 }
+.qopt span { font-weight: 700; color: var(--muted); width: 1.1em }
+.qblock input[type=text] { width: 100% }
+.list .emo { font-size: 1.5rem; width: 1.6em; text-align: center }
+.pk-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)) }
+.pk-card h3 { margin: 0 }
 input[type=range] { accent-color: var(--action); width: 100% }
 
 /* Today */
@@ -612,4 +634,5 @@ canvas.draw { width: 100%; max-width: 320px; aspect-ratio: 1; border: 1px solid 
 <script>/*FARM*/</script>
 <script>/*ONLINE*/</script>
 <script>/*STEM*/</script>
+<script>/*CONTENT*/</script>
 <script>/*APP*/</script>

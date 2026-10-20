@@ -134,10 +134,23 @@
 
   // ---- Sentences ----
   const tokens = (sentence) => sentence.split(" ").filter(Boolean);
+  /** Random order of the tiles (strings or { t } objects). Never the sentence itself or simply read backwards,
+      and from 4 tiles up most of them leave their place, so the learner has to rebuild the sentence. */
   function scramble(toks, r = Math.random) {
-    if (toks.length < 2) return toks.slice();
-    for (let i = 0; i < 8; i++) { const s = shuffle(toks, r); if (s.join(" ") !== toks.join(" ")) return s; }
-    return toks.slice().reverse();
+    const n = toks.length, text = (x) => (typeof x === "string" ? x : x.t);
+    if (n < 2) return toks.slice();
+    const same = (a, b) => a.every((x, i) => text(x) === text(b[i]));
+    const back = toks.slice().reverse(), maxStay = n < 4 ? 0 : Math.floor(n / 3);
+    let best = null, bestStay = n + 1;
+    for (let k = 0; k < 40; k++) {
+      const s = shuffle(toks, r);
+      if (same(s, toks) || (n > 2 && same(s, back))) continue;
+      const stay = s.filter((x, i) => text(x) === text(toks[i])).length;
+      if (stay <= maxStay) return s;
+      if (stay < bestStay) { best = s; bestStay = stay; }
+    }
+    if (best) return best;
+    return toks.slice(1).concat(toks[0]); // every tile identical but one: a rotation still differs
   }
   /** First n sentences (in course order) not learned yet; falls back to review of learned ones. */
   function pickSentences(list, learned, n) {

@@ -27,6 +27,7 @@ def assemble(inline_images):
              "/*FARM*/": (SRC / "farm.js").read_text(encoding="utf-8"),
              "/*ONLINE*/": (SRC / "online.js").read_text(encoding="utf-8"),
              "/*STEM*/": (SRC / "stem.js").read_text(encoding="utf-8"),
+             "/*CONTENT*/": (SRC / "content.js").read_text(encoding="utf-8"),
              "/*ONLINECFG*/": (SRC / "online.config.js").read_text(encoding="utf-8"),
              "/*IMG*/": beast_images(inline_images),
              "/*APP*/": (SRC / "app.js").read_text(encoding="utf-8")}
