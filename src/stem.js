@@ -74,6 +74,151 @@
   const ctl = (k, label, min, max, step, val, unit = "") => ({ k, label, min, max, step, val, unit });
   const BLUE = "#4F8FE8", ORANGE = "#FF9F43", GREEN = "#3FB66B", RED = "#E5533D", PURPLE = "#8B5CF6", WATER = "#BFE3FF";
 
+  // ---------------- Teacher formulas: y = f(x) with slider parameters ----------------
+  // A tiny parser (no eval: formulas come from class material). Numbers (1.5 or 1,5), x, one-letter parameters,
+  // + − × ÷ ^ ² ³, brackets, |x|, √, sin cos tan (degrees, as in grade 9), sqrt abs ln log exp, π and e. "2ax" means 2·a·x.
+  const FUNCS = { sqrt: Math.sqrt, abs: Math.abs, sin: (v) => Math.sin(rad(v)), cos: (v) => Math.cos(rad(v)), tan: (v) => Math.tan(rad(v)),
+    ln: Math.log, log: Math.log10, exp: Math.exp };
+  const NAMES = ["sqrt", "abs", "sin", "cos", "tan", "exp", "log", "ln", "pi"]; // longest first where prefixes clash
+  function tokenize(src) {
+    const s = String(src).replace(/[−–]/g, "-").replace(/[·×]/g, "*").replace(/[÷:]/g, "/").replace(/²/g, "^2").replace(/³/g, "^3").replace(/π/g, "pi");
+    const out = [];
+    for (let i = 0; i < s.length;) {
+      const c = s[i];
+      if (/\s/.test(c)) { i++; continue; }
+      const num = /^(\d+([.,]\d+)?|[.,]\d+)/.exec(s.slice(i));
+      if (num) { out.push({ t: "n", v: parseFloat(num[0].replace(",", ".")) }); i += num[0].length; continue; }
+      if (/[a-zA-Z]/.test(c)) {
+        let id = /^[a-zA-Z]+/.exec(s.slice(i))[0];
+        i += id.length;
+        while (id) { // split "2ax" into a·x, but keep function names whole
+          const name = NAMES.find((n) => id.startsWith(n));
+          if (name) { out.push(name === "pi" ? { t: "n", v: Math.PI } : { t: "f", v: name }); id = id.slice(name.length); }
+          else { out.push(id[0] === "e" ? { t: "n", v: Math.E } : { t: "v", v: id[0] }); id = id.slice(1); }
+        }
+        continue;
+      }
+      if ("+-*/^()|√".includes(c)) { out.push({ t: c }); i++; continue; }
+      throw new Error(`Không hiểu kí tự “${c}”`);
+    }
+    return out;
+  }
+  /** Parse one expression → { f(env), vars } or throw an Error with a Vietnamese message. */
+  function parseExpr(src) {
+    if (String(src).length > 160) throw new Error("Công thức quá dài");
+    const tk = tokenize(src), vars = new Set();
+    let i = 0, depth = 0;
+    const peek = () => tk[i], take = (t) => (tk[i] && tk[i].t === t ? tk[i++] : null);
+    const starts = (x) => x && (x.t === "n" || x.t === "v" || x.t === "f" || x.t === "(" || x.t === "√");
+    function expr() {
+      if (++depth > 40) throw new Error("Công thức lồng quá sâu");
+      let a = term();
+      for (;;) {
+        if (take("+")) { const l = a, r = term(); a = (e) => l(e) + r(e); }
+        else if (take("-")) { const l = a, r = term(); a = (e) => l(e) - r(e); }
+        else break;
+      }
+      depth--;
+      return a;
+    }
+    function term() {
+      let a = unary();
+      for (;;) {
+        if (take("*")) { const l = a, r = unary(); a = (e) => l(e) * r(e); }
+        else if (take("/")) { const l = a, r = unary(); a = (e) => l(e) / r(e); }
+        else if (starts(peek())) { const l = a, r = power(); a = (e) => l(e) * r(e); } // implicit: 2x, 3(x+1), x sin x
+        else break;
+      }
+      return a;
+    }
+    function unary() {
+      if (take("-")) { const a = unary(); return (e) => -a(e); }
+      if (take("+")) return unary();
+      return power();
+    }
+    function power() {
+      const b = primary();
+      if (take("^")) { const x = unary(); return (e) => Math.pow(b(e), x(e)); }
+      return b;
+    }
+    function primary() {
+      const x = tk[i++];
+      if (!x) throw new Error("Công thức bị thiếu ở cuối");
+      if (x.t === "n") return () => x.v;
+      if (x.t === "v") { vars.add(x.v); return (e) => e[x.v]; }
+      if (x.t === "f" || x.t === "√") { const fn = x.t === "√" ? Math.sqrt : FUNCS[x.v], a = power(); return (e) => fn(a(e)); }
+      if (x.t === "(") { const a = expr(); if (!take(")")) throw new Error("Thiếu dấu “)”"); return a; }
+      if (x.t === "|") { const a = expr(); if (!take("|")) throw new Error("Thiếu dấu “|” đóng giá trị tuyệt đối"); return (e) => Math.abs(a(e)); }
+      throw new Error(`Thừa dấu “${x.t}”`);
+    }
+    if (!tk.length) throw new Error("Chưa nhập công thức");
+    const f = expr();
+    if (i < tk.length) throw new Error(`Thừa dấu “${tk[i].t === "n" ? tk[i].v : tk[i].v || tk[i].t}”`);
+    return { f, vars };
+  }
+  /** "y = a*x^2; y = x + 1" → up to 3 expressions, each without its "y =". */
+  const formulaParts = (src) => String(src || "").split(";").map((s) => s.replace(/^\s*y\s*=/i, "").trim()).filter(Boolean).slice(0, 3);
+  /** Parameters a formula uses besides x (letters, in order of appearance). Throws on a bad formula. */
+  function formulaVars(src) {
+    const out = [];
+    for (const part of formulaParts(src)) for (const v of parseExpr(part).vars) if (v !== "x" && !out.includes(v)) out.push(v);
+    return out;
+  }
+  const niceStep = (span) => [0.01, 0.05, 0.1, 0.25, 0.5, 1, 5, 10, 50, 100].find((s) => span / s <= 60) || Math.ceil(span / 60);
+  const escT = (x) => String(x).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  function formulaDraw(p, s) {
+    let parts;
+    try {
+      parts = formulaParts(p.expr).map((src) => ({ src, ...parseExpr(src) }));
+      if (!parts.length) throw new Error("Chưa nhập công thức");
+      const known = new Set(["x", ...(p.params || []).map((q) => q[0])]);
+      for (const q of parts) for (const v of q.vars) if (!known.has(v)) throw new Error(`Chưa khai báo tham số ${v}`);
+    } catch (err) {
+      return { svg: svgw(T(180, 105, "Công thức chưa đúng", { anchor: "middle", bold: true, size: 14, fill: RED }) + T(180, 128, escT(err.message), { anchor: "middle", size: 12 })), info: `⚠️ ${escT(err.message)}`, error: err.message };
+    }
+    const [x1, x2] = p.x || [-6, 6], env = (x, st) => ({ ...st, x });
+    let [y1, y2] = p.y || [NaN, NaN];
+    if (!(y2 > y1)) { // automatic: fit the curves at the starting values, so the axes stay put while sliders move
+      const st0 = Object.fromEntries((p.params || []).map((q) => [q[0], q[3]])), ys = [];
+      for (const q of parts) for (let k = 0; k <= 120; k++) { const v = q.f(env(x1 + ((x2 - x1) * k) / 120, st0)); if (isFinite(v) && Math.abs(v) < 1e6) ys.push(v); }
+      ys.sort((a, b) => a - b);
+      const lo = ys.length ? ys[Math.floor(ys.length * 0.02)] : -1, hi = ys.length ? ys[Math.ceil(ys.length * 0.98) - 1] : 1, pad = (hi - lo) * 0.15 || 1;
+      [y1, y2] = [lo - pad, hi + pad];
+      const span = y2 - y1; // keep the x-axis in view when it is close
+      if (y1 > 0 && y1 < span) y1 = -0.05 * span;
+      if (y2 < 0 && -y2 < span) y2 = 0.05 * span;
+    }
+    const pl = plane(x1, x2, y1, y2), cols = [BLUE, ORANGE, GREEN];
+    let g = pl.g;
+    const fs = parts.map((q) => (x) => q.f(env(x, s)));
+    fs.forEach((f, k) => { g += curve(pl, f, x1, x2, cols[k], 3); });
+    // Points where a curve meets Ox (first curve) and where the first two curves meet: sign changes refined by bisection.
+    const zeros = (f) => {
+      const out = [];
+      let px = x1, pv = f(px);
+      for (let k = 1; k <= 400 && out.length < 4; k++) {
+        const x = x1 + ((x2 - x1) * k) / 400, v = f(x);
+        if (isFinite(pv) && isFinite(v) && Math.abs(v - pv) < (y2 - y1) && (pv === 0 || pv * v < 0)) {
+          let a = px, b = x;
+          for (let n = 0; n < 40; n++) { const m = (a + b) / 2; if (f(a) * f(m) <= 0) b = m; else a = m; }
+          const r = pv === 0 ? px : (a + b) / 2;
+          if (!out.length || Math.abs(out[out.length - 1] - r) > (x2 - x1) / 400) out.push(r);
+        }
+        px = x; pv = v;
+      }
+      return out;
+    };
+    const z = zeros(fs[0]);
+    z.forEach((r) => { g += C(pl.X(r), pl.Y(0), 5, GREEN, "#fff", 1.5); });
+    let meet = [];
+    if (fs[1]) { meet = zeros((x) => fs[0](x) - fs[1](x)); meet.forEach((r) => { const v = fs[0](r); if (v >= y1 && v <= y2) g += C(pl.X(r), pl.Y(v), 6, RED, "#fff", 2); }); }
+    const y0 = fs[0](0), vals = (p.params || []).map((q) => `${escT(q[0])} = ${fmt(s[q[0]])}`).join(", ");
+    const pretty = (t) => t.replace(/\^2(?![\d.,])/g, "²").replace(/\^3(?![\d.,])/g, "³").replace(/\*/g, "·").replace(/-/g, "−");
+    const lines = parts.map((q, k) => `<span style="color:${k === 1 ? "#C46A00" : cols[k]}"><b>y = ${escT(pretty(q.src))}</b></span>`).join(" · ");
+    const info = `${lines}${vals ? ` với ${vals}` : ""}<br>${x1 <= 0 && x2 >= 0 && isFinite(y0) ? `cắt Oy tại (0; ${fmt(y0)})` : ""}${z.length ? `${x1 <= 0 && x2 >= 0 && isFinite(y0) ? " · " : ""}cắt Ox tại x ≈ ${z.map((r) => fmt(r)).join("; ")}` : ""}${fs[1] ? ` · ${meet.length ? `hai đồ thị cắt nhau tại x ≈ ${meet.map((r) => fmt(r)).join("; ")}` : "hai đồ thị không cắt nhau trong khung này"}` : ""}`;
+    return { svg: svgw(g), info };
+  }
+
   const VIZ = {
     // ---------------- MATH ----------------
     numberline: {
@@ -349,6 +494,11 @@
         return { svg: svgw(g), info: `${p.kind === "line" ? "Biểu đồ đoạn thẳng: thấy xu hướng tăng/giảm" : "Biểu đồ cột: so sánh các nhóm"} · lớn nhất: <b>${top[0]} (${fmt(top[1])})</b> · tổng ${fmt(d.reduce((t, x) => t + x[1], 0))}` };
       },
     },
+    formula: {
+      // p: { expr: "a*x^2 + b; x + 1", params: [[name, min, max, start]], x: [min, max], y?: [min, max] }
+      ctrls: (p) => (p.params || []).map(([k, lo, hi, v]) => ctl(k, `Tham số ${k}`, lo, hi, niceStep(hi - lo), v)),
+      draw: formulaDraw,
+    },
     dice: {
       ctrls: () => [ctl("n", "Số lần gieo", 10, 1000, 10, 60)],
       draw: (p, s) => {
@@ -613,7 +763,7 @@
   const ctrls = (viz) => (VIZ[viz.type] ? VIZ[viz.type].ctrls(viz) : []);
   const motionKey = (viz) => (VIZ[viz.type] && VIZ[viz.type].motion) || null;
 
-  const Stem = { VIZ, TYPES: Object.keys(VIZ), init, draw, ctrls, motionKey, fmt };
+  const Stem = { VIZ, TYPES: Object.keys(VIZ), init, draw, ctrls, motionKey, fmt, parseExpr, formulaVars, formulaParts };
   if (typeof module === "object" && module.exports) module.exports = Stem;
   else root.Stem = Stem;
 })(typeof window !== "undefined" ? window : globalThis);

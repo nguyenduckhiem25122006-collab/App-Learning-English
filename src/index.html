@@ -129,6 +129,11 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .55 }
 .qopt span { font-weight: 700; color: var(--muted); width: 1.1em }
 .qblock input[type=text] { width: 100% }
 .list .emo { font-size: 1.5rem; width: 1.6em; text-align: center }
+.edform .only-chart, .edform .only-formula { display: none }
+.edform[data-vk="chart"] .only-chart { display: grid }
+.edform[data-vk="formula"] .only-formula { display: flex }
+.viz-prev { border: 2px dashed color-mix(in srgb, var(--action) 45%, var(--rule)); border-radius: 14px; padding: 12px; gap: 8px }
+.viz-prev .viz-box { max-width: 520px }
 .pk-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)) }
 @media (max-width: 640px) { .pk-grid { grid-template-columns: minmax(0, 1fr) } }
 .pk-card h3 { margin: 0 }

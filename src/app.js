@@ -786,12 +786,16 @@
           <span><b>${esc(l.title)}</b><br><span class="small muted">${esc(l.sum)}</span></span></button>`;
       }).join("")}</div></section>`).join("")}`;
   }
-  function vizBlock(l) {
+  /** The drawing, its readout and its sliders (state kept in U.viz by lesson id). */
+  function vizInner(l) {
     const st = (U.viz[l.id] = U.viz[l.id] || Stem.init(l.viz)), r = Stem.draw(l.viz, st);
-    const ctrls = Stem.ctrls(l.viz).map((c) => `<label class="viz-ctl"><span>${esc(c.label)}: <b class="num" data-vizval="${c.k}">${Stem.fmt(st[c.k], 2)}${esc(c.unit)}</b></span>
-      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${st[c.k]}" data-vizk="${c.k}" data-vizid="${l.id}" aria-label="${esc(c.label)}"></label>`).join("");
-    return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2><div class="viz-box" data-vizbox="${l.id}">${r.svg}</div>
-      <p class="viz-info" data-vizinfo="${l.id}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}<p class="small muted">👉 ${esc(l.vizNote)}</p></section>`;
+    const ctrls = Stem.ctrls(l.viz).map((c) => `<label class="viz-ctl"><span>${esc(c.label)}: <b class="num" data-vizval="${esc(c.k)}">${Stem.fmt(st[c.k], 2)}${esc(c.unit)}</b></span>
+      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${st[c.k]}" data-vizk="${esc(c.k)}" data-vizid="${esc(l.id)}" aria-label="${esc(c.label)}"></label>`).join("");
+    return `<div class="viz-box" data-vizbox="${esc(l.id)}">${r.svg}</div>
+      <p class="viz-info" data-vizinfo="${esc(l.id)}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}`;
+  }
+  function vizBlock(l) {
+    return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2>${vizInner(l)}${l.vizNote ? `<p class="small muted">👉 ${esc(l.vizNote)}</p>` : ""}</section>`;
   }
   // A lesson is done with about 3/4 of its check right (all of it when there are only 1–3 questions).
   const passOf = (l) => Math.ceil(l.quiz.length * 0.75);
@@ -834,12 +838,12 @@
   }
   /** Slider moved: redraw only the visual and its readout, so dragging stays smooth. */
   function vizInput(el) {
-    const id = el.dataset.vizid, l = STEM_BY[id], k = el.dataset.vizk, st = U.viz[id];
+    const id = el.dataset.vizid, l = id === PREV.id ? PREV : STEM_BY[id], k = el.dataset.vizk, st = U.viz[id];
     if (!l || !st) return;
     const v = +el.value, mk = Stem.motionKey(l.viz);
     if (mk === k) { st._dx = v - st[k]; clearTimeout(vizInput.t); vizInput.t = setTimeout(() => { st._dx = 0; drawViz(l); }, 450); }
     st[k] = v;
-    const c = Stem.ctrls(l.viz).find((x) => x.k === k), lab = $(`[data-vizval="${k}"]`);
+    const c = Stem.ctrls(l.viz).find((x) => x.k === k), lab = $(`[data-vizbox="${id}"] ~ .viz-ctrls [data-vizval="${k}"]`);
     if (lab && c) lab.textContent = Stem.fmt(v, 2) + c.unit;
     drawViz(l);
   }
@@ -2157,6 +2161,7 @@
         ${quizFields(x.quiz)}`;
     } else {
       const vk = Content.vizKey(x.viz), chart = x.viz && x.viz.type === "chart" ? x.viz : { title: "", data: [] };
+      const fm = x.viz && x.viz.type === "formula" ? x.viz : { expr: "", params: [], x: [-6, 6] };
       body = `${formHead(edit ? "Sửa bài học" : "Thêm bài Toán / Vật lí")}
         <div class="grid g2">${fld("Tên bài *", inp("title", x.title, { max: 120, req: true }))}${fld("Chương", inp("chap", x.chap, { max: 80, list: "dl-chaps" }))}
         ${fld("Môn", sel("subj", x.subj, [["math", "Toán"], ["phys", "Vật lí"]]))}${fld("Lớp", sel("grade", x.grade, [[7, "Lớp 7"], [8, "Lớp 8"], [9, "Lớp 9"]]))}</div>
@@ -2165,15 +2170,24 @@
         ${fld("Ý chính cần nhớ (mỗi dòng một ý)", area("points", x.points.join("\n"), 4))}
         ${fld("Công thức (mỗi dòng một công thức)", area("formulas", x.formulas.join("\n"), 2, "v = s / t"))}
         ${fld("Hình minh hoạ kéo thả", sel("viz", vk, [["", "Không dùng hình"], ...Content.VIZ_PRESETS]))}
-        <div class="grid g2">${fld("Tiêu đề biểu đồ (nếu chọn biểu đồ)", inp("charttitle", chart.title, { max: 60 }))}
-          ${fld("Số liệu biểu đồ (mỗi dòng: nhãn | số)", area("chartdata", chart.data.map((d) => d.join(" | ")).join("\n"), 3, "Lớp 7A | 32\\nLớp 7B | 28"))}</div>
+        <div class="grid g2 only-chart">${fld("Tiêu đề biểu đồ", inp("charttitle", chart.title, { max: 60 }))}
+          ${fld("Số liệu biểu đồ (mỗi dòng: nhãn | số)", area("chartdata", chart.data.map((d) => d.join(" | ")).join("\n"), 3, "Lớp 7A | 32\nLớp 7B | 28"))}</div>
+        <div class="stack only-formula">
+          ${fld("Công thức y = … (vẽ 2–3 đồ thị: ngăn cách bằng dấu ;)", inp("fexpr", fm.expr, { max: 160, ph: "a*x^2 + b*x + c" }),
+            "Dùng x và tham số một chữ cái (a, b, k…): + − * / ^ ² √ |x| ( ), sin cos tan (theo độ), π. Viết 2x hay 2*x đều được.")}
+          <div class="grid g3">${fld("Tham số (mỗi dòng: tên | nhỏ nhất | lớn nhất | ban đầu)", area("fparams", fm.params.map((q) => q.join(" | ")).join("\n"), 3, "a | -3 | 3 | 1\nb | -5 | 5 | 0"),
+              "Tham số chưa ghi ở đây tự có khoảng −5 … 5")}
+            ${fld("Trục x: từ | đến", inp("fx", fm.x.join(" | "), { max: 40, ph: "-6 | 6" }))}
+            ${fld("Trục y: từ | đến", inp("fy", fm.y ? fm.y.join(" | ") : "", { max: 40, ph: "để trống = tự động" }))}</div></div>
+        <div class="viz-prev stack" data-vizprev aria-live="polite"></div>
         ${fld("Hướng dẫn xem hình", inp("vizNote", x.vizNote, { max: 300, ph: "Kéo thanh trượt …, quan sát …" }))}
         ${fld("Mẹo nhớ", inp("memo", x.memo, { max: 300 }))}
         ${fld("Ví dụ – đề bài", area("exq", x.example.q, 2))}${fld("Ví dụ – lời giải", area("exa", x.example.a, 3))}
         ${fld("Thuật ngữ tiếng Anh (mỗi dòng: English | tiếng Việt)", area("terms", x.terms.map((p) => p.join(" | ")).join("\n"), 2, "speed | tốc độ"))}
         ${quizFields(x.quiz)}`;
     }
-    sheet(`<form class="stack edform" data-edform="${kind}" novalidate>${body}${formFoot()}</form>`, edit ? "Sửa" : "Thêm mới", true);
+    sheet(`<form class="stack edform" data-edform="${kind}" novalidate${kind === "stem" ? ` data-vk="${esc((Content.vizKey(x.viz) || "").split(":")[0])}"` : ""}>${body}${formFoot()}</form>`, edit ? "Sửa" : "Thêm mới", true);
+    if (kind === "stem") vizPreview(true);
   }
   /** Form → item (as typed). Lesson quizzes stay raw here; saveForm() checks them. */
   function readForm(form) {
@@ -2189,6 +2203,19 @@
       viz = { type };
       if (mode) viz[{ angles: "mode", proportion: "kind", parabola: "mode", circle: "mode", solid: "shape", chart: "kind", lens: "kind", pressure: "mode", circuit: "mode" }[type]] = mode;
       if (type === "chart") { viz.title = g("charttitle"); viz.data = pairLines(g("chartdata")).map(([l, n]) => [l, Number(n.replace(",", "."))]); }
+      if (type === "formula") {
+        const cells = (t) => t.split("|").map((c) => c.trim()), num = (c) => (c === "" || c == null ? NaN : Number(String(c).replace(",", ".").replace(/[−–]/g, "-")));
+        viz.expr = g("fexpr");
+        viz.params = lines(g("fparams")).map(cells).map(([k, lo, hi, v]) => [k, num(lo), num(hi), num(v)]);
+        let used = [];
+        try { used = Stem.formulaVars(viz.expr); } catch (e) { /* the preview and saveForm explain the error */ }
+        for (const k of used) if (!viz.params.some((q) => q[0] === k)) viz.params.push([k, -5, 5, 1]);
+        const at = (k) => (used.includes(k) ? used.indexOf(k) : 99); // sliders in the order the letters appear in the formula
+        viz.params.sort((p1, p2) => at(p1[0]) - at(p2[0]));
+        const r = (t) => { const c = cells(t); return c.length === 2 ? c.map(num) : null; };
+        viz.x = r(g("fx")) || [-6, 6];
+        const y = r(g("fy")); if (y && y.every(Number.isFinite)) viz.y = y;
+      }
     }
     return { ...x, subj: g("subj"), grade: +g("grade"), title: g("title"), chap: g("chap"), sum: g("sum"), points: lines(g("points")), formulas: lines(g("formulas")), viz,
       vizNote: g("vizNote"), memo: g("memo"), example: { q: g("exq"), a: g("exa") }, terms: pairLines(g("terms")).filter(([a, b]) => a && b), quiz: readQuiz(fd) };
@@ -2200,7 +2227,8 @@
       : !x.title ? "Hãy đặt tên bài" : "";
     let quiz = null;
     if (!need && (kind === "grammar" || kind === "stem")) quiz = finalQuiz(x.quiz);
-    const err = need || (typeof quiz === "string" ? quiz : "") || (kind === "stem" && x.viz && x.viz.type === "chart" && !Content.cleanViz(x.viz) ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số” (số không âm)" : "");
+    const err = need || (typeof quiz === "string" ? quiz : "") || (kind === "stem" && x.viz && x.viz.type === "chart" && !Content.cleanViz(x.viz) ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số” (số không âm)" : "")
+      || (kind === "stem" && x.viz && x.viz.type === "formula" ? formulaProblem(x.viz) : "");
     if (err) { U.formErr = err; openForm(kind, FD.id, x); return; }
     if (quiz) x.quiz = quiz;
     const id = FD.id || Content.newId(kind === "words" ? "w" : kind === "sents" ? "s" : kind === "grammar" ? "g" : "l");
@@ -2210,6 +2238,42 @@
     saveMine(); rebuild(); closeModal(); render();
     toast(FD && FD.id ? "Đã lưu thay đổi" : "Đã thêm");
     FD = null;
+  }
+  /** What is wrong with a teacher formula (empty string when it draws). */
+  function formulaProblem(v) {
+    if (!v.expr) return "Hãy nhập công thức, ví dụ: a*x^2 + b";
+    const c = Content.cleanViz(v);
+    if (!c) return "Công thức có kí tự không dùng được (chỉ dùng chữ, số, + − * / ^ ( ) | √ ² ³)";
+    if (v.params.length > 4) return "Tối đa 4 tham số";
+    const bad = v.params.find((q) => !(q[1] < q[2]) || !/^[a-df-wyzA-Z]$/.test(q[0]));
+    if (bad) return `Tham số “${bad[0]}”: cần tên một chữ cái (không dùng x, e) và nhỏ nhất < lớn nhất`;
+    if (c.params.length !== v.params.length) return "Mỗi tham số chỉ khai báo một lần";
+    if (!(v.x[0] < v.x[1])) return "Trục x: số đầu phải nhỏ hơn số sau, ví dụ -6 | 6";
+    const r = Stem.draw(c, {});
+    return r.error ? `Công thức chưa đúng: ${r.error}` : "";
+  }
+  // Live preview in the Toán / Vật lí form: the visual as learners will see it, sliders included.
+  const PREV = { id: "__prev", viz: null };
+  let prevT = null;
+  function vizPreview(now) {
+    clearTimeout(prevT);
+    if (!now) { prevT = setTimeout(() => vizPreview(true), 250); return; }
+    const form = $("#sheet [data-edform=stem]"), box = form && form.querySelector("[data-vizprev]");
+    if (!box || !FD) return;
+    const v = readForm(form).viz;
+    form.dataset.vk = v ? v.type : "";
+    const viz = v && Content.cleanViz(v), key = JSON.stringify(viz);
+    if (!viz) {
+      box.innerHTML = `<p class="label">Xem trước</p><p class="small muted">${v && v.type === "formula" ? `⚠️ ${esc(formulaProblem(v) || "Công thức chưa đúng")}` : v ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số”." : "Chọn một hình ở ô trên để xem trước, kéo thử thanh trượt ngay tại đây."}</p>`;
+      return;
+    }
+    if (PREV.key !== key) { // changed visual: default sliders, but keep where a slider is still the same one (type, range, start)
+      const old = U.viz[PREV.id] || {}, fresh = Stem.init(viz), same = PREV.viz && PREV.viz.type === viz.type;
+      const was = same ? Object.fromEntries(Stem.ctrls(PREV.viz).map((c) => [c.k, `${c.min}|${c.max}|${c.val}`])) : {};
+      for (const c of Stem.ctrls(viz)) if (was[c.k] === `${c.min}|${c.max}|${c.val}` && old[c.k] != null) fresh[c.k] = old[c.k];
+      U.viz[PREV.id] = fresh; PREV.key = key; PREV.viz = viz;
+    }
+    box.innerHTML = `<p class="label">Xem trước — học sinh sẽ thấy và kéo được như thế này</p>${vizInner(PREV)}`;
   }
   function bulkForm(kind) {
     FD = null; U.formErr = "";
@@ -2556,6 +2620,7 @@
     if (e.target.id === "bq") { U.bq = e.target.value; clearTimeout(bqT); bqT = setTimeout(() => { const l = $("#blist"); if (l) l.innerHTML = browseList(); }, 200); }
     if (e.target.id === "rate") { S.rate = +e.target.value; $("#rate-v").textContent = S.rate.toFixed(1) + "×"; save(); }
     if (e.target.dataset && e.target.dataset.vizk) vizInput(e.target);
+    else if (e.target.name && e.target.closest("#sheet [data-edform=stem]") && ["viz", "charttitle", "chartdata", "fexpr", "fparams", "fx", "fy"].includes(e.target.name)) vizPreview(e.target.name === "viz");
   });
   document.addEventListener("change", (e) => {
     if (e.target.id === "j-show") {

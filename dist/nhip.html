@@ -129,6 +129,11 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .55 }
 .qopt span { font-weight: 700; color: var(--muted); width: 1.1em }
 .qblock input[type=text] { width: 100% }
 .list .emo { font-size: 1.5rem; width: 1.6em; text-align: center }
+.edform .only-chart, .edform .only-formula { display: none }
+.edform[data-vk="chart"] .only-chart { display: grid }
+.edform[data-vk="formula"] .only-formula { display: flex }
+.viz-prev { border: 2px dashed color-mix(in srgb, var(--action) 45%, var(--rule)); border-radius: 14px; padding: 12px; gap: 8px }
+.viz-prev .viz-box { max-width: 520px }
 .pk-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)) }
 @media (max-width: 640px) { .pk-grid { grid-template-columns: minmax(0, 1fr) } }
 .pk-card h3 { margin: 0 }
@@ -1328,6 +1333,151 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const ctl = (k, label, min, max, step, val, unit = "") => ({ k, label, min, max, step, val, unit });
   const BLUE = "#4F8FE8", ORANGE = "#FF9F43", GREEN = "#3FB66B", RED = "#E5533D", PURPLE = "#8B5CF6", WATER = "#BFE3FF";
 
+  // ---------------- Teacher formulas: y = f(x) with slider parameters ----------------
+  // A tiny parser (no eval: formulas come from class material). Numbers (1.5 or 1,5), x, one-letter parameters,
+  // + − × ÷ ^ ² ³, brackets, |x|, √, sin cos tan (degrees, as in grade 9), sqrt abs ln log exp, π and e. "2ax" means 2·a·x.
+  const FUNCS = { sqrt: Math.sqrt, abs: Math.abs, sin: (v) => Math.sin(rad(v)), cos: (v) => Math.cos(rad(v)), tan: (v) => Math.tan(rad(v)),
+    ln: Math.log, log: Math.log10, exp: Math.exp };
+  const NAMES = ["sqrt", "abs", "sin", "cos", "tan", "exp", "log", "ln", "pi"]; // longest first where prefixes clash
+  function tokenize(src) {
+    const s = String(src).replace(/[−–]/g, "-").replace(/[·×]/g, "*").replace(/[÷:]/g, "/").replace(/²/g, "^2").replace(/³/g, "^3").replace(/π/g, "pi");
+    const out = [];
+    for (let i = 0; i < s.length;) {
+      const c = s[i];
+      if (/\s/.test(c)) { i++; continue; }
+      const num = /^(\d+([.,]\d+)?|[.,]\d+)/.exec(s.slice(i));
+      if (num) { out.push({ t: "n", v: parseFloat(num[0].replace(",", ".")) }); i += num[0].length; continue; }
+      if (/[a-zA-Z]/.test(c)) {
+        let id = /^[a-zA-Z]+/.exec(s.slice(i))[0];
+        i += id.length;
+        while (id) { // split "2ax" into a·x, but keep function names whole
+          const name = NAMES.find((n) => id.startsWith(n));
+          if (name) { out.push(name === "pi" ? { t: "n", v: Math.PI } : { t: "f", v: name }); id = id.slice(name.length); }
+          else { out.push(id[0] === "e" ? { t: "n", v: Math.E } : { t: "v", v: id[0] }); id = id.slice(1); }
+        }
+        continue;
+      }
+      if ("+-*/^()|√".includes(c)) { out.push({ t: c }); i++; continue; }
+      throw new Error(`Không hiểu kí tự “${c}”`);
+    }
+    return out;
+  }
+  /** Parse one expression → { f(env), vars } or throw an Error with a Vietnamese message. */
+  function parseExpr(src) {
+    if (String(src).length > 160) throw new Error("Công thức quá dài");
+    const tk = tokenize(src), vars = new Set();
+    let i = 0, depth = 0;
+    const peek = () => tk[i], take = (t) => (tk[i] && tk[i].t === t ? tk[i++] : null);
+    const starts = (x) => x && (x.t === "n" || x.t === "v" || x.t === "f" || x.t === "(" || x.t === "√");
+    function expr() {
+      if (++depth > 40) throw new Error("Công thức lồng quá sâu");
+      let a = term();
+      for (;;) {
+        if (take("+")) { const l = a, r = term(); a = (e) => l(e) + r(e); }
+        else if (take("-")) { const l = a, r = term(); a = (e) => l(e) - r(e); }
+        else break;
+      }
+      depth--;
+      return a;
+    }
+    function term() {
+      let a = unary();
+      for (;;) {
+        if (take("*")) { const l = a, r = unary(); a = (e) => l(e) * r(e); }
+        else if (take("/")) { const l = a, r = unary(); a = (e) => l(e) / r(e); }
+        else if (starts(peek())) { const l = a, r = power(); a = (e) => l(e) * r(e); } // implicit: 2x, 3(x+1), x sin x
+        else break;
+      }
+      return a;
+    }
+    function unary() {
+      if (take("-")) { const a = unary(); return (e) => -a(e); }
+      if (take("+")) return unary();
+      return power();
+    }
+    function power() {
+      const b = primary();
+      if (take("^")) { const x = unary(); return (e) => Math.pow(b(e), x(e)); }
+      return b;
+    }
+    function primary() {
+      const x = tk[i++];
+      if (!x) throw new Error("Công thức bị thiếu ở cuối");
+      if (x.t === "n") return () => x.v;
+      if (x.t === "v") { vars.add(x.v); return (e) => e[x.v]; }
+      if (x.t === "f" || x.t === "√") { const fn = x.t === "√" ? Math.sqrt : FUNCS[x.v], a = power(); return (e) => fn(a(e)); }
+      if (x.t === "(") { const a = expr(); if (!take(")")) throw new Error("Thiếu dấu “)”"); return a; }
+      if (x.t === "|") { const a = expr(); if (!take("|")) throw new Error("Thiếu dấu “|” đóng giá trị tuyệt đối"); return (e) => Math.abs(a(e)); }
+      throw new Error(`Thừa dấu “${x.t}”`);
+    }
+    if (!tk.length) throw new Error("Chưa nhập công thức");
+    const f = expr();
+    if (i < tk.length) throw new Error(`Thừa dấu “${tk[i].t === "n" ? tk[i].v : tk[i].v || tk[i].t}”`);
+    return { f, vars };
+  }
+  /** "y = a*x^2; y = x + 1" → up to 3 expressions, each without its "y =". */
+  const formulaParts = (src) => String(src || "").split(";").map((s) => s.replace(/^\s*y\s*=/i, "").trim()).filter(Boolean).slice(0, 3);
+  /** Parameters a formula uses besides x (letters, in order of appearance). Throws on a bad formula. */
+  function formulaVars(src) {
+    const out = [];
+    for (const part of formulaParts(src)) for (const v of parseExpr(part).vars) if (v !== "x" && !out.includes(v)) out.push(v);
+    return out;
+  }
+  const niceStep = (span) => [0.01, 0.05, 0.1, 0.25, 0.5, 1, 5, 10, 50, 100].find((s) => span / s <= 60) || Math.ceil(span / 60);
+  const escT = (x) => String(x).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  function formulaDraw(p, s) {
+    let parts;
+    try {
+      parts = formulaParts(p.expr).map((src) => ({ src, ...parseExpr(src) }));
+      if (!parts.length) throw new Error("Chưa nhập công thức");
+      const known = new Set(["x", ...(p.params || []).map((q) => q[0])]);
+      for (const q of parts) for (const v of q.vars) if (!known.has(v)) throw new Error(`Chưa khai báo tham số ${v}`);
+    } catch (err) {
+      return { svg: svgw(T(180, 105, "Công thức chưa đúng", { anchor: "middle", bold: true, size: 14, fill: RED }) + T(180, 128, escT(err.message), { anchor: "middle", size: 12 })), info: `⚠️ ${escT(err.message)}`, error: err.message };
+    }
+    const [x1, x2] = p.x || [-6, 6], env = (x, st) => ({ ...st, x });
+    let [y1, y2] = p.y || [NaN, NaN];
+    if (!(y2 > y1)) { // automatic: fit the curves at the starting values, so the axes stay put while sliders move
+      const st0 = Object.fromEntries((p.params || []).map((q) => [q[0], q[3]])), ys = [];
+      for (const q of parts) for (let k = 0; k <= 120; k++) { const v = q.f(env(x1 + ((x2 - x1) * k) / 120, st0)); if (isFinite(v) && Math.abs(v) < 1e6) ys.push(v); }
+      ys.sort((a, b) => a - b);
+      const lo = ys.length ? ys[Math.floor(ys.length * 0.02)] : -1, hi = ys.length ? ys[Math.ceil(ys.length * 0.98) - 1] : 1, pad = (hi - lo) * 0.15 || 1;
+      [y1, y2] = [lo - pad, hi + pad];
+      const span = y2 - y1; // keep the x-axis in view when it is close
+      if (y1 > 0 && y1 < span) y1 = -0.05 * span;
+      if (y2 < 0 && -y2 < span) y2 = 0.05 * span;
+    }
+    const pl = plane(x1, x2, y1, y2), cols = [BLUE, ORANGE, GREEN];
+    let g = pl.g;
+    const fs = parts.map((q) => (x) => q.f(env(x, s)));
+    fs.forEach((f, k) => { g += curve(pl, f, x1, x2, cols[k], 3); });
+    // Points where a curve meets Ox (first curve) and where the first two curves meet: sign changes refined by bisection.
+    const zeros = (f) => {
+      const out = [];
+      let px = x1, pv = f(px);
+      for (let k = 1; k <= 400 && out.length < 4; k++) {
+        const x = x1 + ((x2 - x1) * k) / 400, v = f(x);
+        if (isFinite(pv) && isFinite(v) && Math.abs(v - pv) < (y2 - y1) && (pv === 0 || pv * v < 0)) {
+          let a = px, b = x;
+          for (let n = 0; n < 40; n++) { const m = (a + b) / 2; if (f(a) * f(m) <= 0) b = m; else a = m; }
+          const r = pv === 0 ? px : (a + b) / 2;
+          if (!out.length || Math.abs(out[out.length - 1] - r) > (x2 - x1) / 400) out.push(r);
+        }
+        px = x; pv = v;
+      }
+      return out;
+    };
+    const z = zeros(fs[0]);
+    z.forEach((r) => { g += C(pl.X(r), pl.Y(0), 5, GREEN, "#fff", 1.5); });
+    let meet = [];
+    if (fs[1]) { meet = zeros((x) => fs[0](x) - fs[1](x)); meet.forEach((r) => { const v = fs[0](r); if (v >= y1 && v <= y2) g += C(pl.X(r), pl.Y(v), 6, RED, "#fff", 2); }); }
+    const y0 = fs[0](0), vals = (p.params || []).map((q) => `${escT(q[0])} = ${fmt(s[q[0]])}`).join(", ");
+    const pretty = (t) => t.replace(/\^2(?![\d.,])/g, "²").replace(/\^3(?![\d.,])/g, "³").replace(/\*/g, "·").replace(/-/g, "−");
+    const lines = parts.map((q, k) => `<span style="color:${k === 1 ? "#C46A00" : cols[k]}"><b>y = ${escT(pretty(q.src))}</b></span>`).join(" · ");
+    const info = `${lines}${vals ? ` với ${vals}` : ""}<br>${x1 <= 0 && x2 >= 0 && isFinite(y0) ? `cắt Oy tại (0; ${fmt(y0)})` : ""}${z.length ? `${x1 <= 0 && x2 >= 0 && isFinite(y0) ? " · " : ""}cắt Ox tại x ≈ ${z.map((r) => fmt(r)).join("; ")}` : ""}${fs[1] ? ` · ${meet.length ? `hai đồ thị cắt nhau tại x ≈ ${meet.map((r) => fmt(r)).join("; ")}` : "hai đồ thị không cắt nhau trong khung này"}` : ""}`;
+    return { svg: svgw(g), info };
+  }
+
   const VIZ = {
     // ---------------- MATH ----------------
     numberline: {
@@ -1603,6 +1753,11 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         return { svg: svgw(g), info: `${p.kind === "line" ? "Biểu đồ đoạn thẳng: thấy xu hướng tăng/giảm" : "Biểu đồ cột: so sánh các nhóm"} · lớn nhất: <b>${top[0]} (${fmt(top[1])})</b> · tổng ${fmt(d.reduce((t, x) => t + x[1], 0))}` };
       },
     },
+    formula: {
+      // p: { expr: "a*x^2 + b; x + 1", params: [[name, min, max, start]], x: [min, max], y?: [min, max] }
+      ctrls: (p) => (p.params || []).map(([k, lo, hi, v]) => ctl(k, `Tham số ${k}`, lo, hi, niceStep(hi - lo), v)),
+      draw: formulaDraw,
+    },
     dice: {
       ctrls: () => [ctl("n", "Số lần gieo", 10, 1000, 10, 60)],
       draw: (p, s) => {
@@ -1867,7 +2022,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   const ctrls = (viz) => (VIZ[viz.type] ? VIZ[viz.type].ctrls(viz) : []);
   const motionKey = (viz) => (VIZ[viz.type] && VIZ[viz.type].motion) || null;
 
-  const Stem = { VIZ, TYPES: Object.keys(VIZ), init, draw, ctrls, motionKey, fmt };
+  const Stem = { VIZ, TYPES: Object.keys(VIZ), init, draw, ctrls, motionKey, fmt, parseExpr, formulaVars, formulaParts };
   if (typeof module === "object" && module.exports) module.exports = Stem;
   else root.Stem = Stem;
 })(typeof window !== "undefined" ? window : globalThis);
@@ -1900,7 +2055,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     ["density", "Khối lượng riêng"], ["pressure:solid", "Áp suất chất rắn"], ["pressure:liquid", "Áp suất chất lỏng"],
     ["lever", "Đòn bẩy, mômen lực"], ["circuit:ohm", "Định luật Ohm"], ["circuit:series", "Mạch nối tiếp"], ["circuit:parallel", "Mạch song song"],
     ["power", "Công suất, điện năng"], ["energy", "Cơ năng"], ["heat", "Nhiệt năng, sự nở vì nhiệt"], ["induction", "Cảm ứng điện từ"],
-    ["ac", "Dòng điện xoay chiều"],
+    ["ac", "Dòng điện xoay chiều"], ["formula", "✏️ Đồ thị theo công thức tự nhập"],
   ];
   const PARAM = { angles: "mode", proportion: "kind", parabola: "mode", circle: "mode", solid: "shape", chart: "kind", lens: "kind", pressure: "mode", circuit: "mode" };
   // ==================
@@ -1920,6 +2075,25 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (!v || typeof v !== "object" || !PRESET.has(vizKey(v))) return null;
     const out = { type: v.type };
     if (PARAM[v.type]) out[PARAM[v.type]] = v[PARAM[v.type]];
+    if (v.type === "formula") { // y = f(x): the formula text, up to 4 one-letter parameters [name, min, max, start], x and y ranges
+      out.expr = one(v.expr, 160);
+      if (!out.expr || !/^[0-9a-zA-Zπ√²³+\-−–*\/^().,|·×÷:;=\s]+$/.test(out.expr)) return null;
+      const num = (n) => (typeof n === "number" || (typeof n === "string" && n.trim() !== "") ? +n : NaN);
+      const range = (r) => (Array.isArray(r) && r.length === 2 && r.every((n) => Number.isFinite(num(n)) && Math.abs(num(n)) <= 1e4) && num(r[0]) < num(r[1]) ? [num(r[0]), num(r[1])] : null);
+      out.params = [];
+      for (const q of Array.isArray(v.params) ? v.params : []) {
+        if (!Array.isArray(q) || !/^[a-df-wyzA-Z]$/.test(q[0]) || out.params.some((x) => x[0] === q[0])) continue;
+        const r = range([q[1], q[2]]);
+        if (!r) continue;
+        const start = Number.isFinite(num(q[3])) ? Math.min(r[1], Math.max(r[0], num(q[3]))) : r[0];
+        out.params.push([q[0], r[0], r[1], start]);
+      }
+      out.params = out.params.slice(0, 4);
+      out.x = range(v.x) || [-6, 6];
+      const y = range(v.y);
+      if (y) out.y = y;
+      return out;
+    }
     if (v.type === "chart") {
       const plain = (x, n) => one(x, n).replace(/[<>&"']/g, "");
       out.title = plain(v.title, 60) || "Biểu đồ";
@@ -2881,12 +3055,16 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
           <span><b>${esc(l.title)}</b><br><span class="small muted">${esc(l.sum)}</span></span></button>`;
       }).join("")}</div></section>`).join("")}`;
   }
-  function vizBlock(l) {
+  /** The drawing, its readout and its sliders (state kept in U.viz by lesson id). */
+  function vizInner(l) {
     const st = (U.viz[l.id] = U.viz[l.id] || Stem.init(l.viz)), r = Stem.draw(l.viz, st);
-    const ctrls = Stem.ctrls(l.viz).map((c) => `<label class="viz-ctl"><span>${esc(c.label)}: <b class="num" data-vizval="${c.k}">${Stem.fmt(st[c.k], 2)}${esc(c.unit)}</b></span>
-      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${st[c.k]}" data-vizk="${c.k}" data-vizid="${l.id}" aria-label="${esc(c.label)}"></label>`).join("");
-    return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2><div class="viz-box" data-vizbox="${l.id}">${r.svg}</div>
-      <p class="viz-info" data-vizinfo="${l.id}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}<p class="small muted">👉 ${esc(l.vizNote)}</p></section>`;
+    const ctrls = Stem.ctrls(l.viz).map((c) => `<label class="viz-ctl"><span>${esc(c.label)}: <b class="num" data-vizval="${esc(c.k)}">${Stem.fmt(st[c.k], 2)}${esc(c.unit)}</b></span>
+      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${st[c.k]}" data-vizk="${esc(c.k)}" data-vizid="${esc(l.id)}" aria-label="${esc(c.label)}"></label>`).join("");
+    return `<div class="viz-box" data-vizbox="${esc(l.id)}">${r.svg}</div>
+      <p class="viz-info" data-vizinfo="${esc(l.id)}">${r.info}</p>${ctrls ? `<div class="viz-ctrls">${ctrls}</div>` : ""}`;
+  }
+  function vizBlock(l) {
+    return `<section class="panel stack"><h2>🔍 Hình dung trực quan</h2>${vizInner(l)}${l.vizNote ? `<p class="small muted">👉 ${esc(l.vizNote)}</p>` : ""}</section>`;
   }
   // A lesson is done with about 3/4 of its check right (all of it when there are only 1–3 questions).
   const passOf = (l) => Math.ceil(l.quiz.length * 0.75);
@@ -2929,12 +3107,12 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
   }
   /** Slider moved: redraw only the visual and its readout, so dragging stays smooth. */
   function vizInput(el) {
-    const id = el.dataset.vizid, l = STEM_BY[id], k = el.dataset.vizk, st = U.viz[id];
+    const id = el.dataset.vizid, l = id === PREV.id ? PREV : STEM_BY[id], k = el.dataset.vizk, st = U.viz[id];
     if (!l || !st) return;
     const v = +el.value, mk = Stem.motionKey(l.viz);
     if (mk === k) { st._dx = v - st[k]; clearTimeout(vizInput.t); vizInput.t = setTimeout(() => { st._dx = 0; drawViz(l); }, 450); }
     st[k] = v;
-    const c = Stem.ctrls(l.viz).find((x) => x.k === k), lab = $(`[data-vizval="${k}"]`);
+    const c = Stem.ctrls(l.viz).find((x) => x.k === k), lab = $(`[data-vizbox="${id}"] ~ .viz-ctrls [data-vizval="${k}"]`);
     if (lab && c) lab.textContent = Stem.fmt(v, 2) + c.unit;
     drawViz(l);
   }
@@ -4252,6 +4430,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         ${quizFields(x.quiz)}`;
     } else {
       const vk = Content.vizKey(x.viz), chart = x.viz && x.viz.type === "chart" ? x.viz : { title: "", data: [] };
+      const fm = x.viz && x.viz.type === "formula" ? x.viz : { expr: "", params: [], x: [-6, 6] };
       body = `${formHead(edit ? "Sửa bài học" : "Thêm bài Toán / Vật lí")}
         <div class="grid g2">${fld("Tên bài *", inp("title", x.title, { max: 120, req: true }))}${fld("Chương", inp("chap", x.chap, { max: 80, list: "dl-chaps" }))}
         ${fld("Môn", sel("subj", x.subj, [["math", "Toán"], ["phys", "Vật lí"]]))}${fld("Lớp", sel("grade", x.grade, [[7, "Lớp 7"], [8, "Lớp 8"], [9, "Lớp 9"]]))}</div>
@@ -4260,15 +4439,24 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
         ${fld("Ý chính cần nhớ (mỗi dòng một ý)", area("points", x.points.join("\n"), 4))}
         ${fld("Công thức (mỗi dòng một công thức)", area("formulas", x.formulas.join("\n"), 2, "v = s / t"))}
         ${fld("Hình minh hoạ kéo thả", sel("viz", vk, [["", "Không dùng hình"], ...Content.VIZ_PRESETS]))}
-        <div class="grid g2">${fld("Tiêu đề biểu đồ (nếu chọn biểu đồ)", inp("charttitle", chart.title, { max: 60 }))}
-          ${fld("Số liệu biểu đồ (mỗi dòng: nhãn | số)", area("chartdata", chart.data.map((d) => d.join(" | ")).join("\n"), 3, "Lớp 7A | 32\\nLớp 7B | 28"))}</div>
+        <div class="grid g2 only-chart">${fld("Tiêu đề biểu đồ", inp("charttitle", chart.title, { max: 60 }))}
+          ${fld("Số liệu biểu đồ (mỗi dòng: nhãn | số)", area("chartdata", chart.data.map((d) => d.join(" | ")).join("\n"), 3, "Lớp 7A | 32\nLớp 7B | 28"))}</div>
+        <div class="stack only-formula">
+          ${fld("Công thức y = … (vẽ 2–3 đồ thị: ngăn cách bằng dấu ;)", inp("fexpr", fm.expr, { max: 160, ph: "a*x^2 + b*x + c" }),
+            "Dùng x và tham số một chữ cái (a, b, k…): + − * / ^ ² √ |x| ( ), sin cos tan (theo độ), π. Viết 2x hay 2*x đều được.")}
+          <div class="grid g3">${fld("Tham số (mỗi dòng: tên | nhỏ nhất | lớn nhất | ban đầu)", area("fparams", fm.params.map((q) => q.join(" | ")).join("\n"), 3, "a | -3 | 3 | 1\nb | -5 | 5 | 0"),
+              "Tham số chưa ghi ở đây tự có khoảng −5 … 5")}
+            ${fld("Trục x: từ | đến", inp("fx", fm.x.join(" | "), { max: 40, ph: "-6 | 6" }))}
+            ${fld("Trục y: từ | đến", inp("fy", fm.y ? fm.y.join(" | ") : "", { max: 40, ph: "để trống = tự động" }))}</div></div>
+        <div class="viz-prev stack" data-vizprev aria-live="polite"></div>
         ${fld("Hướng dẫn xem hình", inp("vizNote", x.vizNote, { max: 300, ph: "Kéo thanh trượt …, quan sát …" }))}
         ${fld("Mẹo nhớ", inp("memo", x.memo, { max: 300 }))}
         ${fld("Ví dụ – đề bài", area("exq", x.example.q, 2))}${fld("Ví dụ – lời giải", area("exa", x.example.a, 3))}
         ${fld("Thuật ngữ tiếng Anh (mỗi dòng: English | tiếng Việt)", area("terms", x.terms.map((p) => p.join(" | ")).join("\n"), 2, "speed | tốc độ"))}
         ${quizFields(x.quiz)}`;
     }
-    sheet(`<form class="stack edform" data-edform="${kind}" novalidate>${body}${formFoot()}</form>`, edit ? "Sửa" : "Thêm mới", true);
+    sheet(`<form class="stack edform" data-edform="${kind}" novalidate${kind === "stem" ? ` data-vk="${esc((Content.vizKey(x.viz) || "").split(":")[0])}"` : ""}>${body}${formFoot()}</form>`, edit ? "Sửa" : "Thêm mới", true);
+    if (kind === "stem") vizPreview(true);
   }
   /** Form → item (as typed). Lesson quizzes stay raw here; saveForm() checks them. */
   function readForm(form) {
@@ -4284,6 +4472,19 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
       viz = { type };
       if (mode) viz[{ angles: "mode", proportion: "kind", parabola: "mode", circle: "mode", solid: "shape", chart: "kind", lens: "kind", pressure: "mode", circuit: "mode" }[type]] = mode;
       if (type === "chart") { viz.title = g("charttitle"); viz.data = pairLines(g("chartdata")).map(([l, n]) => [l, Number(n.replace(",", "."))]); }
+      if (type === "formula") {
+        const cells = (t) => t.split("|").map((c) => c.trim()), num = (c) => (c === "" || c == null ? NaN : Number(String(c).replace(",", ".").replace(/[−–]/g, "-")));
+        viz.expr = g("fexpr");
+        viz.params = lines(g("fparams")).map(cells).map(([k, lo, hi, v]) => [k, num(lo), num(hi), num(v)]);
+        let used = [];
+        try { used = Stem.formulaVars(viz.expr); } catch (e) { /* the preview and saveForm explain the error */ }
+        for (const k of used) if (!viz.params.some((q) => q[0] === k)) viz.params.push([k, -5, 5, 1]);
+        const at = (k) => (used.includes(k) ? used.indexOf(k) : 99); // sliders in the order the letters appear in the formula
+        viz.params.sort((p1, p2) => at(p1[0]) - at(p2[0]));
+        const r = (t) => { const c = cells(t); return c.length === 2 ? c.map(num) : null; };
+        viz.x = r(g("fx")) || [-6, 6];
+        const y = r(g("fy")); if (y && y.every(Number.isFinite)) viz.y = y;
+      }
     }
     return { ...x, subj: g("subj"), grade: +g("grade"), title: g("title"), chap: g("chap"), sum: g("sum"), points: lines(g("points")), formulas: lines(g("formulas")), viz,
       vizNote: g("vizNote"), memo: g("memo"), example: { q: g("exq"), a: g("exa") }, terms: pairLines(g("terms")).filter(([a, b]) => a && b), quiz: readQuiz(fd) };
@@ -4295,7 +4496,8 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
       : !x.title ? "Hãy đặt tên bài" : "";
     let quiz = null;
     if (!need && (kind === "grammar" || kind === "stem")) quiz = finalQuiz(x.quiz);
-    const err = need || (typeof quiz === "string" ? quiz : "") || (kind === "stem" && x.viz && x.viz.type === "chart" && !Content.cleanViz(x.viz) ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số” (số không âm)" : "");
+    const err = need || (typeof quiz === "string" ? quiz : "") || (kind === "stem" && x.viz && x.viz.type === "chart" && !Content.cleanViz(x.viz) ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số” (số không âm)" : "")
+      || (kind === "stem" && x.viz && x.viz.type === "formula" ? formulaProblem(x.viz) : "");
     if (err) { U.formErr = err; openForm(kind, FD.id, x); return; }
     if (quiz) x.quiz = quiz;
     const id = FD.id || Content.newId(kind === "words" ? "w" : kind === "sents" ? "s" : kind === "grammar" ? "g" : "l");
@@ -4305,6 +4507,42 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     saveMine(); rebuild(); closeModal(); render();
     toast(FD && FD.id ? "Đã lưu thay đổi" : "Đã thêm");
     FD = null;
+  }
+  /** What is wrong with a teacher formula (empty string when it draws). */
+  function formulaProblem(v) {
+    if (!v.expr) return "Hãy nhập công thức, ví dụ: a*x^2 + b";
+    const c = Content.cleanViz(v);
+    if (!c) return "Công thức có kí tự không dùng được (chỉ dùng chữ, số, + − * / ^ ( ) | √ ² ³)";
+    if (v.params.length > 4) return "Tối đa 4 tham số";
+    const bad = v.params.find((q) => !(q[1] < q[2]) || !/^[a-df-wyzA-Z]$/.test(q[0]));
+    if (bad) return `Tham số “${bad[0]}”: cần tên một chữ cái (không dùng x, e) và nhỏ nhất < lớn nhất`;
+    if (c.params.length !== v.params.length) return "Mỗi tham số chỉ khai báo một lần";
+    if (!(v.x[0] < v.x[1])) return "Trục x: số đầu phải nhỏ hơn số sau, ví dụ -6 | 6";
+    const r = Stem.draw(c, {});
+    return r.error ? `Công thức chưa đúng: ${r.error}` : "";
+  }
+  // Live preview in the Toán / Vật lí form: the visual as learners will see it, sliders included.
+  const PREV = { id: "__prev", viz: null };
+  let prevT = null;
+  function vizPreview(now) {
+    clearTimeout(prevT);
+    if (!now) { prevT = setTimeout(() => vizPreview(true), 250); return; }
+    const form = $("#sheet [data-edform=stem]"), box = form && form.querySelector("[data-vizprev]");
+    if (!box || !FD) return;
+    const v = readForm(form).viz;
+    form.dataset.vk = v ? v.type : "";
+    const viz = v && Content.cleanViz(v), key = JSON.stringify(viz);
+    if (!viz) {
+      box.innerHTML = `<p class="label">Xem trước</p><p class="small muted">${v && v.type === "formula" ? `⚠️ ${esc(formulaProblem(v) || "Công thức chưa đúng")}` : v ? "Biểu đồ cần ít nhất 2 dòng “nhãn | số”." : "Chọn một hình ở ô trên để xem trước, kéo thử thanh trượt ngay tại đây."}</p>`;
+      return;
+    }
+    if (PREV.key !== key) { // changed visual: default sliders, but keep where a slider is still the same one (type, range, start)
+      const old = U.viz[PREV.id] || {}, fresh = Stem.init(viz), same = PREV.viz && PREV.viz.type === viz.type;
+      const was = same ? Object.fromEntries(Stem.ctrls(PREV.viz).map((c) => [c.k, `${c.min}|${c.max}|${c.val}`])) : {};
+      for (const c of Stem.ctrls(viz)) if (was[c.k] === `${c.min}|${c.max}|${c.val}` && old[c.k] != null) fresh[c.k] = old[c.k];
+      U.viz[PREV.id] = fresh; PREV.key = key; PREV.viz = viz;
+    }
+    box.innerHTML = `<p class="label">Xem trước — học sinh sẽ thấy và kéo được như thế này</p>${vizInner(PREV)}`;
   }
   function bulkForm(kind) {
     FD = null; U.formErr = "";
@@ -4651,6 +4889,7 @@ window.NHIP_ONLINE = window.NHIP_ONLINE || {
     if (e.target.id === "bq") { U.bq = e.target.value; clearTimeout(bqT); bqT = setTimeout(() => { const l = $("#blist"); if (l) l.innerHTML = browseList(); }, 200); }
     if (e.target.id === "rate") { S.rate = +e.target.value; $("#rate-v").textContent = S.rate.toFixed(1) + "×"; save(); }
     if (e.target.dataset && e.target.dataset.vizk) vizInput(e.target);
+    else if (e.target.name && e.target.closest("#sheet [data-edform=stem]") && ["viz", "charttitle", "chartdata", "fexpr", "fparams", "fx", "fy"].includes(e.target.name)) vizPreview(e.target.name === "viz");
   });
   document.addEventListener("change", (e) => {
     if (e.target.id === "j-show") {

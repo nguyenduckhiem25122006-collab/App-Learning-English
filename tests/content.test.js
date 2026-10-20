@@ -34,7 +34,11 @@ test("visuals must be one of the presets; chart labels lose markup", () => {
   const c = K.cleanViz({ type: "chart", kind: "bar", title: "<b>Điểm</b>", data: [["7A<img>", 8], ["7B", -1], ["7C", 6]] });
   assert.deepEqual(c, { type: "chart", kind: "bar", title: "bĐiểm/b", data: [["7Aimg", 8], ["7C", 6]] });
   assert.equal(K.cleanViz({ type: "chart", kind: "pie", data: [["a", 1]] }), null);
-  assert.equal(K.VIZ_PRESETS.length, 45);
+  assert.equal(K.VIZ_PRESETS.length, 46);
+  assert.deepEqual(K.cleanViz({ type: "formula", expr: "a*x² + b", params: [["a", "-3", 3, 9], ["x", 0, 1, 0], ["b", 5, 1, 0], ["e", 0, 1, 0], ["c", -1, 1]], x: [-4, 4], y: ["", ""] }),
+    { type: "formula", expr: "a*x² + b", params: [["a", -3, 3, 3], ["c", -1, 1, -1]], x: [-4, 4] });
+  assert.equal(K.cleanViz({ type: "formula", expr: "<script>", params: [] }), null);
+  assert.deepEqual(K.cleanViz({ type: "formula", expr: "x^2", x: [3, 1] }), { type: "formula", expr: "x^2", params: [], x: [-6, 6] });
 });
 
 test("apply: a new set comes first, edits stay in place, deletions remove", () => {

@@ -26,7 +26,7 @@
     ["density", "Khối lượng riêng"], ["pressure:solid", "Áp suất chất rắn"], ["pressure:liquid", "Áp suất chất lỏng"],
     ["lever", "Đòn bẩy, mômen lực"], ["circuit:ohm", "Định luật Ohm"], ["circuit:series", "Mạch nối tiếp"], ["circuit:parallel", "Mạch song song"],
     ["power", "Công suất, điện năng"], ["energy", "Cơ năng"], ["heat", "Nhiệt năng, sự nở vì nhiệt"], ["induction", "Cảm ứng điện từ"],
-    ["ac", "Dòng điện xoay chiều"],
+    ["ac", "Dòng điện xoay chiều"], ["formula", "✏️ Đồ thị theo công thức tự nhập"],
   ];
   const PARAM = { angles: "mode", proportion: "kind", parabola: "mode", circle: "mode", solid: "shape", chart: "kind", lens: "kind", pressure: "mode", circuit: "mode" };
   // ==================
@@ -46,6 +46,25 @@
     if (!v || typeof v !== "object" || !PRESET.has(vizKey(v))) return null;
     const out = { type: v.type };
     if (PARAM[v.type]) out[PARAM[v.type]] = v[PARAM[v.type]];
+    if (v.type === "formula") { // y = f(x): the formula text, up to 4 one-letter parameters [name, min, max, start], x and y ranges
+      out.expr = one(v.expr, 160);
+      if (!out.expr || !/^[0-9a-zA-Zπ√²³+\-−–*\/^().,|·×÷:;=\s]+$/.test(out.expr)) return null;
+      const num = (n) => (typeof n === "number" || (typeof n === "string" && n.trim() !== "") ? +n : NaN);
+      const range = (r) => (Array.isArray(r) && r.length === 2 && r.every((n) => Number.isFinite(num(n)) && Math.abs(num(n)) <= 1e4) && num(r[0]) < num(r[1]) ? [num(r[0]), num(r[1])] : null);
+      out.params = [];
+      for (const q of Array.isArray(v.params) ? v.params : []) {
+        if (!Array.isArray(q) || !/^[a-df-wyzA-Z]$/.test(q[0]) || out.params.some((x) => x[0] === q[0])) continue;
+        const r = range([q[1], q[2]]);
+        if (!r) continue;
+        const start = Number.isFinite(num(q[3])) ? Math.min(r[1], Math.max(r[0], num(q[3]))) : r[0];
+        out.params.push([q[0], r[0], r[1], start]);
+      }
+      out.params = out.params.slice(0, 4);
+      out.x = range(v.x) || [-6, 6];
+      const y = range(v.y);
+      if (y) out.y = y;
+      return out;
+    }
     if (v.type === "chart") {
       const plain = (x, n) => one(x, n).replace(/[<>&"']/g, "");
       out.title = plain(v.title, 60) || "Biểu đồ";
