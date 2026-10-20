@@ -58,17 +58,20 @@ Mỗi người chọn **tên hiển thị** và **mã PIN 4–6 số**. Đổi m
 Trong app, tab **Lớp học → Học liệu**, thầy cô soạn bộ từ, câu, bài ngữ pháp, bài Toán & Vật lí rồi bấm **Đăng lên lớp**; học sinh đã vào lớp tự nhận bản mới khi mở app.
 
 1. **Cập nhật máy chủ** (chỉ cần một lần, khi app có tính năng này): Supabase → **SQL Editor** → **New query** → dán lại toàn bộ file [`supabase/schema.sql`](supabase/schema.sql) → **Run**. Lớp, học sinh và điểm cũ được giữ nguyên.
-2. **Đặt mật khẩu giáo viên** cho lớp (đổi `LOP7A` và mật khẩu, 6–72 ký tự):
+2. **Đặt mật khẩu giáo viên** cho lớp. Bấm **New query** để mở ô trống (hoặc xoá hết chữ cũ trong ô: Ctrl+A rồi Delete) — Supabase chạy **mọi lệnh** đang có trong ô, nên lệnh cũ còn sót lại sẽ báo lỗi `duplicate key`. Dán lệnh sau (đổi `LOP7A` và mật khẩu, 6–72 ký tự) → **Run**. Lệnh dùng được cả khi lớp đã có hay chưa, chạy lại để đổi mật khẩu:
 
    ```sql
-   update public.nhip_rooms set admin_hash = crypt('mat-khau-giao-vien', gen_salt('bf', 8)), admin_fails = 0, admin_locked_until = null where code = 'LOP7A';
+   insert into public.nhip_rooms (code, max_players, admin_hash) values ('LOP7A', 15, crypt('mat-khau-giao-vien', gen_salt('bf', 8)))
+   on conflict (code) do update set admin_hash = excluded.admin_hash, admin_fails = 0, admin_locked_until = null;
    ```
+
+   Kiểm tra: `select code, admin_hash is not null as co_mat_khau from public.nhip_rooms;` → lớp của bạn hiện `true`.
 
 3. Trong app: **Lớp học → Học liệu → Chia sẻ cho cả lớp** → nhập mã lớp + mật khẩu giáo viên → **Vào chế độ giáo viên**. Soạn xong bấm **📤 Đăng lên lớp**.
 
 - Mật khẩu lưu dạng mã hoá (bcrypt); sai 5 lần thì khoá 15 phút. Chỉ thành viên lớp mới đọc được học liệu; mỗi lớp tối đa 512 KB (khoảng vài nghìn từ).
 - Không dùng máy chủ cũng được: **Xuất file học liệu** rồi gửi file `.json` cho học sinh, học sinh bấm **Nhập file học liệu**.
-- Đổi mật khẩu: chạy lại lệnh ở bước 2 với mật khẩu mới.
+- Đổi mật khẩu: chạy lại lệnh ở bước 2 với mật khẩu mới (khi đổi mật khẩu, số lớp tối đa 15 ở lệnh không ảnh hưởng lớp đã có).
 
 ## Việc quản lý thường dùng (chạy trong SQL Editor)
 
