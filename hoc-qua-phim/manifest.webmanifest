@@ -1,0 +1,12 @@
+{
+  "name": "Học Tiếng Anh Qua Phim",
+  "short_name": "Học Qua Phim",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f5f8",
+  "theme_color": "#1d2433",
+  "description": "Tải đoạn phim tiếng Anh kèm phụ đề, app tự tạo bài tập nghe – điền từ – chép chính tả – shadowing.",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Học Tiếng Anh Qua Phim</title>
+  <meta name="description" content="Tải đoạn phim tiếng Anh kèm phụ đề lên, app tự tạo bài nghe có sub, tắt sub, điền từ, chép chính tả, shadowing, lồng tiếng và sổ từ vựng.">
+  <meta name="theme-color" content="#1d2433">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#" data-act="go" data-view="home"><span class="logo">🎬</span><span>Học Tiếng Anh <b>Qua Phim</b></span></a>
+    <nav>
+      <button class="nav-btn" data-act="go" data-view="home">Thư viện</button>
+      <button class="nav-btn" data-act="go" data-view="vocab">Sổ từ <span id="dueBadge" class="badge" hidden></span></button>
+      <button class="nav-btn" data-act="go" data-view="method">Phương pháp</button>
+    </nav>
+  </header>
+  <main id="view"></main>
+  <div id="pop" class="pop" hidden></div>
+  <div id="modal" class="modal" hidden><div class="modal-card" id="modalCard"></div></div>
+  <div id="toast" class="toast" hidden></div>
+  <input type="file" id="pickFiles" multiple accept="video/*,audio/*,.mkv,.mp4,.webm,.mov,.m4v,.srt,.vtt,.ass,.ssa,.txt" hidden>
+  <input type="file" id="pickSub" accept=".srt,.vtt,.ass,.ssa,.txt" hidden>
+  <input type="file" id="pickVideo" accept="video/*,audio/*,.mkv,.mp4,.webm,.mov,.m4v" hidden>
+  <input type="file" id="pickBackup" accept=".json,application/json" hidden>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+1
+00:00:00,500 --> 00:00:02,000
+<i>Hello there, how are you doing?</i>
+
+2
+00:00:02,500 --> 00:00:04,800
+- I'm fine, thanks.
+- Where were you last night?
+
+3
+00:00:05,000 --> 00:00:07,500
+[DOOR SLAMS]
+JOHN: We need to leave the city tonight.
+
+4
+00:00:08,000 --> 00:00:09,800
+I can't believe it's already over.
+Tôi không tin là đã kết thúc rồi.
